@@ -1,0 +1,116 @@
+export interface Product {
+  _id: string
+  _type: 'product'
+  _updatedAt?: string
+  title: string
+  slug: { current: string }
+  description?: string
+  category?: {
+    _id: string
+    title: string
+    slug: { current: string }
+  }
+  price?: number
+  images?: SanityImage[]
+  specifications?: Array<{
+    label: string
+    value: string
+  }>
+  featured?: boolean
+  seo?: SEO
+}
+
+export interface ProductCategory {
+  _id: string
+  _type: 'productCategory'
+  title: string
+  slug: { current: string }
+  description?: string
+  image?: SanityImage
+}
+
+export interface Project {
+  _id: string
+  _type: 'project'
+  _updatedAt?: string
+  title: string
+  slug: { current: string }
+  description?: string
+  images?: SanityImage[]
+  location?: string
+  year?: string
+  featured?: boolean
+  seo?: SEO
+}
+
+export interface BlogPost {
+  _id: string
+  _type: 'blogPost'
+  _updatedAt?: string
+  title: string
+  slug: { current: string }
+  excerpt?: string
+  content?: any
+  featuredImage?: SanityImage
+  author?: {
+    name: string
+    image?: SanityImage
+  }
+  publishedAt?: string
+  seo?: SEO
+}
+
+export interface Testimonial {
+  _id: string
+  _type: 'testimonial'
+  name: string
+  role?: string
+  company?: string
+  content: string
+  image?: SanityImage
+  rating?: number
+  featured?: boolean
+}
+
+export interface FAQ {
+  _id: string
+  _type: 'faq'
+  question: string
+  answer: any
+  category?: string
+}
+
+export interface SanityImage {
+  _type: 'image'
+  asset: {
+    _ref: string
+    _type: 'reference'
+  }
+  alt?: string
+  caption?: string
+}
+
+export interface SEO {
+  title?: string
+  description?: string
+  image?: SanityImage
+  noIndex?: boolean
+}
+
+export interface LandingPage {
+  _id: string
+  _type: 'landingPage'
+  title: string
+  slug: { current: string }
+  sections?: LandingPageSection[]
+  seo?: SEO
+}
+
+export type LandingPageSection =
+  | { _type: 'hero'; title?: string; subtitle?: string; image?: SanityImage; cta?: { text: string; link: string } }
+  | { _type: 'features'; title?: string; items?: Array<{ title: string; description: string; icon?: string }> }
+  | { _type: 'textWithImage'; title?: string; content?: any; image?: SanityImage; imagePosition?: 'left' | 'right' }
+  | { _type: 'testimonials'; title?: string; testimonials?: Testimonial[] }
+  | { _type: 'faq'; title?: string; faqs?: FAQ[] }
+  | { _type: 'cta'; title?: string; subtitle?: string; buttonText?: string; buttonLink?: string }
+
