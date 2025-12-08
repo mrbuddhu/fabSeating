@@ -13,7 +13,7 @@ export function FeaturedProjects({ projects = [] }: FeaturedProjectsProps) {
   return (
     <Section>
       <div className="mb-12 text-center">
-        <h2 className="font-serif text-3xl md:text-5xl font-bold mb-4">Featured Projects</h2>
+        <h2 className="font-serif text-3xl md:text-5xl font-bold mb-4">Our Works</h2>
         <p className="text-primary-700 max-w-2xl mx-auto">
           Explore our recent work and see how we transform spaces
         </p>

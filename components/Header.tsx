@@ -19,7 +19,13 @@ const navItems = [
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [showAnnouncement, setShowAnnouncement] = useState(true)
   const pathname = usePathname()
+  const announcement = {
+    message: 'Custom builds, nationwide delivery, and showroom consultations now open.',
+    ctaLabel: 'Book a design consult',
+    ctaHref: '/contact',
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,16 +39,59 @@ export function Header() {
     <header
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        isScrolled ? 'bg-primary-50/95 backdrop-blur-sm shadow-sm' : 'bg-transparent'
+        'bg-transparent'
       )}
     >
-      <Container>
-        <div className="flex items-center justify-between h-20 md:h-24">
+      {showAnnouncement && (
+        <div className="relative h-10 overflow-hidden bg-black text-white">
+          <div className="absolute inset-0 bg-black/80" />
+          <button
+            aria-label="Close announcement"
+            onClick={() => setShowAnnouncement(false)}
+            className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 px-2 py-1 text-xs font-semibold text-white backdrop-blur transition hover:bg-white/20"
+          >
+            ×
+          </button>
+          <div className="absolute inset-0 flex items-center">
+            <motion.div
+              className="flex items-center gap-12 whitespace-nowrap px-6"
+              animate={{ x: ['0%', '-50%'] }}
+              transition={{ duration: 12, ease: 'linear', repeat: Infinity }}
+            >
+              <span className="text-xs font-semibold uppercase tracking-[0.15em]">
+                {announcement.message}
+              </span>
+              {announcement.ctaLabel && (
+                <Link
+                  href={announcement.ctaHref}
+                  className="text-xs font-semibold underline underline-offset-4"
+                >
+                  {announcement.ctaLabel}
+                </Link>
+              )}
+              <span className="text-xs font-semibold uppercase tracking-[0.15em]">
+                {announcement.message}
+              </span>
+              {announcement.ctaLabel && (
+                <Link
+                  href={announcement.ctaHref}
+                  className="text-xs font-semibold underline underline-offset-4"
+                >
+                  {announcement.ctaLabel}
+                </Link>
+              )}
+            </motion.div>
+          </div>
+        </div>
+      )}
+
+      <div className="w-full px-4 md:px-6 lg:px-8">
+        <div className="mx-auto max-w-screen-2xl flex items-center justify-between rounded-[22px] md:rounded-[28px] border border-primary-100/70 bg-primary-50/95 px-4 py-3 md:px-6 md:py-4 shadow-[0_18px_50px_rgba(0,0,0,0.12)] backdrop-blur">
           <Link href="/" className="font-serif text-2xl md:text-3xl font-bold text-primary-950">
             FabSeating
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-7">
             {navItems.map((item) => (
               <Link
                 key={item.href}
@@ -94,7 +143,7 @@ export function Header() {
             </div>
           </button>
         </div>
-      </Container>
+      </div>
 
       <AnimatePresence>
         {isMobileMenuOpen && (
