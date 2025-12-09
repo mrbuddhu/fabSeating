@@ -30,7 +30,20 @@ export async function generateMetadata({
 function renderSection(section: LandingPageSection) {
   switch (section._type) {
     case 'hero':
-      return <HomeHero data={section} />
+      return (
+        <HomeHero
+          data={section}
+          headline={section.title || 'Crafting Comfort, Elevating Spaces'}
+          subheadline={section.subtitle || 'Premium furniture, custom crafted for your space.'}
+          trustIndicators={[
+            '21+ Years Experience',
+            '1000+ Projects',
+            '1000+ Happy Clients',
+          ]}
+          brands={['Molteni', 'Herman Miller', 'Fenix']}
+          heroVideos={[]}
+        />
+      )
     
     case 'features':
       return (
