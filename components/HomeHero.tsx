@@ -18,7 +18,7 @@ interface HomeHeroProps {
   trustIndicators: string[]
   brands: string[]
   videoUrl?: string
-  heroVideos?: { src: string; title?: string; poster?: string }[]
+  heroVideos?: { src?: string; title?: string; poster?: string }[]
 }
 
 export function HomeHero({
@@ -40,19 +40,21 @@ export function HomeHero({
   const heroData = { ...defaultData, ...data }
   const fallbackPoster =
     'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1600&q=80'
-  const slides =
+
+  type HeroSlide = { src?: string; title?: string; poster?: string }
+  const slides: HeroSlide[] =
     heroVideos.length > 0
       ? heroVideos
       : videoUrl
       ? [{ src: videoUrl, poster: fallbackPoster }]
-      : []
+      : [{ poster: fallbackPoster }]
 
   return (
     <section className="relative pt-[7.5rem] md:pt-[8.5rem] pb-12 md:pb-16">
       <div className="w-full px-4 md:px-6 lg:px-8">
         <div className="relative mx-auto max-w-screen-2xl overflow-hidden rounded-[28px] md:rounded-[32px] bg-primary-950 text-primary-50 shadow-[0_30px_90px_rgba(0,0,0,0.2)]">
           <div className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth no-scrollbar">
-            {(slides.length ? slides : [{}]).map((slide, idx) => (
+            {slides.map((slide, idx) => (
               <div
                 key={slide.src ?? `fallback-${idx}`}
                 className="relative min-w-full snap-start"
@@ -61,7 +63,7 @@ export function HomeHero({
                   <div
                     className="absolute inset-0"
                     style={{
-                      backgroundImage: `url(${(slide as any).poster || fallbackPoster})`,
+                      backgroundImage: `url(${slide.poster || fallbackPoster})`,
                       backgroundSize: 'cover',
                       backgroundPosition: 'center',
                     }}
