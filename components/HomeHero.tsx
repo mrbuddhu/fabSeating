@@ -18,7 +18,7 @@ interface HomeHeroProps {
   trustIndicators: string[]
   brands: string[]
   videoUrl?: string
-  heroVideos?: { src: string; title?: string }[]
+  heroVideos?: { src: string; title?: string; poster?: string }[]
 }
 
 export function HomeHero({
@@ -38,7 +38,14 @@ export function HomeHero({
   }
 
   const heroData = { ...defaultData, ...data }
-  const slides = heroVideos.length > 0 ? heroVideos : videoUrl ? [{ src: videoUrl }] : []
+  const fallbackPoster =
+    'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1600&q=80'
+  const slides =
+    heroVideos.length > 0
+      ? heroVideos
+      : videoUrl
+      ? [{ src: videoUrl, poster: fallbackPoster }]
+      : []
 
   return (
     <section className="relative pt-[7.5rem] md:pt-[8.5rem] pb-12 md:pb-16">
@@ -51,7 +58,14 @@ export function HomeHero({
                 className="relative min-w-full snap-start"
               >
                 <div className="relative h-[88vh] md:h-[92vh] min-h-[560px] overflow-hidden rounded-[28px] md:rounded-[32px]">
-                  <div className="absolute inset-0">
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      backgroundImage: `url(${(slide as any).poster || fallbackPoster})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                    }}
+                  >
                     {slide.src ? (
                       <video
                         className="h-full w-full object-cover"
@@ -60,6 +74,9 @@ export function HomeHero({
                         loop
                         muted
                         playsInline
+                        preload="auto"
+                        crossOrigin="anonymous"
+                        poster={(slide as any).poster || fallbackPoster}
                       />
                     ) : heroData.image ? (
                       <ResponsiveImage
@@ -72,20 +89,17 @@ export function HomeHero({
                     ) : (
                       <div className="h-full w-full bg-gradient-to-br from-primary-900 via-primary-800 to-primary-600" />
                     )}
-                    <div className="absolute inset-0 bg-primary-950/60" />
+                    <div className="absolute inset-0 bg-primary-950/35" />
                   </div>
 
                   <div className="relative z-10 flex h-full flex-col justify-end px-6 pb-10 pt-8 md:px-12 md:pb-14 md:pt-14 lg:px-16 lg:pb-16 lg:pt-16">
-                    <div className="space-y-5 md:space-y-6">
-                      <div className="inline-flex w-fit items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-primary-50 backdrop-blur">
-                        Premium Since 2003
-                      </div>
+                    <div className="space-y-4 rounded-2xl bg-black/25 p-4 md:p-6 backdrop-blur-md shadow-[0_18px_50px_rgba(0,0,0,0.35)]">
                       <div className="space-y-3 md:space-y-4">
                         <motion.h1
                           initial={{ opacity: 0, y: 20 }}
                           whileInView={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.6 }}
-                          className="font-serif text-4xl leading-tight md:text-6xl lg:text-7xl"
+                          className="font-serif text-4xl leading-tight md:text-6xl lg:text-7xl font-black drop-shadow-[0_10px_35px_rgba(0,0,0,0.45)]"
                         >
                           {heroData.title}
                         </motion.h1>
@@ -93,7 +107,7 @@ export function HomeHero({
                           initial={{ opacity: 0, y: 20 }}
                           whileInView={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.6, delay: 0.1 }}
-                          className="max-w-2xl text-lg text-primary-100 md:text-xl"
+                          className="max-w-2xl text-lg md:text-xl font-semibold text-primary-50 drop-shadow-[0_8px_24px_rgba(0,0,0,0.4)]"
                         >
                           {heroData.subtitle}
                         </motion.p>
@@ -115,27 +129,7 @@ export function HomeHero({
                           View Our Work
                         </Link>
                       </div>
-
-                      <div className="flex flex-wrap gap-3 text-sm text-primary-100">
-                        {trustIndicators.map((item) => (
-                          <span
-                            key={item}
-                            className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 backdrop-blur"
-                          >
-                            <span className="h-2 w-2 rounded-full bg-emerald-400" />
-                            {item}
-                          </span>
-                        ))}
-                      </div>
                     </div>
-
-                    {slide.title && (
-                      <div className="mt-6">
-                        <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-semibold text-primary-50 backdrop-blur">
-                          {slide.title}
-                        </div>
-                      </div>
-                    )}
                   </div>
                 </div>
               </div>

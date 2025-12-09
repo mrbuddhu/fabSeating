@@ -9,7 +9,12 @@ interface TestimonialCardProps {
 
 export function TestimonialCard({ testimonial, className }: TestimonialCardProps) {
   return (
-    <div className={cn('bg-primary-50 p-6 md:p-8', className)}>
+    <div
+      className={cn(
+        'bg-white rounded-2xl p-6 md:p-8 shadow-[0_18px_45px_rgba(0,0,0,0.12)] transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_26px_70px_rgba(0,0,0,0.18)]',
+        className
+      )}
+    >
       {testimonial.rating && (
         <div className="flex gap-1 mb-4">
           {Array.from({ length: 5 }).map((_, i) => (

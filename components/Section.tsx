@@ -5,14 +5,14 @@ interface SectionProps {
   children: React.ReactNode
   className?: string
   containerClassName?: string
-  containerSize?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
+  containerSize?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full'
 }
 
 export function Section({
   children,
   className,
   containerClassName,
-  containerSize = 'lg',
+  containerSize = '2xl',
 }: SectionProps) {
   return (
     <section className={cn('py-16 md:py-24', className)}>

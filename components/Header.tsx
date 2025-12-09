@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Container } from './Container'
@@ -86,32 +87,37 @@ export function Header() {
       )}
 
       <div className="w-full px-4 md:px-6 lg:px-8">
-        <div className="mx-auto max-w-screen-2xl flex items-center justify-between rounded-[22px] md:rounded-[28px] border border-primary-100/70 bg-primary-50/95 px-4 py-3 md:px-6 md:py-4 shadow-[0_18px_50px_rgba(0,0,0,0.12)] backdrop-blur">
-          <Link href="/" className="font-serif text-2xl md:text-3xl font-bold text-primary-950">
-            FabSeating
+        <div
+          className={cn(
+            'mx-auto max-w-screen-2xl flex items-center justify-between rounded-[26px] md:rounded-[32px] border px-4 py-3 md:px-6 md:py-4 mt-2 md:mt-3 transition-colors transition-shadow duration-300',
+            isScrolled
+              ? 'border-white/30 bg-white/35 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.16)]'
+              : 'border-primary-100/70 bg-primary-50/95 backdrop-blur shadow-[0_18px_50px_rgba(0,0,0,0.12)]'
+          )}
+        >
+          <Link href="/" className="flex items-center gap-3">
+            <Image
+              src="/logo.png"
+              alt="FabSeating logo"
+              width={200}
+              height={60}
+              className="h-10 w-auto md:h-12"
+              priority
+            />
           </Link>
 
-          <nav className="hidden md:flex items-center gap-7">
+          <nav className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'text-sm font-medium transition-colors relative',
-                  pathname === item.href
-                    ? 'text-primary-950'
-                    : 'text-primary-700 hover:text-primary-950'
+                  'text-base font-semibold transition-all relative rounded-full px-3 py-2',
+                  pathname === item.href ? 'text-primary-950' : 'text-primary-800',
+                  'hover:text-primary-50 hover:bg-primary-900 hover:shadow-lg hover:shadow-primary-900/20 hover:-translate-y-[2px] hover:scale-105'
                 )}
               >
                 {item.label}
-                {pathname === item.href && (
-                  <motion.div
-                    layoutId="activeNav"
-                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary-950"
-                    initial={false}
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
               </Link>
             ))}
           </nav>

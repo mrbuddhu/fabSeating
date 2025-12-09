@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Container } from './Container'
 
 const footerLinks = {
@@ -23,24 +24,26 @@ export function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-primary-950 text-primary-100 mt-32">
+    <footer className="bg-primary-950 text-primary-100 mt-32 mx-4 md:mx-6 lg:mx-8 mb-6 rounded-3xl overflow-hidden shadow-[0_18px_50px_rgba(0,0,0,0.18)]">
       <Container>
         <div className="py-16 md:py-20 grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="md:col-span-1">
-            <h3 className="font-serif text-2xl font-bold mb-4">FabSeating</h3>
-            <p className="text-primary-300 text-sm leading-relaxed">
+            <div className="mb-4">
+              <Image src="/logo.png" alt="FabSeating logo" width={220} height={64} className="h-14 w-auto" />
+            </div>
+            <p className="text-primary-200 text-base leading-relaxed">
               Premium furniture crafted with excellence and attention to detail.
             </p>
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">Company</h4>
+            <h4 className="font-semibold mb-4 text-base uppercase tracking-[0.12em] text-primary-50">Company</h4>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-primary-300 hover:text-primary-50 text-sm transition-colors"
+                    className="text-primary-200 hover:text-primary-50 text-base transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -50,13 +53,13 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">Products</h4>
+            <h4 className="font-semibold mb-4 text-base uppercase tracking-[0.12em] text-primary-50">Products</h4>
             <ul className="space-y-3">
               {footerLinks.products.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-primary-300 hover:text-primary-50 text-sm transition-colors"
+                    className="text-primary-200 hover:text-primary-50 text-base transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -66,13 +69,13 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">Support</h4>
+            <h4 className="font-semibold mb-4 text-base uppercase tracking-[0.12em] text-primary-50">Support</h4>
             <ul className="space-y-3">
               {footerLinks.support.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-primary-300 hover:text-primary-50 text-sm transition-colors"
+                    className="text-primary-200 hover:text-primary-50 text-base transition-colors"
                   >
                     {link.label}
                   </Link>

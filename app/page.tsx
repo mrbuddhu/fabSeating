@@ -9,6 +9,8 @@ import { getHomePageData } from '@/lib/sanity/queries'
 import { VideoReelSection } from '@/components/VideoReelSection'
 import { VideoCategoryChips } from '@/components/VideoCategoryChips'
 import { BrandStrip } from '@/components/BrandStrip'
+import { ProcessStrip } from '@/components/ProcessStrip'
+import { BrandPressStrip } from '@/components/BrandPressStrip'
 
 export const revalidate = 3600
 
@@ -32,26 +34,75 @@ export default async function Home() {
     videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-living-room-1574/1080p.mp4',
   }
   const reelVideos = [
-    { src: 'https://cdn.coverr.co/videos/coverr-modern-boutique-office-6267/1080p.mp4', title: 'Consultation in progress' },
-    { src: 'https://cdn.coverr.co/videos/coverr-modern-cafe-5535/1080p.mp4', title: 'Cafe seating mock' },
-    { src: 'https://cdn.coverr.co/videos/coverr-modern-apartment-6575/1080p.mp4', title: 'Residence walkthrough' },
-    { src: 'https://cdn.coverr.co/videos/coverr-cozy-coffee-house-1264/1080p.mp4', title: 'Hospitality vibes' },
-    { src: 'https://cdn.coverr.co/videos/coverr-office-meeting-1327/1080p.mp4', title: 'Client review' },
+    {
+      src: 'https://cdn.coverr.co/videos/coverr-modern-boutique-office-6267/1080p.mp4',
+      title: 'Consultation in progress',
+      poster: 'https://images.unsplash.com/photo-1529429617124-aee65f5f7b4d?auto=format&fit=crop&w=1200&q=80',
+    },
+    {
+      src: 'https://cdn.coverr.co/videos/coverr-modern-cafe-5535/1080p.mp4',
+      title: 'Cafe seating mock',
+      poster: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80',
+    },
+    {
+      src: 'https://cdn.coverr.co/videos/coverr-modern-apartment-6575/1080p.mp4',
+      title: 'Residence walkthrough',
+      poster: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80',
+    },
+    {
+      src: 'https://cdn.coverr.co/videos/coverr-cozy-coffee-house-1264/1080p.mp4',
+      title: 'Hospitality vibes',
+      poster: 'https://images.unsplash.com/photo-1461988320302-91bde64fc8e4?auto=format&fit=crop&w=1200&q=80',
+    },
   ]
   const heroVideos = [
-    { src: 'https://cdn.coverr.co/videos/coverr-modern-living-room-1574/1080p.mp4', title: 'Luxury living setup' },
-    { src: 'https://cdn.coverr.co/videos/coverr-modern-boutique-office-6267/1080p.mp4', title: 'Office lounge' },
-    { src: 'https://cdn.coverr.co/videos/coverr-modern-cafe-5535/1080p.mp4', title: 'Cafe seating' },
-    { src: 'https://cdn.coverr.co/videos/coverr-modern-apartment-6575/1080p.mp4', title: 'Residence walkthrough' },
-    { src: 'https://cdn.coverr.co/videos/coverr-office-meeting-1327/1080p.mp4', title: 'Client review' },
+    {
+      src: 'https://cdn.coverr.co/videos/coverr-modern-living-room-1574/1080p.mp4',
+      title: 'Luxury living setup',
+      poster: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80',
+    },
+    {
+      src: 'https://cdn.coverr.co/videos/coverr-modern-boutique-office-6267/1080p.mp4',
+      title: 'Office lounge',
+      poster: 'https://images.unsplash.com/photo-1529429617124-aee65f5f7b4d?auto=format&fit=crop&w=1200&q=80',
+    },
+    {
+      src: 'https://cdn.coverr.co/videos/coverr-modern-cafe-5535/1080p.mp4',
+      title: 'Cafe seating',
+      poster: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80',
+    },
+    {
+      src: 'https://cdn.coverr.co/videos/coverr-modern-apartment-6575/1080p.mp4',
+      title: 'Residence walkthrough',
+      poster: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80',
+    },
+    {
+      src: 'https://cdn.coverr.co/videos/coverr-office-meeting-1327/1080p.mp4',
+      title: 'Client review',
+      poster: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1200&q=80',
+    },
   ]
   const categoryVideos = [
-    { label: 'Sofa Sets', src: 'https://cdn.coverr.co/videos/coverr-modern-living-room-1574/1080p.mp4' },
-    { label: 'Dining Tables', src: 'https://cdn.coverr.co/videos/coverr-modern-dining-room-5978/1080p.mp4' },
-    { label: 'Arm Chairs', src: 'https://cdn.coverr.co/videos/coverr-cozy-chair-8454/1080p.mp4' },
-    { label: 'Centre Tables', src: 'https://cdn.coverr.co/videos/coverr-modern-lounge-5659/1080p.mp4' },
-    { label: 'Beds', src: 'https://cdn.coverr.co/videos/coverr-modern-bedroom-2786/1080p.mp4' },
-    { label: 'Console Tables', src: 'https://cdn.coverr.co/videos/coverr-modern-hall-8715/1080p.mp4' },
+    {
+      label: 'Sofa Sets',
+      src: 'https://cdn.coverr.co/videos/coverr-modern-living-room-1574/1080p.mp4',
+      poster: 'https://images.unsplash.com/photo-1505692069463-5e3405e3e7ee?auto=format&fit=crop&w=800&q=80',
+    },
+    {
+      label: 'Dining Tables',
+      src: 'https://cdn.coverr.co/videos/coverr-modern-dining-room-5978/1080p.mp4',
+      poster: 'https://images.unsplash.com/photo-1616628182501-d995c3cc6aab?auto=format&fit=crop&w=800&q=80',
+    },
+    {
+      label: 'Arm Chairs',
+      src: 'https://cdn.coverr.co/videos/coverr-cozy-chair-8454/1080p.mp4',
+      poster: 'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=800&q=80',
+    },
+    {
+      label: 'Centre Tables',
+      src: 'https://cdn.coverr.co/videos/coverr-modern-lounge-5659/1080p.mp4',
+      poster: 'https://images.unsplash.com/photo-1523419400524-2230b924dc00?auto=format&fit=crop&w=800&q=80',
+    },
   ]
 
   return (
@@ -72,6 +123,8 @@ export default async function Home() {
       />
       <BrandStrip brands={heroContent.brands} />
       <VideoCategoryChips title="Our Products" items={categoryVideos} />
+      <ProcessStrip />
+      <BrandPressStrip />
       <CategoriesSection categories={data.categories} />
       <FeaturedProducts products={data.featuredProducts} />
       <FeaturedProjects projects={data.featuredProjects} />

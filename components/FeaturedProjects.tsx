@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Section } from './Section'
 import { ProjectCard } from './ProjectCard'
+import { Reveal } from './Reveal'
 import type { Project } from '@/types'
 
 interface FeaturedProjectsProps {
@@ -13,15 +14,17 @@ export function FeaturedProjects({ projects = [] }: FeaturedProjectsProps) {
   return (
     <Section>
       <div className="mb-12 text-center">
-        <h2 className="font-serif text-3xl md:text-5xl font-bold mb-4">Our Works</h2>
-        <p className="text-primary-700 max-w-2xl mx-auto">
+        <h2 className="font-serif text-4xl md:text-6xl font-bold mb-4 text-primary-950">Our Works</h2>
+        <p className="text-primary-700 max-w-2xl mx-auto text-lg md:text-xl">
           Explore our recent work and see how we transform spaces
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {projects.map((project) => (
-          <ProjectCard key={project._id} project={project} />
+          <Reveal key={project._id} delay={80}>
+            <ProjectCard project={project} />
+          </Reveal>
         ))}
       </div>
 

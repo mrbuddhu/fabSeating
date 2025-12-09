@@ -1,4 +1,5 @@
 import { Section } from './Section'
+import { Reveal } from './Reveal'
 
 interface WhyChooseUsProps {
   data?: {
@@ -38,18 +39,24 @@ export function WhyChooseUs({ data }: WhyChooseUsProps) {
   return (
     <Section className="bg-primary-100">
       <div className="mb-12 text-center">
-        <h2 className="font-serif text-3xl md:text-5xl font-bold mb-4">{title}</h2>
+        <h2 className="font-serif text-4xl md:text-6xl font-bold mb-4 text-primary-950">{title}</h2>
         {subtitle && (
-          <p className="text-primary-700 max-w-2xl mx-auto">{subtitle}</p>
+          <p className="text-primary-700 max-w-2xl mx-auto text-lg md:text-xl">{subtitle}</p>
         )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {features.map((feature, index) => (
-          <div key={index} className="text-center">
-            <h3 className="font-serif text-xl font-semibold mb-3">{feature.title}</h3>
-            <p className="text-primary-700 leading-relaxed">{feature.description}</p>
-          </div>
+          <Reveal
+            key={index}
+            delay={index * 80}
+            className="h-full"
+          >
+            <div className="text-center rounded-3xl bg-white shadow-[0_18px_45px_rgba(0,0,0,0.12)] p-6 transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_26px_70px_rgba(0,0,0,0.2)] h-full">
+              <h3 className="font-serif text-2xl font-semibold mb-3 text-primary-950">{feature.title}</h3>
+              <p className="text-primary-700 leading-relaxed text-base md:text-lg">{feature.description}</p>
+            </div>
+          </Reveal>
         ))}
       </div>
     </Section>

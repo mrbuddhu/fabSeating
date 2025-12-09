@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
-import { Playfair_Display, Inter } from 'next/font/google'
+import { Inter, Cormorant_Garamond } from 'next/font/google'
 import './globals.css'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Analytics } from '@/components/Analytics'
+import { StickyBookCTA } from '@/components/StickyBookCTA'
 
-const playfair = Playfair_Display({
+const cormorant = Cormorant_Garamond({
   variable: '--font-serif',
   subsets: ['latin'],
   display: 'swap',
@@ -34,10 +35,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
+    <html lang="en" className={`${cormorant.variable} ${inter.variable}`}>
       <body className="font-sans antialiased">
         <Header />
         <main>{children}</main>
+        <StickyBookCTA />
         <Footer />
         <Analytics />
       </body>

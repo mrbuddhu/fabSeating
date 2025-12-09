@@ -12,9 +12,12 @@ export function ProductCard({ product, className }: ProductCardProps) {
   return (
     <Link
       href={`/products/${product.slug.current}`}
-      className={cn('group block', className)}
+      className={cn(
+        'group block rounded-3xl bg-white p-4 shadow-[0_15px_45px_rgba(0,0,0,0.12)] transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(0,0,0,0.2)]',
+        className
+      )}
     >
-      <div className="relative aspect-[4/3] mb-4 overflow-hidden bg-primary-100">
+      <div className="relative aspect-[4/3] mb-4 overflow-hidden rounded-2xl bg-primary-100">
         {product.images && product.images[0] && (
           <ResponsiveImage
             image={product.images[0]}
@@ -24,17 +27,17 @@ export function ProductCard({ product, className }: ProductCardProps) {
           />
         )}
       </div>
-      <div>
-        <h3 className="font-serif text-xl font-semibold mb-2 group-hover:text-primary-700 transition-colors">
+      <div className="space-y-2">
+        <h3 className="font-serif text-2xl font-bold group-hover:text-primary-800 transition-colors">
           {product.title}
         </h3>
         {product.description && (
-          <p className="text-sm text-primary-600 line-clamp-2 mb-2">
+          <p className="text-base text-primary-700 line-clamp-2">
             {product.description}
           </p>
         )}
         {product.price && (
-          <p className="text-lg font-medium text-primary-950">
+          <p className="text-xl font-semibold text-primary-950">
             ${product.price.toLocaleString()}
           </p>
         )}
