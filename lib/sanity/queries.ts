@@ -8,7 +8,6 @@ function isSanityConfigured() {
 export async function getHomePageData() {
   if (!isSanityConfigured()) {
     return {
-      hero: null,
       categories: [],
       featuredProducts: [],
       featuredProjects: [],
@@ -17,24 +16,27 @@ export async function getHomePageData() {
       cta: null,
     }
   }
-  const [hero, categories, featuredProducts, featuredProjects, whyChooseUs, testimonials, cta] = await Promise.all([
-    client.fetch(`*[_type == "siteSettings"][0].homeHero`),
+  
+  // Only fetch dynamic content sections
+  const settings = await client.fetch(`*[_type == "siteSettings"][0] {
+    whyChooseUs,
+    homeCta
+  }`)
+
+  const [categories, featuredProducts, featuredProjects, testimonials] = await Promise.all([
     client.fetch(`*[_type == "productCategory"] | order(_createdAt desc) [0...6]`),
     client.fetch(`*[_type == "product" && featured == true] | order(_createdAt desc) [0...6]`),
     client.fetch(`*[_type == "project" && featured == true] | order(_createdAt desc) [0...3]`),
-    client.fetch(`*[_type == "siteSettings"][0].whyChooseUs`),
     client.fetch(`*[_type == "testimonial" && featured == true] | order(_createdAt desc) [0...3]`),
-    client.fetch(`*[_type == "siteSettings"][0].homeCta`),
   ])
 
   return {
-    hero,
     categories,
     featuredProducts,
     featuredProjects,
-    whyChooseUs,
+    whyChooseUs: settings?.whyChooseUs || null,
     testimonials,
-    cta,
+    cta: settings?.homeCta || null,
   }
 }
 
@@ -206,6 +208,18 @@ export async function getLandingPageBySlug(slug: string): Promise<LandingPage | 
     seo
   }`, { slug })
   return page || null
+}
+
+export async function getSiteSettings() {
+  if (!isSanityConfigured()) {
+    return {
+      announcement: null,
+    }
+  }
+  // Note: Announcement can be added back if needed
+  return {
+    announcement: null,
+  }
 }
 
 export async function getSitemapData() {

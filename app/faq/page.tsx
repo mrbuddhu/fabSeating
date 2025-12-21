@@ -5,7 +5,7 @@ import { FAQAccordion } from '@/components/FAQAccordion'
 import { getFAQs } from '@/lib/sanity/queries'
 import { generateSEOMetadata } from '@/components/SEOHead'
 
-export const revalidate = 3600
+export const revalidate = 21600
 
 export const metadata: Metadata = generateSEOMetadata({
   title: 'FAQ',

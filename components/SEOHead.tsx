@@ -25,7 +25,7 @@ export function generateSEOMetadata({
   const metaTitle = seo?.title || title || 'FabSeating | Premium Furniture'
   const metaDescription = seo?.description || description || 'Premium furniture crafted with excellence and attention to detail.'
   const metaImage = seo?.image || image
-  const imageUrl = metaImage ? urlFor(metaImage)?.width(1200).height(630).url() : `${siteUrl}/og-image.jpg`
+  const imageUrl = metaImage ? urlFor(metaImage)?.width(1200).height(630).url() : `${siteUrl}/logo.png`
 
   return {
     title: metaTitle,

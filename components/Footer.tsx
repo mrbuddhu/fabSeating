@@ -29,7 +29,7 @@ export function Footer() {
         <div className="py-16 md:py-20 grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="md:col-span-1">
             <div className="mb-4">
-              <Image src="/logo.png" alt="FabSeating logo" width={220} height={64} className="h-14 w-auto" />
+              <Image src="/logo.png" alt="FabSeating logo" width={220} height={64} className="h-14 w-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)]" />
             </div>
             <p className="text-primary-200 text-base leading-relaxed">
               Premium furniture crafted with excellence and attention to detail.

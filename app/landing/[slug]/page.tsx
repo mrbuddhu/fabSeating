@@ -10,7 +10,7 @@ import { FAQAccordion } from '@/components/FAQAccordion'
 import { CTA } from '@/components/CTA'
 import type { LandingPageSection } from '@/types'
 
-export const revalidate = 3600
+export const revalidate = 900
 
 export async function generateMetadata({
   params,

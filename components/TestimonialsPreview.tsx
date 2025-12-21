@@ -20,9 +20,9 @@ export function TestimonialsPreview({ testimonials = [] }: TestimonialsPreviewPr
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {testimonials.map((testimonial) => (
-          <Reveal key={testimonial._id} delay={80}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {testimonials.slice(0, 4).map((testimonial, idx) => (
+          <Reveal key={testimonial._id} delay={idx * 80}>
             <TestimonialCard testimonial={testimonial} className="rounded-3xl bg-white shadow-[0_18px_45px_rgba(0,0,0,0.12)] p-6" />
           </Reveal>
         ))}

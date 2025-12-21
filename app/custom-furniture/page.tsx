@@ -4,6 +4,8 @@ import { Section } from '@/components/Section'
 import { EnquiryForm } from '@/components/EnquiryForm'
 import { generateSEOMetadata } from '@/components/SEOHead'
 
+export const revalidate = 21600
+
 export const metadata: Metadata = generateSEOMetadata({
   title: 'Custom Furniture',
   description: 'Commission custom furniture tailored to your needs',

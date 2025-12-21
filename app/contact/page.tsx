@@ -4,6 +4,8 @@ import { Section } from '@/components/Section'
 import { EnquiryForm } from '@/components/EnquiryForm'
 import { generateSEOMetadata } from '@/components/SEOHead'
 
+export const revalidate = 86400
+
 export const metadata: Metadata = generateSEOMetadata({
   title: 'Contact Us',
   description: 'Get in touch with FabSeating',

@@ -47,12 +47,8 @@ export function WhyChooseUs({ data }: WhyChooseUsProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {features.map((feature, index) => (
-          <Reveal
-            key={index}
-            delay={index * 80}
-            className="h-full"
-          >
-            <div className="text-center rounded-3xl bg-white shadow-[0_18px_45px_rgba(0,0,0,0.12)] p-6 transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_26px_70px_rgba(0,0,0,0.2)] h-full">
+          <Reveal key={index} delay={index * 80} className="h-full">
+            <div className="text-center rounded-3xl bg-white shadow-[0_18px_45px_rgba(0,0,0,0.12)] p-6 transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_26px_70px_rgba(0,0,0,0.24)] hover:ring-1 hover:ring-primary-200/80 hover:ring-offset-1 hover:ring-offset-white h-full">
               <h3 className="font-serif text-2xl font-semibold mb-3 text-primary-950">{feature.title}</h3>
               <p className="text-primary-700 leading-relaxed text-base md:text-lg">{feature.description}</p>
             </div>

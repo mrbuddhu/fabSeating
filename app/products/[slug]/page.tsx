@@ -8,7 +8,7 @@ import { EnquiryForm } from '@/components/EnquiryForm'
 import { getProductBySlug, getProducts } from '@/lib/sanity/queries'
 import { generateSEOMetadata } from '@/components/SEOHead'
 
-export const revalidate = 3600
+export const revalidate = 900
 
 export async function generateStaticParams() {
   const products = await getProducts()

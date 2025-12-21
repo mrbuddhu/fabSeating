@@ -101,7 +101,7 @@ export function Header() {
               alt="FabSeating logo"
               width={200}
               height={60}
-              className="h-10 w-auto md:h-12"
+              className="h-10 w-auto md:h-12 drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)]"
               priority
             />
           </Link>

@@ -7,7 +7,7 @@ import { ResponsiveImage } from '@/components/ResponsiveImage'
 import { getBlogPostBySlug, getBlogPosts } from '@/lib/sanity/queries'
 import { generateSEOMetadata } from '@/components/SEOHead'
 
-export const revalidate = 3600
+export const revalidate = 900
 
 export async function generateStaticParams() {
   const posts = await getBlogPosts()

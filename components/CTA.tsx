@@ -37,12 +37,20 @@ export function CTA({ data, className }: CTAProps) {
             </p>
           )}
           {data.buttonLink && (
-            <Link
-              href={data.buttonLink}
-              className="inline-block px-10 py-4 bg-primary-50 text-primary-950 hover:bg-primary-100 transition-colors font-semibold rounded-full shadow-[0_16px_40px_rgba(0,0,0,0.25)]"
-            >
-              {data.buttonText || 'Get Started'}
-            </Link>
+            <div className="flex flex-col items-center gap-3">
+              <Link
+                href={data.buttonLink}
+                className="inline-block px-10 py-4 bg-primary-50 text-primary-950 hover:bg-primary-100 transition-colors font-semibold rounded-full shadow-[0_16px_40px_rgba(0,0,0,0.25)]"
+              >
+                {data.buttonText || 'Get Started'}
+              </Link>
+              <Link
+                href="/projects"
+                className="text-primary-100 hover:text-primary-50 text-sm font-semibold underline underline-offset-4"
+              >
+                View Recent Projects
+              </Link>
+            </div>
           )}
         </div>
       </Container>

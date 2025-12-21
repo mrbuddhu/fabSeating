@@ -5,7 +5,7 @@ import { ProjectCard } from '@/components/ProjectCard'
 import { getProjects } from '@/lib/sanity/queries'
 import { generateSEOMetadata } from '@/components/SEOHead'
 
-export const revalidate = 3600
+export const revalidate = 900
 
 export const metadata: Metadata = generateSEOMetadata({
   title: 'Projects',

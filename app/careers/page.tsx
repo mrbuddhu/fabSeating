@@ -3,6 +3,8 @@ import { PageHero } from '@/components/PageHero'
 import { Section } from '@/components/Section'
 import { generateSEOMetadata } from '@/components/SEOHead'
 
+export const revalidate = 86400
+
 export const metadata: Metadata = generateSEOMetadata({
   title: 'Careers',
   description: 'Join the FabSeating team',

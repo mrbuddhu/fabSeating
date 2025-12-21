@@ -4,18 +4,6 @@ export default {
   type: 'document',
   fields: [
     {
-      name: 'homeHero',
-      title: 'Home Hero',
-      type: 'object',
-      fields: [
-        { name: 'title', type: 'string', title: 'Title' },
-        { name: 'subtitle', type: 'string', title: 'Subtitle' },
-        { name: 'image', type: 'image', title: 'Image', options: { hotspot: true } },
-        { name: 'ctaText', type: 'string', title: 'CTA Text' },
-        { name: 'ctaLink', type: 'string', title: 'CTA Link' },
-      ],
-    },
-    {
       name: 'whyChooseUs',
       title: 'Why Choose Us',
       type: 'object',

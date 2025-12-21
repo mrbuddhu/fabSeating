@@ -5,7 +5,7 @@ import { ProductCard } from '@/components/ProductCard'
 import { getProducts, getProductCategories } from '@/lib/sanity/queries'
 import { generateSEOMetadata } from '@/components/SEOHead'
 
-export const revalidate = 3600
+export const revalidate = 900
 
 export const metadata: Metadata = generateSEOMetadata({
   title: 'Products',

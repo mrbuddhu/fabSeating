@@ -1,4 +1,4 @@
-export default {
+    export default {
   name: 'productCategory',
   title: 'Product Category',
   type: 'document',
