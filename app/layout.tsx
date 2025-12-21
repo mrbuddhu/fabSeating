@@ -29,6 +29,7 @@ export const metadata: Metadata = {
   description: 'Premium furniture crafted with excellence and attention to detail.',
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://fabseating.com'),
   manifest: '/manifest.json',
+  themeColor: '#2a2520',
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
@@ -72,7 +73,6 @@ export const metadata: Metadata = {
     initialScale: 1,
     maximumScale: 5,
   },
-  themeColor: '#2a2520',
 }
 
 export default function RootLayout({
