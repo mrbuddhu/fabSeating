@@ -85,3 +85,4 @@ convert logo.png -resize 180x180 apple-touch-icon.png
 - API routes are excluded from caching
 - Cache version updates automatically on deploy
 - Users will see cached content when offline
+
