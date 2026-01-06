@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Cormorant_Garamond } from 'next/font/google'
+import { Playfair_Display, Montserrat } from 'next/font/google'
 import './globals.css'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
@@ -7,26 +7,31 @@ import { Analytics } from '@/components/Analytics'
 import { StickyBookCTA } from '@/components/StickyBookCTA'
 import { PWARegister } from '@/components/PWARegister'
 
-const cormorant = Cormorant_Garamond({
-  variable: '--font-serif',
+// Configure Google Fonts
+const playfair = Playfair_Display({
   subsets: ['latin'],
-  display: 'swap',
-  weight: ['400', '500', '600', '700'],
+  display: 'optional', // Better for luxury - prevents FOUT
+  variable: '--font-playfair',
+  weight: ['400', '500', '600', '700', '800', '900'],
+  preload: true,
+  adjustFontFallback: true,
 })
 
-const inter = Inter({
-  variable: '--font-sans',
+const montserrat = Montserrat({
   subsets: ['latin'],
-  display: 'swap',
-  weight: ['300', '400', '500', '600'],
+  display: 'optional', // Better for luxury - prevents FOUT
+  variable: '--font-montserrat',
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  preload: true,
+  adjustFontFallback: true,
 })
 
 export const metadata: Metadata = {
   title: {
-    default: 'FabSeating | Premium Furniture',
-    template: '%s | FabSeating',
+    default: 'Fabseating | Premium Furniture & Furnishings',
+    template: '%s | Fabseating',
   },
-  description: 'Premium furniture crafted with excellence and attention to detail.',
+  description: 'Fabseating designs, manufactures, and curates premium furniture and furnishings for homes, offices, and hospitality spaces in Chennai since 2001.',
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://fabseating.com'),
   manifest: '/manifest.json',
   themeColor: '#2a2520',
@@ -47,10 +52,10 @@ export const metadata: Metadata = {
     title: 'FabSeating',
   },
   openGraph: {
-    title: 'FabSeating | Premium Furniture',
-    description: 'Premium furniture crafted with excellence and attention to detail.',
+    title: 'Fabseating | Premium Furniture & Furnishings',
+    description: 'Fabseating designs, manufactures, and curates premium furniture and furnishings for homes, offices, and hospitality spaces in Chennai since 2001.',
     url: process.env.NEXT_PUBLIC_SITE_URL || 'https://fabseating.com',
-    siteName: 'FabSeating',
+    siteName: 'Fabseating',
     images: [
       {
         url: '/logo.png',
@@ -64,8 +69,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'FabSeating | Premium Furniture',
-    description: 'Premium furniture crafted with excellence and attention to detail.',
+    title: 'Fabseating | Premium Furniture & Furnishings',
+    description: 'Fabseating designs, manufactures, and curates premium furniture and furnishings for homes, offices, and hospitality spaces in Chennai since 2001.',
     images: ['/logo.png'],
   },
   viewport: {
@@ -80,9 +85,14 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  // Add smooth scrolling
+  if (typeof window !== 'undefined') {
+    require('smooth-scroll')('a[href*="#"]')
+  }
+  
   return (
-    <html lang="en" className={`${cormorant.variable} ${inter.variable}`}>
-      <body className="font-sans antialiased">
+    <html lang="en" className={`${playfair.variable} ${montserrat.variable} luxury-scrollbar`}>
+      <body className="font-sans antialiased luxury-scrollbar">
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary-950 focus:text-primary-50 focus:rounded-lg focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary-50 focus:ring-offset-2"

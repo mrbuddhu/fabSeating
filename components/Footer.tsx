@@ -5,16 +5,15 @@ import { Container } from './Container'
 const footerLinks = {
   company: [
     { href: '/about', label: 'About Us' },
-    { href: '/careers', label: 'Careers' },
     { href: '/testimonials', label: 'Testimonials' },
+    { href: '/legals', label: 'Legals' },
   ],
   products: [
-    { href: '/products', label: 'All Products' },
     { href: '/custom-furniture', label: 'Custom Furniture' },
     { href: '/projects', label: 'Projects' },
+    { href: '/gallery', label: 'Gallery' },
   ],
   support: [
-    { href: '/faq', label: 'FAQ' },
     { href: '/contact', label: 'Contact' },
     { href: '/blog', label: 'Blog' },
   ],
@@ -24,12 +23,12 @@ export function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-primary-950 text-primary-100 mt-32 mx-4 md:mx-6 lg:mx-8 mb-6 rounded-3xl overflow-hidden shadow-[0_18px_50px_rgba(0,0,0,0.18)]">
+    <footer className="grainy-gradient text-primary-100 mt-32 mx-4 md:mx-6 lg:mx-8 mb-6 rounded-3xl overflow-hidden shadow-[0_18px_50px_rgba(0,0,0,0.18)] relative">
       <Container>
         <div className="py-16 md:py-20 grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="md:col-span-1">
             <div className="mb-4">
-              <Image src="/logo.png" alt="FabSeating logo" width={220} height={64} className="h-14 w-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)]" />
+              <Image src="/logo.png" alt="FabSeating logo" width={440} height={128} className="h-28 w-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)]" />
             </div>
             <p className="text-primary-200 text-base leading-relaxed">
               Premium furniture crafted with excellence and attention to detail.

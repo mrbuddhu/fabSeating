@@ -10,10 +10,8 @@ import { cn } from '@/lib/utils'
 
 const navItems = [
   { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
-  { href: '/products', label: 'Products' },
+  { href: '/solutions', label: 'Solutions' },
   { href: '/projects', label: 'Projects' },
-  { href: '/blog', label: 'Blog' },
   { href: '/contact', label: 'Contact' },
 ]
 
@@ -23,8 +21,8 @@ export function Header() {
   const [showAnnouncement, setShowAnnouncement] = useState(true)
   const pathname = usePathname()
   const announcement = {
-    message: 'Custom builds, nationwide delivery, and showroom consultations now open.',
-    ctaLabel: 'Book a design consult',
+    message: 'Serving residential & commercial spaces across South India since 2001.',
+    ctaLabel: 'Get a Free Consultation',
     ctaHref: '/contact',
   }
 
@@ -86,38 +84,69 @@ export function Header() {
         </div>
       )}
 
-      <div className="w-full px-4 md:px-6 lg:px-8">
-        <div
+      <div className="w-full">
+        <motion.div
+          initial={false}
+          animate={{
+            maxWidth: isScrolled ? '1536px' : '98%',
+            marginLeft: isScrolled ? 'auto' : 'auto',
+            marginRight: isScrolled ? 'auto' : 'auto',
+          }}
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
           className={cn(
-            'mx-auto max-w-screen-2xl flex items-center justify-between rounded-[26px] md:rounded-[32px] border px-4 py-3 md:px-6 md:py-4 mt-2 md:mt-3 transition-colors transition-shadow duration-300',
+            'flex items-center justify-between rounded-[32px] md:rounded-[40px] lg:rounded-[48px] border px-4 py-3 md:px-6 md:py-4 mt-2 md:mt-3 transition-all duration-500 overflow-hidden',
             isScrolled
-              ? 'border-white/30 bg-white/35 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.16)]'
-              : 'border-primary-100/70 bg-primary-50/95 backdrop-blur shadow-[0_18px_50px_rgba(0,0,0,0.12)]'
+              ? 'border-white/30 bg-white/35 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.16)] mx-auto'
+              : 'border-primary-100/70 bg-primary-50/95 backdrop-blur shadow-[0_18px_50px_rgba(0,0,0,0.12)] mx-auto'
           )}
         >
-          <Link href="/" className="flex items-center gap-3">
-            <Image
-              src="/logo.png"
-              alt="FabSeating logo"
-              width={200}
-              height={60}
-              className="h-10 w-auto md:h-12 drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)]"
-              priority
-            />
-          </Link>
+          <motion.div
+            animate={{
+              scale: isScrolled ? 0.9 : 1,
+            }}
+            transition={{ duration: 0.5, ease: 'easeInOut' }}
+            className="flex-shrink-0"
+          >
+            <Link href="/" className="flex items-center gap-3">
+              <Image
+                src="/logo.png"
+                alt="Fabseating - Premium Furniture & Furnishings"
+                width={200}
+                height={60}
+                className={cn(
+                  'w-auto transition-all duration-500',
+                  isScrolled ? 'h-10 md:h-12' : 'h-12 md:h-14'
+                )}
+                priority
+              />
+            </Link>
+          </motion.div>
 
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className={cn(
+            'hidden md:flex items-center transition-all duration-500 flex-shrink-0 whitespace-nowrap',
+            isScrolled ? 'gap-6' : 'gap-8 lg:gap-12'
+          )}>
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'text-base font-semibold transition-all relative rounded-full px-3 py-2',
-                  pathname === item.href ? 'text-primary-950' : 'text-primary-800',
-                  'hover:text-primary-50 hover:bg-primary-900 hover:shadow-lg hover:shadow-primary-900/20 hover:-translate-y-[2px] hover:scale-105'
+                  'font-medium transition-all duration-500 relative px-4 py-2.5 group whitespace-nowrap flex-shrink-0 overflow-hidden',
+                  isScrolled ? 'text-sm' : 'text-base',
+                  pathname === item.href 
+                    ? 'text-primary-700' 
+                    : 'text-gray-700 hover:text-primary-600'
                 )}
               >
-                {item.label}
+                <span className="relative z-10 inline-block transition-all duration-500 group-hover:tracking-wider">
+                  {item.label}
+                </span>
+                {/* Animated underline */}
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary-400 via-primary-600 to-primary-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-center"></span>
+                {/* Background glow effect */}
+                <span className="absolute inset-0 bg-primary-50/0 group-hover:bg-primary-50/30 rounded-lg transform scale-95 group-hover:scale-100 transition-all duration-500 -z-0"></span>
+                {/* Shimmer effect */}
+                <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out bg-gradient-to-r from-transparent via-white/20 to-transparent -z-0"></span>
               </Link>
             ))}
           </nav>
@@ -148,7 +177,7 @@ export function Header() {
               />
             </div>
           </button>
-        </div>
+        </motion.div>
       </div>
 
       <AnimatePresence>
@@ -166,14 +195,19 @@ export function Header() {
                     key={item.href}
                     href={item.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={cn(
-                      'block text-base font-medium transition-colors',
+                    className={`nav-link relative px-4 py-3 text-sm font-medium transition-all duration-500 group overflow-hidden rounded-lg ${
                       pathname === item.href
-                        ? 'text-primary-950'
-                        : 'text-primary-700 hover:text-primary-950'
-                    )}
+                        ? 'text-primary-600'
+                        : 'text-gray-700 hover:text-primary-600'
+                    }`}
                   >
-                    {item.label}
+                    <span className="relative z-10 inline-block transition-all duration-500 group-hover:tracking-wider">
+                      {item.label}
+                    </span>
+                    {/* Animated underline */}
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary-400 via-primary-600 to-primary-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-center"></span>
+                    {/* Background glow effect */}
+                    <span className="absolute inset-0 bg-primary-50/0 group-hover:bg-primary-50/30 rounded-lg transform scale-95 group-hover:scale-100 transition-all duration-500 -z-0"></span>
                   </Link>
                 ))}
               </div>

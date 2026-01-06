@@ -24,10 +24,10 @@ export async function getHomePageData() {
   }`)
 
   const [categories, featuredProducts, featuredProjects, testimonials] = await Promise.all([
-    client.fetch(`*[_type == "productCategory"] | order(_createdAt desc) [0...6]`),
+    client.fetch(`*[_type == "productCategory"] | order(_createdAt desc) [0...8]`),
     client.fetch(`*[_type == "product" && featured == true] | order(_createdAt desc) [0...6]`),
     client.fetch(`*[_type == "project" && featured == true] | order(_createdAt desc) [0...3]`),
-    client.fetch(`*[_type == "testimonial" && featured == true] | order(_createdAt desc) [0...3]`),
+    client.fetch(`*[_type == "testimonial" && featured == true] | order(_createdAt desc) [0...4]`),
   ])
 
   return {
