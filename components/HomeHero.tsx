@@ -61,7 +61,7 @@ export function HomeHero({
                 key={slide.src ?? `fallback-${idx}`}
                 className="relative min-w-full snap-start"
               >
-                <div className="relative h-[85vh] sm:h-[88vh] md:h-[92vh] min-h-[500px] sm:min-h-[560px] overflow-hidden rounded-[28px] md:rounded-[32px]">
+                <div className="relative h-[75vh] sm:h-[80vh] md:h-[82vh] lg:h-[85vh] min-h-[500px] sm:min-h-[560px] max-h-[900px] overflow-hidden rounded-[28px] md:rounded-[32px]">
                   <div
                     className="absolute inset-0"
                     style={{
@@ -97,7 +97,7 @@ export function HomeHero({
                     <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/15 to-black/30" />
                   </div>
 
-                  <div className="relative z-10 flex h-full flex-col justify-end px-4 pb-8 pt-6 sm:px-6 sm:pb-10 sm:pt-8 md:px-12 md:pb-14 md:pt-14 lg:px-16 lg:pb-16 lg:pt-16">
+                  <div className="relative z-10 flex h-full flex-col justify-end px-4 pb-8 pt-4 sm:px-6 sm:pb-10 sm:pt-6 md:px-12 md:pb-14 md:pt-8 lg:px-16 lg:pb-16 lg:pt-12">
                     <div className="space-y-4 rounded-2xl bg-black/25 p-4 sm:p-5 md:p-6 lg:p-8 shadow-[0_18px_50px_rgba(0,0,0,0.35)]">
                       <div className="space-y-3 md:space-y-4">
                         <motion.h1
@@ -136,7 +136,7 @@ export function HomeHero({
                           href="/contact"
                           className="inline-flex items-center justify-center rounded-full border border-primary-200/40 bg-white/10 px-4 py-2.5 sm:px-6 sm:py-3 text-xs sm:text-sm font-semibold text-primary-50 backdrop-blur transition-all duration-300 hover:bg-white/20 hover:-translate-y-1 hover:shadow-xl"
                         >
-                          Customise Your Sofa
+                          Get Custom Solution
                         </Link>
                       </div>
                     </div>
