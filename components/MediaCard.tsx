@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 interface MediaCardProps {
   media: {
@@ -31,10 +32,11 @@ export function MediaCard({ media, className = '' }: MediaCardProps) {
             <source src={media.src} type="video/mp4" />
           </video>
         ) : (
-          <img
+          <Image
             src={media.src}
             alt={media.alt}
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+            fill
+            className="object-cover transition-transform duration-700 group-hover:scale-110"
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />

@@ -76,9 +76,9 @@ export default async function ContactPage() {
               What happens after you contact us
             </h2>
             <p className="text-primary-700 leading-relaxed mb-6">
-              Once you reach out, our team will get back to you within 24 hours. We'll schedule a consultation 
+              Once you reach out, our team will get back to you within 24 hours. We&apos;ll schedule a consultation 
               to understand your requirements, discuss your vision, and provide initial recommendations. From there, 
-              we'll guide you through our process, keeping you informed at every step until your space is complete.
+              we&apos;ll guide you through our process, keeping you informed at every step until your space is complete.
             </p>
           </div>
 
