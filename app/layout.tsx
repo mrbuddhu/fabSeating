@@ -7,7 +7,6 @@ import { Analytics } from '@/components/Analytics'
 import { StickyBookCTA } from '@/components/StickyBookCTA'
 import { PWARegister } from '@/components/PWARegister'
 
-// Configure Google Fonts
 const playfair = Playfair_Display({
   subsets: ['latin'],
   display: 'optional', // Better for luxury - prevents FOUT
@@ -85,7 +84,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  // Add smooth scrolling
   if (typeof window !== 'undefined') {
     require('smooth-scroll')('a[href*="#"]')
   }

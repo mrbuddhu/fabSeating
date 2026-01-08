@@ -4,18 +4,13 @@ import { Container } from './Container'
 
 const footerLinks = {
   company: [
-    { href: '/about', label: 'About Us' },
-    { href: '/testimonials', label: 'Testimonials' },
     { href: '/legals', label: 'Legals' },
   ],
   products: [
-    { href: '/custom-furniture', label: 'Custom Furniture' },
     { href: '/projects', label: 'Projects' },
-    { href: '/gallery', label: 'Gallery' },
   ],
   support: [
     { href: '/contact', label: 'Contact' },
-    { href: '/blog', label: 'Blog' },
   ],
 }
 

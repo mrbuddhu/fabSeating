@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getProducts, getProjects, getBlogPosts } from '@/lib/sanity/queries'
+import { getProjects } from '@/lib/sanity/queries'
 
 export const dynamic = 'force-dynamic'
 
@@ -8,21 +8,11 @@ export async function GET(request: NextRequest) {
   const query = searchParams.get('q')?.toLowerCase() || ''
 
   if (!query) {
-    return NextResponse.json({ products: [], projects: [], posts: [] })
+    return NextResponse.json({ projects: [] })
   }
 
   try {
-    const [products, projects, posts] = await Promise.all([
-      getProducts(),
-      getProjects(),
-      getBlogPosts(),
-    ])
-
-    const filteredProducts = products.filter(
-      (product) =>
-        product.title.toLowerCase().includes(query) ||
-        product.description?.toLowerCase().includes(query)
-    )
+    const projects = await getProjects()
 
     const filteredProjects = projects.filter(
       (project) =>
@@ -31,16 +21,8 @@ export async function GET(request: NextRequest) {
         project.location?.toLowerCase().includes(query)
     )
 
-    const filteredPosts = posts.filter(
-      (post) =>
-        post.title.toLowerCase().includes(query) ||
-        post.excerpt?.toLowerCase().includes(query)
-    )
-
     return NextResponse.json({
-      products: filteredProducts,
       projects: filteredProjects,
-      posts: filteredPosts,
     })
   } catch (error) {
     console.error('Search error:', error)

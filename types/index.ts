@@ -3,7 +3,7 @@ export interface Product {
   _type: 'product'
   _updatedAt?: string
   title: string
-  slug: { current: string }
+  slug?: { current: string }
   description?: string
   category?: {
     _id: string
@@ -39,6 +39,9 @@ export interface Project {
   images?: SanityImage[]
   location?: string
   year?: string
+  category?: 'residential' | 'office' | 'hospitality'
+  furniture?: string[]
+  furnishings?: string[]
   featured?: boolean
   seo?: SEO
 }
@@ -103,6 +106,21 @@ export interface LandingPage {
   title: string
   slug: { current: string }
   sections?: LandingPageSection[]
+  seo?: SEO
+}
+
+export interface SolutionPage {
+  _id: string
+  _type: 'solutionPage'
+  type: 'residential' | 'office' | 'hospitality'
+  title: string
+  subtitle?: string
+  introText: string
+  heroImage?: SanityImage
+  furnitureItems: string[]
+  furnishingsItems: string[]
+  bestSuitedFor: string
+  secondaryImage?: SanityImage
   seo?: SEO
 }
 

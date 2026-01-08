@@ -7,15 +7,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const routes = [
     '',
-    '/about',
-    '/products',
     '/projects',
-    '/blog',
-    '/testimonials',
-    '/faq',
-    '/careers',
     '/contact',
-    '/custom-furniture',
+    '/solutions/residential',
+    '/solutions/office',
+    '/solutions/hospitality',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
@@ -23,27 +19,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: route === '' ? 1 : 0.8,
   }))
 
-  const productRoutes = data.products.map((product: { slug: string; _updatedAt?: string }) => ({
-    url: `${baseUrl}/products/${product.slug}`,
-    lastModified: product._updatedAt ? new Date(product._updatedAt) : new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
-  }))
-
-  const projectRoutes = data.projects.map((project: { slug: string; _updatedAt?: string }) => ({
-    url: `${baseUrl}/projects/${project.slug}`,
-    lastModified: project._updatedAt ? new Date(project._updatedAt) : new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
-  }))
-
-  const blogRoutes = data.blogPosts.map((post: { slug: string; _updatedAt?: string }) => ({
-    url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: post._updatedAt ? new Date(post._updatedAt) : new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: 0.6,
-  }))
-
-  return [...routes, ...productRoutes, ...projectRoutes, ...blogRoutes]
+  return routes
 }
 

@@ -10,8 +10,8 @@ import { cn } from '@/lib/utils'
 
 const navItems = [
   { href: '/', label: 'Home' },
-  { href: '/solutions', label: 'Solutions' },
-  { href: '/projects', label: 'Projects' },
+  { href: '/#solutions', label: 'Solutions' },
+  { href: '/#projects', label: 'Projects' },
   { href: '/contact', label: 'Contact' },
 ]
 
@@ -95,9 +95,8 @@ export function Header() {
           transition={{ duration: 0.5, ease: 'easeInOut' }}
           className={cn(
             'flex items-center justify-between rounded-[32px] md:rounded-[40px] lg:rounded-[48px] border px-4 py-3 md:px-6 md:py-4 mt-2 md:mt-3 transition-all duration-500 overflow-hidden',
-            isScrolled
-              ? 'border-white/30 bg-white/35 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.16)] mx-auto'
-              : 'border-primary-100/70 bg-primary-50/95 backdrop-blur shadow-[0_18px_50px_rgba(0,0,0,0.12)] mx-auto'
+            'border-primary-300/50 bg-primary-100/90 backdrop-blur-xl shadow-[0_20px_60px_rgba(58,135,136,0.2)] mx-auto',
+            isScrolled && 'bg-primary-100/95 shadow-[0_20px_60px_rgba(58,135,136,0.3)]'
           )}
         >
           <motion.div
@@ -134,8 +133,8 @@ export function Header() {
                   'font-medium transition-all duration-500 relative px-4 py-2.5 group whitespace-nowrap flex-shrink-0 overflow-hidden',
                   isScrolled ? 'text-sm' : 'text-base',
                   pathname === item.href 
-                    ? 'text-primary-700' 
-                    : 'text-gray-700 hover:text-primary-600'
+                    ? 'text-primary-800 font-semibold' 
+                    : 'text-primary-700 hover:text-primary-800'
                 )}
               >
                 <span className="relative z-10 inline-block transition-all duration-500 group-hover:tracking-wider">
@@ -186,7 +185,7 @@ export function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-primary-50 border-t border-primary-200"
+            className="md:hidden bg-primary-100/95 border-t border-primary-300 backdrop-blur"
           >
             <Container>
               <div className="py-6 space-y-4">
@@ -197,8 +196,8 @@ export function Header() {
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`nav-link relative px-4 py-3 text-sm font-medium transition-all duration-500 group overflow-hidden rounded-lg ${
                       pathname === item.href
-                        ? 'text-primary-600'
-                        : 'text-gray-700 hover:text-primary-600'
+                        ? 'text-primary-800 font-semibold'
+                        : 'text-primary-700 hover:text-primary-800'
                     }`}
                   >
                     <span className="relative z-10 inline-block transition-all duration-500 group-hover:tracking-wider">

@@ -8,16 +8,13 @@ import { getHomePageData } from '@/lib/sanity/queries'
 export const revalidate = 21600
 
 export default async function Home() {
-  // Only fetch dynamic content: products, projects, categories
   const data = await getHomePageData()
   
-  // Hero section content
-  const heroHeadline = 'Premium Furniture & Furnishings for Homes, Offices & Hospitality'
-  const heroSubheadline = 'Since 2001, Fabseating has been creating complete furniture and furnishing solutions—designed for real spaces, real usage, and long-term comfort.'
-  const primaryCta = 'Talk to a Designer'
+  const heroHeadline = 'Premium Furniture and Furnishings for Homes, Offices and Hospitality'
+  const heroSubheadline = 'Since 2001, FabSeating has been creating complete furniture and furnishing solutions designed for real spaces and long term use.'
+  const primaryCta = 'Talk to Us'
   const trustLine = 'Crafted & curated from our Chennai facility | Serving residential & commercial spaces across South India'
   
-  // Solutions carousel data (Commercial, Residential, Hospitality)
   const solutionsVideos = [
     {
       id: 1,
@@ -25,7 +22,7 @@ export default async function Home() {
       description: 'Elegant and functional furniture for modern homes',
       videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-living-room-1574/1080p.mp4',
       thumbnail: 'https://images.unsplash.com/photo-1556911220-bff31c812d0c?auto=format&fit=crop&w=800&q=80',
-      link: '/solutions#residential'
+      link: '/solutions/residential'
     },
     {
       id: 2,
@@ -33,7 +30,7 @@ export default async function Home() {
       description: 'Productive and inspiring work environments',
       videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-boutique-office-6267/1080p.mp4',
       thumbnail: 'https://images.unsplash.com/photo-1524758631624-e2822e304a36?auto=format&fit=crop&w=800&q=80',
-      link: '/solutions#office'
+      link: '/solutions/office'
     },
     {
       id: 3,
@@ -41,7 +38,7 @@ export default async function Home() {
       description: 'Durable and stylish solutions for hospitality',
       videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-cafe-5535/1080p.mp4',
       thumbnail: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80',
-      link: '/solutions#hospitality'
+      link: '/solutions/hospitality'
     }
   ]
 
@@ -52,7 +49,7 @@ export default async function Home() {
       description: 'Tailored to your exact specifications',
       videoUrl: 'https://cdn.coverr.co/videos/coverr-carpenter-working-on-furniture-4549/1080p.mp4',
       thumbnail: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
-      link: '/custom-furniture'
+      link: '/contact'
     },
     {
       id: 2,
@@ -60,7 +57,7 @@ export default async function Home() {
       description: 'Choose from premium fabrics and designs',
       videoUrl: 'https://cdn.coverr.co/videos/coverr-tailor-sewing-clothes-8575/1080p.mp4',
       thumbnail: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80',
-      link: '/custom-furniture#upholstery'
+      link: '/contact'
     }
   ]
 
@@ -71,7 +68,7 @@ export default async function Home() {
       description: 'Complete home furnishing solution',
       videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-apartment-6575/1080p.mp4',
       thumbnail: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80',
-      link: '/projects#villa'
+      link: '/projects?category=residential'
     },
     {
       id: 2,
@@ -79,7 +76,7 @@ export default async function Home() {
       description: 'Modern workspace transformation',
       videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-office-space-5699/1080p.mp4',
       thumbnail: 'https://images.unsplash.com/photo-1522071820081-009c2f1deba7?auto=format&fit=crop&w=800&q=80',
-      link: '/projects#office'
+      link: '/projects?category=office'
     },
     {
       id: 3,
@@ -87,7 +84,7 @@ export default async function Home() {
       description: 'Luxury hospitality furnishings',
       videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-hotel-lobby-6162/1080p.mp4',
       thumbnail: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80',
-      link: '/projects#hotel'
+      link: '/projects?category=hospitality'
     }
   ]
 
@@ -99,6 +96,10 @@ export default async function Home() {
         subheadline={heroSubheadline}
         trustIndicators={['Crafted & curated from our Chennai facility', 'Serving residential & commercial spaces across South India']}
         brands={['Premium Quality', '20+ Years Experience', 'Custom Solutions']}
+        data={{
+          ctaText: primaryCta,
+          ctaLink: '/contact'
+        }}
       />
 
       {/* 2. Quote Section - Social Proof */}
@@ -120,9 +121,7 @@ export default async function Home() {
               </svg>
             </div>
             <blockquote className="text-lg md:text-2xl lg:text-3xl font-serif font-light mb-3 italic leading-[1.2] tracking-[-0.02em] text-white/95">
-              &ldquo;We are the most experienced makers of exceptional upholstered furniture. 
-              Using materials of the highest quality, we ensure every handmade piece is 
-              comfortable, beautifully finished, and built to last.&rdquo;
+              Furniture should not just look good on day one. It should work well for years.
             </blockquote>
             <div className="flex items-center justify-center gap-2 mt-3">
               <div className="h-px w-16 bg-gradient-to-r from-transparent to-primary-400/40"></div>
@@ -149,11 +148,11 @@ export default async function Home() {
                 <span className="text-xs font-bold tracking-[0.2em] uppercase text-primary-700">Our Story</span>
               </div>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold mb-2 text-primary-950 tracking-tight">
-                About Fabseating
+                About FabSeating
               </h2>
               <div className="w-24 h-px bg-gradient-to-r from-transparent via-primary-700 to-transparent mx-auto mb-3"></div>
               <p className="text-base md:text-lg text-gray-800 font-medium max-w-2xl mx-auto leading-relaxed">
-                Since 2001, we&apos;ve been creating complete furniture and furnishing solutions designed for real spaces, real usage, and long-term comfort.
+                Founded in 2001, FabSeating is a Chennai based furniture and furnishings solutions brand focused on building spaces that last. We bring together furniture, furnishings, planning and execution under one roof.
               </p>
             </div>
             
@@ -250,46 +249,46 @@ export default async function Home() {
               </h2>
               <div className="w-24 h-px bg-gradient-to-r from-transparent via-primary-700 to-transparent mx-auto mb-3"></div>
               <p className="text-lg md:text-xl text-gray-800 font-medium max-w-3xl mx-auto leading-relaxed">
-                Discover our range of furniture and furnishing solutions for every space.
+                FabSeating delivers integrated furniture and furnishings solutions designed around how a space is used not just how it looks.
               </p>
             </div>
           </AnimatedSection>
           
           {/* Solutions Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
             {solutionsVideos.map((item, index) => (
               <AnimatedCard key={item.id} index={index}>
                 <div 
-                  className="group relative rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.08)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.12)] transition-all duration-700 h-[500px]"
+                  className="group relative rounded-2xl overflow-hidden border-2 border-primary-200/50 bg-white shadow-lg hover:shadow-2xl hover:border-primary-400 transition-all duration-500"
                 >
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-950/20 to-primary-950/60 z-10 group-hover:opacity-0 transition-opacity duration-700"></div>
-                <video
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  poster={item.thumbnail}
-                >
-                  <source src={item.videoUrl} type="video/mp4" />
-                </video>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-8 z-20">
-                  <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                    <div className="mb-3">
-                      <span className="text-xs font-semibold tracking-wider text-primary-300/80 uppercase">Solution {index + 1}</span>
-                    </div>
-                    <h3 className="text-3xl font-serif font-light text-white mb-3 tracking-tight">{item.title}</h3>
-                    <p className="text-gray-200/90 mb-6 leading-relaxed font-light">{item.description}</p>
-                    <a 
-                      href={item.link}
-                      className="inline-flex items-center gap-2 text-white font-medium group/link hover:gap-4 transition-all duration-300"
-                    >
-                      <span className="text-sm tracking-wider uppercase">Explore</span>
-                      <svg className="w-5 h-5 transform group-hover/link:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </a>
+                <div className="relative h-[450px] overflow-hidden">
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    poster={item.thumbnail}
+                  >
+                    <source src={item.videoUrl} type="video/mp4" />
+                  </video>
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-primary-950/80"></div>
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
+                  <div className="mb-2">
+                    <span className="text-xs font-semibold tracking-wider text-primary-100 uppercase bg-primary-950/60 px-3 py-1 rounded-full inline-block">Solution {index + 1}</span>
                   </div>
+                  <h3 className="text-2xl font-serif font-semibold text-white mb-2 tracking-tight">{item.title}</h3>
+                  <p className="text-gray-100 text-sm mb-4 leading-relaxed">{item.description}</p>
+                  <a 
+                    href={item.link}
+                    className="inline-flex items-center gap-2 bg-white text-primary-950 px-5 py-2.5 rounded-full font-semibold text-sm hover:bg-primary-50 transition-all duration-300 shadow-lg"
+                  >
+                    <span className="tracking-wide">Explore</span>
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </a>
                 </div>
               </div>
               </AnimatedCard>
@@ -318,40 +317,43 @@ export default async function Home() {
           </div>
           
           {/* Grid Layout */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
             {projectVideos.map((item, index) => (
               <AnimatedCard key={item.id} index={index}>
                 <div 
-                  className="group relative rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.08)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.12)] transition-all duration-700 h-[500px]"
+                  className="group relative overflow-hidden bg-gray-900 rounded-lg shadow-xl hover:shadow-2xl transition-all duration-500"
                 >
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-950/20 to-primary-950/60 z-10 group-hover:opacity-0 transition-opacity duration-700"></div>
-                <video
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  poster={item.thumbnail}
-                >
-                  <source src={item.videoUrl} type="video/mp4" />
-                </video>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-8 z-20">
-                  <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                    <div className="mb-3">
-                      <span className="text-xs font-semibold tracking-wider text-primary-300/80 uppercase">Project {index + 1}</span>
-                    </div>
-                    <h3 className="text-3xl font-serif font-light text-white mb-3 tracking-tight">{item.title}</h3>
-                    <p className="text-gray-200/90 mb-6 leading-relaxed font-light">{item.description}</p>
-                    <a 
-                      href={item.link}
-                      className="inline-flex items-center gap-2 text-white font-medium group/link hover:gap-4 transition-all duration-300"
-                    >
-                      <span className="text-sm tracking-wider uppercase">View Project</span>
-                      <svg className="w-5 h-5 transform group-hover/link:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </a>
+                <div className="relative aspect-[4/5] overflow-hidden">
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    poster={item.thumbnail}
+                  >
+                    <source src={item.videoUrl} type="video/mp4" />
+                  </video>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute top-4 right-4 z-20">
+                    <span className="text-xs font-bold tracking-widest text-white/90 uppercase bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-md border border-white/20">Project</span>
                   </div>
+                </div>
+                <div className="p-6 bg-gradient-to-b from-gray-900 to-black">
+                  <div className="mb-2">
+                    <span className="text-xs font-semibold tracking-wider text-primary-400 uppercase">Case Study {index + 1}</span>
+                  </div>
+                  <h3 className="text-xl font-serif font-bold text-white mb-2 tracking-tight">{item.title}</h3>
+                  <p className="text-gray-300 text-sm mb-4 leading-relaxed">{item.description}</p>
+                  <a 
+                    href={item.link}
+                    className="inline-flex items-center gap-2 text-primary-300 hover:text-primary-200 font-medium text-sm transition-colors duration-300 group/link"
+                  >
+                    <span className="tracking-wide">View Details</span>
+                    <svg className="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </a>
                 </div>
               </div>
               </AnimatedCard>
@@ -451,28 +453,35 @@ export default async function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 max-w-5xl mx-auto">
             {customVideos.map((item, index) => (
               <AnimatedCard key={item.id} index={index}>
-                <div className="group relative rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.08)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.12)] transition-all duration-700 h-[500px]">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-950/20 to-primary-950/60 z-10 group-hover:opacity-0 transition-opacity duration-700"></div>
-                <video
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  poster={item.thumbnail}
-                >
-                  <source src={item.videoUrl} type="video/mp4" />
-                </video>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-8 z-20">
-                  <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                    <h3 className="text-3xl font-serif font-light text-white mb-3 tracking-tight">{item.title}</h3>
-                    <p className="text-gray-200/90 mb-6 leading-relaxed font-light">{item.description}</p>
+                <div className="group relative overflow-hidden bg-primary-950 rounded-2xl shadow-2xl hover:shadow-[0_40px_100px_rgba(0,0,0,0.25)] transition-all duration-700 border border-primary-800/50">
+                <div className="relative h-[550px] overflow-hidden">
+                  <div className="absolute inset-0 z-10 bg-gradient-to-br from-primary-950/40 via-primary-950/20 to-transparent group-hover:from-primary-950/20 transition-all duration-700"></div>
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    poster={item.thumbnail}
+                  >
+                    <source src={item.videoUrl} type="video/mp4" />
+                  </video>
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary-950 via-primary-950/80 to-transparent"></div>
+                </div>
+                <div className="absolute inset-0 flex flex-col justify-end p-8 z-20">
+                  <div className="transform translate-y-0 group-hover:-translate-y-2 transition-transform duration-500">
+                    <div className="mb-4 flex items-center gap-2">
+                      <div className="w-1 h-8 bg-primary-400"></div>
+                      <span className="text-xs font-bold tracking-[0.2em] text-primary-300 uppercase">Bespoke</span>
+                    </div>
+                    <h3 className="text-3xl font-serif font-bold text-white mb-3 tracking-tight">{item.title}</h3>
+                    <p className="text-primary-100 mb-6 leading-relaxed text-base">{item.description}</p>
                     <a 
                       href={item.link}
-                      className="inline-flex items-center gap-2 text-white font-medium group/link hover:gap-4 transition-all duration-300"
+                      className="inline-flex items-center gap-3 bg-primary-400 text-primary-950 px-6 py-3 rounded-full font-bold text-sm hover:bg-primary-300 hover:scale-105 transition-all duration-300 shadow-lg"
                     >
-                      <span className="text-sm tracking-wider uppercase">Explore</span>
-                      <svg className="w-5 h-5 transform group-hover/link:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <span className="tracking-wider">Get Started</span>
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                       </svg>
                     </a>
@@ -486,7 +495,7 @@ export default async function Home() {
           {/* CTA Button */}
           <div className="text-center">
             <a 
-              href="/custom-furniture" 
+              href="/contact" 
               className="inline-flex items-center gap-3 px-8 py-4 bg-primary-950 text-white font-medium rounded-full hover:bg-primary-900 transition-all duration-300 hover:gap-5 shadow-lg hover:-translate-y-1 hover:shadow-2xl group"
             >
               <span className="text-sm tracking-wider uppercase">Get a Custom Quote</span>
@@ -500,13 +509,16 @@ export default async function Home() {
       </AnimatedSection>
 
       {/* 9. Testimonials/Social Proof */}
-      {data.testimonials && data.testimonials.length > 0 && (
+      {(data.testimonials && data.testimonials.length > 0) || process.env.NEXT_PUBLIC_GOOGLE_PLACE_ID ? (
         <AnimatedSection delay={0.5}>
           <section className="relative py-16 md:py-20 bg-gradient-to-b from-white via-primary-50/30 to-white">
-            <TestimonialsPreview testimonials={data.testimonials} />
+            <TestimonialsPreview 
+              testimonials={data.testimonials} 
+              showGoogleReviews={!!process.env.NEXT_PUBLIC_GOOGLE_PLACE_ID}
+            />
           </section>
         </AnimatedSection>
-      )}
+      ) : null}
 
       {/* 10. Call to Action */}
       <section className="relative py-8 md:py-10 grainy-gradient text-white overflow-hidden">
@@ -532,7 +544,7 @@ export default async function Home() {
               href="/contact" 
               className="inline-flex items-center gap-2 px-8 py-3 bg-white text-primary-950 font-medium rounded-full hover:bg-primary-50 transition-all duration-300 hover:gap-3 shadow-2xl hover:-translate-y-1.5 hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] group text-base"
             >
-              <span className="tracking-wider uppercase">Talk to a Designer</span>
+              <span className="tracking-wider uppercase">Talk to Us</span>
               <svg className="w-6 h-6 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>

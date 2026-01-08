@@ -33,15 +33,14 @@ export function HomeHero({
   const defaultData = {
     title: headline,
     subtitle: subheadline,
-    ctaText: 'View Our Collection',
-    ctaLink: '/products',
+    ctaText: 'Talk to Us',
+    ctaLink: '/contact',
   }
 
   const heroData = { ...defaultData, ...data }
   const fallbackPoster =
     'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1600&q=80'
   
-  // Default hero video
   const defaultHeroVideo = '/hero-video.mp4'
 
   type HeroSlide = { src?: string; title?: string; poster?: string }
@@ -134,10 +133,10 @@ export function HomeHero({
                           </Link>
                         )}
                         <Link
-                          href="/projects"
+                          href="/contact"
                           className="inline-flex items-center justify-center rounded-full border border-primary-200/40 bg-white/10 px-4 py-2.5 sm:px-6 sm:py-3 text-xs sm:text-sm font-semibold text-primary-50 backdrop-blur transition-all duration-300 hover:bg-white/20 hover:-translate-y-1 hover:shadow-xl"
                         >
-                          View Our Work
+                          Customise Your Sofa
                         </Link>
                       </div>
                     </div>

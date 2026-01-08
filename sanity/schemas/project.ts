@@ -41,6 +41,32 @@ export default {
       type: 'string',
     },
     {
+      name: 'category',
+      title: 'Category',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Residential', value: 'residential' },
+          { title: 'Office', value: 'office' },
+          { title: 'Hospitality', value: 'hospitality' },
+        ],
+      },
+    },
+    {
+      name: 'furniture',
+      title: 'Furniture Involved',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'List of furniture items used in this project',
+    },
+    {
+      name: 'furnishings',
+      title: 'Furnishings Involved',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'List of furnishings used in this project',
+    },
+    {
       name: 'featured',
       title: 'Featured',
       type: 'boolean',

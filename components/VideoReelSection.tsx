@@ -20,7 +20,6 @@ interface VideoReelSectionProps {
 }
 
 export function VideoReelSection({ title, subtitle, items, data }: VideoReelSectionProps) {
-  // Support both direct props and data object for backward compatibility
   const sectionTitle = title || data?.title || 'Experience with FabSeating'
   const sectionSubtitle = subtitle || data?.subtitle
   const videos = items || data?.videos || []

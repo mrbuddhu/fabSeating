@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { Section } from './Section'
 import { ResponsiveImage } from './ResponsiveImage'
 import type { ProductCategory } from '@/types'
@@ -21,9 +20,8 @@ export function CategoriesSection({ categories = [] }: CategoriesSectionProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
         {categories.map((category) => (
-          <Link
+          <div
             key={category._id}
-            href={`/products?category=${category.slug.current}`}
             className="group block"
           >
             <div className="relative aspect-[4/3] mb-4 overflow-hidden bg-primary-100">
@@ -39,7 +37,7 @@ export function CategoriesSection({ categories = [] }: CategoriesSectionProps) {
             <h3 className="font-serif text-xl font-semibold group-hover:text-primary-700 transition-colors">
               {category.title}
             </h3>
-          </Link>
+          </div>
         ))}
       </div>
     </Section>

@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { Section } from './Section'
 import { ProductCard } from './ProductCard'
 import { Reveal } from './Reveal'
@@ -28,14 +27,6 @@ export function FeaturedProducts({ products = [] }: FeaturedProductsProps) {
         ))}
       </div>
 
-      <div className="text-center mt-12">
-        <Link
-          href="/products"
-          className="inline-block px-8 py-3 border-2 border-primary-950 text-primary-950 hover:bg-primary-950 hover:text-primary-50 transition-colors font-medium"
-        >
-          View All Products
-        </Link>
-      </div>
     </Section>
   )
 }

@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { ResponsiveImage } from './ResponsiveImage'
 import type { Product } from '@/types'
 import { cn } from '@/lib/utils'
@@ -10,8 +9,7 @@ interface ProductCardProps {
 
 export function ProductCard({ product, className }: ProductCardProps) {
   return (
-    <Link
-      href={`/products/${product.slug.current}`}
+    <div
       className={cn(
         'group block rounded-3xl bg-white p-4 shadow-[0_15px_45px_rgba(0,0,0,0.12)] transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(0,0,0,0.24)] hover:ring-1 hover:ring-primary-200/80 hover:ring-offset-1 hover:ring-offset-white',
         className
@@ -43,7 +41,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
           </p>
         )}
       </div>
-    </Link>
+    </div>
   )
 }
 

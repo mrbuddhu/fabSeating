@@ -12,7 +12,6 @@ interface VideoCategoryChipsProps {
 }
 
 export function VideoCategoryChips({ title, items, data }: VideoCategoryChipsProps) {
-  // Support both direct props and data object for backward compatibility
   const sectionTitle = title || data?.title || 'Our Products'
   const categories = items || data?.categories || []
 

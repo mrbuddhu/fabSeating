@@ -4,6 +4,7 @@ import { Section } from '@/components/Section'
 import { ProjectCard } from '@/components/ProjectCard'
 import { getProjects } from '@/lib/sanity/queries'
 import { generateSEOMetadata } from '@/components/SEOHead'
+import Link from 'next/link'
 
 export const revalidate = 900
 
@@ -13,8 +14,21 @@ export const metadata: Metadata = generateSEOMetadata({
   path: '/projects',
 })
 
-export default async function ProjectsPage() {
-  const projects = await getProjects()
+interface ProjectsPageProps {
+  searchParams: { category?: string }
+}
+
+export default async function ProjectsPage({ searchParams }: ProjectsPageProps) {
+  const category = searchParams?.category
+  const allProjects = await getProjects()
+  const projects = category ? await getProjects(category) : allProjects
+
+  const categories = [
+    { label: 'All', value: '', href: '/projects' },
+    { label: 'Residential', value: 'residential', href: '/projects?category=residential' },
+    { label: 'Office', value: 'office', href: '/projects?category=office' },
+    { label: 'Hospitality', value: 'hospitality', href: '/projects?category=hospitality' },
+  ]
 
   return (
     <>
@@ -23,18 +37,22 @@ export default async function ProjectsPage() {
         subtitle="See how we transform spaces with premium furniture"
       />
       <Section>
-        {/* View Gallery CTA */}
-        <div className="mb-12 text-center">
-          <a
-            href="/gallery"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-primary-950 text-white font-medium rounded-full hover:bg-primary-900 transition-all duration-300 hover:gap-5 shadow-lg hover:-translate-y-1 hover:shadow-2xl group"
-          >
-            <span className="text-sm tracking-wider uppercase">View Gallery</span>
-            <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </a>
+        <div className="mb-12 flex flex-wrap justify-center gap-4">
+          {categories.map((cat) => (
+            <Link
+              key={cat.value}
+              href={cat.href}
+              className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
+                (!category && cat.value === '') || category === cat.value
+                  ? 'bg-primary-950 text-white shadow-lg'
+                  : 'border-2 border-primary-300 text-primary-700 hover:border-primary-950 hover:bg-primary-50'
+              }`}
+            >
+              {cat.label}
+            </Link>
+          ))}
         </div>
+
         {projects.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project) => (
@@ -43,7 +61,7 @@ export default async function ProjectsPage() {
           </div>
         ) : (
           <p className="text-center text-primary-700 py-12">
-            No projects available at the moment.
+            No projects available in this category.
           </p>
         )}
       </Section>

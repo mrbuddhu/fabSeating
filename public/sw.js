@@ -2,11 +2,11 @@
 const CACHE_NAME = 'fabseating-v1'
 const urlsToCache = [
   '/',
-  '/about',
-  '/products',
   '/projects',
-  '/blog',
   '/contact',
+  '/solutions/residential',
+  '/solutions/office',
+  '/solutions/hospitality',
   '/logo.png',
 ]
 

@@ -1,5 +1,5 @@
 import { client } from './client'
-import type { Product, ProductCategory, Project, BlogPost, Testimonial, FAQ, LandingPage } from '@/types'
+import type { Product, ProductCategory, Project, BlogPost, Testimonial, FAQ, LandingPage, SolutionPage } from '@/types'
 
 function isSanityConfigured() {
   return !!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
@@ -17,7 +17,6 @@ export async function getHomePageData() {
     }
   }
   
-  // Only fetch dynamic content sections
   const settings = await client.fetch(`*[_type == "siteSettings"][0] {
     whyChooseUs,
     homeCta
@@ -47,7 +46,6 @@ export async function getProducts(): Promise<Product[]> {
     _type,
     _updatedAt,
     title,
-    slug,
     description,
     category->{
       _id,
@@ -59,29 +57,6 @@ export async function getProducts(): Promise<Product[]> {
     featured,
     seo
   }`)
-}
-
-export async function getProductBySlug(slug: string): Promise<Product | null> {
-  if (!isSanityConfigured()) return null
-  const products = await client.fetch(`*[_type == "product" && slug.current == $slug][0] {
-    _id,
-    _type,
-    _updatedAt,
-    title,
-    slug,
-    description,
-    category->{
-      _id,
-      title,
-      slug
-    },
-    price,
-    images,
-    specifications,
-    featured,
-    seo
-  }`, { slug })
-  return products || null
 }
 
 export async function getProductCategories(): Promise<ProductCategory[]> {
@@ -96,9 +71,10 @@ export async function getProductCategories(): Promise<ProductCategory[]> {
   }`)
 }
 
-export async function getProjects(): Promise<Project[]> {
+export async function getProjects(category?: string): Promise<Project[]> {
   if (!isSanityConfigured()) return []
-  return client.fetch(`*[_type == "project"] | order(_createdAt desc) {
+  const categoryFilter = category ? `&& category == $category` : ''
+  return client.fetch(`*[_type == "project"${categoryFilter}] | order(_createdAt desc) {
     _id,
     _type,
     _updatedAt,
@@ -108,27 +84,10 @@ export async function getProjects(): Promise<Project[]> {
     images,
     location,
     year,
+    category,
     featured,
     seo
-  }`)
-}
-
-export async function getProjectBySlug(slug: string): Promise<Project | null> {
-  if (!isSanityConfigured()) return null
-  const project = await client.fetch(`*[_type == "project" && slug.current == $slug][0] {
-    _id,
-    _type,
-    _updatedAt,
-    title,
-    slug,
-    description,
-    images,
-    location,
-    year,
-    featured,
-    seo
-  }`, { slug })
-  return project || null
+  }`, category ? { category } : {})
 }
 
 export async function getBlogPosts(): Promise<BlogPost[]> {
@@ -216,30 +175,34 @@ export async function getSiteSettings() {
       announcement: null,
     }
   }
-  // Note: Announcement can be added back if needed
   return {
     announcement: null,
   }
 }
 
+export async function getSolutionPage(type: 'residential' | 'office' | 'hospitality'): Promise<SolutionPage | null> {
+  if (!isSanityConfigured()) return null
+  const page = await client.fetch(`*[_type == "solutionPage" && type == $type][0] {
+    _id,
+    _type,
+    type,
+    title,
+    subtitle,
+    introText,
+    heroImage,
+    furnitureItems,
+    furnishingsItems,
+    bestSuitedFor,
+    secondaryImage,
+    seo
+  }`, { type })
+  return page || null
+}
+
 export async function getSitemapData() {
   if (!isSanityConfigured()) {
-    return {
-      products: [],
-      projects: [],
-      blogPosts: [],
-    }
+    return {}
   }
-  const [products, projects, blogPosts] = await Promise.all([
-    client.fetch(`*[_type == "product"] { slug, _updatedAt }`),
-    client.fetch(`*[_type == "project"] { slug, _updatedAt }`),
-    client.fetch(`*[_type == "blogPost"] { slug, _updatedAt }`),
-  ])
-
-  return {
-    products: products.map((p: any) => ({ slug: p.slug.current, _updatedAt: p._updatedAt })),
-    projects: projects.map((p: any) => ({ slug: p.slug.current, _updatedAt: p._updatedAt })),
-    blogPosts: blogPosts.map((p: any) => ({ slug: p.slug.current, _updatedAt: p._updatedAt })),
-  }
+  return {}
 }
 

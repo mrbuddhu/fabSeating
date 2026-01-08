@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { ResponsiveImage } from './ResponsiveImage'
 import type { BlogPost } from '@/types'
 import { cn } from '@/lib/utils'
@@ -16,8 +15,7 @@ export function BlogCard({ post, className }: BlogCardProps) {
   }) : null
 
   return (
-    <Link
-      href={`/blog/${post.slug.current}`}
+    <div
       className={cn('group block', className)}
     >
       <div className="relative aspect-[16/10] mb-4 overflow-hidden bg-primary-100">
@@ -45,7 +43,7 @@ export function BlogCard({ post, className }: BlogCardProps) {
           </p>
         )}
       </div>
-    </Link>
+    </div>
   )
 }
 

@@ -28,3 +28,8 @@ export function AnimatedCard({ children, index = 0, className = '', delay = 0 }:
   )
 }
 
+
+
+
+
+
