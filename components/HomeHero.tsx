@@ -124,20 +124,20 @@ export function HomeHero({
                       </div>
 
                       <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                        <Link
+                          href="/projects"
+                          className="inline-flex items-center justify-center rounded-full bg-primary-50 px-4 py-2.5 sm:px-6 sm:py-3 text-xs sm:text-sm font-semibold text-primary-900 shadow-lg shadow-primary-900/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+                        >
+                          View Projects
+                        </Link>
                         {heroData.ctaLink && (
                           <Link
                             href={heroData.ctaLink}
-                            className="inline-flex items-center justify-center rounded-full bg-primary-50 px-4 py-2.5 sm:px-6 sm:py-3 text-xs sm:text-sm font-semibold text-primary-900 shadow-lg shadow-primary-900/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+                            className="inline-flex items-center justify-center rounded-full border border-primary-200/40 bg-white/10 px-4 py-2.5 sm:px-6 sm:py-3 text-xs sm:text-sm font-semibold text-primary-50 backdrop-blur transition-all duration-300 hover:bg-white/20 hover:-translate-y-1 hover:shadow-xl"
                           >
                             {heroData.ctaText}
                           </Link>
                         )}
-                        <Link
-                          href="/contact"
-                          className="inline-flex items-center justify-center rounded-full border border-primary-200/40 bg-white/10 px-4 py-2.5 sm:px-6 sm:py-3 text-xs sm:text-sm font-semibold text-primary-50 backdrop-blur transition-all duration-300 hover:bg-white/20 hover:-translate-y-1 hover:shadow-xl"
-                        >
-                          Get Custom Solution
-                        </Link>
                       </div>
                     </div>
                   </div>
