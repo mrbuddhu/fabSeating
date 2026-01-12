@@ -8,38 +8,11 @@ export const revalidate = 86400
 
 export const metadata: Metadata = generateSEOMetadata({
   title: 'Contact Us',
-  description: 'Get in touch with FabSeating',
+  description: 'Get in touch with Fab Seating',
   path: '/contact',
 })
 
 export default async function ContactPage() {
-  const processSteps = [
-    {
-      title: 'Consultation',
-      description: 'We start by understanding your space, requirements, and vision through detailed discussions.',
-    },
-    {
-      title: 'Design and Selection',
-      description: 'Our team creates design proposals and helps you select furniture and furnishings that match your style and needs.',
-    },
-    {
-      title: 'Manufacturing and Sourcing',
-      description: 'We manufacture custom pieces in-house and source quality furnishings from trusted partners.',
-    },
-    {
-      title: 'Quality Checks',
-      description: 'Every piece undergoes rigorous quality checks to ensure it meets our high standards before delivery.',
-    },
-    {
-      title: 'Delivery and Installation',
-      description: 'We handle delivery and professional installation, ensuring everything is placed perfectly in your space.',
-    },
-    {
-      title: 'After Sales Support',
-      description: 'Our relationship continues after installation with ongoing support, maintenance, and care guidance.',
-    },
-  ]
-
   return (
     <>
       <PageHero
@@ -48,29 +21,6 @@ export default async function ContactPage() {
       />
       <Section>
         <div className="max-w-6xl mx-auto space-y-16">
-          <div>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold mb-8 text-primary-950 text-center">
-              How We Work
-            </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {processSteps.map((step, index) => (
-                <div key={index} className="p-6 rounded-2xl bg-primary-50/50 border border-primary-100">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary-950 text-white flex items-center justify-center font-bold text-sm">
-                      {index + 1}
-                    </div>
-                    <h3 className="font-serif text-xl font-semibold text-primary-950">
-                      {step.title}
-                    </h3>
-                  </div>
-                  <p className="text-primary-700 leading-relaxed">
-                    {step.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
           <div className="bg-primary-50/30 rounded-2xl p-8 md:p-12">
             <h2 className="font-serif text-2xl md:text-3xl font-semibold mb-4 text-primary-950">
               What happens after you contact us

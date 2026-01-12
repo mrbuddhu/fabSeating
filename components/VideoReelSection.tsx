@@ -20,7 +20,7 @@ interface VideoReelSectionProps {
 }
 
 export function VideoReelSection({ title, subtitle, items, data }: VideoReelSectionProps) {
-  const sectionTitle = title || data?.title || 'Experience with FabSeating'
+  const sectionTitle = title || data?.title || 'Experience with Fab Seating'
   const sectionSubtitle = subtitle || data?.subtitle
   const videos = items || data?.videos || []
 

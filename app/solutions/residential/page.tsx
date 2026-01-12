@@ -31,23 +31,8 @@ export async function generateMetadata(): Promise<Metadata> {
   })
 }
 
-const furnitureIcons: Record<string, string> = {
-  'Sofas and seating': '🛋️',
-  'Dining tables and chairs': '🪑',
-  'Bedroom furniture': '🛏️',
-  'Storage solutions': '📦',
-  'Home office furniture': '💼',
-  'Custom built-ins': '🏗️',
-}
-
-const furnishingsIcons: Record<string, string> = {
-  'Curtains and drapes': '🪟',
-  'Rugs and carpets': '🧶',
-  'Bedding and linens': '🛌',
-  'Decorative cushions': '🪴',
-  'Window treatments': '☀️',
-  'Accessories and accents': '✨',
-}
+const furnitureIcons: Record<string, string> = {}
+const furnishingsIcons: Record<string, string> = {}
 
 export default async function ResidentialPage() {
   const page = await getSolutionPage('residential')
@@ -109,7 +94,6 @@ export default async function ResidentialPage() {
               <ul className="space-y-3">
                 {content.furnitureItems.map((item, index) => (
                   <li key={index} className="flex items-center gap-3 text-primary-700">
-                    <span className="text-2xl">{furnitureIcons[item] || '📦'}</span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -128,7 +112,6 @@ export default async function ResidentialPage() {
               <ul className="space-y-3">
                 {content.furnishingsItems.map((item, index) => (
                   <li key={index} className="flex items-center gap-3 text-primary-700">
-                    <span className="text-2xl">{furnishingsIcons[item] || '✨'}</span>
                     <span>{item}</span>
                   </li>
                 ))}

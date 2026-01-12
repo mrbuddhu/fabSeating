@@ -3,6 +3,7 @@ import { CategoriesSection } from '@/components/CategoriesSection'
 import { TestimonialsPreview } from '@/components/TestimonialsPreview'
 import { AnimatedCard } from '@/components/AnimatedCard'
 import { AnimatedSection } from '@/components/AnimatedSection'
+import { ProcessTypewriter } from '@/components/ProcessTypewriter'
 import { getHomePageData } from '@/lib/sanity/queries'
 
 export const revalidate = 21600
@@ -11,7 +12,7 @@ export default async function Home() {
   const data = await getHomePageData()
   
   const heroHeadline = 'Premium Furniture and Furnishings for Homes, Offices and Hospitality'
-  const heroSubheadline = 'Since 2001, FabSeating has been creating complete furniture and furnishing solutions designed for real spaces and long term use.'
+  const heroSubheadline = 'Since 2001, Fab Seating has been creating complete furniture and furnishing solutions designed for real spaces and long term use.'
   const primaryCta = 'Talk to Us'
   const trustLine = 'Crafted & curated from our Chennai facility | Serving residential & commercial spaces across South India'
   
@@ -121,7 +122,7 @@ export default async function Home() {
               </svg>
             </div>
             <blockquote className="text-lg md:text-2xl lg:text-3xl font-serif font-light mb-3 italic leading-[1.2] tracking-[-0.02em] text-white/95">
-              Furniture should not just look good on day one. It should work well for years.
+              We are the most experienced makers of exceptional upholstered furniture. Using materials of the highest quality, we ensure every handmade piece is comfortable, beautifully finished, and built to last.
             </blockquote>
             <div className="flex items-center justify-center gap-2 mt-3">
               <div className="h-px w-16 bg-gradient-to-r from-transparent to-primary-400/40"></div>
@@ -140,20 +141,63 @@ export default async function Home() {
       {/* 3. About Us Section */}
       <AnimatedSection>
         <section className="relative py-12 md:py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-10">
+          <div className="max-w-screen-2xl mx-auto">
             {/* Section Header */}
             <div className="text-center mb-8">
               <div className="inline-block mb-2">
                 <span className="text-xs font-bold tracking-[0.2em] uppercase text-primary-700">Our Story</span>
               </div>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold mb-2 text-primary-950 tracking-tight">
-                About FabSeating
+                About Fab Seating
               </h2>
               <div className="w-24 h-px bg-gradient-to-r from-transparent via-primary-700 to-transparent mx-auto mb-3"></div>
               <p className="text-base md:text-lg text-gray-800 font-medium max-w-2xl mx-auto leading-relaxed">
-                Founded in 2001, FabSeating is a Chennai based furniture and furnishings solutions brand focused on building spaces that last. We bring together furniture, furnishings, planning and execution under one roof.
+                Founded in 2001, Fab Seating is a Chennai based furniture and furnishings solutions brand focused on building spaces that last. We bring together furniture, furnishings, planning and execution under one roof.
               </p>
+            </div>
+            
+            {/* Video Reels Grid - Portrait Mode - Full Width */}
+            <div className="w-full mb-12">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-[6px] md:gap-2">
+                {[
+                  {
+                    id: 1,
+                    videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-living-room-1574/1080p.mp4',
+                    thumbnail: 'https://images.unsplash.com/photo-1556911220-bff31c812d0c?auto=format&fit=crop&w=800&q=80',
+                  },
+                  {
+                    id: 2,
+                    videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-boutique-office-6267/1080p.mp4',
+                    thumbnail: 'https://images.unsplash.com/photo-1524758631624-e2822e304a36?auto=format&fit=crop&w=800&q=80',
+                  },
+                  {
+                    id: 3,
+                    videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-cafe-5535/1080p.mp4',
+                    thumbnail: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80',
+                  },
+                  {
+                    id: 4,
+                    videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-apartment-6575/1080p.mp4',
+                    thumbnail: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80',
+                  },
+                ].map((reel, index) => (
+                  <AnimatedCard key={reel.id} index={index}>
+                    <div className="relative w-full aspect-[9/16] overflow-hidden rounded-2xl md:rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.3)] hover:shadow-[0_35px_90px_rgba(0,0,0,0.4)] transition-all duration-500 hover:-translate-y-2">
+                      <video
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="w-full h-full object-cover"
+                        poster={reel.thumbnail}
+                      >
+                        <source src={reel.videoUrl} type="video/mp4" />
+                      </video>
+                    </div>
+                  </AnimatedCard>
+                ))}
+              </div>
             </div>
             
             {/* Category Icons Grid */}
@@ -196,7 +240,7 @@ export default async function Home() {
                     <path d="M4 8h16M4 12h16M4 16h16" stroke="currentColor" strokeWidth="1.5" fill="none"/>
                   </svg>
                 )},
-                { name: 'Cabinets', icon: (
+                { name: 'Wallpapers', icon: (
                   <svg className="w-8 h-8 md:w-10 md:h-10" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM9 7h6v2H9V7zm0 4h6v2H9v-2zm0 4h6v2H9v-2z"/>
                   </svg>
@@ -207,7 +251,7 @@ export default async function Home() {
                     <div className="text-primary-600 mb-2 transform group-hover:scale-110 group-hover:text-primary-700 transition-all duration-300">
                       {category.icon}
                     </div>
-                    <p className="text-xs md:text-sm text-primary-700 font-medium text-center group-hover:text-primary-900 transition-colors">
+                    <p className="text-[11px] md:text-xs text-primary-700 font-medium text-center leading-tight whitespace-normal break-words group-hover:text-primary-900 transition-colors">
                       {category.name}
                     </p>
                   </div>
@@ -249,7 +293,7 @@ export default async function Home() {
               </h2>
               <div className="w-24 h-px bg-gradient-to-r from-transparent via-primary-700 to-transparent mx-auto mb-3"></div>
               <p className="text-lg md:text-xl text-gray-800 font-medium max-w-3xl mx-auto leading-relaxed">
-                FabSeating delivers integrated furniture and furnishings solutions designed around how a space is used not just how it looks.
+                Fab Seating delivers integrated furniture and furnishings solutions designed around how a space is used not just how it looks.
               </p>
             </div>
           </AnimatedSection>
@@ -297,6 +341,42 @@ export default async function Home() {
         </div>
       </section>
       </AnimatedSection>
+
+      {/* Teal Strip Divider with Process Typewriter */}
+      <section className="relative py-8 md:py-10 grainy-gradient text-white overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-1/3 w-[800px] h-[800px] bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/3 w-[600px] h-[600px] bg-primary-300 rounded-full blur-3xl"></div>
+        </div>
+        
+        {/* Decorative lines */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-6xl mx-auto text-center">
+            <div className="mb-6">
+              <div className="w-24 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent mx-auto mb-4"></div>
+              <h3 className="text-xs font-semibold tracking-[0.2em] uppercase text-primary-300/60 mb-6">Our Process</h3>
+            </div>
+            <ProcessTypewriter 
+              steps={[
+                'Consultation',
+                'Design and Selection',
+                'Manufacturing and Sourcing',
+                'Quality Checks',
+                'Delivery and Installation',
+                'After Sales Support'
+              ]}
+              delay={1500}
+              typingSpeed={40}
+            />
+          </div>
+        </div>
+        
+        {/* Bottom decorative line */}
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+      </section>
 
       {/* 6. Projects Showcase - Carousel/Bento Grid */}
       <AnimatedSection delay={0.3}>
@@ -449,47 +529,25 @@ export default async function Home() {
             </p>
           </div>
           
-          {/* Custom Videos Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 max-w-5xl mx-auto">
-            {customVideos.map((item, index) => (
-              <AnimatedCard key={item.id} index={index}>
-                <div className="group relative overflow-hidden bg-primary-950 rounded-2xl shadow-2xl hover:shadow-[0_40px_100px_rgba(0,0,0,0.25)] transition-all duration-700 border border-primary-800/50">
-                <div className="relative h-[550px] overflow-hidden">
-                  <div className="absolute inset-0 z-10 bg-gradient-to-br from-primary-950/40 via-primary-950/20 to-transparent group-hover:from-primary-950/20 transition-all duration-700"></div>
-                  <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    poster={item.thumbnail}
-                  >
-                    <source src={item.videoUrl} type="video/mp4" />
-                  </video>
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary-950 via-primary-950/80 to-transparent"></div>
-                </div>
-                <div className="absolute inset-0 flex flex-col justify-end p-8 z-20">
-                  <div className="transform translate-y-0 group-hover:-translate-y-2 transition-transform duration-500">
-                    <div className="mb-4 flex items-center gap-2">
-                      <div className="w-1 h-8 bg-primary-400"></div>
-                      <span className="text-xs font-bold tracking-[0.2em] text-primary-300 uppercase">Bespoke</span>
-                    </div>
-                    <h3 className="text-3xl font-serif font-bold text-white mb-3 tracking-tight">{item.title}</h3>
-                    <p className="text-primary-100 mb-6 leading-relaxed text-base">{item.description}</p>
-                    <a 
-                      href={item.link}
-                      className="inline-flex items-center gap-3 bg-primary-400 text-primary-950 px-6 py-3 rounded-full font-bold text-sm hover:bg-primary-300 hover:scale-105 transition-all duration-300 shadow-lg"
-                    >
-                      <span className="tracking-wider">Get Started</span>
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-              </div>
-              </AnimatedCard>
-            ))}
+          {/* Custom Solutions Text Content */}
+          <div className="max-w-6xl mx-auto mb-16 px-2 md:px-4">
+            <div className="text-center max-w-5xl mx-auto space-y-6">
+              <AnimatedSection delay={0.1}>
+                <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
+                  At Fabseating, furniture doesn&apos;t start with a template. It starts with your space.
+                </p>
+              </AnimatedSection>
+              <AnimatedSection delay={0.2}>
+                <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
+                  Dimensions, comfort, upholstery, wood, finishes — every detail is designed, refined, and crafted specifically for you.
+                </p>
+              </AnimatedSection>
+              <AnimatedSection delay={0.3}>
+                <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
+                  From one-of-a-kind sofas to fully bespoke dining, bedroom, and statement pieces, we build furniture that fits perfectly, looks intentional, and lasts for years.
+                </p>
+              </AnimatedSection>
+            </div>
           </div>
           
           {/* CTA Button */}
@@ -521,7 +579,7 @@ export default async function Home() {
       ) : null}
 
       {/* 10. Call to Action */}
-      <section className="relative py-8 md:py-10 grainy-gradient text-white overflow-hidden">
+      <section className="relative py-8 md:py-10 mb-12 md:mb-16 grainy-gradient text-white overflow-hidden">
         {/* Background decoration */}
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-white rounded-full blur-3xl"></div>

@@ -1,4 +1,4 @@
-// Service Worker for FabSeating PWA
+// Service Worker for Fab Seating PWA
 const CACHE_NAME = 'fabseating-v1'
 const urlsToCache = [
   '/',

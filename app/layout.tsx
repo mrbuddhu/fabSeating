@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'FabSeating',
+    title: 'Fab Seating',
   },
   openGraph: {
     title: 'Fabseating | Premium Furniture & Furnishings',
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
         url: '/logo.png',
         width: 1200,
         height: 630,
-        alt: 'FabSeating',
+        alt: 'Fab Seating',
       },
     ],
     locale: 'en_US',

@@ -31,23 +31,8 @@ export async function generateMetadata(): Promise<Metadata> {
   })
 }
 
-const furnitureIcons: Record<string, string> = {
-  'Desks and workstations': '🖥️',
-  'Office chairs and seating': '💺',
-  'Conference room furniture': '🤝',
-  'Reception area furniture': '🚪',
-  'Storage and filing solutions': '📁',
-  'Modular office systems': '🔧',
-}
-
-const furnishingsIcons: Record<string, string> = {
-  'Window treatments': '🪟',
-  'Office carpets and rugs': '🧶',
-  'Partition screens': '🚧',
-  'Decorative elements': '🎨',
-  'Lighting solutions': '💡',
-  'Accessories and accents': '✨',
-}
+const furnitureIcons: Record<string, string> = {}
+const furnishingsIcons: Record<string, string> = {}
 
 export default async function OfficePage() {
   const page = await getSolutionPage('office')
@@ -109,7 +94,6 @@ export default async function OfficePage() {
               <ul className="space-y-3">
                 {content.furnitureItems.map((item, index) => (
                   <li key={index} className="flex items-center gap-3 text-primary-700">
-                    <span className="text-2xl">{furnitureIcons[item] || '📦'}</span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -128,7 +112,6 @@ export default async function OfficePage() {
               <ul className="space-y-3">
                 {content.furnishingsItems.map((item, index) => (
                   <li key={index} className="flex items-center gap-3 text-primary-700">
-                    <span className="text-2xl">{furnishingsIcons[item] || '✨'}</span>
                     <span>{item}</span>
                   </li>
                 ))}

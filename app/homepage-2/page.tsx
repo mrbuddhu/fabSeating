@@ -11,7 +11,7 @@ export default async function Homepage2() {
   const data = await getHomePageData()
   
   const heroHeadline = 'Premium Furniture and Furnishings for Homes, Offices and Hospitality'
-  const heroSubheadline = 'Since 2001, FabSeating has been creating complete furniture and furnishing solutions designed for real spaces and long term use.'
+  const heroSubheadline = 'Since 2001, Fab Seating has been creating complete furniture and furnishing solutions designed for real spaces and long term use.'
   const primaryCta = 'Talk to Us'
   const trustLine = 'Crafted & curated from our Chennai facility | Serving residential & commercial spaces across South India'
   
@@ -144,11 +144,11 @@ export default async function Homepage2() {
                 <span className="text-xs font-bold tracking-[0.2em] uppercase text-[#a83d46]">Our Story</span>
               </div>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold mb-2 text-gray-900 tracking-tight">
-                About FabSeating
+                About Fab Seating
               </h2>
               <div className="w-24 h-px bg-gradient-to-r from-transparent via-[#da5863] to-transparent mx-auto mb-3"></div>
               <p className="text-base md:text-lg text-gray-800 font-medium max-w-2xl mx-auto leading-relaxed">
-                Founded in 2001, FabSeating is a Chennai based furniture and furnishings solutions brand focused on building spaces that last. We bring together furniture, furnishings, planning and execution under one roof.
+                Founded in 2001, Fab Seating is a Chennai based furniture and furnishings solutions brand focused on building spaces that last. We bring together furniture, furnishings, planning and execution under one roof.
               </p>
             </div>
             
@@ -242,7 +242,7 @@ export default async function Homepage2() {
               </h2>
               <div className="w-24 h-px bg-gradient-to-r from-transparent via-[#da5863] to-transparent mx-auto mb-3"></div>
               <p className="text-lg md:text-xl text-gray-800 font-medium max-w-3xl mx-auto leading-relaxed">
-                FabSeating delivers integrated furniture and furnishings solutions designed around how a space is used not just how it looks.
+                Fab Seating delivers integrated furniture and furnishings solutions designed around how a space is used not just how it looks.
               </p>
             </div>
           </AnimatedSection>

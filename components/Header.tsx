@@ -22,8 +22,8 @@ export function Header() {
   const pathname = usePathname()
   const announcement = {
     message: 'Serving residential & commercial spaces across South India since 2001.',
-    ctaLabel: 'Get a Free Consultation',
-    ctaHref: '/contact',
+    ctaLabel: '',
+    ctaHref: '',
   }
 
   useEffect(() => {
@@ -95,8 +95,10 @@ export function Header() {
           transition={{ duration: 0.5, ease: 'easeInOut' }}
           className={cn(
             'flex items-center justify-between rounded-[32px] md:rounded-[40px] lg:rounded-[48px] border px-4 py-3 md:px-6 md:py-4 mt-2 md:mt-3 transition-all duration-500 overflow-hidden',
-            'border-primary-300/50 bg-primary-100/90 backdrop-blur-xl shadow-[0_20px_60px_rgba(58,135,136,0.2)] mx-auto',
-            isScrolled && 'bg-primary-100/95 shadow-[0_20px_60px_rgba(58,135,136,0.3)]'
+            'border-primary-300/30 mx-auto',
+            !isScrolled 
+              ? 'bg-white shadow-sm' 
+              : 'bg-white/80 backdrop-blur-xl shadow-[0_20px_60px_rgba(58,135,136,0.15)] border-primary-300/50'
           )}
         >
           <motion.div
@@ -132,9 +134,13 @@ export function Header() {
                 className={cn(
                   'font-medium transition-all duration-500 relative px-4 py-2.5 group whitespace-nowrap flex-shrink-0 overflow-hidden',
                   isScrolled ? 'text-sm' : 'text-base',
-                  pathname === item.href 
-                    ? 'text-primary-800 font-semibold' 
-                    : 'text-primary-700 hover:text-primary-800'
+                  isScrolled 
+                    ? pathname === item.href 
+                      ? 'text-gray-900 font-semibold' 
+                      : 'text-gray-800 hover:text-gray-900'
+                    : pathname === item.href 
+                      ? 'text-primary-800 font-semibold' 
+                      : 'text-primary-700 hover:text-primary-800'
                 )}
               >
                 <span className="relative z-10 inline-block transition-all duration-500 group-hover:tracking-wider">
@@ -196,8 +202,8 @@ export function Header() {
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`nav-link relative px-4 py-3 text-sm font-medium transition-all duration-500 group overflow-hidden rounded-lg ${
                       pathname === item.href
-                        ? 'text-primary-800 font-semibold'
-                        : 'text-primary-700 hover:text-primary-800'
+                        ? 'text-gray-900 font-semibold'
+                        : 'text-gray-800 hover:text-gray-900'
                     }`}
                   >
                     <span className="relative z-10 inline-block transition-all duration-500 group-hover:tracking-wider">
