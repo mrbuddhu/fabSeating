@@ -22,20 +22,6 @@ export default function AdminPage() {
   if (!isLoggedIn) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-primary-100 pt-20">
-        {/* Header - Fixed Position */}
-        <header className="fixed top-0 left-0 right-0 bg-white shadow-sm border-b border-primary-100 z-50">
-          <div className="container mx-auto px-4 py-4">
-            <nav className="flex items-center justify-between">
-              <Link href="/" className="text-2xl font-serif font-bold text-primary-950">
-                Fab Seating
-              </Link>
-              <Link href="/" className="text-primary-600 hover:text-primary-700 transition-colors">
-                ← Back to Website
-              </Link>
-            </nav>
-          </div>
-        </header>
-
         {/* Login Section */}
         <div className="container mx-auto px-4 py-16">
           <div className="max-w-md mx-auto">
