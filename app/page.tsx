@@ -369,7 +369,6 @@ export default async function Home() {
                 'After Sales Support'
               ]}
               delay={1500}
-              typingSpeed={40}
             />
           </div>
         </div>
