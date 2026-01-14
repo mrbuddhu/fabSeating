@@ -139,8 +139,8 @@ export function Header() {
                       ? 'text-gray-900 font-semibold' 
                       : 'text-gray-800 hover:text-gray-900'
                     : pathname === item.href 
-                      ? 'text-primary-800 font-semibold' 
-                      : 'text-primary-700 hover:text-primary-800'
+                    ? 'text-primary-800 font-semibold' 
+                    : 'text-primary-700 hover:text-primary-800'
                 )}
               >
                 <span className="relative z-10 inline-block transition-all duration-500 group-hover:tracking-wider">

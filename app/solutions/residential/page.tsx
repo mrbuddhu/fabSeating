@@ -7,27 +7,30 @@ import Image from 'next/image'
 import { getSolutionPage } from '@/lib/sanity/queries'
 import { ResponsiveImage } from '@/components/ResponsiveImage'
 
-export const revalidate = 86400
+export const revalidate = 60
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getSolutionPage('residential')
+  const defaultTitle = 'Residential Furniture and Furnishings'
+  const defaultDescription = 'Premium furniture and furnishings solutions for residential spaces'
+  
   if (!page) {
     return generateSEOMetadata({
-      title: 'Residential Furniture and Furnishings',
-      description: 'Premium furniture and furnishings solutions for residential spaces',
+      title: defaultTitle,
+      description: defaultDescription,
       path: '/solutions/residential',
     })
   }
   return page.seo ? generateSEOMetadata({
     seo: page.seo,
-    title: page.title,
-    description: page.subtitle || page.introText,
+    title: defaultTitle,
+    description: defaultDescription,
     image: page.heroImage,
-    path: `/solutions/${page.type}`,
+    path: '/solutions/residential',
   }) : generateSEOMetadata({
-    title: page.title,
-    description: page.subtitle || page.introText,
-    path: `/solutions/${page.type}`,
+    title: defaultTitle,
+    description: defaultDescription,
+    path: '/solutions/residential',
   })
 }
 
@@ -37,7 +40,7 @@ const furnishingsIcons: Record<string, string> = {}
 export default async function ResidentialPage() {
   const page = await getSolutionPage('residential')
 
-  const defaultContent = {
+  const content = {
     title: 'Residential Furniture and Furnishings',
     subtitle: 'Creating comfortable and elegant living spaces',
     introText: 'Transform your home with our comprehensive residential furniture and furnishings solutions. We design and curate pieces that combine comfort, style, and durability for every room in your home.',
@@ -46,39 +49,49 @@ export default async function ResidentialPage() {
     bestSuitedFor: 'Ideal for homeowners looking to create cohesive, well-designed living spaces. Perfect for new homes, renovations, or room-by-room updates. Our solutions work for apartments, villas, and independent houses.',
   }
 
-  const content = page || defaultContent
-
   return (
     <>
       <PageHero
         title={content.title}
         subtitle={content.subtitle || 'Creating comfortable and elegant living spaces'}
+        contentClassName="max-w-6xl"
+        titleClassName="text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] md:whitespace-nowrap"
       />
       <Section>
         <div className="max-w-6xl mx-auto space-y-12">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="prose prose-lg max-w-none">
-              <p className="text-lg text-primary-700 leading-relaxed">
-                {content.introText}
-              </p>
+          {/* Hero gallery: three residential images from Sanity where available */}
+          <div className="space-y-6">
+            <div className="grid gap-4 md:gap-6 md:grid-cols-3">
+              {[
+                page?.galleryImages?.[0] || page?.heroImage,
+                page?.galleryImages?.[1] || page?.secondaryImage || page?.heroImage,
+                page?.galleryImages?.[2] || page?.heroImage || page?.secondaryImage,
+              ].map((image, index) => (
+                <div
+                  key={index}
+                  className="group relative aspect-[4/3] md:aspect-[3/4] rounded-3xl overflow-hidden shadow-xl ring-1 ring-black/5 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:ring-primary-300/40"
+                >
+                  {image ? (
+                    <ResponsiveImage
+                      image={image}
+                      alt={content.title}
+                      fill
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                    />
+                  ) : (
+                    <Image
+                      src="https://images.unsplash.com/photo-1556911220-bff31c812d0c?auto=format&fit=crop&w=1200&q=80"
+                      alt={content.title}
+                      fill
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                    />
+                  )}
+                </div>
+              ))}
             </div>
-            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
-              {page?.heroImage ? (
-                <ResponsiveImage
-                  image={page.heroImage}
-                  alt={content.title}
-                  fill
-                  className="object-cover"
-                />
-              ) : (
-                <Image
-                  src="https://images.unsplash.com/photo-1556911220-bff31c812d0c?auto=format&fit=crop&w=1200&q=80"
-                  alt={content.title}
-                  fill
-                  className="object-cover"
-                />
-              )}
-            </div>
+            <p className="text-lg text-primary-700 leading-relaxed">
+              {content.introText}
+            </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">

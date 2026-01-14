@@ -61,7 +61,7 @@ export function HomeHero({
                 key={slide.src ?? `fallback-${idx}`}
                 className="relative min-w-full snap-start"
               >
-                <div className="relative h-[75vh] sm:h-[80vh] md:h-[82vh] lg:h-[85vh] min-h-[500px] sm:min-h-[560px] max-h-[900px] overflow-hidden rounded-[28px] md:rounded-[32px]">
+                <div className="relative h-[68vh] sm:h-[72vh] md:h-[74vh] lg:h-[80vh] min-h-[520px] sm:min-h-[560px] max-h-[900px] overflow-hidden rounded-[28px] md:rounded-[32px]">
                   <div
                     className="absolute inset-0"
                     style={{
@@ -97,14 +97,14 @@ export function HomeHero({
                     <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/15 to-black/30" />
                   </div>
 
-                  <div className="relative z-10 flex h-full flex-col justify-end px-4 pb-8 pt-4 sm:px-6 sm:pb-10 sm:pt-6 md:px-12 md:pb-14 md:pt-8 lg:px-16 lg:pb-16 lg:pt-12">
-                    <div className="space-y-4 rounded-2xl bg-black/25 p-4 sm:p-5 md:p-6 lg:p-8 shadow-[0_18px_50px_rgba(0,0,0,0.35)]">
+                  <div className="relative z-10 flex h-full flex-col justify-end px-4 pb-6 pt-4 sm:px-6 sm:pb-8 sm:pt-6 md:px-10 md:pb-10 md:pt-8 lg:px-14 lg:pb-12 lg:pt-10">
+                    <div className="max-w-4xl space-y-4 rounded-2xl bg-black/25 p-4 sm:p-5 md:p-6 lg:p-8 shadow-[0_18px_50px_rgba(0,0,0,0.35)]">
                       <div className="space-y-3 md:space-y-4">
                         <motion.h1
                           initial={{ opacity: 0, y: 20 }}
                           whileInView={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.6 }}
-                          className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-[1.2] sm:leading-tight md:leading-tight font-black drop-shadow-[0_10px_35px_rgba(0,0,0,0.45)]"
+                          className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-[1.15] sm:leading-tight md:leading-tight font-black drop-shadow-[0_10px_35px_rgba(0,0,0,0.45)]"
                         >
                           {heroData.title?.split(' for ').map((part, index, array) => (
                             <span key={index}>
@@ -117,7 +117,7 @@ export function HomeHero({
                           initial={{ opacity: 0, y: 20 }}
                           whileInView={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.6, delay: 0.1 }}
-                          className="max-w-2xl text-base sm:text-lg md:text-lg lg:text-xl font-semibold text-primary-50 drop-shadow-[0_8px_24px_rgba(0,0,0,0.4)] leading-relaxed"
+                          className="max-w-3xl text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-primary-50 drop-shadow-[0_8px_24px_rgba(0,0,0,0.4)] leading-relaxed"
                         >
                           {heroData.subtitle}
                         </motion.p>

@@ -163,22 +163,22 @@ export default async function Home() {
                 {[
                   {
                     id: 1,
-                    videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-living-room-1574/1080p.mp4',
+                    videoUrl: '/videos/video1.mp4',
                     thumbnail: 'https://images.unsplash.com/photo-1556911220-bff31c812d0c?auto=format&fit=crop&w=800&q=80',
                   },
                   {
                     id: 2,
-                    videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-boutique-office-6267/1080p.mp4',
+                    videoUrl: '/videos/video2.mp4',
                     thumbnail: 'https://images.unsplash.com/photo-1524758631624-e2822e304a36?auto=format&fit=crop&w=800&q=80',
                   },
                   {
                     id: 3,
-                    videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-cafe-5535/1080p.mp4',
+                    videoUrl: '/videos/video3.mp4',
                     thumbnail: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80',
                   },
                   {
                     id: 4,
-                    videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-apartment-6575/1080p.mp4',
+                    videoUrl: '/videos/video4.mp4',
                     thumbnail: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80',
                   },
                 ].map((reel, index) => (

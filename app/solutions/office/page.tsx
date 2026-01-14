@@ -7,27 +7,30 @@ import Image from 'next/image'
 import { getSolutionPage } from '@/lib/sanity/queries'
 import { ResponsiveImage } from '@/components/ResponsiveImage'
 
-export const revalidate = 86400
+export const revalidate = 60
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getSolutionPage('office')
+  const defaultTitle = 'Office Furniture and Furnishings'
+  const defaultDescription = 'Professional furniture and furnishings solutions for office spaces'
+  
   if (!page) {
     return generateSEOMetadata({
-      title: 'Office Furniture and Furnishings',
-      description: 'Professional furniture and furnishings solutions for office spaces',
+      title: defaultTitle,
+      description: defaultDescription,
       path: '/solutions/office',
     })
   }
   return page.seo ? generateSEOMetadata({
     seo: page.seo,
-    title: page.title,
-    description: page.subtitle || page.introText,
+    title: defaultTitle,
+    description: defaultDescription,
     image: page.heroImage,
-    path: `/solutions/${page.type}`,
+    path: '/solutions/office',
   }) : generateSEOMetadata({
-    title: page.title,
-    description: page.subtitle || page.introText,
-    path: `/solutions/${page.type}`,
+    title: defaultTitle,
+    description: defaultDescription,
+    path: '/solutions/office',
   })
 }
 
@@ -37,7 +40,7 @@ const furnishingsIcons: Record<string, string> = {}
 export default async function OfficePage() {
   const page = await getSolutionPage('office')
 
-  const defaultContent = {
+  const content = {
     title: 'Office Furniture and Furnishings',
     subtitle: 'Designing productive and inspiring work environments',
     introText: 'Create efficient and professional office spaces with our comprehensive office furniture and furnishings solutions. We design work environments that enhance productivity, comfort, and employee well-being.',
@@ -46,39 +49,49 @@ export default async function OfficePage() {
     bestSuitedFor: 'Perfect for corporate offices, co-working spaces, startups, and professional service firms. Ideal for new office setups, expansions, or workspace renovations. Our solutions scale from small teams to large corporate environments.',
   }
 
-  const content = page || defaultContent
-
   return (
     <>
       <PageHero
         title={content.title}
         subtitle={content.subtitle || 'Designing productive and inspiring work environments'}
+        contentClassName="max-w-6xl"
+        titleClassName="text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] md:whitespace-nowrap"
       />
       <Section>
         <div className="max-w-6xl mx-auto space-y-12">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="prose prose-lg max-w-none">
-              <p className="text-lg text-primary-700 leading-relaxed">
-                {content.introText}
-              </p>
+          {/* Hero gallery: three office images from Sanity where available */}
+          <div className="space-y-6">
+            <div className="grid gap-4 md:gap-6 md:grid-cols-3">
+              {[
+                page?.galleryImages?.[0] || page?.heroImage,
+                page?.galleryImages?.[1] || page?.secondaryImage || page?.heroImage,
+                page?.galleryImages?.[2] || page?.heroImage || page?.secondaryImage,
+              ].map((image, index) => (
+                <div
+                  key={index}
+                  className="group relative aspect-[4/3] md:aspect-[3/4] rounded-3xl overflow-hidden shadow-xl ring-1 ring-black/5 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:ring-primary-300/40"
+                >
+                  {image ? (
+                    <ResponsiveImage
+                      image={image}
+                      alt={content.title}
+                      fill
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                    />
+                  ) : (
+                    <Image
+                      src="https://images.unsplash.com/photo-1524758631624-e2822e304a36?auto=format&fit=crop&w=1200&q=80"
+                      alt={content.title}
+                      fill
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                    />
+                  )}
+                </div>
+              ))}
             </div>
-            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
-              {page?.heroImage ? (
-                <ResponsiveImage
-                  image={page.heroImage}
-                  alt={content.title}
-                  fill
-                  className="object-cover"
-                />
-              ) : (
-                <Image
-                  src="https://images.unsplash.com/photo-1524758631624-e2822e304a36?auto=format&fit=crop&w=1200&q=80"
-                  alt={content.title}
-                  fill
-                  className="object-cover"
-                />
-              )}
-            </div>
+            <p className="text-lg text-primary-700 leading-relaxed">
+              {content.introText}
+            </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
