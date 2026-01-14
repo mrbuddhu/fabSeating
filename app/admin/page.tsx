@@ -102,29 +102,17 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-primary-100 pt-20">
-      {/* Header - Fixed Position */}
-      <header className="fixed top-0 left-0 right-0 bg-white shadow-sm border-b border-primary-100 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <nav className="flex items-center justify-between">
-            <Link href="/" className="text-2xl font-serif font-bold text-primary-950">
-              Fab Seating Admin
-            </Link>
-            <div className="flex items-center gap-4">
-              <Link href="/" className="text-primary-600 hover:text-primary-700 transition-colors">
-                ← Back to Website
-              </Link>
-              <button
-                onClick={() => setIsLoggedIn(false)}
-                className="text-sm text-red-600 hover:text-red-700 transition-colors"
-              >
-                Logout
-              </button>
-            </div>
-          </nav>
-        </div>
-      </header>
-
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-primary-100">
+      {/* Simple Back Link */}
+      <div className="container mx-auto px-4 pt-4">
+        <Link href="/" className="inline-flex items-center text-primary-600 hover:text-primary-700 transition-colors mb-8">
+          <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7l-7-7" />
+          </svg>
+          ← Back to Website
+        </Link>
+      </div>
+      
       {/* Admin Dashboard */}
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
