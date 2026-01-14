@@ -34,7 +34,7 @@ export function VideoReelSection({ title, subtitle, items, data }: VideoReelSect
       </div>
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {videos.slice(0, 4).map((item, idx) => (
-          <Reveal key={item.src + idx} delay={idx * 80} className="w-full">
+          <Reveal key={item.src + idx} delay={0} className="w-full">
             <VideoCard src={item.src} poster={item.poster} title={item.title} rounded="lg" aspect="aspect-[2/3]" />
           </Reveal>
         ))}

@@ -362,10 +362,10 @@ export default async function Home() {
             <ProcessTypewriter 
               steps={[
                 'Consultation',
-                'Design and Selection',
-                'Manufacturing and Sourcing',
+                'Design & Selection',
+                'Manufacturing & Sourcing',
                 'Quality Checks',
-                'Delivery and Installation',
+                'Delivery & Installation',
                 'After Sales Support'
               ]}
               delay={1500}
