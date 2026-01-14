@@ -22,7 +22,7 @@ export default async function Home() {
       title: 'Residential Collection',
       description: 'Elegant and functional furniture for modern homes',
       videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-living-room-1574/1080p.mp4',
-      thumbnail: 'https://images.unsplash.com/photo-1556911220-bff31c812d0c?auto=format&fit=crop&w=800&q=80',
+      thumbnail: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80',
       link: '/solutions/residential'
     },
     {
@@ -30,7 +30,7 @@ export default async function Home() {
       title: 'Office Spaces',
       description: 'Productive and inspiring work environments',
       videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-boutique-office-6267/1080p.mp4',
-      thumbnail: 'https://images.unsplash.com/photo-1524758631624-e2822e304a36?auto=format&fit=crop&w=800&q=80',
+      thumbnail: 'https://images.unsplash.com/photo-1497366214047-2a8ba81e032e?auto=format&fit=crop&w=800&q=80',
       link: '/solutions/office'
     },
     {
@@ -57,7 +57,7 @@ export default async function Home() {
       title: 'Custom Upholstery',
       description: 'Choose from premium fabrics and designs',
       videoUrl: 'https://cdn.coverr.co/videos/coverr-tailor-sewing-clothes-8575/1080p.mp4',
-      thumbnail: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80',
+      thumbnail: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80',
       link: '/contact'
     }
   ]
@@ -76,7 +76,7 @@ export default async function Home() {
       title: 'Corporate Office',
       description: 'Modern workspace transformation',
       videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-office-space-5699/1080p.mp4',
-      thumbnail: 'https://images.unsplash.com/photo-1522071820081-009c2f1deba7?auto=format&fit=crop&w=800&q=80',
+      thumbnail: 'https://images.unsplash.com/photo-1497366214047-2a8ba81e032e?auto=format&fit=crop&w=800&q=80',
       link: '/projects?category=office'
     },
     {
