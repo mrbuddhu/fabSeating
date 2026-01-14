@@ -116,9 +116,9 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-primary-100">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b border-primary-100">
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-primary-100 pt-20">
+      {/* Header - Fixed Position */}
+      <header className="fixed top-0 left-0 right-0 bg-white shadow-sm border-b border-primary-100 z-50">
         <div className="container mx-auto px-4 py-4">
           <nav className="flex items-center justify-between">
             <Link href="/" className="text-2xl font-serif font-bold text-primary-950">
@@ -199,22 +199,22 @@ export default function AdminPage() {
         </div>
 
         {/* Quick Guide */}
-        <div className="bg-gradient-to-r from-primary-50 to-primary-100 border border-primary-200 rounded-xl p-6">
+        <div className="bg-gradient-to-r from-primary-50 to-primary-100 border border-primary-200 rounded-xl p-8">
           <h3 className="text-lg font-semibold text-primary-900 mb-4">📋 Quick Guide</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-3">
               <h4 className="font-medium text-primary-800">How to Update Content:</h4>
-              <ul className="text-sm text-primary-700 space-y-1">
+              <ul className="text-sm text-primary-700 space-y-2">
                 <li>• Click "Edit Content" to open Sanity Studio</li>
-                <li>• Navigate to the section you want to update</li>
+                <li>• Navigate to section you want to update</li>
                 <li>• Make your changes (text, images, etc.)</li>
                 <li>• Click "Publish" to save changes</li>
                 <li>• Website updates automatically within 30 seconds</li>
               </ul>
             </div>
-            <div className="space-y-2">
+            <div className="space-y-3">
               <h4 className="font-medium text-primary-800">What You Can Edit:</h4>
-              <ul className="text-sm text-primary-700 space-y-1">
+              <ul className="text-sm text-primary-700 space-y-2">
                 <li>• Homepage content and sections</li>
                 <li>• Products and categories</li>
                 <li>• Project showcase</li>
@@ -224,7 +224,7 @@ export default function AdminPage() {
               </ul>
             </div>
           </div>
-          <div className="mt-4 p-3 bg-white/70 rounded-lg">
+          <div className="mt-6 p-4 bg-white/70 rounded-lg">
             <p className="text-sm text-primary-800">
               <strong>Need Help?</strong> Contact your website developer for assistance with any technical issues or advanced features.
             </p>
