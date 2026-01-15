@@ -21,7 +21,7 @@ export default function AdminPage() {
 
   if (!isLoggedIn) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-primary-100 pt-20">
+      <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-primary-100">
         {/* Login Section */}
         <div className="container mx-auto px-4 py-16">
           <div className="max-w-md mx-auto">
