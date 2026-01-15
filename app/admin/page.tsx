@@ -104,8 +104,8 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-primary-100">
       {/* Simple Back Link */}
-      <div className="container mx-auto px-4 pt-4">
-        <Link href="/" className="inline-flex items-center text-primary-600 hover:text-primary-700 transition-colors mb-8">
+      <div className="container mx-auto px-4 pt-2">
+        <Link href="/" className="inline-flex items-center text-primary-600 hover:text-primary-700 transition-colors mb-4">
           <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7l-7-7" />
           </svg>
@@ -114,94 +114,89 @@ export default function AdminPage() {
       </div>
       
       {/* Admin Dashboard */}
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-serif font-bold text-primary-950 mb-2">
+      <div className="container mx-auto px-4 py-4">
+        <div className="mb-4">
+          <h1 className="text-2xl font-serif font-bold text-primary-950 mb-1">
             Admin Dashboard
           </h1>
-          <p className="text-gray-600">
+          <p className="text-sm text-gray-600">
             Manage your Fab Seating website content and settings
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
           <a 
             href="https://fabseating.sanity.studio" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="group bg-white rounded-xl shadow-md border border-primary-100 p-6 hover:shadow-lg hover:border-primary-300 transition-all duration-200"
+            className="group bg-white rounded-lg shadow border border-primary-100 p-4 hover:shadow-md hover:border-primary-300 transition-all duration-200"
           >
-            <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary-200 transition-colors">
-              <svg className="w-6 h-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center mb-3 group-hover:bg-primary-200 transition-colors">
+              <svg className="w-5 h-5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
               </svg>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">📝 Edit Content</h3>
-            <p className="text-gray-600 text-sm">Open Sanity Studio to manage all website content, products, and pages</p>
+            <h3 className="text-base font-semibold text-gray-900 mb-1">📝 Edit Content</h3>
+            <p className="text-xs text-gray-600">Open Sanity Studio to manage content</p>
           </a>
 
           <a 
             href="https://vercel.com/mrbuddhus-projects/fabseating" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="group bg-white rounded-xl shadow-md border border-primary-100 p-6 hover:shadow-lg hover:border-primary-300 transition-all duration-200"
+            className="group bg-white rounded-lg shadow border border-primary-100 p-4 hover:shadow-md hover:border-primary-300 transition-all duration-200"
           >
-            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-green-200 transition-colors">
-              <svg className="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mb-3 group-hover:bg-green-200 transition-colors">
+              <svg className="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">🚀 Deployments</h3>
-            <p className="text-gray-600 text-sm">View deployment status, analytics, and website performance</p>
+            <h3 className="text-base font-semibold text-gray-900 mb-1">🚀 Deployments</h3>
+            <p className="text-xs text-gray-600">View deployment status and analytics</p>
           </a>
 
           <a 
             href="https://fabseating.vercel.app" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="group bg-white rounded-xl shadow-md border border-primary-100 p-6 hover:shadow-lg hover:border-primary-300 transition-all duration-200"
+            className="group bg-white rounded-lg shadow border border-primary-100 p-4 hover:shadow-md hover:border-primary-300 transition-all duration-200"
           >
-            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-200 transition-colors">
-              <svg className="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-3 group-hover:bg-blue-200 transition-colors">
+              <svg className="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
               </svg>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">👁️ View Website</h3>
-            <p className="text-gray-600 text-sm">See the live website and test your changes</p>
+            <h3 className="text-base font-semibold text-gray-900 mb-1">👁️ View Website</h3>
+            <p className="text-xs text-gray-600">See the live website</p>
           </a>
         </div>
 
-        {/* Quick Guide */}
-        <div className="bg-gradient-to-r from-primary-50 to-primary-100 border border-primary-200 rounded-xl p-4">
-          <h3 className="text-lg font-semibold text-primary-900 mb-3">📋 Quick Guide</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <h4 className="font-medium text-primary-800">How to Update Content:</h4>
-              <ul className="text-sm text-primary-700 space-y-1">
-                <li>• Click &quot;Edit Content&quot; to open Sanity Studio</li>
-                <li>• Navigate to section you want to update</li>
-                <li>• Make your changes (text, images, etc.)</li>
-                <li>• Click &quot;Publish&quot; to save changes</li>
-                <li>• Website updates automatically within 30 seconds</li>
+        {/* Compact Quick Guide */}
+        <div className="bg-gradient-to-r from-primary-50 to-primary-100 border border-primary-200 rounded-lg p-3">
+          <h3 className="text-base font-semibold text-primary-900 mb-2">📋 Quick Guide</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="space-y-1">
+              <h4 className="text-sm font-medium text-primary-800">How to Update:</h4>
+              <ul className="text-xs text-primary-700 space-y-0">
+                <li>• Click &quot;Edit Content&quot;</li>
+                <li>• Navigate to section</li>
+                <li>• Make changes</li>
+                <li>• Click &quot;Publish&quot;</li>
               </ul>
             </div>
-            <div className="space-y-2">
-              <h4 className="font-medium text-primary-800">What You Can Edit:</h4>
-              <ul className="text-sm text-primary-700 space-y-1">
-                <li>• Homepage content and sections</li>
-                <li>• Products and categories</li>
-                <li>• Project showcase</li>
-                <li>• Blog posts and articles</li>
-                <li>• Customer testimonials</li>
-                <li>• Contact information</li>
+            <div className="space-y-1">
+              <h4 className="text-sm font-medium text-primary-800">What You Can Edit:</h4>
+              <ul className="text-xs text-primary-700 space-y-0">
+                <li>• Homepage content</li>
+                <li>• Products & categories</li>
+                <li>• Projects & testimonials</li>
+                <li>• Contact info</li>
               </ul>
             </div>
           </div>
-          <div className="mt-4 p-3 bg-white/70 rounded-lg">
-            <p className="text-sm text-primary-800">
-              <strong>Need Help?</strong> Contact your website developer for assistance with any technical issues or advanced features.
-            </p>
+          <div className="mt-2 p-2 bg-white/70 rounded text-xs text-primary-800">
+            <strong>Need Help?</strong> Contact your website developer.
           </div>
         </div>
       </div>
