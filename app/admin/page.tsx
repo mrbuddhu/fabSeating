@@ -173,12 +173,12 @@ export default function AdminPage() {
         </div>
 
         {/* Quick Guide */}
-        <div className="bg-gradient-to-r from-primary-50 to-primary-100 border border-primary-200 rounded-xl p-8">
-          <h3 className="text-lg font-semibold text-primary-900 mb-4">📋 Quick Guide</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-3">
+        <div className="bg-gradient-to-r from-primary-50 to-primary-100 border border-primary-200 rounded-xl p-4">
+          <h3 className="text-lg font-semibold text-primary-900 mb-3">📋 Quick Guide</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
               <h4 className="font-medium text-primary-800">How to Update Content:</h4>
-              <ul className="text-sm text-primary-700 space-y-2">
+              <ul className="text-sm text-primary-700 space-y-1">
                 <li>• Click &quot;Edit Content&quot; to open Sanity Studio</li>
                 <li>• Navigate to section you want to update</li>
                 <li>• Make your changes (text, images, etc.)</li>
@@ -186,9 +186,9 @@ export default function AdminPage() {
                 <li>• Website updates automatically within 30 seconds</li>
               </ul>
             </div>
-            <div className="space-y-3">
+            <div className="space-y-2">
               <h4 className="font-medium text-primary-800">What You Can Edit:</h4>
-              <ul className="text-sm text-primary-700 space-y-2">
+              <ul className="text-sm text-primary-700 space-y-1">
                 <li>• Homepage content and sections</li>
                 <li>• Products and categories</li>
                 <li>• Project showcase</li>
@@ -198,7 +198,7 @@ export default function AdminPage() {
               </ul>
             </div>
           </div>
-          <div className="mt-6 p-4 bg-white/70 rounded-lg">
+          <div className="mt-4 p-3 bg-white/70 rounded-lg">
             <p className="text-sm text-primary-800">
               <strong>Need Help?</strong> Contact your website developer for assistance with any technical issues or advanced features.
             </p>
