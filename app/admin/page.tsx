@@ -179,10 +179,10 @@ export default function AdminPage() {
             <div className="space-y-3">
               <h4 className="font-medium text-primary-800">How to Update Content:</h4>
               <ul className="text-sm text-primary-700 space-y-2">
-                <li>• Click "Edit Content" to open Sanity Studio</li>
+                <li>• Click &quot;Edit Content&quot; to open Sanity Studio</li>
                 <li>• Navigate to section you want to update</li>
                 <li>• Make your changes (text, images, etc.)</li>
-                <li>• Click "Publish" to save changes</li>
+                <li>• Click &quot;Publish&quot; to save changes</li>
                 <li>• Website updates automatically within 30 seconds</li>
               </ul>
             </div>
