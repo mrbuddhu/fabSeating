@@ -584,28 +584,28 @@ export default async function Home() {
       ) : null}
 
       {/* 10. Call to Action */}
-      <section className="relative py-8 md:py-10 mb-12 md:mb-16 grainy-gradient text-white overflow-hidden">
+      <section className="relative py-12 md:py-16 mb-12 md:mb-16 bg-white text-primary-950 overflow-hidden">
         {/* Background decoration */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-white rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary-300 rounded-full blur-3xl"></div>
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-600 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary-400 rounded-full blur-3xl"></div>
         </div>
         
         <div className="container mx-auto px-4 text-center relative z-10">
           <div className="max-w-4xl mx-auto">
             <div className="inline-block mb-2">
-              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-primary-200/60">Let&apos;s Begin</span>
+              <span className="text-xs font-bold tracking-[0.2em] uppercase text-primary-600">Let&apos;s Begin</span>
             </div>
-            <h2 className="text-xl md:text-2xl lg:text-3xl font-serif font-light mb-3 text-white tracking-tight">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold mb-3 text-primary-950 tracking-tight">
               Planning a new space or upgrading an existing one?
             </h2>
-            <div className="w-24 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent mx-auto mb-3"></div>
-            <p className="text-sm md:text-base mb-4 max-w-2xl mx-auto text-white/90 font-light leading-relaxed">
+            <div className="w-24 h-px bg-gradient-to-r from-transparent via-primary-300 to-transparent mx-auto mb-4"></div>
+            <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto text-gray-600 font-medium leading-relaxed">
               Let&apos;s design it thoughtfully with Fabseating&apos;s expertise in furniture and furnishings.
             </p>
             <a 
               href="/contact" 
-              className="inline-flex items-center gap-2 px-8 py-3 bg-white text-primary-950 font-medium rounded-full hover:bg-primary-50 transition-all duration-300 hover:gap-3 shadow-2xl hover:-translate-y-1.5 hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] group text-base"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-primary-950 text-white font-medium rounded-full hover:bg-primary-900 transition-all duration-300 hover:gap-3 shadow-xl hover:-translate-y-1 hover:shadow-2xl group text-base"
             >
               <span className="tracking-wider uppercase">Talk to Us</span>
               <svg className="w-6 h-6 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

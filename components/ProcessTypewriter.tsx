@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 
 interface ProcessTypewriterProps {
   steps: string[]
@@ -9,51 +9,38 @@ interface ProcessTypewriterProps {
 
 export function ProcessTypewriter({ 
   steps, 
-  delay = 600
+  delay = 200 // unused but kept for compatibility or adjusted usage
 }: ProcessTypewriterProps) {
-  const [visibleItems, setVisibleItems] = useState<Array<{ type: 'text' | 'arrow', content: string, index: number }>>([])
-  const [currentIndex, setCurrentIndex] = useState(0)
-
-  useEffect(() => {
-    if (currentIndex >= steps.length * 2) {
-      return
-    }
-
-    const timer = setTimeout(() => {
-      const stepIndex = Math.floor(currentIndex / 2)
-      const isArrow = currentIndex % 2 === 1
-
-      if (isArrow && stepIndex < steps.length - 1) {
-        // Show arrow
-        setVisibleItems(prev => [...prev, { type: 'arrow', content: '→', index: currentIndex }])
-      } else if (!isArrow && stepIndex < steps.length) {
-        // Show text
-        setVisibleItems(prev => [...prev, { type: 'text', content: steps[stepIndex], index: currentIndex }])
-      }
-
-      setCurrentIndex(prev => prev + 1)
-    }, delay)
-
-    return () => clearTimeout(timer)
-  }, [currentIndex, steps, delay])
-
   return (
     <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4 text-base md:text-lg lg:text-xl min-h-[2rem]">
-      {visibleItems.map((item, index) => (
-        <span
-          key={`${item.type}-${item.index}`}
-          className="inline-flex items-center opacity-0 animate-fade-in"
-          style={{
-            animationDelay: '0ms',
-            animationFillMode: 'forwards'
-          }}
-        >
-          {item.type === 'text' ? (
-            <span className="text-white font-serif font-bold">{item.content}</span>
-          ) : (
-            <span className="text-primary-300/70 font-bold text-xl md:text-2xl">{item.content}</span>
+      {steps.map((step, index) => (
+        <div key={index} className="flex items-center gap-3 md:gap-4">
+          <motion.span
+            initial={{ color: '#94a3b8', opacity: 0.4, filter: 'grayscale(100%)' }} // slate-400
+            whileInView={{ color: '#ffffff', opacity: 1, filter: 'grayscale(0%)' }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ 
+              duration: 2, 
+              ease: "easeInOut",
+              delay: index * 0.8 // Stagger effect
+            }}
+            className="font-serif font-bold cursor-default"
+          >
+            {step}
+          </motion.span>
+          
+          {index < steps.length - 1 && (
+            <motion.span 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.8 + 0.4, duration: 1 }}
+              className="text-primary-200/50 font-bold text-xl md:text-2xl"
+            >
+              →
+            </motion.span>
           )}
-        </span>
+        </div>
       ))}
     </div>
   )
