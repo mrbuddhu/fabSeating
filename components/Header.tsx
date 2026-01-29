@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils'
 const navItems = [
   { href: '/', label: 'Home' },
   { href: '/#solutions', label: 'Solutions' },
+  { href: '/catalog', label: 'Catalog' },
   { href: '/#projects', label: 'Projects' },
   { href: '/contact', label: 'Contact' },
 ]
@@ -223,4 +224,3 @@ export function Header() {
     </header>
   )
 }
-

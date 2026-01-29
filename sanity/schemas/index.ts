@@ -8,6 +8,7 @@ import faq from './faq'
 import siteSettings from './siteSettings'
 import landingPage from './landingPage'
 import solutionPage from './solutionPage'
+import catalog from './catalog'
 
 export const schemaTypes = [
   productCategory,
@@ -20,5 +21,5 @@ export const schemaTypes = [
   siteSettings,
   landingPage,
   solutionPage,
+  catalog,
 ]
-

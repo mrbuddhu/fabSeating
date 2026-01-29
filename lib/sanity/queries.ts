@@ -1,5 +1,5 @@
 import { client } from './client'
-import type { Project, BlogPost, Testimonial, SolutionPage } from '@/types'
+import type { Project, BlogPost, Testimonial, SolutionPage, Catalog } from '@/types'
 
 function isSanityConfigured() {
   return !!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
@@ -159,3 +159,19 @@ export async function getSitemapData() {
   return {}
 }
 
+export async function getCatalogs(): Promise<Catalog[]> {
+  if (!isSanityConfigured()) return []
+  return client.fetch(
+    `*[_type == "catalog"] | order(_createdAt desc) {
+      _id,
+      _type,
+      title,
+      description,
+      coverImage,
+      "fileUrl": file.asset->url,
+      seo
+    }`,
+    {},
+    { next: { tags: ['sanity', 'sanity:catalog'] } } as any,
+  )
+}

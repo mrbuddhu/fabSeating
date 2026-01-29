@@ -7,6 +7,7 @@ const footerLinks = {
     { href: '/legals', label: 'Legals' },
   ],
   products: [
+    { href: '/catalog', label: 'Catalog' },
     { href: '/projects', label: 'Projects' },
   ],
   support: [

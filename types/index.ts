@@ -132,3 +132,12 @@ export type LandingPageSection =
   | { _type: 'faq'; title?: string; faqs?: FAQ[] }
   | { _type: 'cta'; title?: string; subtitle?: string; buttonText?: string; buttonLink?: string }
 
+export interface Catalog {
+  _id: string
+  _type: 'catalog'
+  title: string
+  description?: string
+  coverImage?: SanityImage
+  fileUrl: string
+  seo?: SEO
+}

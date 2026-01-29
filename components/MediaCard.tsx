@@ -10,6 +10,7 @@ interface MediaCardProps {
     description?: string;
     ctaText?: string;
     ctaLink?: string;
+    download?: boolean;
   };
   className?: string;
 }
@@ -52,6 +53,7 @@ export function MediaCard({ media, className = '' }: MediaCardProps) {
         {media.ctaText && media.ctaLink && (
           <a
             href={media.ctaLink}
+            download={media.download ? '' : undefined}
             className="mt-4 inline-block text-lg font-semibold text-primary-600 hover:text-primary-700"
           >
             {media.ctaText} →

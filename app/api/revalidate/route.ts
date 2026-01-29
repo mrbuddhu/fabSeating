@@ -24,6 +24,7 @@ export async function POST(req: Request) {
   revalidateTag('sanity:blogPost')
   revalidateTag('sanity:testimonial')
   revalidateTag('sanity:productCategory')
+  revalidateTag('sanity:catalog')
 
   return NextResponse.json({ ok: true })
 }
