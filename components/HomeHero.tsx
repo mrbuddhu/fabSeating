@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ResponsiveImage } from './ResponsiveImage'
+import { Container } from './Container'
 import type { SanityImage } from '@/types'
 
 interface HomeHeroProps {
@@ -52,16 +53,16 @@ export function HomeHero({
       : [{ src: defaultHeroVideo, poster: fallbackPoster }]
 
   return (
-    <section className="relative pt-[7.5rem] md:pt-[8.5rem] mt-6 md:mt-8 pb-12 md:pb-16">
-      <div className="w-full px-4 md:px-6 lg:px-8">
-        <div className="relative mx-auto max-w-screen-2xl overflow-hidden rounded-[28px] md:rounded-[32px] bg-primary-950 text-primary-50 shadow-[0_30px_90px_rgba(0,0,0,0.2)]">
+    <section className="relative pt-[6rem] sm:pt-[7rem] md:pt-[7.5rem] lg:pt-[8rem] mt-2 md:mt-4 pb-12 md:pb-16">
+      <Container>
+        <div className="relative overflow-hidden rounded-[28px] md:rounded-[32px] bg-primary-950 text-primary-50 shadow-[0_30px_90px_rgba(0,0,0,0.2)]">
           <div className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth no-scrollbar">
             {slides.map((slide, idx) => (
               <div
                 key={slide.src ?? `fallback-${idx}`}
                 className="relative min-w-full snap-start"
               >
-                <div className="relative h-[68vh] sm:h-[72vh] md:h-[74vh] lg:h-[80vh] min-h-[520px] sm:min-h-[560px] max-h-[900px] overflow-hidden rounded-[28px] md:rounded-[32px]">
+                <div className="relative h-[75vh] sm:h-[75vh] md:h-[75vh] lg:h-[75vh] min-h-[520px] sm:min-h-[560px] md:min-h-[580px] lg:min-h-[600px] overflow-hidden rounded-[28px] md:rounded-[32px]">
                   <div
                     className="absolute inset-0"
                     style={{
@@ -97,8 +98,8 @@ export function HomeHero({
                     <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/15 to-black/30" />
                   </div>
 
-                  <div className="relative z-10 flex h-full flex-col justify-end px-4 pb-6 pt-4 sm:px-6 sm:pb-8 sm:pt-6 md:px-10 md:pb-10 md:pt-8 lg:px-14 lg:pb-12 lg:pt-10">
-                    <div className="max-w-4xl space-y-4 rounded-2xl bg-black/25 p-4 sm:p-5 md:p-6 lg:p-8 shadow-[0_18px_50px_rgba(0,0,0,0.35)]">
+                  <div className="relative z-10 flex h-full flex-col justify-center px-4 pb-16 pt-16 sm:px-6 sm:pb-20 sm:pt-20 md:px-10 md:pb-24 md:pt-24 lg:px-14 lg:pb-28 lg:pt-28">
+                    <div className="max-w-4xl md:max-w-5xl lg:max-w-6xl space-y-4 rounded-2xl bg-black/15 p-4 sm:p-5 md:p-6 lg:p-8 shadow-[0_18px_50px_rgba(0,0,0,0.35)]">
                       <div className="space-y-3 md:space-y-4">
                         <motion.h1
                           initial={{ opacity: 0, y: 20 }}
@@ -109,7 +110,7 @@ export function HomeHero({
                           {heroData.title?.split(' for ').map((part, index, array) => (
                             <span key={index}>
                               {part}
-                              {index < array.length - 1 && <><br className="hidden sm:block" /> <span className="sm:hidden"> </span>for </>}
+                              {index < array.length - 1 && <><br className="hidden sm:block" /> <span className="inline sm:hidden"> </span>for </>}
                             </span>
                           ))}
                         </motion.h1>
@@ -121,6 +122,18 @@ export function HomeHero({
                         >
                           {heroData.subtitle}
                         </motion.p>
+                        {trustIndicators?.length > 0 && (
+                          <div className="space-y-1">
+                            {trustIndicators.map((ti, idx) => (
+                              <p
+                                key={idx}
+                                className="text-xs sm:text-sm font-medium text-primary-50"
+                              >
+                                {ti}
+                              </p>
+                            ))}
+                          </div>
+                        )}
                       </div>
 
                       <div className="flex flex-wrap items-center gap-2 sm:gap-3">
@@ -157,8 +170,7 @@ export function HomeHero({
             </div>
           )}
         </div>
-      </div>
+      </Container>
     </section>
   )
 }
-

@@ -4,6 +4,7 @@ import { TestimonialsPreview } from '@/components/TestimonialsPreview'
 import { AnimatedCard } from '@/components/AnimatedCard'
 import { AnimatedSection } from '@/components/AnimatedSection'
 import { ProcessTypewriter } from '@/components/ProcessTypewriter'
+import { TeamSection } from '@/components/TeamSection'
 import { getHomePageData } from '@/lib/sanity/queries'
 
 export const revalidate = 21600
@@ -11,7 +12,7 @@ export const revalidate = 21600
 export default async function Home() {
   const data = await getHomePageData()
   
-  const heroHeadline = 'Premium Furniture and Furnishings for Homes, Offices and Hospitality'
+  const heroHeadline = 'Premium Furniture & Furnishings for Homes, Offices and Hospitality'
   const heroSubheadline = 'Since 2001, Fab Seating has been creating complete furniture and furnishing solutions designed for real spaces and long term use.'
   const primaryCta = 'Talk to Us'
   const trustLine = 'Crafted & curated from our Chennai facility | Serving residential & commercial spaces across South India'
@@ -201,7 +202,7 @@ export default async function Home() {
             </div>
             
             {/* Category Icons Grid */}
-            <div className="grid grid-cols-4 md:grid-cols-8 gap-4 md:gap-6 mb-12">
+            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-3 sm:gap-4 md:gap-6 mb-12">
               {[
                 { name: 'Sofas', icon: (
                   <svg className="w-8 h-8 md:w-10 md:h-10" fill="currentColor" viewBox="0 0 24 24">
@@ -251,7 +252,7 @@ export default async function Home() {
                     <div className="text-primary-600 mb-2 transform group-hover:scale-110 group-hover:text-primary-700 transition-all duration-300">
                       {category.icon}
                     </div>
-                    <p className="text-[11px] md:text-xs text-primary-700 font-medium text-center leading-tight whitespace-normal break-words group-hover:text-primary-900 transition-colors">
+                    <p className="text-[10px] sm:text-[11px] md:text-xs text-primary-700 font-medium text-center leading-tight whitespace-normal break-words group-hover:text-primary-900 transition-colors">
                       {category.name}
                     </p>
                   </div>
@@ -319,20 +320,20 @@ export default async function Home() {
                   <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-primary-950/80"></div>
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
-                  <div className="mb-2">
-                    <span className="text-xs font-semibold tracking-wider text-primary-100 uppercase bg-primary-950/60 px-3 py-1 rounded-full inline-block">Solution {index + 1}</span>
-                  </div>
+
                   <h3 className="text-2xl font-serif font-semibold text-white mb-2 tracking-tight">{item.title}</h3>
                   <p className="text-gray-100 text-sm mb-4 leading-relaxed">{item.description}</p>
-                  <a 
-                    href={item.link}
-                    className="inline-flex items-center gap-2 bg-white text-primary-950 px-5 py-2.5 rounded-full font-semibold text-sm hover:bg-primary-50 transition-all duration-300 shadow-lg"
-                  >
-                    <span className="tracking-wide">Explore</span>
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </a>
+                  <div className="inline-block hover:scale-110 transition-transform duration-300">
+                    <a 
+                      href={item.link}
+                      className="inline-flex items-center gap-2 bg-white text-primary-950 px-5 py-2.5 rounded-full font-semibold text-sm hover:bg-primary-50 hover:animate-shake transition-colors duration-300 shadow-lg"
+                    >
+                      <span className="tracking-wide">Explore</span>
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </a>
+                  </div>
                 </div>
               </div>
               </AnimatedCard>
@@ -563,6 +564,11 @@ export default async function Home() {
           </div>
         </div>
       </section>
+      </AnimatedSection>
+
+      {/* Team Section */}
+      <AnimatedSection>
+        <TeamSection />
       </AnimatedSection>
 
       {/* 9. Testimonials/Social Proof */}
