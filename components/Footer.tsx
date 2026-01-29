@@ -20,7 +20,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="grainy-gradient text-primary-100 mt-32 mx-4 md:mx-6 lg:mx-8 mb-6 rounded-3xl overflow-hidden shadow-[0_18px_50px_rgba(0,0,0,0.18)] relative">
+    <footer className="grainy-gradient text-primary-100 mt-4 mx-4 md:mx-6 lg:mx-8 mb-6 rounded-3xl overflow-hidden shadow-[0_18px_50px_rgba(0,0,0,0.18)] relative">
       <Container>
         <div className="py-16 md:py-20 grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="md:col-span-1">

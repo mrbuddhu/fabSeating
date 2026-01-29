@@ -12,7 +12,7 @@ export const revalidate = 21600
 export default async function Home() {
   const data = await getHomePageData()
   
-  const heroHeadline = 'Premium Furniture & Furnishings for Homes, Offices and Hospitality'
+  const heroHeadline = 'Premium Furniture & Furnishings\nfor Homes, Offices & Hospitality'
   const heroSubheadline = 'Since 2001, Fab Seating has been creating complete furniture and furnishing solutions designed for real spaces and long term use.'
   const primaryCta = 'Talk to Us'
   const trustLine = 'Crafted & curated from our Chennai facility | Serving residential & commercial spaces across South India'
@@ -532,17 +532,17 @@ export default async function Home() {
           {/* Custom Solutions Text Content */}
           <div className="max-w-6xl mx-auto mb-16 px-2 md:px-4">
             <div className="text-center max-w-5xl mx-auto space-y-6">
-              <AnimatedSection delay={0.1}>
+              <AnimatedSection delay={0.1} once={false}>
                 <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
                   At Fabseating, furniture doesn&apos;t start with a template. It starts with your space.
                 </p>
               </AnimatedSection>
-              <AnimatedSection delay={0.2}>
+              <AnimatedSection delay={0.2} once={false}>
                 <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
                   Dimensions, comfort, upholstery, wood, finishes — every detail is designed, refined, and crafted specifically for you.
                 </p>
               </AnimatedSection>
-              <AnimatedSection delay={0.3}>
+              <AnimatedSection delay={0.3} once={false}>
                 <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
                   From one-of-a-kind sofas to fully bespoke dining, bedroom, and statement pieces, we build furniture that fits perfectly, looks intentional, and lasts for years.
                 </p>
@@ -584,7 +584,7 @@ export default async function Home() {
       ) : null}
 
       {/* 10. Call to Action */}
-      <section className="relative py-12 md:py-16 mb-12 md:mb-16 bg-white text-primary-950 overflow-hidden">
+      <section className="relative py-12 md:py-16 bg-white text-primary-950 overflow-hidden">
         {/* Background decoration */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
           <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-600 rounded-full blur-3xl"></div>

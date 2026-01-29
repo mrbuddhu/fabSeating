@@ -99,18 +99,17 @@ export function HomeHero({
                   </div>
 
                   <div className="relative z-10 flex h-full flex-col justify-center px-4 pb-16 pt-16 sm:px-6 sm:pb-20 sm:pt-20 md:px-10 md:pb-24 md:pt-24 lg:px-14 lg:pb-28 lg:pt-28">
-                    <div className="max-w-4xl md:max-w-5xl lg:max-w-6xl space-y-4 rounded-2xl bg-black/15 p-4 sm:p-5 md:p-6 lg:p-8 shadow-[0_18px_50px_rgba(0,0,0,0.35)]">
+                    <div className="max-w-4xl md:max-w-6xl lg:max-w-7xl space-y-4 rounded-2xl bg-black/15 p-4 sm:p-5 md:p-6 lg:p-8 shadow-[0_18px_50px_rgba(0,0,0,0.35)]">
                       <div className="space-y-3 md:space-y-4">
                         <motion.h1
                           initial={{ opacity: 0, y: 20 }}
                           whileInView={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.6 }}
-                          className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-[1.15] sm:leading-tight md:leading-tight font-black drop-shadow-[0_10px_35px_rgba(0,0,0,0.45)]"
+                          className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl leading-none tracking-tight font-black text-white drop-shadow-[0_15px_45px_rgba(0,0,0,0.6)]"
                         >
-                          {heroData.title?.split(' for ').map((part, index, array) => (
-                            <span key={index}>
-                              {part}
-                              {index < array.length - 1 && <><br className="hidden sm:block" /> <span className="inline sm:hidden"> </span>for </>}
+                          {heroData.title?.split('\n').map((line, i) => (
+                            <span key={i} className="block lg:whitespace-nowrap">
+                              {line}
                             </span>
                           ))}
                         </motion.h1>
@@ -118,7 +117,7 @@ export function HomeHero({
                           initial={{ opacity: 0, y: 20 }}
                           whileInView={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.6, delay: 0.1 }}
-                          className="max-w-3xl text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-primary-50 drop-shadow-[0_8px_24px_rgba(0,0,0,0.4)] leading-relaxed"
+                          className="max-w-3xl text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)] leading-relaxed tracking-wide"
                         >
                           {heroData.subtitle}
                         </motion.p>

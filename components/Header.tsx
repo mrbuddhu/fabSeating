@@ -43,12 +43,12 @@ export function Header() {
       )}
     >
       {showAnnouncement && (
-        <div className="relative h-10 overflow-hidden bg-black text-white">
+        <div className="relative h-7 overflow-hidden bg-black text-white">
           <div className="absolute inset-0 bg-black/80" />
           <button
             aria-label="Close announcement"
             onClick={() => setShowAnnouncement(false)}
-            className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 px-2 py-1 text-xs font-semibold text-white backdrop-blur transition hover:bg-white/20"
+            className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 px-1.5 py-0.5 text-[10px] font-semibold text-white backdrop-blur transition hover:bg-white/20"
           >
             ×
           </button>
@@ -58,24 +58,24 @@ export function Header() {
               animate={{ x: ['0%', '-50%'] }}
               transition={{ duration: 12, ease: 'linear', repeat: Infinity }}
             >
-              <span className="text-xs font-semibold uppercase tracking-[0.15em]">
+              <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/90">
                 {announcement.message}
               </span>
               {announcement.ctaLabel && (
                 <Link
                   href={announcement.ctaHref}
-                  className="text-xs font-semibold underline underline-offset-4"
+                  className="text-[10px] font-medium underline underline-offset-4 text-white/90"
                 >
                   {announcement.ctaLabel}
                 </Link>
               )}
-              <span className="text-xs font-semibold uppercase tracking-[0.15em]">
+              <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/90">
                 {announcement.message}
               </span>
               {announcement.ctaLabel && (
                 <Link
                   href={announcement.ctaHref}
-                  className="text-xs font-semibold underline underline-offset-4"
+                  className="text-[10px] font-medium underline underline-offset-4 text-white/90"
                 >
                   {announcement.ctaLabel}
                 </Link>
