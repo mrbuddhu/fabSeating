@@ -1,16 +1,18 @@
 import { Metadata } from 'next'
 import { PageHero } from '@/components/PageHero'
 import { Section } from '@/components/Section'
-import { ProjectCard } from '@/components/ProjectCard'
 import { getProjects } from '@/lib/sanity/queries'
 import { generateSEOMetadata } from '@/components/SEOHead'
 import Link from 'next/link'
+import { AnimatedCard } from '@/components/AnimatedCard'
+import { ResponsiveImage } from '@/components/ResponsiveImage'
+import { SkeletonCard } from '@/components/SkeletonCard'
 
 export const revalidate = 900
 
 export const metadata: Metadata = generateSEOMetadata({
-  title: 'Projects',
-  description: 'Explore our portfolio of completed projects',
+  title: 'Project Gallery',
+  description: 'Visual showcase of our finest work',
   path: '/projects',
 })
 
@@ -20,8 +22,7 @@ interface ProjectsPageProps {
 
 export default async function ProjectsPage({ searchParams }: ProjectsPageProps) {
   const category = searchParams?.category
-  const allProjects = await getProjects()
-  const projects = category ? await getProjects(category) : allProjects
+  const projects = await getProjects(category)
 
   const categories = [
     { label: 'All', value: '', href: '/projects' },
@@ -33,8 +34,8 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
   return (
     <>
       <PageHero
-        title="Our Projects"
-        subtitle="See how we transform spaces with premium furniture"
+        title="Project Gallery"
+        subtitle="A visual collection of our design excellence"
       />
       <Section>
         <div className="mb-12 flex flex-wrap justify-center gap-4">
@@ -54,18 +55,63 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
         </div>
 
         {projects.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project) => (
-              <ProjectCard key={project._id} project={project} />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projects.map((project, index) => (
+              <AnimatedCard key={project._id} index={index}>
+                <Link 
+                  href={`/case-studies/${project.slug.current}`}
+                  className="group relative block aspect-square overflow-hidden rounded-xl bg-gray-100"
+                >
+                  {project.images && project.images[0] ? (
+                    <ResponsiveImage
+                      image={project.images[0]}
+                      alt={project.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                  ) : (project as any).thumbnail ? (
+                    <img
+                      src={(project as any).thumbnail}
+                      alt={project.title}
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                  ) : (
+                    <div className="flex h-full items-center justify-center bg-gray-200">
+                      <span className="text-gray-400">No Image</span>
+                    </div>
+                  )}
+                  
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/40" />
+                  
+                  {/* Text Content */}
+                  <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <span className="mb-2 text-xs font-bold uppercase tracking-widest text-white/80">
+                      {project.category}
+                    </span>
+                    <h3 className="font-serif text-2xl font-bold text-white">
+                      {project.title}
+                    </h3>
+                    {(project.location || project.year) && (
+                      <p className="mt-2 text-sm text-white/90">
+                        {[project.location, project.year].filter(Boolean).join(' — ')}
+                      </p>
+                    )}
+                  </div>
+                </Link>
+              </AnimatedCard>
             ))}
           </div>
         ) : (
-          <p className="text-center text-primary-700 py-12">
-            No projects available in this category.
-          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+               <AnimatedCard key={i} index={i}>
+                 <SkeletonCard variant="project" />
+               </AnimatedCard>
+             ))}
+          </div>
         )}
       </Section>
     </>
   )
 }
-

@@ -9,11 +9,13 @@ import siteSettings from './siteSettings'
 import landingPage from './landingPage'
 import solutionPage from './solutionPage'
 import catalog from './catalog'
+import caseStudy from './caseStudy'
 
 export const schemaTypes = [
   productCategory,
   product,
   project,
+  caseStudy,
   blogPost,
   author,
   testimonial,

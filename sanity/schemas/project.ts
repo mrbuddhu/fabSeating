@@ -73,6 +73,12 @@ export default {
       initialValue: false,
     },
     {
+      name: 'videoUrl',
+      title: 'Video URL (Optional)',
+      type: 'url',
+      description: 'URL to a video file (mp4) for the homepage card background. If not provided, the first image will be used.',
+    },
+    {
       name: 'seo',
       title: 'SEO',
       type: 'object',

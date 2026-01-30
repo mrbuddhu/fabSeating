@@ -5,7 +5,10 @@ import { AnimatedCard } from '@/components/AnimatedCard'
 import { AnimatedSection } from '@/components/AnimatedSection'
 import { ProcessTypewriter } from '@/components/ProcessTypewriter'
 import { TeamSection } from '@/components/TeamSection'
+import { ResponsiveImage } from '@/components/ResponsiveImage'
 import { getHomePageData } from '@/lib/sanity/queries'
+import { CaseStudyCard } from '@/components/CaseStudyCard'
+import { SkeletonCard } from '@/components/SkeletonCard'
 
 export const revalidate = 21600
 
@@ -63,32 +66,8 @@ export default async function Home() {
     }
   ]
 
-  const projectVideos = [
-    {
-      id: 1,
-      title: 'Luxury Villa Project',
-      description: 'Complete home furnishing solution',
-      videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-apartment-6575/1080p.mp4',
-      thumbnail: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80',
-      link: '/projects?category=residential'
-    },
-    {
-      id: 2,
-      title: 'Corporate Office',
-      description: 'Modern workspace transformation',
-      videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-office-space-5699/1080p.mp4',
-      thumbnail: 'https://images.unsplash.com/photo-1497366214047-2a8ba81e032e?auto=format&fit=crop&w=800&q=80',
-      link: '/projects?category=office'
-    },
-    {
-      id: 3,
-      title: 'Boutique Hotel',
-      description: 'Luxury hospitality furnishings',
-      videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-hotel-lobby-6162/1080p.mp4',
-      thumbnail: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80',
-      link: '/projects?category=hospitality'
-    }
-  ]
+  // Use Sanity data if available
+  const projectsToDisplay = data.featuredProjects || []
 
   return (
     <main className="flex min-h-screen flex-col overflow-hidden">
@@ -398,55 +377,31 @@ export default async function Home() {
           
           {/* Grid Layout */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            {projectVideos.map((item, index) => (
-              <AnimatedCard key={item.id} index={index}>
-                <div 
-                  className="group relative overflow-hidden bg-gray-900 rounded-lg shadow-xl hover:shadow-2xl transition-all duration-500"
-                >
-                <div className="relative aspect-[4/5] overflow-hidden">
-                  <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    poster={item.thumbnail}
-                  >
-                    <source src={item.videoUrl} type="video/mp4" />
-                  </video>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="absolute top-4 right-4 z-20">
-                    <span className="text-xs font-bold tracking-widest text-white/90 uppercase bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-md border border-white/20">Project</span>
-                  </div>
-                </div>
-                <div className="p-6 bg-gradient-to-b from-gray-900 to-black">
-                  <div className="mb-2">
-                    <span className="text-xs font-semibold tracking-wider text-primary-400 uppercase">Case Study {index + 1}</span>
-                  </div>
-                  <h3 className="text-xl font-serif font-bold text-white mb-2 tracking-tight">{item.title}</h3>
-                  <p className="text-gray-300 text-sm mb-4 leading-relaxed">{item.description}</p>
-                  <a 
-                    href={item.link}
-                    className="inline-flex items-center gap-2 text-primary-300 hover:text-primary-200 font-medium text-sm transition-colors duration-300 group/link"
-                  >
-                    <span className="tracking-wide">View Details</span>
-                    <svg className="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-              </AnimatedCard>
-            ))}
+            {projectsToDisplay.length > 0 ? (
+              projectsToDisplay.map((item, index) => (
+                <AnimatedCard key={item._id} index={index}>
+                  <CaseStudyCard 
+                    project={item as any} 
+                    index={index} 
+                  />
+                </AnimatedCard>
+              ))
+            ) : (
+              [1, 2, 3].map((i) => (
+                <AnimatedCard key={i} index={i}>
+                  <SkeletonCard />
+                </AnimatedCard>
+              ))
+            )}
           </div>
           
           {/* CTA Button */}
           <div className="text-center">
             <a 
-              href="/projects" 
+              href="/case-studies" 
               className="inline-flex items-center gap-3 px-8 py-4 bg-primary-950 text-white font-medium rounded-full hover:bg-primary-900 transition-all duration-300 hover:gap-5 shadow-lg hover:-translate-y-1 hover:shadow-2xl group"
             >
-              <span className="text-sm tracking-wider uppercase">View All Projects</span>
+              <span className="text-sm tracking-wider uppercase">View All Case Studies</span>
               <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>

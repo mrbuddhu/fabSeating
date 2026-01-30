@@ -9,6 +9,7 @@ const footerLinks = {
   ],
   products: [
     { href: '/catalog', label: 'Catalog' },
+    { href: '/case-studies', label: 'Case Studies' },
     { href: '/projects', label: 'Projects' },
   ],
   support: [

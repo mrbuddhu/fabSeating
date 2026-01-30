@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { Section } from '@/components/Section'
 import { PageHero } from '@/components/PageHero'
 import { MediaCard } from '@/components/MediaCard'
+import { SkeletonCard } from '@/components/SkeletonCard'
 import { getCatalogs } from '@/lib/sanity/queries'
 import { generateSEOMetadata } from '@/components/SEOHead'
 import { urlFor } from '@/lib/sanity/client'
@@ -28,21 +29,27 @@ export default async function CatalogPage() {
       <Section>
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {catalogs.map((item) => (
-              <MediaCard
-                key={item._id}
-                media={{
-                  type: 'image',
-                  src: urlFor(item.coverImage)?.width(1200).height(675).url() || '/logo.png',
-                  alt: item.title,
-                  title: item.title,
-                  description: item.description,
-                  ctaText: 'Download',
-                  ctaLink: item.fileUrl,
-                  download: true,
-                }}
-              />
-            ))}
+            {catalogs && catalogs.length > 0 ? (
+              catalogs.map((item) => (
+                <MediaCard
+                  key={item._id}
+                  media={{
+                    type: 'image',
+                    src: urlFor(item.coverImage)?.width(1200).height(675).url() || '/logo.png',
+                    alt: item.title,
+                    title: item.title,
+                    description: item.description,
+                    ctaText: 'Download',
+                    ctaLink: item.fileUrl,
+                    download: true,
+                  }}
+                />
+              ))
+            ) : (
+              [1, 2, 3].map((i) => (
+                <SkeletonCard key={i} variant="catalog" />
+              ))
+            )}
           </div>
         </div>
       </Section>

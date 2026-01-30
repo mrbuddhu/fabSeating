@@ -37,12 +37,54 @@ export interface Project {
   slug: { current: string }
   description?: string
   images?: SanityImage[]
+  videoUrl?: string
   location?: string
   year?: string
   category?: 'residential' | 'office' | 'hospitality'
   furniture?: string[]
   furnishings?: string[]
   featured?: boolean
+  seo?: SEO
+}
+
+export interface CaseStudy {
+  _id: string
+  _type: 'caseStudy'
+  _updatedAt?: string
+  title: string
+  subtitle?: string
+  slug: { current: string }
+  summary?: string
+  heroImage?: SanityImage
+  client?: string
+  location?: string
+  year?: string
+  industry?: string
+  story?: Array<{
+    heading?: string
+    content?: any
+    image?: SanityImage
+  }>
+  showcase?: Array<{
+    type: 'image' | 'video'
+    image?: SanityImage
+    videoUrl?: string
+  }>
+  challenge?: any
+  solution?: any
+  result?: any
+  stats?: Array<{
+    label: string
+    value: string
+  }>
+  gallery?: SanityImage[]
+  videoUrl?: string
+  productsUsed?: Product[]
+  testimonial?: {
+    quote: string
+    author: string
+    role: string
+  }
   seo?: SEO
 }
 

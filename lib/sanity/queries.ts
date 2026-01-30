@@ -1,5 +1,5 @@
 import { client } from './client'
-import type { Project, BlogPost, Testimonial, SolutionPage, Catalog } from '@/types'
+import type { Project, CaseStudy, BlogPost, Testimonial, SolutionPage, Catalog } from '@/types'
 
 function isSanityConfigured() {
   return !!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
@@ -10,10 +10,11 @@ export async function getHomePageData() {
     return {
       categories: [],
       testimonials: [],
+      featuredProjects: [],
     }
   }
 
-  const [categories, testimonials] = await Promise.all([
+  const [categories, testimonials, featuredProjects] = await Promise.all([
     client.fetch(
       `*[_type == "productCategory"] | order(_createdAt desc) [0...8]`,
       {},
@@ -24,11 +25,25 @@ export async function getHomePageData() {
       {},
       { next: { tags: ['sanity', 'sanity:testimonial'] } } as any,
     ),
+    client.fetch(
+      `*[_type == "caseStudy"] | order(_createdAt desc) [0...3] {
+        _id,
+        title,
+        slug,
+        summary,
+        heroImage,
+        videoUrl,
+        industry
+      }`,
+      {},
+      { next: { tags: ['sanity', 'sanity:caseStudy'] } } as any,
+    ),
   ])
 
   return {
     categories,
     testimonials,
+    featuredProjects,
   }
 }
 
@@ -45,6 +60,7 @@ export async function getProjects(category?: string): Promise<Project[]> {
       slug,
       description,
       images,
+      videoUrl,
       location,
       year,
       category,
@@ -53,6 +69,93 @@ export async function getProjects(category?: string): Promise<Project[]> {
     }`,
     category ? { category } : {},
     { next: { tags: ['sanity', 'sanity:project'] } } as any,
+  )
+}
+
+export async function getProjectBySlug(slug: string): Promise<Project | null> {
+  if (!isSanityConfigured()) return null
+  return client.fetch(
+    `*[_type == "project" && slug.current == $slug][0] {
+      _id,
+      _type,
+      _updatedAt,
+      title,
+      slug,
+      description,
+      content,
+      images,
+      location,
+      year,
+      category,
+      furniture,
+      furnishings,
+      featured,
+      seo
+    }`,
+    { slug },
+    { next: { tags: ['sanity', 'sanity:project'] } } as any,
+  )
+}
+
+export async function getCaseStudies(industry?: string): Promise<CaseStudy[]> {
+  if (!isSanityConfigured()) return []
+  const industryFilter = industry ? `&& industry == $industry` : ''
+  return client.fetch(
+    `*[_type == "caseStudy"${industryFilter}] | order(_createdAt desc) {
+      _id,
+      _type,
+      _updatedAt,
+      title,
+      slug,
+      summary,
+      heroImage,
+      client,
+      location,
+      year,
+      industry,
+      videoUrl,
+      seo
+    }`,
+    industry ? { industry } : {},
+    { next: { tags: ['sanity', 'sanity:caseStudy'] } } as any,
+  )
+}
+
+export async function getCaseStudyBySlug(slug: string): Promise<CaseStudy | null> {
+  if (!isSanityConfigured()) return null
+  return client.fetch(
+    `*[_type == "caseStudy" && slug.current == $slug][0] {
+      _id,
+      _type,
+      _updatedAt,
+      title,
+      subtitle,
+      slug,
+      summary,
+      heroImage,
+      client,
+      location,
+      year,
+      industry,
+      story,
+      showcase,
+      challenge,
+      solution,
+      result,
+      stats,
+      gallery,
+      videoUrl,
+      productsUsed[]->{
+        _id,
+        title,
+        slug,
+        images
+      },
+      testimonial,
+      seo
+    }`,
+    { slug },
+    { next: { tags: ['sanity', 'sanity:caseStudy'] } } as any,
   )
 }
 
