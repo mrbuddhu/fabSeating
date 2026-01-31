@@ -9,6 +9,40 @@ import { ResponsiveImage } from '@/components/ResponsiveImage'
 import { SkeletonCard } from '@/components/SkeletonCard'
 import Image from 'next/image'
 
+// Dummy data for preview when no Sanity data is available
+const dummyProjects = [
+  {
+    _id: 'dummy-1',
+    _type: 'project',
+    title: 'Modern Living Room',
+    slug: { current: '#' },
+    category: 'Residential',
+    location: 'Chennai',
+    year: '2024',
+    thumbnail: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80'
+  },
+  {
+    _id: 'dummy-2',
+    _type: 'project',
+    title: 'Corporate HQ',
+    slug: { current: '#' },
+    category: 'Office',
+    location: 'Bangalore',
+    year: '2025',
+    thumbnail: 'https://images.unsplash.com/photo-1497366214047-2a8ba81e032e?auto=format&fit=crop&w=800&q=80'
+  },
+  {
+    _id: 'dummy-3',
+    _type: 'project',
+    title: 'Luxury Hotel Suite',
+    slug: { current: '#' },
+    category: 'Hospitality',
+    location: 'Hyderabad',
+    year: '2024',
+    thumbnail: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80'
+  }
+]
+
 export const revalidate = 900
 
 export const metadata: Metadata = generateSEOMetadata({
@@ -106,10 +140,36 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-               <AnimatedCard key={i} index={i}>
-                 <SkeletonCard variant="project" />
-               </AnimatedCard>
+            {dummyProjects.map((project, index) => (
+              <AnimatedCard key={project._id} index={index}>
+                <Link 
+                  href={`#`}
+                  className="group relative block aspect-square overflow-hidden rounded-xl bg-gray-100"
+                >
+                  <Image
+                    src={(project as any).thumbnail}
+                    alt={project.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/40" />
+                  
+                  {/* Text Content */}
+                  <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <span className="mb-2 text-xs font-bold uppercase tracking-widest text-white/80">
+                      {project.category}
+                    </span>
+                    <h3 className="font-serif text-2xl font-bold text-white">
+                      {project.title}
+                    </h3>
+                    <p className="mt-2 text-sm text-white/90">
+                      {[project.location, project.year].filter(Boolean).join(' — ')}
+                    </p>
+                  </div>
+                </Link>
+              </AnimatedCard>
              ))}
           </div>
         )}

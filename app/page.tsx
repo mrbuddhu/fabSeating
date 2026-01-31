@@ -378,10 +378,10 @@ export default async function Home() {
           {/* Grid Layout */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
             {projectsToDisplay.length > 0 ? (
-              projectsToDisplay.map((item, index) => (
+              projectsToDisplay.map((item: any, index: number) => (
                 <AnimatedCard key={item._id} index={index}>
                   <CaseStudyCard 
-                    project={item as any} 
+                    project={item} 
                     index={index} 
                   />
                 </AnimatedCard>
