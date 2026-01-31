@@ -6,6 +6,7 @@ const footerLinks = {
   company: [
     { href: '/legals', label: 'Legals' },
     { href: '/policies', label: 'Policies' },
+    { href: '/terms', label: 'Terms' },
   ],
   products: [
     { href: '/catalog', label: 'Catalog' },
