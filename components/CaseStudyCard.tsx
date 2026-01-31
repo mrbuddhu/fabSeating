@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { ResponsiveImage } from './ResponsiveImage'
+import Image from 'next/image'
 import type { Project, CaseStudy } from '@/types'
 import { cn } from '@/lib/utils'
 
@@ -58,10 +59,11 @@ export function CaseStudyCard({ project, index = 0, className }: CaseStudyCardPr
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
           />
         ) : (project as any).thumbnail ? (
-          <img 
+          <Image 
             src={(project as any).thumbnail} 
             alt={project.title}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            fill
+            className="object-cover group-hover:scale-110 transition-transform duration-700"
           />
         ) : (
           <div className="w-full h-full bg-gray-800 flex items-center justify-center">

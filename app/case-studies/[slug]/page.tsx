@@ -251,7 +251,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
               <path d="M14.017 21L14.017 18C14.017 16.896 14.325 15.923 14.941 15.08C15.557 14.238 16.634 13.243 18.173 12.094C19.712 10.945 20.482 9.508 20.482 7.781C20.482 6.055 19.962 4.603 18.922 3.427C17.882 2.251 16.516 1.663 14.825 1.663C13.134 1.663 11.758 2.251 10.698 3.427C9.638 4.603 9.108 6.055 9.108 7.781C9.108 9.073 9.468 10.228 10.188 11.246L10.188 11.246C10.908 12.264 12.185 13.433 14.017 14.752L14.017 21ZM4.908 21L4.908 18C4.908 16.896 5.216 15.923 5.832 15.08C6.448 14.238 7.525 13.243 9.064 12.094C10.603 10.945 11.373 9.508 11.373 7.781C11.373 6.055 10.853 4.603 9.813 3.427C8.773 2.251 7.407 1.663 5.716 1.663C4.025 1.663 2.649 2.251 1.589 3.427C0.529 4.603 0 6.055 0 7.781C0 9.073 0.36 10.228 1.08 11.246L1.08 11.246C1.8 12.264 3.077 13.433 4.908 14.752L4.908 21Z" />
             </svg>
             <blockquote className="text-2xl md:text-4xl font-serif leading-relaxed mb-8 text-primary-900">
-              "{caseStudy.testimonial.quote}"
+              &quot;{caseStudy.testimonial.quote}&quot;
             </blockquote>
             <cite className="not-italic">
               <span className="block font-bold text-lg text-primary-950">{caseStudy.testimonial.author}</span>

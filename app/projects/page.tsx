@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { AnimatedCard } from '@/components/AnimatedCard'
 import { ResponsiveImage } from '@/components/ResponsiveImage'
 import { SkeletonCard } from '@/components/SkeletonCard'
+import Image from 'next/image'
 
 export const revalidate = 900
 
@@ -70,10 +71,11 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
                       className="object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                   ) : (project as any).thumbnail ? (
-                    <img
+                    <Image
                       src={(project as any).thumbnail}
                       alt={project.title}
-                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                   ) : (
                     <div className="flex h-full items-center justify-center bg-gray-200">
