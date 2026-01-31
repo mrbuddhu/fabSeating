@@ -127,6 +127,10 @@ export async function generateMetadata({ params }: CaseStudyPageProps): Promise<
     }
   }
 
+  if (!caseStudy) {
+    return {}
+  }
+
   return generateSEOMetadata({
     title: caseStudy.seo?.title || caseStudy.title,
     description: caseStudy.seo?.description || caseStudy.summary,
