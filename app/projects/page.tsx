@@ -59,6 +59,10 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
   const category = searchParams?.category
   const projects = await getProjects(category)
 
+  const filteredDummyProjects = category
+    ? dummyProjects.filter((project) => project.category.toLowerCase() === category.toLowerCase())
+    : dummyProjects
+
   const categories = [
     { label: 'All', value: '', href: '/projects' },
     { label: 'Residential', value: 'residential', href: '/projects?category=residential' },
