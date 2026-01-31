@@ -18,6 +18,7 @@ export default async function ContactPage() {
       <PageHero
         title="Let's discuss your requirement"
         subtitle="Get in touch with our team to start your furniture and furnishings journey"
+        titleClassName="whitespace-nowrap md:whitespace-normal lg:whitespace-nowrap"
       />
       <Section>
         <div className="max-w-6xl mx-auto space-y-16">

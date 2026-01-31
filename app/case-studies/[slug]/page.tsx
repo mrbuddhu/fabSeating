@@ -8,16 +8,123 @@ import { ResponsiveImage } from '@/components/ResponsiveImage'
 import { generateSEOMetadata } from '@/components/SEOHead'
 import { PortableText } from '@portabletext/react'
 import { cn } from '@/lib/utils'
+import Image from 'next/image'
+
+// Dummy data for preview when no Sanity data is available
+const dummyCaseStudies: Record<string, any> = {
+  'tech-hub-workspace': {
+    _id: 'dummy-1',
+    _type: 'caseStudy',
+    title: 'Tech Hub Workspace',
+    subtitle: 'A futuristic office space designed for collaboration and innovation',
+    summary: 'A futuristic office space designed for collaboration and innovation.',
+    client: 'TechCorp Inc.',
+    location: 'Bangalore, India',
+    year: '2023',
+    industry: 'Office',
+    heroImage: null, // Will use a placeholder
+    heroImageUrl: 'https://images.unsplash.com/photo-1497366214047-2a8ba81e032e?auto=format&fit=crop&w=1600&q=80',
+    story: [
+      {
+        heading: 'The Challenge',
+        content: [{ _type: 'block', children: [{ _type: 'span', text: 'Creating a workspace that balances open collaboration with private focus areas was the primary challenge. The client needed a flexible environment that could adapt to their rapidly growing team while maintaining a cohesive aesthetic.' }] }],
+        image: null,
+        imageUrl: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80'
+      },
+      {
+        heading: 'The Solution',
+        content: [{ _type: 'block', children: [{ _type: 'span', text: 'We implemented a modular furniture system that allows for easy reconfiguration. Sound-dampening pods were strategically placed for quiet work, while open lounges encourage spontaneous brainstorming sessions.' }] }],
+        image: null,
+        imageUrl: 'https://images.unsplash.com/photo-1504384308090-c54be3855092?auto=format&fit=crop&w=800&q=80'
+      }
+    ],
+    showcase: [
+      { type: 'image', imageUrl: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=800&q=80' },
+      { type: 'image', imageUrl: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=800&q=80' },
+      { type: 'image', imageUrl: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=800&q=80' }
+    ],
+    testimonial: {
+      quote: "The transformation has been incredible. Our team productivity has soared, and clients are always impressed when they visit.",
+      author: "Sarah Johnson",
+      role: "Operations Director"
+    }
+  },
+  'luxury-villa-interiors': {
+    _id: 'dummy-2',
+    _type: 'caseStudy',
+    title: 'Luxury Villa Interiors',
+    subtitle: 'Bespoke furniture collection for a premium residential project',
+    summary: 'Bespoke furniture collection for a premium residential project.',
+    client: 'Private Client',
+    location: 'Chennai, India',
+    year: '2024',
+    industry: 'Residential',
+    heroImage: null,
+    heroImageUrl: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1600&q=80',
+    story: [
+      {
+        heading: 'Design Vision',
+        content: [{ _type: 'block', children: [{ _type: 'span', text: 'The goal was to create a sanctuary of comfort and elegance. Every piece of furniture was custom-designed to complement the architectural details of the villa, using premium fabrics and sustainable woods.' }] }],
+        image: null,
+        imageUrl: 'https://images.unsplash.com/photo-1616137466211-f939a420be84?auto=format&fit=crop&w=800&q=80'
+      }
+    ],
+    showcase: [
+      { type: 'image', imageUrl: 'https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&w=800&q=80' },
+      { type: 'image', imageUrl: 'https://images.unsplash.com/photo-1615873968403-89e068629265?auto=format&fit=crop&w=800&q=80' }
+    ],
+    testimonial: {
+      quote: "Fab Seating understood exactly what we wanted. The craftsmanship is world-class.",
+      author: "Mr. & Mrs. Reddy",
+      role: "Homeowners"
+    }
+  },
+  'boutique-hotel-lobby': {
+    _id: 'dummy-3',
+    _type: 'caseStudy',
+    title: 'Boutique Hotel Lobby',
+    subtitle: 'Welcoming and elegant seating solutions for hospitality',
+    summary: 'Welcoming and elegant seating solutions for hospitality.',
+    client: 'The Grand Heritage',
+    location: 'Hyderabad, India',
+    year: '2024',
+    industry: 'Hospitality',
+    heroImage: null,
+    heroImageUrl: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80',
+    story: [
+      {
+        heading: 'Concept',
+        content: [{ _type: 'block', children: [{ _type: 'span', text: 'We wanted to create a first impression that lasts. The lobby furniture needed to be durable enough for high traffic yet stylish enough to set the tone for the entire hotel experience.' }] }],
+        image: null,
+        imageUrl: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=800&q=80'
+      }
+    ],
+    showcase: [
+      { type: 'image', imageUrl: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80' },
+      { type: 'image', imageUrl: 'https://images.unsplash.com/photo-1590430344266-2064f5e18c04?auto=format&fit=crop&w=800&q=80' }
+    ],
+    testimonial: {
+      quote: "Our guests constantly compliment the lobby design. It's the perfect blend of style and comfort.",
+      author: "Rajesh Kumar",
+      role: "General Manager"
+    }
+  }
+}
 
 interface CaseStudyPageProps {
   params: { slug: string }
 }
 
 export async function generateMetadata({ params }: CaseStudyPageProps): Promise<Metadata> {
-  const caseStudy = await getCaseStudyBySlug(params.slug)
+  let caseStudy = await getCaseStudyBySlug(params.slug)
   
   if (!caseStudy) {
-    return {}
+    // Check for dummy data
+    if (dummyCaseStudies[params.slug]) {
+      caseStudy = dummyCaseStudies[params.slug] as any
+    } else {
+      return {}
+    }
   }
 
   return generateSEOMetadata({
@@ -29,10 +136,15 @@ export async function generateMetadata({ params }: CaseStudyPageProps): Promise<
 }
 
 export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
-  const caseStudy = await getCaseStudyBySlug(params.slug)
+  let caseStudy = await getCaseStudyBySlug(params.slug)
 
   if (!caseStudy) {
-    notFound()
+    // Check for dummy data
+    if (dummyCaseStudies[params.slug]) {
+      caseStudy = dummyCaseStudies[params.slug] as any
+    } else {
+      notFound()
+    }
   }
 
   // Use subtitle if available, otherwise summary
@@ -82,10 +194,20 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
       </section>
 
       {/* Hero Image */}
-      {caseStudy.heroImage && (
+      {caseStudy.heroImage ? (
         <div className="relative w-full aspect-[21/9] md:aspect-[2.4/1] overflow-hidden">
           <ResponsiveImage
             image={caseStudy.heroImage}
+            alt={caseStudy.title}
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
+      ) : (caseStudy as any).heroImageUrl && (
+        <div className="relative w-full aspect-[21/9] md:aspect-[2.4/1] overflow-hidden">
+          <Image
+            src={(caseStudy as any).heroImageUrl}
             alt={caseStudy.title}
             fill
             className="object-cover"
@@ -125,6 +247,13 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                   {section.image ? (
                     <ResponsiveImage
                       image={section.image}
+                      alt={section.heading || `Story image ${idx + 1}`}
+                      fill
+                      className="object-cover hover:scale-105 transition-transform duration-700"
+                    />
+                  ) : (section as any).imageUrl ? (
+                    <Image
+                      src={(section as any).imageUrl}
                       alt={section.heading || `Story image ${idx + 1}`}
                       fill
                       className="object-cover hover:scale-105 transition-transform duration-700"
@@ -221,6 +350,15 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                     <div className="w-full h-full relative">
                        <ResponsiveImage
                          image={item.image}
+                         alt={`Gallery image ${idx + 1}`}
+                         fill
+                         className="object-cover transition-transform duration-700 group-hover:scale-110"
+                       />
+                    </div>
+                  ) : (item as any).imageUrl ? (
+                    <div className="w-full h-full relative">
+                       <Image
+                         src={(item as any).imageUrl}
                          alt={`Gallery image ${idx + 1}`}
                          fill
                          className="object-cover transition-transform duration-700 group-hover:scale-110"

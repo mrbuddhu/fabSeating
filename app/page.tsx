@@ -10,6 +10,37 @@ import { getHomePageData } from '@/lib/sanity/queries'
 import { CaseStudyCard } from '@/components/CaseStudyCard'
 import { SkeletonCard } from '@/components/SkeletonCard'
 
+// Dummy data for preview when no Sanity data is available
+const dummyCaseStudies = [
+  {
+    _id: 'dummy-1',
+    _type: 'caseStudy',
+    title: 'Tech Hub Workspace',
+    slug: { current: 'tech-hub-workspace' },
+    summary: 'A futuristic office space designed for collaboration and innovation.',
+    industry: 'Office',
+    thumbnail: 'https://images.unsplash.com/photo-1497366214047-2a8ba81e032e?auto=format&fit=crop&w=800&q=80'
+  },
+  {
+    _id: 'dummy-2',
+    _type: 'caseStudy',
+    title: 'Luxury Villa Interiors',
+    slug: { current: 'luxury-villa-interiors' },
+    summary: 'Bespoke furniture collection for a premium residential project.',
+    industry: 'Residential',
+    thumbnail: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80'
+  },
+  {
+    _id: 'dummy-3',
+    _type: 'caseStudy',
+    title: 'Boutique Hotel Lobby',
+    slug: { current: 'boutique-hotel-lobby' },
+    summary: 'Welcoming and elegant seating solutions for hospitality.',
+    industry: 'Hospitality',
+    thumbnail: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80'
+  }
+]
+
 export const revalidate = 21600
 
 export default async function Home() {
@@ -387,9 +418,9 @@ export default async function Home() {
                 </AnimatedCard>
               ))
             ) : (
-              [1, 2, 3].map((i) => (
-                <AnimatedCard key={i} index={i}>
-                  <SkeletonCard />
+              dummyCaseStudies.map((project, index) => (
+                <AnimatedCard key={project._id} index={index}>
+                  <CaseStudyCard project={project as any} index={index} />
                 </AnimatedCard>
               ))
             )}
