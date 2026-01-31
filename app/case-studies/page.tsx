@@ -56,6 +56,10 @@ export default async function CaseStudiesPage({ searchParams }: CaseStudiesPageP
   const category = searchParams?.category
   const projects = await getCaseStudies(category)
 
+  const filteredDummyCaseStudies = category
+    ? dummyCaseStudies.filter((study) => study.industry.toLowerCase() === category.toLowerCase())
+    : dummyCaseStudies
+
   const categories = [
     { label: 'All', value: '', href: '/case-studies' },
     { label: 'Residential', value: 'residential', href: '/case-studies?category=residential' },
