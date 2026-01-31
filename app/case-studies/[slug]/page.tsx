@@ -151,6 +151,10 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
     }
   }
 
+  if (!caseStudy) {
+    notFound()
+  }
+
   // Use subtitle if available, otherwise summary
   const subtitle = caseStudy.subtitle || caseStudy.summary
 
