@@ -98,7 +98,7 @@ export function HomeHero({
                     <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/15 to-black/30" />
                   </div>
 
-                  <div className="relative z-10 flex min-h-[75vh] lg:min-h-[85vh] flex-col justify-center px-4 py-12 sm:px-6 sm:py-16 md:px-10 md:py-20 lg:px-14 lg:py-24">
+                  <div className="absolute inset-0 z-10 flex flex-col justify-center px-4 py-12 sm:px-6 sm:py-16 md:px-10 md:py-20 lg:px-14 lg:py-24">
                     <div className="w-fit max-w-4xl md:max-w-6xl lg:max-w-7xl space-y-4 rounded-2xl bg-black/15 p-4 sm:p-5 md:p-6 lg:p-8 shadow-[0_18px_50px_rgba(0,0,0,0.35)]">
                       <div className="space-y-3 md:space-y-4">
                         <motion.h1
