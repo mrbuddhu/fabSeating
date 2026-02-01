@@ -105,7 +105,7 @@ export function HomeHero({
                           initial={{ opacity: 0, y: 20 }}
                           whileInView={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.6 }}
-                          className="font-serif text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl leading-tight md:leading-none tracking-tight font-black text-white drop-shadow-[0_15px_45px_rgba(0,0,0,0.6)]"
+                          className="font-serif text-2xl sm:text-3xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl leading-tight md:leading-none tracking-tight font-black text-white drop-shadow-[0_15px_45px_rgba(0,0,0,0.6)]"
                         >
                           {heroData.title?.split('\n').map((line, i) => (
                             <span key={i} className="block whitespace-nowrap">
