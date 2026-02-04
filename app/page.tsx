@@ -48,7 +48,7 @@ export default async function Home() {
   
   const heroHeadline = 'Premium Furniture & Furnishings\nfor Homes, Offices & Hospitality'
   const heroSubheadline = 'Since 2001, Fab Seating has been creating complete furniture and furnishing solutions designed for real spaces and long term use.'
-  const primaryCta = 'Talk to Us'
+  const primaryCta = 'Contact Us'
   const trustLine = 'Crafted & curated from our Chennai facility | Serving residential & commercial spaces across South India'
   
   const solutionsVideos = [

@@ -34,7 +34,7 @@ export function HomeHero({
   const defaultData = {
     title: headline,
     subtitle: subheadline,
-    ctaText: 'Talk to Us',
+    ctaText: 'Contact Us',
     ctaLink: '/contact',
   }
 
@@ -117,12 +117,12 @@ export function HomeHero({
                           initial={{ opacity: 0, y: 20 }}
                           whileInView={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.6, delay: 0.1 }}
-                          className="max-w-3xl text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)] leading-relaxed tracking-wide"
+                          className="invisible max-w-3xl text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)] leading-relaxed tracking-wide"
                         >
                           {heroData.subtitle}
                         </motion.p>
                         {trustIndicators?.length > 0 && (
-                          <div className="space-y-1">
+                          <div className="invisible space-y-1">
                             {trustIndicators.map((ti, idx) => (
                               <p
                                 key={idx}
