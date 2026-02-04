@@ -41,6 +41,17 @@ const dummyCaseStudies = [
   }
 ]
 
+const dummyCategories = [
+  { _id: 'cat-1', title: 'Sofas', slug: { current: 'sofas' }, image: { asset: { _ref: 'image-1', _type: 'reference' }, imageUrl: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=80' } },
+  { _id: 'cat-2', title: 'Chairs', slug: { current: 'chairs' }, image: { asset: { _ref: 'image-2', _type: 'reference' }, imageUrl: 'https://images.unsplash.com/photo-1503602642458-232111445857?auto=format&fit=crop&w=800&q=80' } },
+  { _id: 'cat-3', title: 'Tables', slug: { current: 'tables' }, image: { asset: { _ref: 'image-3', _type: 'reference' }, imageUrl: 'https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?auto=format&fit=crop&w=800&q=80' } },
+  { _id: 'cat-4', title: 'Beds', slug: { current: 'beds' }, image: { asset: { _ref: 'image-4', _type: 'reference' }, imageUrl: 'https://images.unsplash.com/photo-1505693314120-0d443867891c?auto=format&fit=crop&w=800&q=80' } },
+  { _id: 'cat-5', title: 'Storage', slug: { current: 'storage' }, image: { asset: { _ref: 'image-5', _type: 'reference' }, imageUrl: 'https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=800&q=80' } },
+  { _id: 'cat-6', title: 'Outdoor', slug: { current: 'outdoor' }, image: { asset: { _ref: 'image-6', _type: 'reference' }, imageUrl: 'https://images.unsplash.com/photo-1565538810643-b5bdb714032a?auto=format&fit=crop&w=800&q=80' } },
+  { _id: 'cat-7', title: 'Office', slug: { current: 'office' }, image: { asset: { _ref: 'image-7', _type: 'reference' }, imageUrl: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=800&q=80' } },
+  { _id: 'cat-8', title: 'Lighting', slug: { current: 'lighting' }, image: { asset: { _ref: 'image-8', _type: 'reference' }, imageUrl: 'https://images.unsplash.com/photo-1513506003013-d5347e0f95d1?auto=format&fit=crop&w=800&q=80' } },
+]
+
 export const revalidate = 21600
 
 export default async function Home() {
@@ -210,78 +221,12 @@ export default async function Home() {
                 ))}
               </div>
             </div>
-            
-            {/* Category Icons Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-3 sm:gap-4 md:gap-6 mb-12">
-              {[
-                { name: 'Sofas', icon: (
-                  <svg className="w-8 h-8 md:w-10 md:h-10" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20 9V7c0-1.1-.9-2-2-2h-3c0-1.66-1.34-3-3-3S9 3.34 9 5H6c-1.1 0-2 .9-2 2v2c-1.66 0-3 1.34-3 3v5c0 1.1.9 2 2 2h1c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2h1c1.1 0 2-.9 2-2v-5c0-1.66-1.34-3-3-3zM4 12h16v5h-1v-1c0-1.1-.9-2-2-2H7c-1.1 0-2 .9-2 2v1H4v-5z"/>
-                  </svg>
-                )},
-                { name: 'Chairs', icon: (
-                  <svg className="w-8 h-8 md:w-10 md:h-10" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M7 2v2h1v14c0 2.21 1.79 4 4 4s4-1.79 4-4V4h1V2H7zm4 14c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm2-4H7V4h6v8z"/>
-                  </svg>
-                )},
-                { name: 'Tables', icon: (
-                  <svg className="w-8 h-8 md:w-10 md:h-10" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4v-4h16v4zm0-6H4V6h16v6z"/>
-                  </svg>
-                )},
-                { name: 'Beds', icon: (
-                  <svg className="w-8 h-8 md:w-10 md:h-10" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M21 10.78V8c0-1.65-1.35-3-3-3h-4c-.77 0-1.47.3-2 .78-.53-.48-1.23-.78-2-.78H6C4.35 2 3 3.35 3 5v5.78c-.61.55-1 1.34-1 2.22v6h2v-2h16v2h2v-6c0-.88-.39-1.67-1-2.22zM14 4h4c.55 0 1 .45 1 1v5.78c-.16-.12-.33-.22-.5-.3L19 10.6V9c0-.55-.45-1-1-1h-3c-.55 0-1 .45-1 1v1.6l-.5.38c-.17.08-.34.18-.5.3V5c0-.55.45-1 1-1zM5 5c0-.55.45-1 1-1h4c.55 0 1 .45 1 1v5.78c-.16-.12-.33-.22-.5-.3L10 10.6V9c0-.55-.45-1-1-1H6c-.55 0-1 .45-1 1v1.6l-.5.38c-.17.08-.34.18-.5.3V5z"/>
-                  </svg>
-                )},
-                { name: 'Rugs', icon: (
-                  <svg className="w-8 h-8 md:w-10 md:h-10" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/>
-                    <rect x="2" y="4" width="20" height="16" rx="1" fill="none" stroke="currentColor" strokeWidth="2"/>
-                  </svg>
-                )},
-                { name: 'Curtains', icon: (
-                  <svg className="w-8 h-8 md:w-10 md:h-10" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM4 4h7v16H4V4zm9 0h7v16h-7V4z"/>
-                  </svg>
-                )},
-                { name: 'Mattresses', icon: (
-                  <svg className="w-8 h-8 md:w-10 md:h-10" fill="currentColor" viewBox="0 0 24 24">
-                    <rect x="2" y="4" width="20" height="16" rx="2"/>
-                    <path d="M4 8h16M4 12h16M4 16h16" stroke="currentColor" strokeWidth="1.5" fill="none"/>
-                  </svg>
-                )},
-                { name: 'Wallpapers', icon: (
-                  <svg className="w-8 h-8 md:w-10 md:h-10" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM9 7h6v2H9V7zm0 4h6v2H9v-2zm0 4h6v2H9v-2z"/>
-                  </svg>
-                )},
-              ].map((category, index) => (
-                <AnimatedCard key={index} index={index}>
-                  <div className="group flex flex-col items-center justify-center p-3 md:p-4 rounded-2xl hover:bg-primary-50/50 transition-all duration-500 cursor-pointer">
-                    <div className="text-primary-600 mb-2 transform group-hover:scale-110 group-hover:text-primary-700 transition-all duration-300">
-                      {category.icon}
-                    </div>
-                    <p className="text-[10px] sm:text-[11px] md:text-xs text-primary-700 font-medium text-center leading-tight whitespace-normal break-words group-hover:text-primary-900 transition-colors">
-                      {category.name}
-                    </p>
-                  </div>
-                </AnimatedCard>
-              ))}
-            </div>
           </div>
         </div>
       </section>
       </AnimatedSection>
 
-      {/* 4. Categories Offered Section - 8 Categories */}
-      {data.categories && data.categories.length > 0 && (
-        <AnimatedSection delay={0.1}>
-          <section className="relative py-16 md:py-20 bg-gradient-to-b from-white via-primary-50/30 to-white">
-            <CategoriesSection categories={data.categories.slice(0, 8)} />
-          </section>
-        </AnimatedSection>
-      )}
+      {/* Categories Section Moved to Solutions */}
 
       {/* 5. Solutions Section - Carousel Only (Commercial, Residential, Hospitality) */}
       <AnimatedSection delay={0.2}>
@@ -308,6 +253,11 @@ export default async function Home() {
               </p>
             </div>
           </AnimatedSection>
+
+          {/* Categories Grid */}
+          <div className="mb-16">
+            <CategoriesSection categories={data.categories && data.categories.length > 0 ? data.categories.slice(0, 8) : dummyCategories} />
+          </div>
           
           {/* Solutions Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">

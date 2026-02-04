@@ -98,17 +98,17 @@ export function HomeHero({
                     <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/15 to-black/30" />
                   </div>
 
-                  <div className="absolute inset-0 z-10 flex flex-col justify-center px-4 py-12 sm:px-6 sm:py-16 md:px-10 md:py-20 lg:px-14 lg:py-24">
+                  <div className="absolute inset-0 z-10 flex flex-col justify-center px-4 sm:px-6 md:px-10 lg:px-14">
                     <div className="w-fit max-w-4xl md:max-w-6xl lg:max-w-7xl space-y-4 rounded-2xl bg-black/15 p-4 sm:p-5 md:p-6 lg:p-8 shadow-[0_18px_50px_rgba(0,0,0,0.35)]">
                       <div className="space-y-3 md:space-y-4">
                         <motion.h1
                           initial={{ opacity: 0, y: 20 }}
                           whileInView={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.6 }}
-                          className="font-serif text-2xl sm:text-3xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl leading-tight md:leading-none tracking-tight font-black text-white drop-shadow-[0_15px_45px_rgba(0,0,0,0.6)]"
+                          className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight font-black text-white drop-shadow-[0_15px_45px_rgba(0,0,0,0.6)]"
                         >
                           {heroData.title?.split('\n').map((line, i) => (
-                            <span key={i} className="block whitespace-nowrap">
+                            <span key={i} className="block">
                               {line}
                             </span>
                           ))}

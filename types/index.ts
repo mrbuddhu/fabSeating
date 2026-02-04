@@ -133,6 +133,7 @@ export interface SanityImage {
   }
   alt?: string
   caption?: string
+  imageUrl?: string
 }
 
 export interface SEO {

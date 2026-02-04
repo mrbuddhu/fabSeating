@@ -28,6 +28,43 @@ export function ResponsiveImage({
 }: ResponsiveImageProps) {
   if (!image) return null
 
+  // Handle direct URL from dummy data
+  if (image.imageUrl) {
+    const src = image.imageUrl
+    
+    if (fill) {
+      return (
+        <Image
+          src={src}
+          alt={alt || image.alt || ''}
+          fill
+          className={cn('object-cover', className)}
+          priority={priority}
+          sizes={sizes}
+        />
+      )
+    }
+
+    return (
+      <Image
+        src={src}
+        alt={alt || image.alt || ''}
+        width={width || 1200}
+        height={height || 800}
+        className={cn(
+          objectFit === 'cover' && 'object-cover',
+          objectFit === 'contain' && 'object-contain',
+          objectFit === 'fill' && 'object-fill',
+          objectFit === 'none' && 'object-none',
+          objectFit === 'scale-down' && 'object-scale-down',
+          className
+        )}
+        priority={priority}
+        sizes={sizes}
+      />
+    )
+  }
+
   const imageUrl = urlFor(image)
   if (!imageUrl) return null
 
