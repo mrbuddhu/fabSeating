@@ -54,6 +54,22 @@ export function CategoriesSection({ categories = [] }: CategoriesSectionProps) {
 
   return (
     <Section>
+      {/* Compact icon strip above heading */}
+      <div className="mb-6 flex flex-wrap items-center justify-center gap-4 md:gap-6">
+        {categories.slice(0, 8).map((category) => {
+          const icon = CATEGORY_ICONS[category.title]
+
+          return (
+            <div
+              key={`icon-strip-${category._id}`}
+              className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-50/70 text-primary-600 shadow-sm ring-1 ring-primary-100/80"
+            >
+              {icon}
+            </div>
+          )
+        })}
+      </div>
+
       <div className="mb-12 text-center">
         <h2 className="font-serif text-3xl md:text-5xl font-bold mb-4">Shop by Category</h2>
         <p className="text-primary-700 max-w-2xl mx-auto">
@@ -62,36 +78,16 @@ export function CategoriesSection({ categories = [] }: CategoriesSectionProps) {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-        {categories.map((category) => {
-          const icon = CATEGORY_ICONS[category.title]
-          
-          return (
-            <div
-              key={category._id}
-              className="group flex flex-col items-center text-center p-6 rounded-2xl bg-primary-50/50 hover:bg-primary-100 transition-all duration-300"
-            >
-              <div className="mb-4 text-primary-600 group-hover:text-primary-800 transition-colors duration-300 transform group-hover:scale-110">
-                {icon ? (
-                  icon
-                ) : (
-                  <div className="relative w-12 h-12 overflow-hidden rounded-full bg-primary-200">
-                    {category.image && (
-                      <ResponsiveImage
-                        image={category.image}
-                        alt={category.title}
-                        fill
-                        className="object-cover"
-                      />
-                    )}
-                  </div>
-                )}
-              </div>
-              <h3 className="font-serif text-lg font-semibold text-primary-900 group-hover:text-primary-700 transition-colors">
-                {category.title}
-              </h3>
-            </div>
-          )
-        })}
+        {categories.map((category) => (
+          <div
+            key={category._id}
+            className="group flex flex-col items-center text-center p-6 rounded-2xl bg-primary-50/50 hover:bg-primary-100 transition-all duration-300"
+          >
+            <h3 className="font-serif text-lg font-semibold text-primary-900 group-hover:text-primary-700 transition-colors">
+              {category.title}
+            </h3>
+          </div>
+        ))}
       </div>
     </Section>
   )

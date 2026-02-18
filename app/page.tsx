@@ -1,5 +1,4 @@
 import { HomeHero } from '@/components/HomeHero'
-import { CategoriesSection } from '@/components/CategoriesSection'
 import { TestimonialsPreview } from '@/components/TestimonialsPreview'
 import { AnimatedCard } from '@/components/AnimatedCard'
 import { AnimatedSection } from '@/components/AnimatedSection'
@@ -41,16 +40,6 @@ const dummyCaseStudies = [
   }
 ]
 
-const dummyCategories = [
-  { _id: 'cat-1', title: 'Sofas', slug: { current: 'sofas' }, image: { asset: { _ref: 'image-1', _type: 'reference' }, imageUrl: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=80' } },
-  { _id: 'cat-2', title: 'Chairs', slug: { current: 'chairs' }, image: { asset: { _ref: 'image-2', _type: 'reference' }, imageUrl: 'https://images.unsplash.com/photo-1503602642458-232111445857?auto=format&fit=crop&w=800&q=80' } },
-  { _id: 'cat-3', title: 'Tables', slug: { current: 'tables' }, image: { asset: { _ref: 'image-3', _type: 'reference' }, imageUrl: 'https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?auto=format&fit=crop&w=800&q=80' } },
-  { _id: 'cat-4', title: 'Beds', slug: { current: 'beds' }, image: { asset: { _ref: 'image-4', _type: 'reference' }, imageUrl: 'https://images.unsplash.com/photo-1505693314120-0d443867891c?auto=format&fit=crop&w=800&q=80' } },
-  { _id: 'cat-5', title: 'Storage', slug: { current: 'storage' }, image: { asset: { _ref: 'image-5', _type: 'reference' }, imageUrl: 'https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=800&q=80' } },
-  { _id: 'cat-6', title: 'Outdoor', slug: { current: 'outdoor' }, image: { asset: { _ref: 'image-6', _type: 'reference' }, imageUrl: 'https://images.unsplash.com/photo-1565538810643-b5bdb714032a?auto=format&fit=crop&w=800&q=80' } },
-  { _id: 'cat-7', title: 'Office', slug: { current: 'office' }, image: { asset: { _ref: 'image-7', _type: 'reference' }, imageUrl: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=800&q=80' } },
-  { _id: 'cat-8', title: 'Lighting', slug: { current: 'lighting' }, image: { asset: { _ref: 'image-8', _type: 'reference' }, imageUrl: 'https://images.unsplash.com/photo-1513506003013-d5347e0f95d1?auto=format&fit=crop&w=800&q=80' } },
-]
 
 export const revalidate = 21600
 
@@ -283,11 +272,6 @@ export default async function Home() {
             </div>
           </AnimatedSection>
 
-          {/* Categories Grid */}
-          <div className="mb-16">
-            <CategoriesSection categories={data.categories && data.categories.length > 0 ? data.categories.slice(0, 8) : dummyCategories} />
-          </div>
-          
           {/* Solutions Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
             {solutionsVideos.map((item, index) => (
