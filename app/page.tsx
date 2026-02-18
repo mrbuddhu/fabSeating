@@ -179,7 +179,7 @@ export default async function Home() {
             </div>
             
             {/* Video Reels Grid - Portrait Mode - Full Width */}
-            <div className="w-full mb-12">
+            <div className="w-full mb-8">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-[6px] md:gap-2">
                 {[
                   {
@@ -219,6 +219,36 @@ export default async function Home() {
                   </AnimatedCard>
                 ))}
               </div>
+            </div>
+
+            {/* Minimal Instagram link for Fabseating */}
+            <div className="w-full mb-12 flex justify-center">
+              <a
+                href="https://instagram.com/fabseating"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/80 px-5 py-2 text-xs md:text-sm text-gray-800 shadow-[0_14px_35px_rgba(15,23,42,0.22)] hover:shadow-[0_20px_55px_rgba(15,23,42,0.3)] hover:-translate-y-0.5 hover:border-primary-400/80 hover:bg-primary-50/95 hover:text-primary-900 transition-all duration-300 backdrop-blur-md"
+              >
+                <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-tr from-[#f58529] via-[#dd2a7b] to-[#515bd4]">
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    className="h-3.5 w-3.5 text-white"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M12 7.3A4.7 4.7 0 1 0 16.7 12 4.7 4.7 0 0 0 12 7.3Zm0 7.7A3 3 0 1 1 15 12a3 3 0 0 1-3 3Zm4.9-7.9a1.1 1.1 0 1 1-1.1-1.1 1.1 1.1 0 0 1 1.1 1.1Z"
+                    />
+                    <path
+                      fill="currentColor"
+                      d="M17.9 3.1H6.1A3 3 0 0 0 3.1 6.1v11.8a3 3 0 0 0 3 3h11.8a3 3 0 0 0 3-3V6.1a3 3 0 0 0-3-3Zm1.8 14.8a1.8 1.8 0 0 1-1.8 1.8H6.1a1.8 1.8 0 0 1-1.8-1.8V6.1a1.8 1.8 0 0 1 1.8-1.8h11.8a1.8 1.8 0 0 1 1.8 1.8Z"
+                    />
+                  </svg>
+                </span>
+                <span className="tracking-[0.16em] uppercase font-medium">
+                  View more
+                </span>
+              </a>
             </div>
           </div>
         </div>
