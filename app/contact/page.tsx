@@ -16,8 +16,7 @@ export default async function ContactPage() {
   return (
     <>
       <PageHero
-        title="Let's discuss your requirement"
-        subtitle="Get in touch with our team to start your furniture and furnishings journey"
+        title="What's your requirement?"
         titleClassName="whitespace-nowrap md:whitespace-normal lg:whitespace-nowrap"
       />
       <Section>
@@ -41,12 +40,12 @@ export default async function ContactPage() {
                   <strong>Email:</strong> info@fabseating.com
                 </p>
                 <p>
-                  <strong>Phone:</strong> +1 (555) 123-4567
+                  <strong>Phone:</strong> 098410 66135
                 </p>
                 <p>
                   <strong>Address:</strong><br />
-                  123 Furniture Street<br />
-                  Design District, NY 10001
+                  428, Kilpauk Garden Road, Aspiran Garden Colony<br />
+                  Kilpauk, Chennai, Tamil Nadu 600010
                 </p>
               </div>
             </div>

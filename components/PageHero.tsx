@@ -22,17 +22,13 @@ export function PageHero({
         <div className={cn('max-w-3xl', contentClassName)}>
           <h1
             className={cn(
-              'font-serif text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-balance',
+              'font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 text-balance break-words',
               titleClassName,
             )}
+            style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}
           >
             {title}
           </h1>
-          {subtitle && (
-            <p className="text-lg md:text-xl text-primary-700 leading-relaxed">
-              {subtitle}
-            </p>
-          )}
         </div>
       </Container>
     </section>

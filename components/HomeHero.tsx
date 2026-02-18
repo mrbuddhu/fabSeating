@@ -98,14 +98,15 @@ export function HomeHero({
                     <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/15 to-black/30" />
                   </div>
 
-                  <div className="absolute inset-0 z-10 flex flex-col justify-center px-4 sm:px-6 md:px-10 lg:px-14">
-                    <div className="w-fit max-w-4xl md:max-w-6xl lg:max-w-7xl space-y-4 rounded-2xl bg-black/15 p-4 sm:p-5 md:p-6 lg:p-8 shadow-[0_18px_50px_rgba(0,0,0,0.35)]">
-                      <div className="space-y-3 md:space-y-4">
+                  <div className="absolute inset-0 z-10 flex flex-col justify-center px-4 sm:px-6 md:px-10 lg:px-14 overflow-hidden">
+                    <div className="w-full max-w-full sm:max-w-4xl md:max-w-5xl lg:max-w-6xl mx-auto space-y-4 rounded-2xl bg-black/15 p-4 sm:p-5 md:p-6 lg:p-8 shadow-[0_18px_50px_rgba(0,0,0,0.35)] overflow-hidden">
+                      <div className="space-y-3 md:space-y-4 overflow-hidden">
                         <motion.h1
                           initial={{ opacity: 0, y: 20 }}
                           whileInView={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.6 }}
-                          className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight font-black text-white drop-shadow-[0_15px_45px_rgba(0,0,0,0.6)]"
+                          className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight font-black text-white drop-shadow-[0_15px_45px_rgba(0,0,0,0.6)] break-words"
+                          style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}
                         >
                           {heroData.title?.split('\n').map((line, i) => (
                             <span key={i} className="block">
@@ -113,14 +114,6 @@ export function HomeHero({
                             </span>
                           ))}
                         </motion.h1>
-                        <motion.p
-                          initial={{ opacity: 0, y: 20 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.6, delay: 0.1 }}
-                          className="invisible max-w-3xl text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)] leading-relaxed tracking-wide"
-                        >
-                          {heroData.subtitle}
-                        </motion.p>
                         {trustIndicators?.length > 0 && (
                           <div className="invisible space-y-1">
                             {trustIndicators.map((ti, idx) => (

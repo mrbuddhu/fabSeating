@@ -116,7 +116,6 @@ export default async function Home() {
       {/* 1. Hero Section */}
       <HomeHero 
         headline={heroHeadline}
-        subheadline={heroSubheadline}
         trustIndicators={['Crafted & curated from our Chennai facility', 'Serving residential & commercial spaces across South India']}
         brands={['Premium Quality', '20+ Years Experience', 'Custom Solutions']}
         data={{

@@ -97,14 +97,15 @@ export function HomeHeroCoral({
                     <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/15 to-black/30" />
                   </div>
 
-                  <div className="relative z-10 flex h-full flex-col justify-end px-4 pb-8 pt-4 sm:px-6 sm:pb-10 sm:pt-6 md:px-12 md:pb-14 md:pt-8 lg:px-16 lg:pb-16 lg:pt-12">
-                    <div className="space-y-4 rounded-2xl bg-black/25 p-4 sm:p-5 md:p-6 lg:p-8 shadow-[0_18px_50px_rgba(0,0,0,0.35)]">
-                      <div className="space-y-3 md:space-y-4">
+                  <div className="relative z-10 flex h-full flex-col justify-end px-4 pb-8 pt-4 sm:px-6 sm:pb-10 sm:pt-6 md:px-12 md:pb-14 md:pt-8 lg:px-16 lg:pb-16 lg:pt-12 overflow-hidden">
+                    <div className="w-full max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto space-y-4 rounded-2xl bg-black/25 p-4 sm:p-5 md:p-6 lg:p-8 shadow-[0_18px_50px_rgba(0,0,0,0.35)] overflow-hidden">
+                      <div className="space-y-3 md:space-y-4 overflow-hidden">
                         <motion.h1
                           initial={{ opacity: 0, y: 20 }}
                           whileInView={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.6 }}
-                          className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-[1.2] sm:leading-tight md:leading-tight font-black drop-shadow-[0_10px_35px_rgba(0,0,0,0.45)]"
+                          className="font-serif text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-[1.2] sm:leading-tight md:leading-tight font-black drop-shadow-[0_10px_35px_rgba(0,0,0,0.45)] break-words"
+                          style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}
                         >
                           {heroData.title?.split(' for ').map((part, index, array) => (
                             <span key={index}>
@@ -113,14 +114,6 @@ export function HomeHeroCoral({
                             </span>
                           ))}
                         </motion.h1>
-                        <motion.p
-                          initial={{ opacity: 0, y: 20 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.6, delay: 0.1 }}
-                          className="max-w-2xl text-base sm:text-lg md:text-lg lg:text-xl font-semibold text-white drop-shadow-[0_8px_24px_rgba(0,0,0,0.4)] leading-relaxed"
-                        >
-                          {heroData.subtitle}
-                        </motion.p>
                       </div>
 
                       <div className="flex flex-wrap items-center gap-2 sm:gap-3">
