@@ -14,7 +14,7 @@ interface HomeHeroCoralProps {
     ctaLink?: string
   }
   headline: string
-  subheadline: string
+  subheadline?: string
   trustIndicators: string[]
   brands: string[]
   videoUrl?: string
@@ -32,7 +32,7 @@ export function HomeHeroCoral({
 }: HomeHeroCoralProps) {
   const defaultData = {
     title: headline,
-    subtitle: subheadline,
+    subtitle: subheadline || '',
     ctaText: 'Talk to Us',
     ctaLink: '/contact',
   }
