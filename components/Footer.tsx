@@ -39,12 +39,12 @@ export function Footer() {
                 href="https://www.instagram.com/fabseating/?hl=en"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-primary-900/40 text-primary-50 hover:bg-primary-50 hover:text-primary-900 transition-colors duration-200"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary-900/60 text-primary-50 shadow-[0_10px_25px_rgba(15,23,42,0.6)] hover:shadow-[0_16px_40px_rgba(15,23,42,0.75)] hover:-translate-y-0.5 hover:bg-primary-50 hover:text-primary-900 transition-all duration-300 backdrop-blur-sm"
               >
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
-                  className="h-4 w-4"
+                  className="h-5 w-5"
                 >
                   <path
                     fill="currentColor"
@@ -60,12 +60,12 @@ export function Footer() {
                 href="https://www.youtube.com/@FabSeating"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-primary-900/40 text-primary-50 hover:bg-primary-50 hover:text-primary-900 transition-colors duration-200"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary-900/60 text-primary-50 shadow-[0_10px_25px_rgba(15,23,42,0.6)] hover:shadow-[0_16px_40px_rgba(15,23,42,0.75)] hover:-translate-y-0.5 hover:bg-primary-50 hover:text-primary-900 transition-all duration-300 backdrop-blur-sm"
               >
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
-                  className="h-4 w-4"
+                  className="h-5 w-5"
                 >
                   <path
                     fill="currentColor"

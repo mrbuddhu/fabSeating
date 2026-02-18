@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import Image from 'next/image'
 import { PageHero } from '@/components/PageHero'
 import { Section } from '@/components/Section'
 import { EnquiryForm } from '@/components/EnquiryForm'
@@ -19,6 +20,40 @@ export default async function ContactPage() {
         title="What's your requirement?"
         titleClassName="whitespace-nowrap md:whitespace-normal lg:whitespace-nowrap"
       />
+      {/* Craft & execution strip image */}
+      <section className="bg-primary-950 text-primary-50">
+        <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-6 md:py-8 flex flex-col md:flex-row items-center gap-4 md:gap-6">
+          <div className="flex-1 grid grid-cols-3 gap-3">
+            <div className="relative h-20 md:h-24 rounded-xl overflow-hidden bg-primary-900/40">
+              <Image
+                src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=80"
+                alt="Carpenter working on wooden furniture"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative h-20 md:h-24 rounded-xl overflow-hidden bg-primary-900/40">
+              <Image
+                src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=80"
+                alt="Upholstery and fabric detailing"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative h-20 md:h-24 rounded-xl overflow-hidden bg-primary-900/40">
+              <Image
+                src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=900&q=80"
+                alt="Finishing and paint work on site"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+          <p className="flex-1 text-sm md:text-base text-primary-100 leading-relaxed">
+            From carpentry and upholstery to on-site painting and finishing, our team handles every stage of execution with the same care and detail you see in the final space.
+          </p>
+        </div>
+      </section>
       <Section>
         <div className="max-w-6xl mx-auto space-y-16">
           <div className="bg-primary-50/30 rounded-2xl p-8 md:p-12">
