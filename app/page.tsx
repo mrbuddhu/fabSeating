@@ -5,7 +5,8 @@ import { AnimatedSection } from '@/components/AnimatedSection'
 import { ProcessTypewriter } from '@/components/ProcessTypewriter'
 import { TeamSection } from '@/components/TeamSection'
 import { ResponsiveImage } from '@/components/ResponsiveImage'
-import { getHomePageData } from '@/lib/sanity/queries'
+import { getHomePageData, getHomePageContent, getTeamMembers } from '@/lib/sanity/queries'
+import { urlFor } from '@/lib/sanity/client'
 import { CaseStudyCard } from '@/components/CaseStudyCard'
 import { SkeletonCard } from '@/components/SkeletonCard'
 
@@ -43,59 +44,58 @@ const dummyCaseStudies = [
 
 export const revalidate = 21600
 
+const defaultReels = [
+  { id: 1, videoUrl: '/videos/video1.mp4', thumbnail: 'https://images.unsplash.com/photo-1556911220-bff31c812d0c?auto=format&fit=crop&w=800&q=80' },
+  { id: 2, videoUrl: '/videos/video2.mp4', thumbnail: 'https://images.unsplash.com/photo-1524758631624-e2822e304a36?auto=format&fit=crop&w=800&q=80' },
+  { id: 3, videoUrl: '/videos/video3.mp4', thumbnail: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80' },
+  { id: 4, videoUrl: '/videos/video4.mp4', thumbnail: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80' },
+]
+
+const defaultSolutionsCards = [
+  { id: 1, title: 'Residential Collection', description: 'Elegant and functional furniture for modern homes', videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-living-room-1574/1080p.mp4', thumbnail: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80', link: '/solutions/residential' },
+  { id: 2, title: 'Office Spaces', description: 'Productive and inspiring work environments', videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-boutique-office-6267/1080p.mp4', thumbnail: 'https://images.unsplash.com/photo-1497366214047-2a8ba81e032e?auto=format&fit=crop&w=800&q=80', link: '/solutions/office' },
+  { id: 3, title: 'Hospitality', description: 'Durable and stylish solutions for hospitality', videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-cafe-5535/1080p.mp4', thumbnail: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80', link: '/solutions/hospitality' },
+]
+
+const defaultProcessSteps = ['Consultation', 'Design & Selection', 'Manufacturing & Sourcing', 'Quality Checks', 'Delivery & Installation', 'After Sales Support']
+
 export default async function Home() {
-  const data = await getHomePageData()
-  
+  const [data, homeContent, teamMembers] = await Promise.all([
+    getHomePageData(),
+    getHomePageContent(),
+    getTeamMembers(),
+  ])
+
   const heroHeadline = 'Premium Furniture & Furnishings\nfor Homes, Offices & Hospitality'
   const heroSubheadline = 'Since 2001, Fab Seating has been creating complete furniture and furnishing solutions designed for real spaces and long term use.'
   const primaryCta = 'Contact Us'
   const trustLine = 'Crafted & curated from our Chennai facility | Serving residential & commercial spaces across South India'
-  
-  const solutionsVideos = [
-    {
-      id: 1,
-      title: 'Residential Collection',
-      description: 'Elegant and functional furniture for modern homes',
-      videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-living-room-1574/1080p.mp4',
-      thumbnail: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80',
-      link: '/solutions/residential'
-    },
-    {
-      id: 2,
-      title: 'Office Spaces',
-      description: 'Productive and inspiring work environments',
-      videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-boutique-office-6267/1080p.mp4',
-      thumbnail: 'https://images.unsplash.com/photo-1497366214047-2a8ba81e032e?auto=format&fit=crop&w=800&q=80',
-      link: '/solutions/office'
-    },
-    {
-      id: 3,
-      title: 'Hospitality',
-      description: 'Durable and stylish solutions for hospitality',
-      videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-cafe-5535/1080p.mp4',
-      thumbnail: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80',
-      link: '/solutions/hospitality'
-    }
-  ]
 
-  const customVideos = [
-    {
-      id: 1,
-      title: 'Bespoke Furniture',
-      description: 'Tailored to your exact specifications',
-      videoUrl: 'https://cdn.coverr.co/videos/coverr-carpenter-working-on-furniture-4549/1080p.mp4',
-      thumbnail: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
-      link: '/contact'
-    },
-    {
-      id: 2,
-      title: 'Custom Upholstery',
-      description: 'Choose from premium fabrics and designs',
-      videoUrl: 'https://cdn.coverr.co/videos/coverr-tailor-sewing-clothes-8575/1080p.mp4',
-      thumbnail: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80',
-      link: '/contact'
+  // About reels: from Sanity or fallback (with poster URL for Sanity images)
+  const aboutReels = (homeContent?.aboutReels?.length ? homeContent.aboutReels : defaultReels).map((reel: any, i: number) => {
+    const fallback = defaultReels[i] || defaultReels[0]
+    const videoUrl = reel.videoUrl ?? fallback?.videoUrl ?? ''
+    const posterImage = reel.posterImage
+    const posterUrl = posterImage && urlFor(posterImage) ? urlFor(posterImage).width(800).height(1422).url() : (reel.thumbnail ?? fallback?.thumbnail ?? '')
+    return { id: i + 1, videoUrl, posterUrl, posterImage }
+  })
+
+  // Solutions cards: from Sanity or fallback
+  const solutionsVideos = (homeContent?.solutionsCards?.length ? homeContent.solutionsCards : defaultSolutionsCards).map((card: any, i: number) => {
+    const fallback = defaultSolutionsCards[i] || defaultSolutionsCards[0]
+    const posterImage = card.posterImage
+    const thumbnail = posterImage && urlFor(posterImage) ? urlFor(posterImage).width(800).height(450).url() : (card.thumbnail ?? fallback?.thumbnail ?? '')
+    return {
+      id: i + 1,
+      title: card.title ?? fallback?.title ?? '',
+      description: card.description ?? fallback?.description ?? '',
+      videoUrl: card.videoUrl ?? fallback?.videoUrl ?? '',
+      thumbnail,
+      link: card.link ?? fallback?.link ?? '/solutions/residential',
     }
-  ]
+  })
+
+  const processSteps = (homeContent?.processSteps?.length ? homeContent.processSteps : defaultProcessSteps) as string[]
 
   // Use Sanity data if available
   const projectsToDisplay = data.featuredProjects || []
@@ -167,31 +167,10 @@ export default async function Home() {
               </p>
             </div>
             
-            {/* Video Reels Grid - Portrait Mode - Full Width */}
+            {/* Video Reels Grid - Portrait Mode - Full Width (from Sanity Homepage or fallback) */}
             <div className="w-full mb-8">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-[6px] md:gap-2">
-                {[
-                  {
-                    id: 1,
-                    videoUrl: '/videos/video1.mp4',
-                    thumbnail: 'https://images.unsplash.com/photo-1556911220-bff31c812d0c?auto=format&fit=crop&w=800&q=80',
-                  },
-                  {
-                    id: 2,
-                    videoUrl: '/videos/video2.mp4',
-                    thumbnail: 'https://images.unsplash.com/photo-1524758631624-e2822e304a36?auto=format&fit=crop&w=800&q=80',
-                  },
-                  {
-                    id: 3,
-                    videoUrl: '/videos/video3.mp4',
-                    thumbnail: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80',
-                  },
-                  {
-                    id: 4,
-                    videoUrl: '/videos/video4.mp4',
-                    thumbnail: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80',
-                  },
-                ].map((reel, index) => (
+                {aboutReels.map((reel, index) => (
                   <AnimatedCard key={reel.id} index={index}>
                     <div className="relative w-full aspect-[9/16] overflow-hidden rounded-2xl md:rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.3)] hover:shadow-[0_35px_90px_rgba(0,0,0,0.4)] transition-all duration-500 hover:-translate-y-2">
                       <video
@@ -200,7 +179,7 @@ export default async function Home() {
                         muted
                         playsInline
                         className="w-full h-full object-cover"
-                        poster={reel.thumbnail}
+                        poster={reel.posterUrl}
                       >
                         <source src={reel.videoUrl} type="video/mp4" />
                       </video>
@@ -334,14 +313,7 @@ export default async function Home() {
               <h3 className="text-xs font-semibold tracking-[0.2em] uppercase text-primary-300/60 mb-6">Our Process</h3>
             </div>
             <ProcessTypewriter 
-              steps={[
-                'Consultation',
-                'Design & Selection',
-                'Manufacturing & Sourcing',
-                'Quality Checks',
-                'Delivery & Installation',
-                'After Sales Support'
-              ]}
+              steps={processSteps}
               delay={1500}
             />
           </div>
@@ -515,9 +487,9 @@ export default async function Home() {
       </section>
       </AnimatedSection>
 
-      {/* Team Section */}
+      {/* Team Section (from Sanity Team or fallback) */}
       <AnimatedSection>
-        <TeamSection />
+        <TeamSection teamMembers={teamMembers} />
       </AnimatedSection>
 
       {/* 9. Testimonials/Social Proof */}

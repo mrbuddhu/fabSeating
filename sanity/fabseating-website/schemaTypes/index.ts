@@ -9,11 +9,16 @@ import siteSettings from '../../schemas/siteSettings'
 import landingPage from '../../schemas/landingPage'
 import solutionPage from '../../schemas/solutionPage'
 import catalog from '../../schemas/catalog'
+import caseStudy from '../../schemas/caseStudy'
+import homePage from '../../schemas/homePage'
+import contactPage from '../../schemas/contactPage'
+import teamMember from '../../schemas/teamMember'
 
 export const schemaTypes = [
   productCategory,
   product,
   project,
+  caseStudy,
   blogPost,
   author,
   testimonial,
@@ -22,4 +27,7 @@ export const schemaTypes = [
   landingPage,
   solutionPage,
   catalog,
+  homePage,
+  contactPage,
+  teamMember,
 ]

@@ -6,6 +6,8 @@ import { Footer } from '@/components/Footer'
 import { Analytics } from '@/components/Analytics'
 import { StickyBookCTA } from '@/components/StickyBookCTA'
 import { PWARegister } from '@/components/PWARegister'
+import { getSiteSettings } from '@/lib/sanity/queries'
+import { urlFor } from '@/lib/sanity/client'
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -79,15 +81,14 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  if (typeof window !== 'undefined') {
-    require('smooth-scroll')('a[href*="#"]')
-  }
-  
+  const settings = await getSiteSettings()
+  const logoUrl = settings?.logo && urlFor(settings.logo as any) ? urlFor(settings.logo as any).width(440).height(128).url() : null
+
   return (
     <html lang="en" className={`${playfair.variable} ${montserrat.variable} luxury-scrollbar`}>
       <body className="font-sans antialiased luxury-scrollbar">
@@ -98,10 +99,10 @@ export default function RootLayout({
           Skip to main content
         </a>
         <PWARegister />
-        <Header />
+        <Header logoUrl={logoUrl} />
         <main id="main-content">{children}</main>
         <StickyBookCTA />
-        <Footer />
+        <Footer logoUrl={logoUrl} />
         <Analytics />
       </body>
     </html>

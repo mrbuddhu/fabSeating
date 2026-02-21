@@ -229,13 +229,73 @@ export async function getTestimonials(): Promise<Testimonial[]> {
 
 export async function getSiteSettings() {
   if (!isSanityConfigured()) {
-    return {
-      announcement: null,
-    }
+    return { announcement: null, logo: null }
   }
+  const doc = await client.fetch(
+    `*[_type == "siteSettings"][0] {
+      announcementText,
+      logo
+    }`,
+    {},
+    { next: { tags: ['sanity', 'sanity:siteSettings'] } } as any,
+  )
   return {
-    announcement: null,
+    announcement: doc?.announcementText ?? null,
+    logo: doc?.logo ?? null,
   }
+}
+
+/** Homepage singleton: hero, about reels, solutions cards, process steps */
+export async function getHomePageContent() {
+  if (!isSanityConfigured()) return null
+  return client.fetch(
+    `*[_type == "homePage"][0] {
+      heroImage,
+      aboutReels[] {
+        videoUrl,
+        posterImage
+      },
+      solutionsCards[] {
+        title,
+        description,
+        link,
+        posterImage,
+        videoUrl
+      },
+      processSteps
+    }`,
+    {},
+    { next: { tags: ['sanity', 'sanity:homePage'] } } as any,
+  )
+}
+
+/** Contact page singleton: strip images */
+export async function getContactPageContent() {
+  if (!isSanityConfigured()) return null
+  return client.fetch(
+    `*[_type == "contactPage"][0] {
+      stripImages
+    }`,
+    {},
+    { next: { tags: ['sanity', 'sanity:contactPage'] } } as any,
+  )
+}
+
+/** Team members for Team section */
+export async function getTeamMembers() {
+  if (!isSanityConfigured()) return []
+  return client.fetch(
+    `*[_type == "teamMember"] | order(_createdAt asc) {
+      _id,
+      name,
+      role,
+      bio,
+      image,
+      socials
+    }`,
+    {},
+    { next: { tags: ['sanity', 'sanity:teamMember'] } } as any,
+  )
 }
 
 export async function getSolutionPage(

@@ -16,7 +16,7 @@ const navItems = [
   { href: '/contact', label: 'Contact' },
 ]
 
-export function Header() {
+export function Header({ logoUrl }: { logoUrl?: string | null }) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [showAnnouncement, setShowAnnouncement] = useState(true)
@@ -111,7 +111,7 @@ export function Header() {
           >
             <Link href="/" className="flex items-center gap-3">
               <Image
-                src="/logo.png"
+                src={logoUrl || '/logo.png'}
                 alt="Fabseating - Premium Furniture & Furnishings"
                 width={200}
                 height={60}

@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate-favicons": "node scripts/generate-favicons.js"
+    "generate-favicons": "node scripts/generate-favicons.js",
+    "seed-sanity": "node scripts/seed-sanity.js"
   },
   "dependencies": {
     "@portabletext/react": "^6.0.2",

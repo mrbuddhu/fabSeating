@@ -1,6 +1,6 @@
 export default {
   name: 'solutionPage',
-  title: 'Solution Page',
+  title: 'Solutions',
   type: 'document',
   fields: [
     {
