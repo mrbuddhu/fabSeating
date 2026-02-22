@@ -15,6 +15,24 @@
 
 ---
 
+## 🌐 Live site not updating when you publish? (e.g. founders/team)
+
+- **Localhost** gets fresh data when you refresh. The **live site** (e.g. Vercel) uses cache and only updates when:
+  1. **Webhook (recommended):** Sanity notifies your live site when you publish, and the site revalidates the homepage.
+  2. **Fallback:** The homepage cache is set to revalidate every **5 minutes**, so even without a webhook, updates will appear within a few minutes.
+
+**To get instant updates on the live site**, set up a webhook in Sanity:
+
+1. Go to [sanity.io/manage](https://sanity.io/manage) → your project (**n59kaaxb**) → **API** → **Webhooks**.
+2. **Create webhook**:
+   - **URL:** `https://YOUR-LIVE-DOMAIN.com/api/sanity-webhook` (use your real live site URL, not localhost).
+   - **Trigger:** Create, Update, Delete.
+   - **Dataset:** production.
+   - (Optional) Set **Secret** and add the same value as `SANITY_WEBHOOK_SECRET` in your live site’s environment variables.
+3. Redeploy your live site so it has the webhook route, then publish a change in Studio; the live site should update within a few seconds.
+
+---
+
 ## ✅ **EDITABLE FROM SANITY STUDIO** (These WILL work)
 
 ### **Homepage** (single document: “Homepage” in Studio)

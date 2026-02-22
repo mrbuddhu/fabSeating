@@ -42,7 +42,8 @@ const dummyCaseStudies = [
 ]
 
 
-export const revalidate = 21600
+// Revalidate so Sanity updates (e.g. founders/team) appear on live site within minutes when webhook runs; fallback if webhook not set
+export const revalidate = 300
 
 const defaultReels = [
   { id: 1, videoUrl: '/videos/video1.mp4', thumbnail: 'https://images.unsplash.com/photo-1556911220-bff31c812d0c?auto=format&fit=crop&w=800&q=80' },

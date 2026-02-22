@@ -38,9 +38,11 @@ export async function POST(req: NextRequest) {
       revalidatePath(path)
     })
 
-    // Revalidate by tag for dynamic content
+    // Revalidate by tag so homepage team/founders and other Sanity-driven content refresh
     revalidateTag('sanity')
-    
+    revalidateTag('sanity:teamMember')
+    revalidateTag('sanity:homePage')
+
     return NextResponse.json({ revalidated: true, paths: pathsToRevalidate })
   } catch (error) {
     console.error('Webhook error:', error)
