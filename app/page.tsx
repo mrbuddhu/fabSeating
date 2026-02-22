@@ -76,7 +76,8 @@ export default async function Home() {
     const fallback = defaultReels[i] || defaultReels[0]
     const videoUrl = reel.videoUrl ?? fallback?.videoUrl ?? ''
     const posterImage = reel.posterImage
-    const posterUrl = posterImage && urlFor(posterImage) ? urlFor(posterImage).width(800).height(1422).url() : (reel.thumbnail ?? fallback?.thumbnail ?? '')
+    const posterBuilder = posterImage ? urlFor(posterImage) : null
+    const posterUrl = posterBuilder ? posterBuilder.width(800).height(1422).url() : (reel.thumbnail ?? fallback?.thumbnail ?? '')
     return { id: i + 1, videoUrl, posterUrl, posterImage }
   })
 
@@ -84,7 +85,8 @@ export default async function Home() {
   const solutionsVideos = (homeContent?.solutionsCards?.length ? homeContent.solutionsCards : defaultSolutionsCards).map((card: any, i: number) => {
     const fallback = defaultSolutionsCards[i] || defaultSolutionsCards[0]
     const posterImage = card.posterImage
-    const thumbnail = posterImage && urlFor(posterImage) ? urlFor(posterImage).width(800).height(450).url() : (card.thumbnail ?? fallback?.thumbnail ?? '')
+    const thumbBuilder = posterImage ? urlFor(posterImage) : null
+    const thumbnail = thumbBuilder ? thumbBuilder.width(800).height(450).url() : (card.thumbnail ?? fallback?.thumbnail ?? '')
     return {
       id: i + 1,
       title: card.title ?? fallback?.title ?? '',
@@ -170,7 +172,7 @@ export default async function Home() {
             {/* Video Reels Grid - Portrait Mode - Full Width (from Sanity Homepage or fallback) */}
             <div className="w-full mb-8">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-[6px] md:gap-2">
-                {aboutReels.map((reel, index) => (
+                {aboutReels.map((reel: { id: number; videoUrl: string; posterUrl: string }, index: number) => (
                   <AnimatedCard key={reel.id} index={index}>
                     <div className="relative w-full aspect-[9/16] overflow-hidden rounded-2xl md:rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.3)] hover:shadow-[0_35px_90px_rgba(0,0,0,0.4)] transition-all duration-500 hover:-translate-y-2">
                       <video
@@ -253,7 +255,7 @@ export default async function Home() {
 
           {/* Solutions Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            {solutionsVideos.map((item, index) => (
+            {solutionsVideos.map((item: { id: number; title: string; description: string; videoUrl: string; thumbnail: string; link: string }, index: number) => (
               <AnimatedCard key={item.id} index={index}>
                 <div 
                   className="group relative rounded-2xl overflow-hidden border-2 border-primary-200/50 bg-white shadow-lg hover:shadow-2xl hover:border-primary-400 transition-all duration-500"

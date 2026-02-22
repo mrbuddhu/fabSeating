@@ -96,7 +96,9 @@ export default {
       type: 'type',
       media: 'heroImage',
     },
-    prepare({ title, type }: { title: string; type: string }) {
+    prepare(value: Record<string, unknown>) {
+      const title = value?.title as string | undefined
+      const type = value?.type as string | undefined
       return {
         title: title || 'Untitled',
         subtitle: type ? type.charAt(0).toUpperCase() + type.slice(1) : '',
