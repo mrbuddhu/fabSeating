@@ -1,5 +1,20 @@
 # What's Actually Editable from Sanity Studio
 
+## 🔄 Still seeing the old Studio? (No Homepage, Contact Page, Team, Case Studies?)
+
+- **Option A – Use Studio locally (recommended):** From the project root run:
+  ```bash
+  npm run studio
+  ```
+  Open the URL it prints (e.g. http://localhost:3333). You’ll see **all** the new types (Homepage, Contact Page, Team, Case Studies, etc.) because it uses your current code.
+
+- **Option B – Update the hosted Studio (e.g. fabseating.sanity.studio):**
+  1. In a terminal: `cd sanity/fabseating-website` then `npm run build` then `npm run deploy`.
+  2. When it asks **“Select existing studio hostname”**, use the arrow keys to select **fabseating** and press **Enter**.
+  3. After deploy finishes, do a **hard refresh** (Ctrl+Shift+R) or open the Studio in an **incognito/private** window so you don’t see a cached old version.
+
+---
+
 ## ✅ **EDITABLE FROM SANITY STUDIO** (These WILL work)
 
 ### **Homepage** (single document: “Homepage” in Studio)
