@@ -100,12 +100,13 @@
 - **How to edit:** Go to Sanity Studio → Solution Page → Create/Edit (one per type: residential/office/hospitality)
 
 ### 7. **Catalogs** (`catalog`)
-- **Where it appears:** Catalog pages
+- **Where it appears:** `/catalog` page
 - **Editable fields:**
   - Title, Description
   - Cover Image
-  - PDF File
-- **How to edit:** Go to Sanity Studio → Catalog → Create/Edit
+  - Catalog File (PDF)
+- **How to edit:** Go to Sanity Studio → **Catalogs** → Create/Edit
+- **Important:** After creating or editing a catalog, click **Publish** (top right). Unpublished (draft) catalogs do **not** appear on the site. If you don’t see your catalog, open it in Studio and Publish it, then hard-refresh the site (Ctrl+Shift+R) or wait a few minutes for cache to refresh.
 
 ---
 

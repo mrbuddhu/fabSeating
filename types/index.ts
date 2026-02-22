@@ -181,6 +181,6 @@ export interface Catalog {
   title: string
   description?: string
   coverImage?: SanityImage
-  fileUrl: string
+  fileUrl?: string | null
   seo?: SEO
 }
