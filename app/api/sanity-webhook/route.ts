@@ -21,8 +21,8 @@ export async function POST(req: NextRequest) {
     }
 
     const data = JSON.parse(body)
-    
-    // Revalidate all pages when content changes
+
+    // Revalidate every path that shows Sanity content so the live site updates instantly
     const pathsToRevalidate = [
       '/',
       '/projects',
@@ -30,18 +30,25 @@ export async function POST(req: NextRequest) {
       '/contact',
       '/solutions/residential',
       '/solutions/office',
-      '/solutions/hospitality'
+      '/solutions/hospitality',
     ]
+    pathsToRevalidate.forEach((path) => revalidatePath(path))
+    revalidatePath('/case-studies', 'layout')
+    revalidatePath('/blog', 'layout')
 
-    // Revalidate specific paths
-    pathsToRevalidate.forEach(path => {
-      revalidatePath(path)
-    })
-
-    // Revalidate by tag so homepage team/founders and other Sanity-driven content refresh
+    // Invalidate all Sanity-backed data so next request fetches fresh content
     revalidateTag('sanity')
     revalidateTag('sanity:teamMember')
     revalidateTag('sanity:homePage')
+    revalidateTag('sanity:contactPage')
+    revalidateTag('sanity:siteSettings')
+    revalidateTag('sanity:project')
+    revalidateTag('sanity:caseStudy')
+    revalidateTag('sanity:catalog')
+    revalidateTag('sanity:solutionPage')
+    revalidateTag('sanity:blogPost')
+    revalidateTag('sanity:testimonial')
+    revalidateTag('sanity:productCategory')
 
     return NextResponse.json({ revalidated: true, paths: pathsToRevalidate })
   } catch (error) {

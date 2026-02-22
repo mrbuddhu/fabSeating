@@ -15,21 +15,16 @@
 
 ---
 
-## 🌐 Live site not updating when you publish? (e.g. founders/team)
+## 🌐 Instant updates on the live site (publish in Sanity → see changes on real site)
 
-- **Localhost** gets fresh data when you refresh. The **live site** (e.g. Vercel) uses cache and only updates when:
-  1. **Webhook (recommended):** Sanity notifies your live site when you publish, and the site revalidates the homepage.
-  2. **Fallback:** The homepage cache is set to revalidate every **5 minutes**, so even without a webhook, updates will appear within a few minutes.
+- **Localhost** already shows new content when you refresh. For the **live site** (your real URL, e.g. Vercel), content updates **instantly** after you publish in Sanity **only if** you add a webhook that points to that live URL.
 
-**To get instant updates on the live site**, set up a webhook in Sanity:
+**One-time setup:** See **[WEBHOOK_SETUP.md](./WEBHOOK_SETUP.md)** for step-by-step instructions. In short:
 
-1. Go to [sanity.io/manage](https://sanity.io/manage) → your project (**n59kaaxb**) → **API** → **Webhooks**.
-2. **Create webhook**:
-   - **URL:** `https://YOUR-LIVE-DOMAIN.com/api/sanity-webhook` (use your real live site URL, not localhost).
-   - **Trigger:** Create, Update, Delete.
-   - **Dataset:** production.
-   - (Optional) Set **Secret** and add the same value as `SANITY_WEBHOOK_SECRET` in your live site’s environment variables.
-3. Redeploy your live site so it has the webhook route, then publish a change in Studio; the live site should update within a few seconds.
+1. Go to [sanity.io/manage](https://sanity.io/manage) → your project → **API** → **Webhooks** → **Create webhook**.
+2. Set **URL** to `https://YOUR-LIVE-DOMAIN.com/api/sanity-webhook` (use your **real live domain**, not localhost).
+3. Trigger: **Create**, **Update**, **Delete**. Dataset: **production**. Save.
+4. After you deploy your site, every **Publish** in Studio will revalidate the live site within seconds.
 
 ---
 
