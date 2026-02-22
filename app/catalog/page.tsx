@@ -7,7 +7,8 @@ import { getCatalogs } from '@/lib/sanity/queries'
 import { generateSEOMetadata } from '@/components/SEOHead'
 import { urlFor } from '@/lib/sanity/client'
 
-export const revalidate = 900
+// Revalidate often so new/updated catalogs appear soon after publish
+export const revalidate = 60
 
 export const metadata: Metadata = generateSEOMetadata({
   title: 'Catalog',

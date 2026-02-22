@@ -335,6 +335,8 @@ export async function getCatalogs(): Promise<Catalog[]> {
       seo
     }`,
     {},
-    { next: { tags: ['sanity', 'sanity:catalog'] } } as any,
+    {
+      next: { tags: ['sanity', 'sanity:catalog'], revalidate: 60 },
+    } as any,
   )
 }
