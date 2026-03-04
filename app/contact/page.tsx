@@ -31,42 +31,21 @@ export default async function ContactPage() {
         title="What's your requirement?"
         titleClassName="whitespace-nowrap md:whitespace-normal lg:whitespace-nowrap"
       />
-      {/* Craft & execution strip (from Sanity Contact Page or fallback) */}
+      {/* Compact explanation strip (replaces image strip) */}
       <section className="bg-primary-950 text-primary-50">
-        <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-6 md:py-8 flex flex-col md:flex-row items-center gap-4 md:gap-6">
-          <div className="flex-1 grid grid-cols-3 gap-3">
-            {stripImages ? (
-              stripImages.slice(0, 3).map((img: any, i: number) => (
-                <div key={i} className="relative h-20 md:h-24 rounded-xl overflow-hidden bg-primary-900/40">
-                  <ResponsiveImage image={img} alt={img.alt || `Strip image ${i + 1}`} fill className="object-cover" />
-                </div>
-              ))
-            ) : (
-              defaultStripImages.map((img, i) => (
-                <div key={i} className="relative h-20 md:h-24 rounded-xl overflow-hidden bg-primary-900/40">
-                  <Image src={img.url} alt={img.alt} fill className="object-cover" />
-                </div>
-              ))
-            )}
-          </div>
-          <p className="flex-1 text-sm md:text-base text-primary-100 leading-relaxed">
-            From carpentry and upholstery to on-site painting and finishing, our team handles every stage of execution with the same care and detail you see in the final space.
+        <div className="max-w-4xl mx-auto px-4 md:px-6 lg:px-8 py-4 md:py-5">
+          <h2 className="font-serif text-xl md:text-2xl font-semibold mb-2">
+            What happens after you contact us
+          </h2>
+          <p className="text-sm md:text-base text-primary-100 leading-relaxed">
+            Once you reach out, our team will get back to you within 24 hours. We&apos;ll schedule a consultation
+            to understand your requirements, discuss your vision, and provide initial recommendations. From there,
+            we&apos;ll guide you through our process, keeping you informed at every step until your space is complete.
           </p>
         </div>
       </section>
       <Section>
         <div className="max-w-6xl mx-auto space-y-16">
-          <div className="bg-primary-50/30 rounded-2xl p-8 md:p-12">
-            <h2 className="font-serif text-2xl md:text-3xl font-semibold mb-4 text-primary-950">
-              What happens after you contact us
-            </h2>
-            <p className="text-primary-700 leading-relaxed mb-6">
-              Once you reach out, our team will get back to you within 24 hours. We&apos;ll schedule a consultation 
-              to understand your requirements, discuss your vision, and provide initial recommendations. From there, 
-              we&apos;ll guide you through our process, keeping you informed at every step until your space is complete.
-            </p>
-          </div>
-
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
               <h2 className="font-serif text-2xl font-semibold mb-6">Get in Touch</h2>

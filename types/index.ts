@@ -88,6 +88,15 @@ export interface CaseStudy {
   seo?: SEO
 }
 
+export interface BlogPostSection {
+  _key?: string
+  number?: string
+  title?: string
+  tags?: string[]
+  body?: any
+  highlight?: string
+}
+
 export interface BlogPost {
   _id: string
   _type: 'blogPost'
@@ -103,6 +112,19 @@ export interface BlogPost {
   }
   publishedAt?: string
   seo?: SEO
+  /** Journal layout (same as main site blog articles) */
+  useJournalLayout?: boolean
+  heroTag?: string
+  byline?: string
+  intro?: any
+  sections?: BlogPostSection[]
+  summaryTitle?: string
+  summaryBody?: any
+  summaryBullets?: string[]
+  ctaHeading?: string
+  ctaDescription?: string
+  readTime?: string
+  category?: string
 }
 
 export interface Testimonial {

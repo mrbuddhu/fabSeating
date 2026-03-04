@@ -1,3 +1,23 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { revalidateTag } from 'next/cache'
+
+export async function POST(req: NextRequest) {
+  const secret = req.nextUrl.searchParams.get('secret')
+
+  if (!secret || secret !== process.env.REVALIDATE_SECRET) {
+    return NextResponse.json({ message: 'Invalid token' }, { status: 401 })
+  }
+
+  try {
+    // Revalidate all Sanity blog post queries (listing + detail pages)
+    revalidateTag('sanity:blogPost')
+
+    return NextResponse.json({ revalidated: true, now: Date.now() })
+  } catch (error) {
+    return NextResponse.json({ revalidated: false, message: 'Error revalidating' }, { status: 500 })
+  }
+}
+
 import { revalidateTag } from 'next/cache'
 import { NextResponse } from 'next/server'
 

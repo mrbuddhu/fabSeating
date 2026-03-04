@@ -175,6 +175,8 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
         image
       },
       publishedAt,
+      readTime,
+      category,
       seo
     }`,
     {},
@@ -199,7 +201,26 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> 
         image
       },
       publishedAt,
-      seo
+      seo,
+      useJournalLayout,
+      heroTag,
+      byline,
+      intro,
+      sections[] {
+        _key,
+        number,
+        title,
+        tags,
+        body,
+        highlight
+      },
+      summaryTitle,
+      summaryBody,
+      summaryBullets,
+      ctaHeading,
+      ctaDescription,
+      readTime,
+      category
     }`,
     { slug },
     { next: { tags: ['sanity', 'sanity:blogPost'] } } as any,
