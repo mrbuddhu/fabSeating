@@ -1,11 +1,13 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
-import { PortableText } from '@portabletext/react'
+import Link from 'next/link'
+import { PortableText, type PortableTextReactComponents } from '@portabletext/react'
+
 import type { BlogPost } from '@/types'
 import { urlFor } from '@/lib/sanity/client'
-import Link from 'next/link'
 
-const portableTextComponents = {
+const portableTextComponents: Partial<PortableTextReactComponents> = {
   block: {
     normal: ({ children }: any) => (
       <p className="text-primary-800 mb-4 last:mb-0 leading-relaxed">{children}</p>
@@ -27,7 +29,6 @@ const portableTextComponents = {
     image: ({ value }: any) => {
       const src = value ? urlFor(value)?.width(1800).url() ?? null : null
       if (!src) return null
-      // eslint-disable-next-line @next/next/no-img-element
       return <img src={src} alt={value?.alt ?? ''} className="w-full h-auto rounded-2xl my-6" />
     },
   },
@@ -36,6 +37,7 @@ const portableTextComponents = {
 export function SanityBlogPostView({ post }: { post: BlogPost }) {
   const heroImageUrl = post.featuredImage
     ? urlFor(post.featuredImage)?.width(2000).height(1200).url() ?? null
+    : null
   const useJournal = post.useJournalLayout !== false && (post.sections?.length ?? 0) > 0
 
   if (!useJournal) {
