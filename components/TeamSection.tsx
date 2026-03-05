@@ -3,36 +3,6 @@ import Image from 'next/image'
 import { Section } from '@/components/Section'
 import { ResponsiveImage } from '@/components/ResponsiveImage'
 
-const defaultTeamMembers = [
-  {
-    _id: '1',
-    name: 'Mr. Gobind Chugani',
-    role: 'Founder',
-    bio: 'A seasoned industry leader with over 30 years of experience, guiding Fabseating’s vision to create spaces that inspire.',
-    image: null as any,
-    imageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80',
-    socials: {},
-  },
-  {
-    _id: '2',
-    name: 'Mr. Deenu Chugani',
-    role: 'Director – Business & Strategy',
-    bio: 'A forward-thinking business strategist, driving Fabseating’s growth with innovation and a modern market perspective.',
-    image: null as any,
-    imageUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80',
-    socials: {},
-  },
-  {
-    _id: '3',
-    name: 'Mr. Haresh',
-    role: 'Operations & Client Relations Manager',
-    bio: 'A dedicated operations leader, ensuring seamless coordination and consistent quality across every client experience.',
-    image: null as any,
-    imageUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80',
-    socials: {},
-  },
-]
-
 type TeamMember = {
   _id: string
   name: string
@@ -40,10 +10,44 @@ type TeamMember = {
   bio?: string | null
   image?: { asset?: { _ref: string } } | null
   socials?: { linkedin?: string; twitter?: string; instagram?: string; email?: string } | null
+  imageUrl?: string
 }
 
+// Hard-coded leadership copy. Sanity controls only photos & socials.
+const HARD_CODED_TEAM: TeamMember[] = [
+  {
+    _id: '1',
+    name: 'Mr. Gobind Chugani',
+    role: 'Founder',
+    bio: '“A seasoned industry leader with over 30 years of experience, guiding Fabseating’s vision to create spaces that inspire.”',
+    imageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    _id: '2',
+    name: 'Mr. Deenu Chugani',
+    role: 'Director – Business & Strategy',
+    bio: '“A forward-thinking business strategist, driving Fabseating’s growth with innovation and a modern market perspective.”',
+    imageUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    _id: '3',
+    name: 'Mr. Haresh',
+    role: 'Operations & Client Relations Manager',
+    bio: '“A dedicated operations leader, ensuring seamless coordination and consistent quality across every client experience.”',
+    imageUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80',
+  },
+]
+
 export const TeamSection = ({ teamMembers: sanityMembers }: { teamMembers?: TeamMember[] | null }) => {
-  const teamMembers = (sanityMembers?.length ? sanityMembers : defaultTeamMembers) as (TeamMember & { imageUrl?: string })[]
+  // Merge hard-coded text with optional images + socials from Sanity (by order)
+  const teamMembers: TeamMember[] = HARD_CODED_TEAM.map((base, index) => {
+    const sanity = sanityMembers?.[index]
+    return {
+      ...base,
+      image: sanity?.image ?? null,
+      socials: sanity?.socials ?? undefined,
+    }
+  })
   return (
     <Section className="grainy-gradient py-12 md:py-16 text-white relative overflow-hidden">
       {/* Background decoration */}
@@ -64,7 +68,7 @@ export const TeamSection = ({ teamMembers: sanityMembers }: { teamMembers?: Team
             const socials = member.socials || {}
             const hasSocials =
               !!(socials.linkedin || socials.twitter || socials.instagram || socials.email)
-            const imageSrc = member.image?.asset ? null : (member as any).imageUrl
+            const imageSrc = member.image?.asset ? null : member.imageUrl
             return (
             <div 
               key={member._id} 
