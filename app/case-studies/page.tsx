@@ -21,6 +21,7 @@ const dummyCaseStudies = [
     client: 'Murugan',
     location: 'Kilpauk, Chennai',
     year: '2024',
+    // This heroImage will be replaced with Sanity image when uploaded
     heroImage: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80'
   },
   {
@@ -33,6 +34,7 @@ const dummyCaseStudies = [
     client: 'Mr. Rajesh Kothari',
     location: 'Nungambakkam, Chennai',
     year: '2024',
+    // This heroImage will be replaced with Sanity image when uploaded
     heroImage: 'https://images.unsplash.com/photo-1524758631624-e2822e304a36?auto=format&fit=crop&w=800&q=80'
   },
   {
@@ -42,6 +44,7 @@ const dummyCaseStudies = [
     slug: { current: 'boutique-hotel-lobby' },
     summary: 'Welcoming and elegant seating solutions for hospitality. Coming Soon.',
     industry: 'hospitality',
+    // This heroImage will be replaced with Sanity image when uploaded
     heroImage: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80',
     comingSoon: true
   }
