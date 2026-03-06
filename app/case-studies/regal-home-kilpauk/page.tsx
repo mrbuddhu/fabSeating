@@ -256,7 +256,7 @@ export default function CaseStudyPage() {
                   <div className="space-y-4 text-lg text-gray-700">
                     <p>
                       The highlight of the project? Custom throne chairs — bold, sculptural, and unmistakably regal. 
-                      These weren't just seating pieces; they became conversation starters and focal points of the home.
+                      These weren&apos;t just seating pieces; they became conversation starters and focal points of the home.
                     </p>
                     <p>
                       Crafted with intricate detailing and premium materials, they added a royal character that truly set the space apart.
