@@ -62,9 +62,9 @@ const defaultReels = [
 ]
 
 const defaultSolutionsCards = [
-  { id: 1, title: 'Residential Collection', description: 'Elegant and functional furniture for modern homes', videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-living-room-1574/1080p.mp4', thumbnail: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80', link: '/solutions/residential' },
-  { id: 2, title: 'Office Spaces', description: 'Productive and inspiring work environments', videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-boutique-office-6267/1080p.mp4', thumbnail: 'https://images.unsplash.com/photo-1497366214047-2a8ba81e032e?auto=format&fit=crop&w=800&q=80', link: '/solutions/office' },
-  { id: 3, title: 'Hospitality', description: 'Durable and stylish solutions for hospitality', videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-cafe-5535/1080p.mp4', thumbnail: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80', link: '/solutions/hospitality' },
+  { id: 1, title: 'RESIDENTIAL', description: 'Designed around how your family lives, gathers, rests, and grows. A home isn\'t built with furniture. It\'s shaped by how every piece works together.', videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-living-room-1574/1080p.mp4', thumbnail: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80', link: '/solutions/residential' },
+  { id: 2, title: 'OFFICE', description: 'Workspaces engineered for productivity, culture, and growth. An office isn\'t just where work happens. It shapes how teams collaborate, focus, and perform.', videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-boutique-office-6267/1080p.mp4', thumbnail: 'https://images.unsplash.com/photo-1497366214047-2a8ba81e032e?auto=format&fit=crop&w=800&q=80', link: '/solutions/office' },
+  { id: 3, title: 'HOSPITALITY', description: 'Furniture and furnishings crafted to elevate guest experience. In hospitality, every detail shapes perception. From lobby to guest room, comfort, durability, and aesthetics must work seamlessly together.', videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-cafe-5535/1080p.mp4', thumbnail: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80', link: '/solutions/hospitality' },
 ]
 
 const defaultProcessSteps = ['Consultation', 'Design & Selection', 'Manufacturing & Sourcing', 'Quality Checks', 'Delivery & Installation', 'After Sales Support']
@@ -91,18 +91,50 @@ export default async function Home() {
     return { id: i + 1, videoUrl, posterUrl, posterImage }
   })
 
+  // Helper function to get image URL (works with both Sanity images and string URLs)
+  function getImageUrl(image: any) {
+    if (!image) return null
+  
+    // If it's a Sanity image object
+    if (image && typeof image === 'object' && image.asset) {
+      return urlFor(image)?.width(1920).height(1080).url() || null
+    }
+  
+    // If it's a string URL
+    if (typeof image === 'string') {
+      return image
+    }
+  
+    return null
+  }
+
+  // Helper function to get solution image URL (works with both Sanity images and string URLs)
+  function getSolutionImageUrl(image: any) {
+    if (!image) return null
+  
+    // If it's a Sanity image object
+    if (image && typeof image === 'object' && image.asset) {
+      return urlFor(image)?.width(800).height(450).url() || null
+    }
+  
+    // If it's a string URL
+    if (typeof image === 'string') {
+      return image
+    }
+  
+    return null
+  }
+
   // Solutions cards: from Sanity or fallback
   const solutionsVideos = (homeContent?.solutionsCards?.length ? homeContent.solutionsCards : defaultSolutionsCards).map((card: any, i: number) => {
     const fallback = defaultSolutionsCards[i] || defaultSolutionsCards[0]
-    const posterImage = card.posterImage
-    const thumbBuilder = posterImage ? urlFor(posterImage) : null
-    const thumbnail = thumbBuilder ? thumbBuilder.width(800).height(450).url() : (card.thumbnail ?? fallback?.thumbnail ?? '')
+    const thumbnail = getSolutionImageUrl(card.posterImage) || (card.thumbnail ?? fallback?.thumbnail ?? '')
     return {
       id: i + 1,
       title: card.title ?? fallback?.title ?? '',
       description: card.description ?? fallback?.description ?? '',
       videoUrl: card.videoUrl ?? fallback?.videoUrl ?? '',
-      thumbnail,
+      thumbnail, // This will be Sanity image URL when uploaded
       link: card.link ?? fallback?.link ?? '/solutions/residential',
     }
   })
@@ -271,16 +303,12 @@ export default async function Home() {
                   className="group relative rounded-2xl overflow-hidden border-2 border-primary-200/50 bg-white shadow-lg hover:shadow-2xl hover:border-primary-400 transition-all duration-500"
                 >
                 <div className="relative h-[450px] overflow-hidden">
-                  <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
+                  <Image
+                    src={item.thumbnail}
+                    alt={item.title}
+                    fill
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    poster={item.thumbnail}
-                  >
-                    <source src={item.videoUrl} type="video/mp4" />
-                  </video>
+                  />
                   <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-primary-950/80"></div>
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
