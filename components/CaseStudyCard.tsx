@@ -32,11 +32,14 @@ export function CaseStudyCard({ project, index = 0, className }: CaseStudyCardPr
     return ''
   }
 
+  // Check if coming soon
+  const isComingSoon = (project as any).comingSoon
+
   return (
-    <Link
-      href={`/case-studies/${project.slug.current}`}
+    <div
       className={cn(
         'group relative overflow-hidden bg-gray-900 rounded-lg shadow-xl hover:shadow-2xl transition-all duration-500 block h-full',
+        isComingSoon ? 'cursor-not-allowed' : '',
         className
       )}
     >
@@ -75,7 +78,20 @@ export function CaseStudyCard({ project, index = 0, className }: CaseStudyCardPr
           <span className="text-xs font-bold tracking-widest text-white/90 uppercase bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-md border border-white/20">
             {getCategory()}
           </span>
+          {isComingSoon && (
+            <span className="absolute -top-2 -right-2 text-xs font-bold tracking-widest text-yellow-400 uppercase bg-yellow-900/80 backdrop-blur-sm px-2 py-1 rounded-md border border-yellow-400/30">
+              Coming Soon
+            </span>
+          )}
         </div>
+        {isComingSoon && (
+          <div className="absolute inset-0 bg-black/60 z-10 flex items-center justify-center">
+            <div className="text-center">
+              <div className="text-white/90 font-serif text-2xl font-bold mb-2">Coming Soon</div>
+              <div className="text-white/70 text-sm">This case study is under construction</div>
+            </div>
+          </div>
+        )}
       </div>
       <div className="p-6 bg-gradient-to-b from-gray-900 to-black h-full">
         <div className="mb-2">
@@ -91,19 +107,28 @@ export function CaseStudyCard({ project, index = 0, className }: CaseStudyCardPr
             {getDescription()}
           </p>
         )}
-        <div className="inline-flex items-center gap-2 text-primary-300 hover:text-primary-200 font-medium text-sm transition-colors duration-300 group/link">
-          <span className="tracking-wide">View Details</span>
-          <svg
-            className="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2.5}
+        {!isComingSoon ? (
+          <Link
+            href={`/case-studies/${project.slug.current}`}
+            className="inline-flex items-center gap-2 text-primary-300 hover:text-primary-200 font-medium text-sm transition-colors duration-300 group/link"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-          </svg>
-        </div>
+            <span className="tracking-wide">View Details</span>
+            <svg
+              className="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2.5}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </Link>
+        ) : (
+          <div className="inline-flex items-center gap-2 text-gray-500 font-medium text-sm">
+            <span className="tracking-wide">Coming Soon</span>
+          </div>
+        )}
       </div>
-    </Link>
+    </div>
   )
 }
