@@ -33,12 +33,13 @@ export function ResponsiveImage({
     const src = image.imageUrl
     
     if (fill) {
+      const objectClass = objectFit === 'cover' ? 'object-cover' : objectFit === 'contain' ? 'object-contain' : objectFit === 'fill' ? 'object-fill' : objectFit === 'none' ? 'object-none' : 'object-scale-down'
       return (
         <Image
           src={src}
           alt={alt || image.alt || ''}
           fill
-          className={cn('object-cover', className)}
+          className={cn(objectClass, className)}
           priority={priority}
           sizes={sizes}
         />
@@ -71,12 +72,13 @@ export function ResponsiveImage({
   const src = imageUrl.width(fill ? 1920 : width || 1200).height(fill ? 1080 : height || 800).url()
 
   if (fill) {
+    const objectClass = objectFit === 'cover' ? 'object-cover' : objectFit === 'contain' ? 'object-contain' : objectFit === 'fill' ? 'object-fill' : objectFit === 'none' ? 'object-none' : 'object-scale-down'
     return (
       <Image
         src={src}
         alt={alt || image.alt || ''}
         fill
-        className={cn('object-cover', className)}
+        className={cn(objectClass, className)}
         priority={priority}
         sizes={sizes}
       />
