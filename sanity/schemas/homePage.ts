@@ -39,7 +39,7 @@ export default {
         {
           type: 'object',
           fields: [
-            { name: 'title', title: 'Title', type: 'string', validation: (Rule: any) => Rule.required() },
+            { name: 'title', title: 'Title', type: 'string' },
             { name: 'description', title: 'Description', type: 'text' },
             { name: 'link', title: 'Link', type: 'string', description: 'e.g. /solutions/residential' },
             { name: 'posterImage', title: 'Poster / thumbnail image', type: 'image', options: { hotspot: true } },
