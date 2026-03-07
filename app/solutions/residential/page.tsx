@@ -40,8 +40,10 @@ const furnishingsIcons: Record<string, string> = {}
 export default async function ResidentialPage() {
   const page = await getSolutionPage('residential')
 
-  const content = {
-    title: '🏠 RESIDENTIAL',
+  // Fallback content if no Sanity data exists
+  const fallbackContent = {
+    emoji: '🏠',
+    title: 'RESIDENTIAL',
     subtitle: 'Designed around how your family lives, gathers, rests, and grows.',
     tagline: 'A home isn\'t built with furniture. It\'s shaped by how every piece works together.',
     introText: 'At Fab Seating, we create integrated residential environments — where sofas, storage, fabrics, lighting, and finishes are thoughtfully curated to function beautifully and last for years.',
@@ -78,6 +80,19 @@ export default async function ResidentialPage() {
     bestSuitedFor: 'Perfect for homeowners seeking cohesive, well-designed living spaces. Ideal for new homes, renovations, or room-by-room updates across apartments, villas, and independent houses.',
   }
 
+  // Use Sanity data if available, otherwise use fallback
+  const content = {
+    title: `${page?.emoji || fallbackContent.emoji} ${page?.title || fallbackContent.title}`,
+    subtitle: page?.subtitle || fallbackContent.subtitle,
+    tagline: page?.tagline || fallbackContent.tagline,
+    introText: page?.introText || fallbackContent.introText,
+    imageOptions: (page?.galleryImages && page.galleryImages.length > 0) ? [] : fallbackContent.imageOptions,
+    whatWeDesign: page?.whatWeDesign || fallbackContent.whatWeDesign,
+    whyChooseUs: page?.whyChooseUs || fallbackContent.whyChooseUs,
+    approach: page?.approach || fallbackContent.approach,
+    bestSuitedFor: page?.bestSuitedFor || fallbackContent.bestSuitedFor,
+  }
+
   return (
     <>
       <PageHero
@@ -103,7 +118,7 @@ export default async function ResidentialPage() {
                   {image ? (
                     <ResponsiveImage
                       image={image}
-                      alt={content.title}
+                      alt={`${content.title} - Image ${index + 1}`}
                       fill
                       className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                     />

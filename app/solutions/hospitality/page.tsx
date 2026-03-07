@@ -40,10 +40,12 @@ const furnishingsIcons: Record<string, string> = {}
 export default async function HospitalityPage() {
   const page = await getSolutionPage('hospitality')
 
-  const content = {
-    title: '🏨 HOSPITALITY',
+  // Fallback content if no Sanity data exists
+  const fallbackContent = {
+    emoji: '🏨',
+    title: 'HOSPITALITY',
     subtitle: 'Furniture and furnishings crafted to elevate guest experience.',
-    tagline: 'In hospitality, every detail shapes perception. From the lobby to the guest room, comfort, durability, and aesthetics must work seamlessly together.',
+    tagline: 'In hospitality, every detail shapes perception. From lobby to the guest room, comfort, durability, and aesthetics must work seamlessly together.',
     introText: 'Fab Seating delivers hospitality environments built to withstand high traffic while maintaining refined visual appeal.',
     imageOptions: [
       'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80',
@@ -75,6 +77,19 @@ export default async function HospitalityPage() {
       'Installation and final styling'
     ],
     bestSuitedFor: 'Perfect for hotels, resorts, restaurants, cafés, bars, and event venues seeking durable, stylish, and guest-friendly environments.',
+  }
+
+  // Use Sanity data if available, otherwise use fallback
+  const content = {
+    title: `${page?.emoji || fallbackContent.emoji} ${page?.title || fallbackContent.title}`,
+    subtitle: page?.subtitle || fallbackContent.subtitle,
+    tagline: page?.tagline || fallbackContent.tagline,
+    introText: page?.introText || fallbackContent.introText,
+    imageOptions: (page?.galleryImages && page.galleryImages.length > 0) ? [] : fallbackContent.imageOptions,
+    designedFor: page?.whatWeDesign || fallbackContent.designedFor,
+    whyTrustUs: page?.whyChooseUs || fallbackContent.whyTrustUs,
+    approach: page?.approach || fallbackContent.approach,
+    bestSuitedFor: page?.bestSuitedFor || fallbackContent.bestSuitedFor,
   }
 
   return (

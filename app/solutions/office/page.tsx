@@ -40,8 +40,10 @@ const furnishingsIcons: Record<string, string> = {}
 export default async function OfficePage() {
   const page = await getSolutionPage('office')
 
-  const content = {
-    title: '🏢 OFFICE',
+  // Fallback content if no Sanity data exists
+  const fallbackContent = {
+    emoji: '🏢',
+    title: 'OFFICE',
     subtitle: 'Workspaces engineered for productivity, culture, and growth.',
     tagline: 'An office isn\'t just where work happens. It shapes how teams collaborate, focus, and perform.',
     introText: 'Fab Seating designs office environments that balance ergonomics, aesthetics, and efficiency — from executive cabins to large-scale corporate floors.',
@@ -53,7 +55,7 @@ export default async function OfficePage() {
       'https://images.unsplash.com/photo-1517002366821-a344e6c3b3f6?auto=format&fit=crop&w=1200&q=80',
       'https://images.unsplash.com/photo-1603796836034-708c3f1b7d81?auto=format&fit=crop&w=1200&q=80'
     ],
-    whatWeBuild: [
+    whatWeDesign: [
       'Ergonomic seating systems',
       'Modular workstation layouts',
       'Executive and boardroom environments',
@@ -61,7 +63,7 @@ export default async function OfficePage() {
       'Reception spaces that elevate brand perception',
       'Smart storage and partition systems'
     ],
-    builtForTeams: [
+    whyChooseUs: [
       'Scalable designs',
       'Durable commercial-grade materials',
       'Custom layouts based on workflow',
@@ -75,6 +77,19 @@ export default async function OfficePage() {
       'Installation and final styling'
     ],
     bestSuitedFor: 'This makes you sound enterprise-ready. Perfect for corporate offices, co-working spaces, startups, and professional service firms seeking scalable, professional workspace solutions.',
+  }
+
+  // Use Sanity data if available, otherwise use fallback
+  const content = {
+    title: `${page?.emoji || fallbackContent.emoji} ${page?.title || fallbackContent.title}`,
+    subtitle: page?.subtitle || fallbackContent.subtitle,
+    tagline: page?.tagline || fallbackContent.tagline,
+    introText: page?.introText || fallbackContent.introText,
+    imageOptions: (page?.galleryImages && page.galleryImages.length > 0) ? [] : fallbackContent.imageOptions,
+    whatWeDesign: page?.whatWeDesign || fallbackContent.whatWeDesign,
+    whyChooseUs: page?.whyChooseUs || fallbackContent.whyChooseUs,
+    approach: page?.approach || fallbackContent.approach,
+    bestSuitedFor: page?.bestSuitedFor || fallbackContent.bestSuitedFor,
   }
 
   return (
@@ -138,7 +153,7 @@ export default async function OfficePage() {
               <h2 className="font-serif text-3xl font-bold text-primary-950">What We Build For Workspaces</h2>
             </div>
             <div className="grid md:grid-cols-2 gap-4">
-              {content.whatWeBuild.map((item, index) => (
+              {content.whatWeDesign.map((item: string, index: number) => (
                 <div key={index} className="flex items-center gap-4 p-4 rounded-xl bg-white/60 backdrop-blur-sm">
                   <div className="w-2 h-2 rounded-full bg-primary-950"></div>
                   <span className="text-primary-800 font-medium">{item}</span>
@@ -158,7 +173,7 @@ export default async function OfficePage() {
               <h2 className="font-serif text-3xl font-bold">Built For Growing Teams</h2>
             </div>
             <div className="grid md:grid-cols-2 gap-4">
-              {content.builtForTeams.map((item, index) => (
+              {content.whyChooseUs.map((item: string, index: number) => (
                 <div key={index} className="flex items-center gap-4 p-4 rounded-xl bg-white/10 backdrop-blur-sm">
                   <div className="w-2 h-2 rounded-full bg-white"></div>
                   <span className="font-medium">{item}</span>
@@ -196,7 +211,7 @@ export default async function OfficePage() {
                 <h2 className="font-serif text-3xl font-bold text-primary-950">Our Approach</h2>
               </div>
               <div className="space-y-3">
-                {content.approach.map((step, index) => (
+                {content.approach.map((step: string, index: number) => (
                   <div key={index} className="flex items-center gap-4">
                     <div className="w-8 h-8 rounded-full bg-primary-950 text-white flex items-center justify-center text-sm font-bold">
                       {index + 1}

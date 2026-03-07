@@ -321,13 +321,36 @@ export async function getTeamMembers() {
 
 export async function getSolutionPage(
   type: 'residential' | 'office' | 'hospitality',
-): Promise<{ heroImage?: any; secondaryImage?: any; galleryImages?: any[]; seo?: any } | null> {
+): Promise<{
+    emoji?: string;
+    title?: string;
+    subtitle?: string;
+    tagline?: string;
+    introText?: string;
+    heroImage?: any;
+    galleryImages?: any[];
+    whatWeDesign?: string[];
+    whyChooseUs?: string[];
+    approach?: string[];
+    bestSuitedFor?: string;
+    secondaryImage?: any;
+    seo?: any;
+  } | null> {
   if (!isSanityConfigured()) return null
   const page = await client.fetch(
     `*[_type == "solutionPage" && type == $type][0] {
+      emoji,
+      title,
+      subtitle,
+      tagline,
+      introText,
       heroImage,
-      secondaryImage,
       galleryImages,
+      whatWeDesign,
+      whyChooseUs,
+      approach,
+      bestSuitedFor,
+      secondaryImage,
       seo
     }`,
     { type },
