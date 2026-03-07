@@ -77,20 +77,20 @@ export const TeamSection = ({ teamMembers: sanityMembers }: { teamMembers?: Team
               <div className="relative group shrink-0">
                 <div className={`absolute top-3 ${index % 2 === 1 ? '-right-3' : '-left-3'} w-full h-full border-2 border-white/20 rounded-2xl -z-10 transition-transform duration-500 group-hover:translate-x-1 group-hover:translate-y-1`}></div>
                 <div className={`absolute -inset-1 bg-white/10 rounded-[1.2rem] -z-20 blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
-                <div className="relative w-64 h-80 md:w-72 md:h-96 overflow-hidden rounded-2xl shadow-lg bg-primary-900/20">
+                <div className="relative w-64 h-80 md:w-72 md:h-96 overflow-hidden rounded-2xl shadow-lg bg-gradient-to-br from-primary-100 to-white">
                   {member.image?.asset ? (
                     <ResponsiveImage
                       image={member.image as any}
                       alt={member.name}
                       fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="object-contain transition-transform duration-700 group-hover:scale-105 p-4"
                     />
                   ) : (
                     <Image
                       src={imageSrc || HARD_CODED_TEAM[0].imageUrl!}
                       alt={member.name}
                       fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="object-contain transition-transform duration-700 group-hover:scale-105 p-4"
                     />
                   )}
                 </div>
