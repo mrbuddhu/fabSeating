@@ -41,27 +41,55 @@ export default async function OfficePage() {
   const page = await getSolutionPage('office')
 
   const content = {
-    title: 'Office Furniture and Furnishings',
-    subtitle: 'Designing productive and inspiring work environments',
-    introText: 'Create efficient and professional office spaces with our comprehensive office furniture and furnishings solutions. We design work environments that enhance productivity, comfort, and employee well-being.',
-    furnitureItems: ['Desks and workstations', 'Office chairs and seating', 'Conference room furniture', 'Reception area furniture', 'Storage and filing solutions', 'Modular office systems'],
-    furnishingsItems: ['Window treatments', 'Office carpets and rugs', 'Partition screens', 'Decorative elements', 'Lighting solutions', 'Accessories and accents'],
-    bestSuitedFor: 'Perfect for corporate offices, co-working spaces, startups, and professional service firms. Ideal for new office setups, expansions, or workspace renovations. Our solutions scale from small teams to large corporate environments.',
+    title: '🏢 OFFICE',
+    subtitle: 'Workspaces engineered for productivity, culture, and growth.',
+    tagline: 'An office isn\'t just where work happens. It shapes how teams collaborate, focus, and perform.',
+    introText: 'Fab Seating designs office environments that balance ergonomics, aesthetics, and efficiency — from executive cabins to large-scale corporate floors.',
+    imageOptions: [
+      'https://images.unsplash.com/photo-1524758631624-e2822e304a36?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1497366214047-3361a0a2d8e1?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1517002366821-a344e6c3b3f6?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1603796836034-708c3f1b7d81?auto=format&fit=crop&w=1200&q=80'
+    ],
+    whatWeBuild: [
+      'Ergonomic seating systems',
+      'Modular workstation layouts',
+      'Executive and boardroom environments',
+      'Collaborative breakout zones',
+      'Reception spaces that elevate brand perception',
+      'Smart storage and partition systems'
+    ],
+    builtForTeams: [
+      'Scalable designs',
+      'Durable commercial-grade materials',
+      'Custom layouts based on workflow',
+      'Professional project coordination'
+    ],
+    approach: [
+      'Understand your space and usage',
+      'Concept development and layout planning',
+      'Material selection and customization',
+      'Production and quality control',
+      'Installation and final styling'
+    ],
+    bestSuitedFor: 'This makes you sound enterprise-ready. Perfect for corporate offices, co-working spaces, startups, and professional service firms seeking scalable, professional workspace solutions.',
   }
 
   return (
     <>
       <PageHero
         title={content.title}
-        subtitle={content.subtitle || 'Designing productive and inspiring work environments'}
+        subtitle={content.subtitle}
         contentClassName="max-w-6xl"
-        titleClassName="text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] md:whitespace-nowrap"
+        titleClassName="text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]"
       />
       <Section>
-        <div className="max-w-6xl mx-auto space-y-12">
-          {/* Hero gallery: three office images from Sanity where available */}
-          <div className="space-y-6">
-            <div className="grid gap-4 md:gap-6 md:grid-cols-3">
+        <div className="max-w-6xl mx-auto space-y-16">
+          {/* Hero gallery */}
+          <div className="space-y-8">
+            <div className="grid gap-6 md:gap-8 md:grid-cols-3">
               {[
                 page?.galleryImages?.[0] || page?.heroImage,
                 page?.galleryImages?.[1] || page?.secondaryImage || page?.heroImage,
@@ -80,8 +108,8 @@ export default async function OfficePage() {
                     />
                   ) : (
                     <Image
-                      src="https://images.unsplash.com/photo-1524758631624-e2822e304a36?auto=format&fit=crop&w=1200&q=80"
-                      alt={content.title}
+                      src={content.imageOptions[index] || content.imageOptions[0]}
+                      alt={`${content.title} - Image ${index + 1}`}
                       fill
                       className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                     />
@@ -89,51 +117,59 @@ export default async function OfficePage() {
                 </div>
               ))}
             </div>
-            <p className="text-lg text-primary-700 leading-relaxed">
-              {content.introText}
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-primary-50/50 rounded-2xl p-6 md:p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-full bg-primary-950 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                </div>
-                <h2 className="font-serif text-2xl font-semibold text-primary-950">Furniture Includes</h2>
-              </div>
-              <ul className="space-y-3">
-                {content.furnitureItems.map((item, index) => (
-                  <li key={index} className="flex items-center gap-3 text-primary-700">
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="bg-primary-50/50 rounded-2xl p-6 md:p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-full bg-primary-950 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                  </svg>
-                </div>
-                <h2 className="font-serif text-2xl font-semibold text-primary-950">Furnishings Includes</h2>
-              </div>
-              <ul className="space-y-3">
-                {content.furnishingsItems.map((item, index) => (
-                  <li key={index} className="flex items-center gap-3 text-primary-700">
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
+            <div className="text-center space-y-4">
+              <p className="text-xl text-primary-700 leading-relaxed max-w-4xl mx-auto">
+                {content.tagline}
+              </p>
+              <p className="text-lg text-primary-600 leading-relaxed max-w-4xl mx-auto">
+                {content.introText}
+              </p>
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg order-2 md:order-1">
+          {/* What We Build */}
+          <div className="bg-gradient-to-br from-primary-50 to-white rounded-3xl p-8 md:p-12 shadow-lg">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-16 h-16 rounded-full bg-primary-950 flex items-center justify-center">
+                <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+              </div>
+              <h2 className="font-serif text-3xl font-bold text-primary-950">What We Build For Workspaces</h2>
+            </div>
+            <div className="grid md:grid-cols-2 gap-4">
+              {content.whatWeBuild.map((item, index) => (
+                <div key={index} className="flex items-center gap-4 p-4 rounded-xl bg-white/60 backdrop-blur-sm">
+                  <div className="w-2 h-2 rounded-full bg-primary-950"></div>
+                  <span className="text-primary-800 font-medium">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Built For Teams */}
+          <div className="bg-gradient-to-br from-primary-950 to-primary-900 rounded-3xl p-8 md:p-12 shadow-xl text-white">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center">
+                <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <h2 className="font-serif text-3xl font-bold">Built For Growing Teams</h2>
+            </div>
+            <div className="grid md:grid-cols-2 gap-4">
+              {content.builtForTeams.map((item, index) => (
+                <div key={index} className="flex items-center gap-4 p-4 rounded-xl bg-white/10 backdrop-blur-sm">
+                  <div className="w-2 h-2 rounded-full bg-white"></div>
+                  <span className="font-medium">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Our Approach */}
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-xl">
               {page?.secondaryImage ? (
                 <ResponsiveImage
                   image={page.secondaryImage}
@@ -150,40 +186,56 @@ export default async function OfficePage() {
                 />
               )}
             </div>
-            <div className="order-1 md:order-2">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-full bg-primary-200 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-primary-950" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <div className="space-y-6">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-primary-200 flex items-center justify-center">
+                  <svg className="w-6 h-6 text-primary-950" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                   </svg>
                 </div>
-                <h2 className="font-serif text-2xl font-semibold text-primary-950">Best Suited For</h2>
+                <h2 className="font-serif text-3xl font-bold text-primary-950">Our Approach</h2>
               </div>
-              <p className="text-primary-700 leading-relaxed">
-                {content.bestSuitedFor}
-              </p>
+              <div className="space-y-3">
+                {content.approach.map((step, index) => (
+                  <div key={index} className="flex items-center gap-4">
+                    <div className="w-8 h-8 rounded-full bg-primary-950 text-white flex items-center justify-center text-sm font-bold">
+                      {index + 1}
+                    </div>
+                    <span className="text-primary-700 font-medium">{step}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 pt-4">
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-950 text-white font-medium rounded-full hover:bg-primary-900 transition-all duration-300 hover:gap-3 shadow-lg hover:-translate-y-1 hover:shadow-2xl group"
-            >
-              <span className="text-sm tracking-wider uppercase">Talk to Us</span>
-              <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </Link>
-            <Link
-              href="/projects?category=office"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-primary-950 text-primary-950 font-medium rounded-full hover:bg-primary-950 hover:text-white transition-all duration-300 hover:gap-3 group"
-            >
-              <span className="text-sm tracking-wider uppercase">Explore Gallery</span>
-              <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </Link>
+          {/* CTA Section */}
+          <div className="bg-gradient-to-r from-primary-100 to-primary-50 rounded-3xl p-8 md:p-12 text-center">
+            <h2 className="font-serif text-3xl font-bold text-primary-950 mb-4">
+              Ready to Transform Your Workspace?
+            </h2>
+            <p className="text-lg text-primary-700 mb-8 max-w-2xl mx-auto">
+              {content.bestSuitedFor}
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-950 text-white font-medium rounded-full hover:bg-primary-900 transition-all duration-300 hover:gap-3 shadow-lg hover:-translate-y-1 hover:shadow-2xl group"
+              >
+                <span className="text-sm tracking-wider uppercase">Start Your Project</span>
+                <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </Link>
+              <Link
+                href="/projects?category=office"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-primary-950 text-primary-950 font-medium rounded-full hover:bg-primary-950 hover:text-white transition-all duration-300 hover:gap-3 group"
+              >
+                <span className="text-sm tracking-wider uppercase">View Workspaces</span>
+                <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </Link>
+            </div>
           </div>
         </div>
       </Section>

@@ -41,27 +41,55 @@ export default async function HospitalityPage() {
   const page = await getSolutionPage('hospitality')
 
   const content = {
-    title: 'Hospitality Furniture and Furnishings',
-    subtitle: 'Creating memorable guest experiences through thoughtful design',
-    introText: 'Elevate your hospitality space with our comprehensive furniture and furnishings solutions. We design durable, stylish, and guest-friendly environments for hotels, restaurants, cafes, and other hospitality venues.',
-    furnitureItems: ['Hotel room furniture', 'Restaurant seating and tables', 'Lobby and reception furniture', 'Outdoor furniture', 'Bar and lounge furniture', 'Custom hospitality solutions'],
-    furnishingsItems: ['Curtains and window treatments', 'Hospitality-grade carpets', 'Bedding and linens', 'Decorative accessories', 'Lighting solutions', 'Branded elements'],
-    bestSuitedFor: 'Ideal for hotels, resorts, restaurants, cafes, bars, and event venues. Perfect for new hospitality projects, renovations, or brand refreshes. Our solutions are designed to withstand high traffic while maintaining aesthetic appeal and guest comfort.',
+    title: '🏨 HOSPITALITY',
+    subtitle: 'Furniture and furnishings crafted to elevate guest experience.',
+    tagline: 'In hospitality, every detail shapes perception. From the lobby to the guest room, comfort, durability, and aesthetics must work seamlessly together.',
+    introText: 'Fab Seating delivers hospitality environments built to withstand high traffic while maintaining refined visual appeal.',
+    imageOptions: [
+      'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1551884947-55d9348293e0?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1598928506311-c55ded91e20c?auto=format&fit=crop&w=1200&q=80'
+    ],
+    designedFor: [
+      'Guest room environments',
+      'Restaurant and café seating systems',
+      'Lobby and lounge concepts',
+      'Outdoor hospitality furniture',
+      'Branded custom-built solutions',
+      'Commercial-grade furnishings and soft decor'
+    ],
+    whyTrustUs: [
+      'High-traffic durability',
+      'Custom finishes and branding integration',
+      'Timely project execution',
+      'Experience across hotels, cafés, and restaurants'
+    ],
+    approach: [
+      'Understand your space and usage',
+      'Concept development and layout planning',
+      'Material selection and customization',
+      'Production and quality control',
+      'Installation and final styling'
+    ],
+    bestSuitedFor: 'Perfect for hotels, resorts, restaurants, cafés, bars, and event venues seeking durable, stylish, and guest-friendly environments.',
   }
 
   return (
     <>
       <PageHero
         title={content.title}
-        subtitle={content.subtitle || 'Creating memorable guest experiences through thoughtful design'}
+        subtitle={content.subtitle}
         contentClassName="max-w-6xl"
-        titleClassName="text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] md:whitespace-nowrap"
+        titleClassName="text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]"
       />
       <Section>
-        <div className="max-w-6xl mx-auto space-y-12">
-          {/* Hero gallery: three hospitality images from Sanity where available */}
-          <div className="space-y-6">
-            <div className="grid gap-4 md:gap-6 md:grid-cols-3">
+        <div className="max-w-6xl mx-auto space-y-16">
+          {/* Hero gallery */}
+          <div className="space-y-8">
+            <div className="grid gap-6 md:gap-8 md:grid-cols-3">
               {[
                 page?.galleryImages?.[0] || page?.heroImage,
                 page?.galleryImages?.[1] || page?.secondaryImage || page?.heroImage,
@@ -80,8 +108,8 @@ export default async function HospitalityPage() {
                     />
                   ) : (
                     <Image
-                      src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80"
-                      alt={content.title}
+                      src={content.imageOptions[index] || content.imageOptions[0]}
+                      alt={`${content.title} - Image ${index + 1}`}
                       fill
                       className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                     />
@@ -89,51 +117,59 @@ export default async function HospitalityPage() {
                 </div>
               ))}
             </div>
-            <p className="text-lg text-primary-700 leading-relaxed">
-              {content.introText}
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-primary-50/50 rounded-2xl p-6 md:p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-full bg-primary-950 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                  </svg>
-                </div>
-                <h2 className="font-serif text-2xl font-semibold text-primary-950">Furniture Includes</h2>
-              </div>
-              <ul className="space-y-3">
-                {content.furnitureItems.map((item, index) => (
-                  <li key={index} className="flex items-center gap-3 text-primary-700">
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="bg-primary-50/50 rounded-2xl p-6 md:p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-full bg-primary-950 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                  </svg>
-                </div>
-                <h2 className="font-serif text-2xl font-semibold text-primary-950">Furnishings Includes</h2>
-              </div>
-              <ul className="space-y-3">
-                {content.furnishingsItems.map((item, index) => (
-                  <li key={index} className="flex items-center gap-3 text-primary-700">
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
+            <div className="text-center space-y-4">
+              <p className="text-xl text-primary-700 leading-relaxed max-w-4xl mx-auto">
+                {content.tagline}
+              </p>
+              <p className="text-lg text-primary-600 leading-relaxed max-w-4xl mx-auto">
+                {content.introText}
+              </p>
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg order-2 md:order-1">
+          {/* Designed For */}
+          <div className="bg-gradient-to-br from-primary-50 to-white rounded-3xl p-8 md:p-12 shadow-lg">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-16 h-16 rounded-full bg-primary-950 flex items-center justify-center">
+                <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+              </div>
+              <h2 className="font-serif text-3xl font-bold text-primary-950">Designed For Hospitality Spaces</h2>
+            </div>
+            <div className="grid md:grid-cols-2 gap-4">
+              {content.designedFor.map((item, index) => (
+                <div key={index} className="flex items-center gap-4 p-4 rounded-xl bg-white/60 backdrop-blur-sm">
+                  <div className="w-2 h-2 rounded-full bg-primary-950"></div>
+                  <span className="text-primary-800 font-medium">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Why Trust Us */}
+          <div className="bg-gradient-to-br from-primary-950 to-primary-900 rounded-3xl p-8 md:p-12 shadow-xl text-white">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center">
+                <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h2 className="font-serif text-3xl font-bold">Why Hospitality Brands Trust Us</h2>
+            </div>
+            <div className="grid md:grid-cols-2 gap-4">
+              {content.whyTrustUs.map((item, index) => (
+                <div key={index} className="flex items-center gap-4 p-4 rounded-xl bg-white/10 backdrop-blur-sm">
+                  <div className="w-2 h-2 rounded-full bg-white"></div>
+                  <span className="font-medium">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Our Approach */}
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-xl">
               {page?.secondaryImage ? (
                 <ResponsiveImage
                   image={page.secondaryImage}
@@ -150,40 +186,56 @@ export default async function HospitalityPage() {
                 />
               )}
             </div>
-            <div className="order-1 md:order-2">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-full bg-primary-200 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-primary-950" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <div className="space-y-6">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-primary-200 flex items-center justify-center">
+                  <svg className="w-6 h-6 text-primary-950" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                   </svg>
                 </div>
-                <h2 className="font-serif text-2xl font-semibold text-primary-950">Best Suited For</h2>
+                <h2 className="font-serif text-3xl font-bold text-primary-950">Our Approach</h2>
               </div>
-              <p className="text-primary-700 leading-relaxed">
-                {content.bestSuitedFor}
-              </p>
+              <div className="space-y-3">
+                {content.approach.map((step, index) => (
+                  <div key={index} className="flex items-center gap-4">
+                    <div className="w-8 h-8 rounded-full bg-primary-950 text-white flex items-center justify-center text-sm font-bold">
+                      {index + 1}
+                    </div>
+                    <span className="text-primary-700 font-medium">{step}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 pt-4">
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-950 text-white font-medium rounded-full hover:bg-primary-900 transition-all duration-300 hover:gap-3 shadow-lg hover:-translate-y-1 hover:shadow-2xl group"
-            >
-              <span className="text-sm tracking-wider uppercase">Talk to Us</span>
-              <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </Link>
-            <Link
-              href="/projects?category=hospitality"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-primary-950 text-primary-950 font-medium rounded-full hover:bg-primary-950 hover:text-white transition-all duration-300 hover:gap-3 group"
-            >
-              <span className="text-sm tracking-wider uppercase">Explore Gallery</span>
-              <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </Link>
+          {/* CTA Section */}
+          <div className="bg-gradient-to-r from-primary-100 to-primary-50 rounded-3xl p-8 md:p-12 text-center">
+            <h2 className="font-serif text-3xl font-bold text-primary-950 mb-4">
+              Ready to Elevate Your Guest Experience?
+            </h2>
+            <p className="text-lg text-primary-700 mb-8 max-w-2xl mx-auto">
+              {content.bestSuitedFor}
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-950 text-white font-medium rounded-full hover:bg-primary-900 transition-all duration-300 hover:gap-3 shadow-lg hover:-translate-y-1 hover:shadow-2xl group"
+              >
+                <span className="text-sm tracking-wider uppercase">Start Your Project</span>
+                <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </Link>
+              <Link
+                href="/projects?category=hospitality"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-primary-950 text-primary-950 font-medium rounded-full hover:bg-primary-950 hover:text-white transition-all duration-300 hover:gap-3 group"
+              >
+                <span className="text-sm tracking-wider uppercase">View Venues</span>
+                <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </Link>
+            </div>
           </div>
         </div>
       </Section>
