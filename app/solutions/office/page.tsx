@@ -48,7 +48,7 @@ export default async function OfficePage() {
     tagline: 'An office isn\'t just where work happens. It shapes how teams collaborate, focus, and perform.',
     introText: 'Fab Seating designs office environments that balance ergonomics, aesthetics, and efficiency — from executive cabins to large-scale corporate floors.',
     imageOptions: [
-      'https://images.unsplash.com/photo-1524758631624-e2822e304a36?auto=format&fit=crop&w=1200&q=80',
+      '/office-hero.jpg', // Your uploaded image
       'https://images.unsplash.com/photo-1497366214047-3361a0a2d8e1?auto=format&fit=crop&w=1200&q=80',
       'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1200&q=80',
       'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=80',
@@ -106,24 +106,24 @@ export default async function OfficePage() {
           <div className="space-y-8">
             <div className="grid gap-6 md:gap-8 md:grid-cols-3">
               {[
-                page?.galleryImages?.[0] || page?.heroImage,
-                page?.galleryImages?.[1] || page?.secondaryImage || page?.heroImage,
-                page?.galleryImages?.[2] || page?.heroImage || page?.secondaryImage,
+                page?.galleryImages?.[0] || page?.heroImage || content.imageOptions[0],
+                page?.galleryImages?.[1] || page?.secondaryImage || page?.heroImage || content.imageOptions[1],
+                page?.galleryImages?.[2] || page?.heroImage || page?.secondaryImage || content.imageOptions[2],
               ].map((image, index) => (
                 <div
                   key={index}
                   className="group relative aspect-[4/3] md:aspect-[3/4] rounded-3xl overflow-hidden shadow-xl ring-1 ring-black/5 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:ring-primary-300/40"
                 >
-                  {image ? (
-                    <ResponsiveImage
-                      image={image}
-                      alt={content.title}
+                  {typeof image === 'string' ? (
+                    <Image
+                      src={image}
+                      alt={`${content.title} - Image ${index + 1}`}
                       fill
                       className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                     />
                   ) : (
-                    <Image
-                      src={content.imageOptions[index] || content.imageOptions[0]}
+                    <ResponsiveImage
+                      image={image}
                       alt={`${content.title} - Image ${index + 1}`}
                       fill
                       className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"

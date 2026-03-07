@@ -1,0 +1,2 @@
+// This is just to reference the uploaded image
+// The user wants to use this image in the office solution page

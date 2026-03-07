@@ -107,24 +107,24 @@ export default async function ResidentialPage() {
           <div className="space-y-8">
             <div className="grid gap-6 md:gap-8 md:grid-cols-3">
               {[
-                page?.galleryImages?.[0] || page?.heroImage,
-                page?.galleryImages?.[1] || page?.secondaryImage || page?.heroImage,
-                page?.galleryImages?.[2] || page?.heroImage || page?.secondaryImage,
+                page?.galleryImages?.[0] || page?.heroImage || content.imageOptions[0],
+                page?.galleryImages?.[1] || page?.secondaryImage || page?.heroImage || content.imageOptions[1],
+                page?.galleryImages?.[2] || page?.heroImage || page?.secondaryImage || content.imageOptions[2],
               ].map((image, index) => (
                 <div
                   key={index}
                   className="group relative aspect-[4/3] md:aspect-[3/4] rounded-3xl overflow-hidden shadow-xl ring-1 ring-black/5 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:ring-primary-300/40"
                 >
-                  {image ? (
-                    <ResponsiveImage
-                      image={image}
+                  {typeof image === 'string' ? (
+                    <Image
+                      src={image}
                       alt={`${content.title} - Image ${index + 1}`}
                       fill
                       className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                     />
                   ) : (
-                    <Image
-                      src={content.imageOptions[index] || content.imageOptions[0]}
+                    <ResponsiveImage
+                      image={image}
                       alt={`${content.title} - Image ${index + 1}`}
                       fill
                       className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
