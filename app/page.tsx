@@ -112,15 +112,20 @@ export default async function Home() {
   // Helper function to get solution image URL (works with both Sanity images and string URLs)
   function getSolutionImageUrl(image: any) {
     if (!image) return null
-  
-    // If it's a Sanity image object
-    if (image && typeof image === 'object' && image.asset) {
-      return urlFor(image)?.width(800).height(450).url() || null
-    }
-  
-    // If it's a string URL
-    if (typeof image === 'string') {
-      return image
+    
+    try {
+      // If it's a Sanity image object
+      if (image && typeof image === 'object' && image.asset) {
+        return urlFor(image)?.width(800).height(450).url() || null
+      }
+      
+      // If it's a string URL
+      if (typeof image === 'string') {
+        return image
+      }
+    } catch (error) {
+      console.warn('Error getting solution image URL:', error);
+      return null;
     }
   
     return null

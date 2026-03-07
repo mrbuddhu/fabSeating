@@ -1,14 +1,12 @@
-import { Metadata } from 'next'
-import { notFound } from 'next/navigation'
-import Link from 'next/link'
-import { getCaseStudyBySlug } from '@/lib/sanity/queries'
-import { Container } from '@/components/Container'
-import { Section } from '@/components/Section'
-import { ResponsiveImage } from '@/components/ResponsiveImage'
-import { generateSEOMetadata } from '@/components/SEOHead'
-import { PortableText } from '@portabletext/react'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
+import { notFound } from 'next/navigation'
+import { urlFor } from '@/lib/sanity/client'
+import { generateSEOMetadata } from '@/lib/seo'
+import type { CaseStudy } from '@/types'
+import { Section } from '@/components/Section'
+import { Container } from '@/components/Container'
+import { ResponsiveImage } from '@/components/ResponsiveImage'
 
 // Dummy data for preview when no Sanity data is available
 const dummyCaseStudies: Record<string, any> = {
@@ -17,126 +15,186 @@ const dummyCaseStudies: Record<string, any> = {
     _type: 'caseStudy',
     title: 'Tech Hub Workspace',
     subtitle: 'A futuristic office space designed for collaboration and innovation',
-    summary: 'A futuristic office space designed for collaboration and innovation.',
-    client: 'TechCorp Inc.',
-    location: 'Bangalore, India',
-    year: '2023',
-    industry: 'Office',
-    heroImage: null, // Will use a placeholder
-    heroImageUrl: 'https://images.unsplash.com/photo-1497366214047-2a8ba81e032e?auto=format&fit=crop&w=1600&q=80',
-    story: [
+    summary: 'Modern office setup with ergonomic furniture and collaborative workspaces.',
+    client: 'TechCorp Solutions',
+    location: 'Chennai, Tamil Nadu',
+    year: '2024',
+    industry: 'office',
+    heroImage: 'https://images.unsplash.com/photo-1497366212-3dadae4b4ace?auto=format&fit=crop&w=800&q=80',
+    challenge: [
       {
-        heading: 'The Challenge',
-        content: [{ _type: 'block', children: [{ _type: 'span', text: 'Creating a workspace that balances open collaboration with private focus areas was the primary challenge. The client needed a flexible environment that could adapt to their rapidly growing team while maintaining a cohesive aesthetic.' }] }],
-        image: null,
-        imageUrl: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80'
-      },
-      {
-        heading: 'The Solution',
-        content: [{ _type: 'block', children: [{ _type: 'span', text: 'We implemented a modular furniture system that allows for easy reconfiguration. Sound-dampening pods were strategically placed for quiet work, while open lounges encourage spontaneous brainstorming sessions.' }] }],
-        image: null,
-        imageUrl: 'https://images.unsplash.com/photo-1504384308090-c54be3855092?auto=format&fit=crop&w=800&q=80'
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'Client needed a modern workspace that would foster innovation and team collaboration.'
+          }
+        ]
       }
     ],
-    showcase: [
-      { type: 'image', imageUrl: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=800&q=80' },
-      { type: 'image', imageUrl: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=800&q=80' },
-      { type: 'image', imageUrl: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=800&q=80' }
+    solution: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'We created a tech hub with modular workstations, collaborative zones, and advanced meeting rooms.'
+          }
+        ]
+      }
     ],
-    testimonial: {
-      quote: "The transformation has been incredible. Our team productivity has soared, and clients are always impressed when they visit.",
-      author: "Sarah Johnson",
-      role: "Operations Director"
-    }
+    result: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'A transformed workspace that increased productivity and team satisfaction by 40%.'
+          }
+        ]
+      }
+    ],
+    stats: [
+      {
+        _type: 'object',
+        label: 'Project Duration',
+        value: '3 months'
+      },
+      {
+        _type: 'object',
+        label: 'Square Footage',
+        value: '2,500 sq ft'
+      },
+      {
+        _type: 'object',
+        label: 'Workstations',
+        value: '15+'
+      }
+    ]
   },
   'luxury-villa-interiors': {
     _id: 'dummy-2',
     _type: 'caseStudy',
     title: 'Luxury Villa Interiors',
     subtitle: 'Bespoke furniture collection for a premium residential project',
-    summary: 'Bespoke furniture collection for a premium residential project.',
-    client: 'Private Client',
-    location: 'Chennai, India',
+    summary: 'High-end custom furniture and furnishings for a luxury villa with Italian marble and premium materials.',
+    client: 'Mr. & Mrs. Sharma',
+    location: 'Adyar, Chennai',
     year: '2024',
-    industry: 'Residential',
-    heroImage: null,
-    heroImageUrl: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1600&q=80',
-    story: [
+    industry: 'residential',
+    heroImage: 'https://images.unsplash.com/photo-1524758631624-e2822e304a36?auto=format&fit=crop&w=800&q=80',
+    challenge: [
       {
-        heading: 'Design Vision',
-        content: [{ _type: 'block', children: [{ _type: 'span', text: 'The goal was to create a sanctuary of comfort and elegance. Every piece of furniture was custom-designed to complement the architectural details of the villa, using premium fabrics and sustainable woods.' }] }],
-        image: null,
-        imageUrl: 'https://images.unsplash.com/photo-1616137466211-f939a420be84?auto=format&fit=crop&w=800&q=80'
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'Client wanted luxury interiors that would reflect their sophisticated taste while maintaining functionality.'
+          }
+        ]
       }
     ],
-    showcase: [
-      { type: 'image', imageUrl: 'https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&w=800&q=80' },
-      { type: 'image', imageUrl: 'https://images.unsplash.com/photo-1615873968403-89e068629265?auto=format&fit=crop&w=800&q=80' }
+    solution: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'We designed custom furniture pieces, sourced Italian marble, and created a cohesive luxury aesthetic.'
+          }
+        ]
+      }
     ],
-    testimonial: {
-      quote: "Fab Seating understood exactly what we wanted. The craftsmanship is world-class.",
-      author: "Mr. & Mrs. Reddy",
-      role: "Homeowners"
-    }
+    result: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'A stunning villa transformation that exceeded client expectations with premium materials and craftsmanship.'
+          }
+        ]
+      }
+    ],
+    stats: [
+      {
+        _type: 'object',
+        label: 'Project Duration',
+        value: '6 months'
+      },
+      {
+        _type: 'object',
+        label: 'Budget',
+        value: '₹45 Lakhs'
+      },
+      {
+        _type: 'object',
+        label: 'Custom Pieces',
+        value: '25+ items'
+      }
+    ]
   },
   'boutique-hotel-lobby': {
     _id: 'dummy-3',
     _type: 'caseStudy',
     title: 'Boutique Hotel Lobby',
     subtitle: 'Welcoming and elegant seating solutions for hospitality',
-    summary: 'Welcoming and elegant seating solutions for hospitality.',
-    client: 'The Grand Heritage',
-    location: 'Hyderabad, India',
+    summary: 'Elegant lobby design with custom furniture pieces for a boutique hotel.',
+    client: 'Grand Plaza Hotel',
+    location: 'Chennai, Tamil Nadu',
     year: '2024',
-    industry: 'Hospitality',
-    heroImage: null,
-    heroImageUrl: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80',
-    story: [
+    industry: 'hospitality',
+    heroImage: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80',
+    challenge: [
       {
-        heading: 'Concept',
-        content: [{ _type: 'block', children: [{ _type: 'span', text: 'We wanted to create a first impression that lasts. The lobby furniture needed to be durable enough for high traffic yet stylish enough to set the tone for the entire hotel experience.' }] }],
-        image: null,
-        imageUrl: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=800&q=80'
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'Hotel needed a lobby that would create a welcoming first impression while reflecting their brand.'
+          }
+        ]
       }
     ],
-    showcase: [
-      { type: 'image', imageUrl: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80' },
-      { type: 'image', imageUrl: 'https://images.unsplash.com/photo-1590430344266-2064f5e18c04?auto=format&fit=crop&w=800&q=80' }
+    solution: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'We designed custom seating solutions and elegant furniture pieces that balance comfort with style.'
+          }
+        ]
+      }
     ],
-    testimonial: {
-      quote: "Our guests constantly compliment the lobby design. It's the perfect blend of style and comfort.",
-      author: "Rajesh Kumar",
-      role: "General Manager"
-    }
+    result: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'A transformed lobby space that enhances guest experience and strengthens hotel brand identity.'
+          }
+        ]
+      }
+    ],
+    stats: [
+      {
+        _type: 'object',
+        label: 'Project Status',
+        value: 'Coming Soon'
+      },
+      {
+        _type: 'object',
+        label: 'Seating Capacity',
+        value: '25+ guests'
+      }
+    ]
   }
 }
 
 interface CaseStudyPageProps {
   params: { slug: string }
-}
-
-export async function generateMetadata({ params }: CaseStudyPageProps): Promise<Metadata> {
-  let caseStudy = await getCaseStudyBySlug(params.slug)
-  
-  if (!caseStudy) {
-    // Check for dummy data
-    if (dummyCaseStudies[params.slug]) {
-      caseStudy = dummyCaseStudies[params.slug] as any
-    } else {
-      return {}
-    }
-  }
-
-  if (!caseStudy) {
-    return {}
-  }
-
-  return generateSEOMetadata({
-    title: caseStudy.seo?.title || caseStudy.title,
-    description: caseStudy.seo?.description || caseStudy.summary,
-    image: caseStudy.seo?.image || caseStudy.heroImage,
-    path: `/case-studies/${params.slug}`,
-  })
 }
 
 export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
@@ -147,190 +205,190 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
     if (dummyCaseStudies[params.slug]) {
       caseStudy = dummyCaseStudies[params.slug] as any
     } else {
-      notFound()
+      return notFound()
     }
   }
 
   if (!caseStudy) {
-    notFound()
+    return notFound()
   }
 
-  // Use subtitle if available, otherwise summary
-  const subtitle = caseStudy.subtitle || caseStudy.summary
+  // Helper function to get image URL (works with both Sanity images and string URLs)
+  function getImageUrl(image: any) {
+    if (!image) return null
+    
+    try {
+      // If it's a Sanity image object
+      if (image && typeof image === 'object' && image.asset) {
+        return urlFor(image)?.width(1200).height(800).url() || null
+      }
+      
+      // If it's a string URL
+      if (typeof image === 'string') {
+        return image
+      }
+    } catch (error) {
+      console.warn('Error getting case study image URL:', error);
+      return null;
+    }
+  
+    return null
+  }
+
+  return generateSEOMetadata({
+    title: caseStudy.seo?.title || caseStudy.title,
+    description: caseStudy.seo?.description || caseStudy.summary,
+    image: caseStudy.seo?.image || caseStudy.heroImage,
+    path: `/case-studies/${params.slug}`,
+  })
 
   return (
-    <>
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-white">
       {/* Hero Section */}
-      <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 bg-primary-50">
+      <div className="relative h-[60vh] min-h-[500px] overflow-hidden">
+        {caseStudy.heroImage && (
+          <div className="absolute inset-0">
+            <ResponsiveImage
+              image={caseStudy.heroImage}
+              alt={caseStudy.title}
+              fill
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent"></div>
+          </div>
+        )}
+        
+        <div className="relative z-10 flex items-center justify-center h-full">
+          <Container>
+            <div className="text-center max-w-4xl mx-auto">
+              <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
+                {caseStudy.title}
+              </h1>
+              {caseStudy.subtitle && (
+                <p className="text-xl md:text-2xl text-primary-100 mb-8 max-w-3xl">
+                  {caseStudy.subtitle}
+                </p>
+              )}
+            </div>
+          </Container>
+        </div>
+      </div>
+
+      {/* Content Sections */}
+      <div className="relative z-20 -mt-20">
         <Container>
-          <div className="max-w-4xl mx-auto text-center">
-            <Link 
-              href="/case-studies"
-              className="inline-flex items-center gap-2 text-sm font-medium text-primary-600 hover:text-primary-900 transition-colors uppercase tracking-wider mb-8"
-            >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              Back to Case Studies
-            </Link>
-            
-            <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-primary-950">
-              {caseStudy.title}
-            </h1>
-            
-            {subtitle && (
-              <p className="text-xl md:text-2xl text-primary-800 font-light max-w-2xl mx-auto leading-relaxed">
-                {subtitle}
-              </p>
+          <div className="max-w-6xl mx-auto">
+            {/* Challenge Section */}
+            {caseStudy.challenge && caseStudy.challenge.length > 0 && (
+              <Section>
+                <div className="text-center max-w-3xl mx-auto mb-16">
+                  <h2 className="font-serif text-3xl md:text-5xl font-bold mb-6 text-primary-900">The Challenge</h2>
+                  <p className="text-primary-200 text-lg">What we needed to overcome</p>
+                </div>
+                <div className="prose prose-lg text-primary-700 max-w-none">
+                  {caseStudy.challenge.map((block, index) => (
+                    <p key={index} className="mb-6">
+                      {block.children?.map((span: any) => (
+                        <span key={span._key}>{span.text}</span>
+                      ))}
+                    </p>
+                  ))}
+                </div>
+              </Section>
             )}
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 border-t border-b border-primary-200 py-6 text-left md:text-center">
-              {[
-                { label: 'Client', value: caseStudy.client },
-                { label: 'Location', value: caseStudy.location },
-                { label: 'Year', value: caseStudy.year },
-                { label: 'Industry', value: caseStudy.industry },
-              ].map((item) => item.value && (
-                <div key={item.label} className="flex flex-col">
-                  <span className="text-xs uppercase tracking-widest text-primary-500 mb-1">{item.label}</span>
-                  <span className="font-medium text-primary-900">{item.value}</span>
+            {/* Solution Section */}
+            {caseStudy.solution && caseStudy.solution.length > 0 && (
+              <Section>
+                <div className="text-center max-w-3xl mx-auto mb-16">
+                  <h2 className="font-serif text-3xl md:text-5xl font-bold mb-6 text-primary-900">The Solution</h2>
+                  <p className="text-primary-200 text-lg">How we solved it</p>
                 </div>
-              ))}
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* Hero Image */}
-      {caseStudy.heroImage ? (
-        <div className="relative w-full aspect-[21/9] md:aspect-[2.4/1] overflow-hidden">
-          <ResponsiveImage
-            image={caseStudy.heroImage}
-            alt={caseStudy.title}
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
-      ) : (caseStudy as any).heroImageUrl && (
-        <div className="relative w-full aspect-[21/9] md:aspect-[2.4/1] overflow-hidden">
-          <Image
-            src={(caseStudy as any).heroImageUrl}
-            alt={caseStudy.title}
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
-      )}
-
-      {/* Story Sections - Alternating Layout */}
-      {caseStudy.story && caseStudy.story.length > 0 ? (
-        <section className="py-24 space-y-24">
-          {caseStudy.story.map((section, idx) => (
-            <Container key={idx}>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
-                {/* Text Content */}
-                <div className={cn(
-                  "flex flex-col justify-center",
-                  idx % 2 !== 0 ? "lg:order-2" : "lg:order-1"
-                )}>
-                  {section.heading && (
-                    <h2 className="font-serif text-3xl md:text-4xl font-bold mb-6 text-primary-900">
-                      {section.heading}
-                    </h2>
-                  )}
-                  {section.content && (
-                    <div className="prose prose-lg prose-primary text-primary-800/80 leading-relaxed">
-                      <PortableText value={section.content} />
-                    </div>
-                  )}
-                </div>
-
-                {/* Image */}
-                <div className={cn(
-                  "relative aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl",
-                  idx % 2 !== 0 ? "lg:order-1" : "lg:order-2"
-                )}>
-                  {section.image ? (
-                    <ResponsiveImage
-                      image={section.image}
-                      alt={section.heading || `Story image ${idx + 1}`}
-                      fill
-                      className="object-cover hover:scale-105 transition-transform duration-700"
-                    />
-                  ) : (section as any).imageUrl ? (
-                    <Image
-                      src={(section as any).imageUrl}
-                      alt={section.heading || `Story image ${idx + 1}`}
-                      fill
-                      className="object-cover hover:scale-105 transition-transform duration-700"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-primary-100 flex items-center justify-center">
-                      <span className="text-primary-300 font-serif text-xl">Image Placeholder</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </Container>
-          ))}
-        </section>
-      ) : (
-        /* Legacy Content Fallback */
-        <Section className="py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
-            <div className="lg:col-span-8">
-              {caseStudy.challenge && (
-                <div className="mb-16">
-                  <h2 className="font-serif text-3xl font-bold mb-6 text-primary-900">The Challenge</h2>
-                  <div className="prose prose-lg prose-primary text-primary-800/80 leading-relaxed">
-                    <PortableText value={caseStudy.challenge} />
-                  </div>
-                </div>
-              )}
-              {caseStudy.solution && (
-                <div className="mb-16">
-                  <h2 className="font-serif text-3xl font-bold mb-6 text-primary-900">The Solution</h2>
-                  <div className="prose prose-lg prose-primary text-primary-800/80 leading-relaxed">
-                    <PortableText value={caseStudy.solution} />
-                  </div>
-                </div>
-              )}
-              {caseStudy.result && (
-                <div className="mb-16">
-                  <h2 className="font-serif text-3xl font-bold mb-6 text-primary-900">The Result</h2>
-                  <div className="prose prose-lg prose-primary text-primary-800/80 leading-relaxed">
-                    <PortableText value={caseStudy.result} />
-                  </div>
-                </div>
-              )}
-            </div>
-            {/* Sidebar / Stats */}
-            <div className="lg:col-span-4 space-y-12">
-               {/* Keep stats sidebar if using legacy layout */}
-               {caseStudy.stats && caseStudy.stats.length > 0 && (
-                  <div className="bg-primary-50 rounded-2xl p-8">
-                    <h3 className="font-serif text-xl font-bold mb-6 text-primary-900">Project Stats</h3>
-                    <div className="space-y-6">
-                      {caseStudy.stats.map((stat) => (
-                        <div key={stat.label} className="flex justify-between items-baseline border-b border-primary-200 pb-3 last:border-0 last:pb-0">
-                          <span className="text-sm font-medium text-primary-600">{stat.label}</span>
-                          <span className="text-lg font-bold text-primary-900">{stat.value}</span>
-                        </div>
+                <div className="prose prose-lg text-primary-700 max-w-none">
+                  {caseStudy.solution.map((block, index) => (
+                    <p key={index} className="mb-6">
+                      {block.children?.map((span: any) => (
+                        <span key={span._key}>{span.text}</span>
                       ))}
-                    </div>
-                  </div>
-               )}
-            </div>
-          </div>
-        </Section>
-      )}
+                    </p>
+                  ))}
+                </div>
+              </Section>
+            )}
 
-      {/* Showcase Media Grid (Bottom) */}
-      {(caseStudy.showcase && caseStudy.showcase.length > 0) || (caseStudy.gallery && caseStudy.gallery.length > 0) ? (
-        <section className="py-24 bg-primary-950 text-white">
-          <Container>
+            {/* Result Section */}
+            {caseStudy.result && caseStudy.result.length > 0 && (
+              <Section>
+                <div className="text-center max-w-3xl mx-auto mb-16">
+                  <h2 className="font-serif text-3xl md:text-5xl font-bold mb-6 text-primary-900">The Result</h2>
+                  <p className="text-primary-200 text-lg">The outcome</p>
+                </div>
+                <div className="prose prose-lg text-primary-700 max-w-none">
+                  {caseStudy.result.map((block, index) => (
+                    <p key={index} className="mb-6">
+                      {block.children?.map((span: any) => (
+                        <span key={span._key}>{span.text}</span>
+                      ))}
+                    </p>
+                  ))}
+                </div>
+              </Section>
+            )}
+
+            {/* Stats Section */}
+            {caseStudy.stats && caseStudy.stats.length > 0 && (
+              <Section className="py-16">
+                <div className="text-center max-w-3xl mx-auto mb-16">
+                  <h2 className="font-serif text-3xl md:text-5xl font-bold mb-6">Project Statistics</h2>
+                  <p className="text-primary-200 text-lg">Key metrics and achievements</p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {caseStudy.stats.map((stat, idx) => (
+                    <div key={idx} className="bg-gradient-to-br from-primary-50 to-white rounded-2xl p-8 shadow-lg">
+                      <h3 className="font-bold text-primary-950 mb-2">{stat.label}</h3>
+                      <p className="text-3xl font-serif text-primary-900">{stat.value}</p>
+                    </div>
+                  ))}
+                </div>
+              </Section>
+            )}
+
+            {/* Testimonial Section */}
+            {caseStudy.testimonial && (
+              <Section className="py-16">
+                <div className="text-center max-w-3xl mx-auto mb-16">
+                  <h2 className="font-serif text-3xl md:text-5xl font-bold mb-6">Client Testimonial</h2>
+                  <p className="text-primary-200 text-lg">What our clients say about their experience</p>
+                </div>
+                <blockquote className="text-2xl md:text-4xl font-serif leading-relaxed mb-8 text-primary-900">
+                  &quot;{caseStudy.testimonial.quote}&quot;
+                </blockquote>
+                <cite className="not-italic">
+                  <span className="block font-bold text-lg text-primary-950">{caseStudy.testimonial.author}</span>
+                  <span className="block text-primary-600">{caseStudy.testimonial.role}</span>
+                </cite>
+              </Section>
+            )}
+
+            {/* Products Used */}
+            {caseStudy.productsUsed && caseStudy.productsUsed.length > 0 && (
+              <Section>
+                <h2 className="font-serif text-3xl font-bold mb-12 text-center text-primary-900">Featured Products</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                  {caseStudy.productsUsed.map((product) => (
+                    <div key={product._id} className="group block bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:ring-2 hover:ring-primary-300">
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-xl font-bold text-primary-900 group-hover:text-primary-700">{product.title}</h3>
+                        <span className="text-primary-600 text-sm">View Details</span>
+                      </div>
+                      <div className="text-primary-700 font-medium">Product #{product.sku}</div>
+                    </div>
+                  ))}
+                </div>
+              </Section>
+            )}
+
+            {/* Gallery & Media Section */}
             <div className="text-center max-w-3xl mx-auto mb-16">
               <h2 className="font-serif text-3xl md:text-5xl font-bold mb-6">Gallery & Media</h2>
               <p className="text-primary-200 text-lg">A closer look at the details</p>
@@ -340,103 +398,94 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
               {/* Prioritize new showcase field, fallback to old gallery */}
               {caseStudy.showcase ? caseStudy.showcase.map((item, idx) => (
                 <div key={idx} className="group relative aspect-square rounded-2xl overflow-hidden bg-primary-900 shadow-2xl">
-                  {item.type === 'video' && item.videoUrl ? (
-                    <div className="w-full h-full relative">
-                         <video 
-                           controls 
-                           className="w-full h-full object-cover"
-                           poster={item.image?.asset?._ref /* Need proper url builder if possible, or omit */}
-                         >
-                           <source src={item.videoUrl} />
-                           Your browser does not support the video tag.
-                         </video>
-                         <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wider text-white">
-                           Video
-                         </div>
-                    </div>
-                  ) : item.image ? (
-                    <div className="w-full h-full relative">
-                       <ResponsiveImage
-                         image={item.image}
-                         alt={`Gallery image ${idx + 1}`}
-                         fill
-                         className="object-cover transition-transform duration-700 group-hover:scale-110"
-                       />
-                    </div>
-                  ) : (item as any).imageUrl ? (
-                    <div className="w-full h-full relative">
-                       <Image
-                         src={(item as any).imageUrl}
-                         alt={`Gallery image ${idx + 1}`}
-                         fill
-                         className="object-cover transition-transform duration-700 group-hover:scale-110"
-                       />
-                    </div>
-                  ) : null}
+                  {item.type === 'image' ? (
+                    <ResponsiveImage
+                      image={item.image}
+                      alt={`${caseStudy.title} - Gallery ${idx + 1}`}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                  ) : (
+                    <video
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    >
+                      <source src={item.videoUrl} type="video/mp4" />
+                    </video>
+                  )}
                 </div>
-              )) : caseStudy.gallery?.map((image, idx) => (
-                <div key={idx} className="group relative aspect-square rounded-2xl overflow-hidden bg-primary-900 shadow-2xl">
-                   <ResponsiveImage
-                     image={image}
-                     alt={`Gallery image ${idx + 1}`}
-                     fill
-                     className="object-cover transition-transform duration-700 group-hover:scale-110"
-                   />
-                </div>
-              ))}
+              )) : (
+                /* Legacy Content Fallback */
+                <Section className="py-24">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
+                    <div className="lg:col-span-8">
+                      {caseStudy.gallery?.length > 0 ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                          {caseStudy.gallery.map((image, idx) => (
+                            <div key={idx} className="group relative aspect-square rounded-2xl overflow-hidden bg-primary-900 shadow-2xl">
+                              <ResponsiveImage
+                                image={image}
+                                alt={`${caseStudy.title} - Gallery ${idx + 1}`}
+                                fill
+                                className="object-cover group-hover:scale-105 transition-transform duration-700"
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                          {caseStudy.heroImage && (
+                            <div className="group relative aspect-[4/3] rounded-2xl overflow-hidden bg-primary-900 shadow-2xl">
+                              <ResponsiveImage
+                                image={caseStudy.heroImage}
+                                alt={`${caseStudy.title} - Hero Image`}
+                                fill
+                                className="object-cover group-hover:scale-105 transition-transform duration-700"
+                              />
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div className="lg:col-span-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {caseStudy.gallery?.length > 0 ? (
+                          caseStudy.gallery.map((image, idx) => (
+                            <div key={idx} className="group relative aspect-square rounded-2xl overflow-hidden bg-primary-900 shadow-2xl">
+                              <ResponsiveImage
+                                image={image}
+                                alt={`${caseStudy.title} - Gallery ${idx + 1}`}
+                                fill
+                                className="object-cover group-hover:scale-105 transition-transform duration-700"
+                              />
+                            </div>
+                          ))
+                        ) : (
+                          // Fallback to hero image if no gallery
+                          caseStudy.heroImage && (
+                            <div className="group relative aspect-[4/3] rounded-2xl overflow-hidden bg-primary-900 shadow-2xl">
+                              <ResponsiveImage
+                                image={caseStudy.heroImage}
+                                alt={`${caseStudy.title} - Hero Image`}
+                                fill
+                                className="object-cover group-hover:scale-105 transition-transform duration-700"
+                              />
+                            </div>
+                          )
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </Section>
+              )}
             </div>
           </Container>
-        </section>
-      ) : null}
-
-      {/* Testimonial */}
-      {caseStudy.testimonial && (
-        <Section className="bg-primary-50">
-          <div className="max-w-4xl mx-auto text-center">
-            <svg className="w-12 h-12 text-primary-300 mx-auto mb-8" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M14.017 21L14.017 18C14.017 16.896 14.325 15.923 14.941 15.08C15.557 14.238 16.634 13.243 18.173 12.094C19.712 10.945 20.482 9.508 20.482 7.781C20.482 6.055 19.962 4.603 18.922 3.427C17.882 2.251 16.516 1.663 14.825 1.663C13.134 1.663 11.758 2.251 10.698 3.427C9.638 4.603 9.108 6.055 9.108 7.781C9.108 9.073 9.468 10.228 10.188 11.246L10.188 11.246C10.908 12.264 12.185 13.433 14.017 14.752L14.017 21ZM4.908 21L4.908 18C4.908 16.896 5.216 15.923 5.832 15.08C6.448 14.238 7.525 13.243 9.064 12.094C10.603 10.945 11.373 9.508 11.373 7.781C11.373 6.055 10.853 4.603 9.813 3.427C8.773 2.251 7.407 1.663 5.716 1.663C4.025 1.663 2.649 2.251 1.589 3.427C0.529 4.603 0 6.055 0 7.781C0 9.073 0.36 10.228 1.08 11.246L1.08 11.246C1.8 12.264 3.077 13.433 4.908 14.752L4.908 21Z" />
-            </svg>
-            <blockquote className="text-2xl md:text-4xl font-serif leading-relaxed mb-8 text-primary-900">
-              &quot;{caseStudy.testimonial.quote}&quot;
-            </blockquote>
-            <cite className="not-italic">
-              <span className="block font-bold text-lg text-primary-950">{caseStudy.testimonial.author}</span>
-              <span className="block text-primary-600">{caseStudy.testimonial.role}</span>
-            </cite>
-          </div>
-        </Section>
-      )}
-
-      {/* Products Used */}
-      {caseStudy.productsUsed && caseStudy.productsUsed.length > 0 && (
-         <Section>
-            <h2 className="font-serif text-3xl font-bold mb-12 text-center text-primary-900">Featured Products</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {caseStudy.productsUsed.map((product) => (
-                    <Link 
-                        key={product._id}
-                        href={`/catalog/${product.slug?.current}`}
-                        className="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
-                    >
-                        {product.images && product.images[0] && (
-                          <div className="relative aspect-square overflow-hidden bg-gray-100">
-                            <ResponsiveImage
-                              image={product.images[0]}
-                              alt={product.title}
-                              fill
-                              className="object-cover group-hover:scale-105 transition-transform duration-500"
-                            />
-                          </div>
-                        )}
-                        <div className="p-4">
-                           <h3 className="font-medium text-primary-900 group-hover:text-primary-700">{product.title}</h3>
-                           <span className="text-xs text-primary-500 uppercase tracking-wider mt-1 block">View Product</span>
-                        </div>
-                    </Link>
-                ))}
-            </div>
-         </Section>
-      )}
-    </>
+        </div>
+      </div>
+    </div>
   )
 }
