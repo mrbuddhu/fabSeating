@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { HomeHero } from '@/components/HomeHero'
 import { TestimonialsPreview } from '@/components/TestimonialsPreview'
 import { AnimatedCard } from '@/components/AnimatedCard'
