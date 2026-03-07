@@ -55,16 +55,10 @@ const dummyCaseStudies = [
 // Revalidate so Sanity updates (e.g. founders/team) appear on live site within minutes when webhook runs; fallback if webhook not set
 export const revalidate = 300
 
-const defaultReels = [
-  { id: 1, videoUrl: '/videos/video1.mp4', thumbnail: 'https://images.unsplash.com/photo-1556911220-bff31c812d0c?auto=format&fit=crop&w=800&q=80' },
-  { id: 2, videoUrl: '/videos/video2.mp4', thumbnail: 'https://images.unsplash.com/photo-1524758631624-e2822e304a36?auto=format&fit=crop&w=800&q=80' },
-  { id: 3, videoUrl: '/videos/video3.mp4', thumbnail: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80' },
-  { id: 4, videoUrl: '/videos/video4.mp4', thumbnail: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80' },
-]
 
 const defaultSolutionsCards = [
   { id: 1, title: 'RESIDENTIAL', description: 'Designed around how your family lives, gathers, rests, and grows. A home isn\'t built with furniture. It\'s shaped by how every piece works together.', videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-living-room-1574/1080p.mp4', thumbnail: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80', link: '/solutions/residential' },
-  { id: 2, title: 'OFFICE', description: 'Workspaces engineered for productivity, culture, and growth. An office isn\'t just where work happens. It shapes how teams collaborate, focus, and perform.', videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-boutique-office-6267/1080p.mp4', thumbnail: 'https://images.unsplash.com/photo-1497366214047-2a8ba81e032e?auto=format&fit=crop&w=800&q=80', link: '/solutions/office' },
+  { id: 2, title: 'OFFICE', description: 'Workspaces engineered for productivity, culture, and growth. An office isn\'t just where work happens. It shapes how teams collaborate, focus, and perform.', videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-boutique-office-6267/1080p.mp4', thumbnail: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=80', link: '/solutions/office' },
   { id: 3, title: 'HOSPITALITY', description: 'Furniture and furnishings crafted to elevate guest experience. In hospitality, every detail shapes perception. From lobby to guest room, comfort, durability, and aesthetics must work seamlessly together.', videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-cafe-5535/1080p.mp4', thumbnail: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80', link: '/solutions/hospitality' },
 ]
 
@@ -82,14 +76,11 @@ export default async function Home() {
   const primaryCta = 'Contact Us'
   const trustLine = 'Crafted & curated from our Chennai facility | Serving residential & commercial spaces across South India'
 
-  // About reels: from Sanity or fallback (with poster URL for Sanity images)
-  const aboutReels = (homeContent?.aboutReels?.length ? homeContent.aboutReels : defaultReels).map((reel: any, i: number) => {
-    const fallback = defaultReels[i] || defaultReels[0]
-    const videoUrl = reel.videoUrl ?? fallback?.videoUrl ?? ''
-    const posterImage = reel.posterImage
-    const posterBuilder = posterImage ? urlFor(posterImage) : null
-    const posterUrl = posterBuilder ? posterBuilder.width(800).height(1422).url() : (reel.thumbnail ?? fallback?.thumbnail ?? '')
-    return { id: i + 1, videoUrl, posterUrl, posterImage }
+  // About reels: from Sanity only (no hardcoded fallback)
+  const aboutReels = (homeContent?.aboutReels?.length ? homeContent.aboutReels : []).map((reel: any, i: number) => {
+    const posterBuilder = reel.posterImage ? urlFor(reel.posterImage) : null
+    const posterUrl = posterBuilder ? posterBuilder.width(800).height(1422).url() : null
+    return { id: i + 1, videoUrl: reel.videoUrl || '', posterUrl, posterImage: reel.posterImage }
   })
 
   // Helper function to get image URL (works with both Sanity images and string URLs)

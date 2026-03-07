@@ -85,7 +85,7 @@ export default async function OfficePage() {
     subtitle: page?.subtitle || fallbackContent.subtitle,
     tagline: page?.tagline || fallbackContent.tagline,
     introText: page?.introText || fallbackContent.introText,
-    imageOptions: (page?.galleryImages && page.galleryImages.length > 0) ? [] : fallbackContent.imageOptions,
+    imageOptions: (page?.galleryImages && page.galleryImages.length > 0) ? page.galleryImages : fallbackContent.imageOptions,
     whatWeDesign: page?.whatWeDesign || fallbackContent.whatWeDesign,
     whyChooseUs: page?.whyChooseUs || fallbackContent.whyChooseUs,
     approach: page?.approach || fallbackContent.approach,

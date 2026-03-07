@@ -85,7 +85,7 @@ export default async function HospitalityPage() {
     subtitle: page?.subtitle || fallbackContent.subtitle,
     tagline: page?.tagline || fallbackContent.tagline,
     introText: page?.introText || fallbackContent.introText,
-    imageOptions: (page?.galleryImages && page.galleryImages.length > 0) ? [] : fallbackContent.imageOptions,
+    imageOptions: (page?.galleryImages && page.galleryImages.length > 0) ? page.galleryImages : fallbackContent.imageOptions,
     designedFor: page?.whatWeDesign || fallbackContent.designedFor,
     whyTrustUs: page?.whyChooseUs || fallbackContent.whyTrustUs,
     approach: page?.approach || fallbackContent.approach,
