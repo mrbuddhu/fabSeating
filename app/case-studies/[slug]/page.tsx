@@ -235,13 +235,6 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
     return null
   }
 
-  return generateSEOMetadata({
-    title: caseStudy.seo?.title || caseStudy.title,
-    description: caseStudy.seo?.description || caseStudy.summary,
-    image: caseStudy.seo?.image || caseStudy.heroImage,
-    path: `/case-studies/${params.slug}`,
-  })
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 to-white">
       {/* Hero Section */}
