@@ -83,15 +83,17 @@ export const TeamSection = ({ teamMembers: sanityMembers }: { teamMembers?: Team
                       image={member.image as any}
                       alt={member.name}
                       fill
-                      objectFit="contain"
-                      className="transition-transform duration-700 group-hover:scale-105 p-4 object-top"
+                      objectFit="cover"
+                      className="!object-cover !object-top transition-opacity duration-300 hover:opacity-95"
+                      sizes="(max-width: 768px) 256px, 288px"
                     />
                   ) : (
                     <Image
                       src={imageSrc || HARD_CODED_TEAM[0].imageUrl!}
                       alt={member.name}
                       fill
-                      className="object-contain object-top transition-transform duration-700 group-hover:scale-105 p-4"
+                      className="!object-cover !object-top transition-opacity duration-300 hover:opacity-95"
+                      sizes="(max-width: 768px) 256px, 288px"
                     />
                   )}
                 </div>
