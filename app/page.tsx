@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import NextImage from 'next/image'
 import { HomeHero } from '@/components/HomeHero'
 import { TestimonialsPreview } from '@/components/TestimonialsPreview'
 import { AnimatedCard } from '@/components/AnimatedCard'
@@ -6,12 +6,11 @@ import { AnimatedSection } from '@/components/AnimatedSection'
 import { ProcessTypewriter } from '@/components/ProcessTypewriter'
 import { TeamSection } from '@/components/TeamSection'
 import { ResponsiveImage } from '@/components/ResponsiveImage'
-import { getHomePageData, getHomePageContent, getTeamMembers } from '@/lib/sanity/queries'
+import { getHomePageData, getHomePageContent } from '@/lib/sanity/queries'
 import { urlFor } from '@/lib/sanity/client'
 import { CaseStudyCard } from '@/components/CaseStudyCard'
-import { SkeletonCard } from '@/components/SkeletonCard'
 
-// Dummy data for preview when no Sanity data is available
+// Homepage only: upload to public/images/case-studies/ — use these exact filenames: regal-home-kilpauk.webp, luxury-4bhk-nungambakkam.webp, boutique-hotel-lobby.webp
 const dummyCaseStudies = [
   {
     _id: 'dummy-1',
@@ -23,15 +22,11 @@ const dummyCaseStudies = [
     client: 'Murugan',
     location: 'Kilpauk, Chennai',
     year: '2024',
-    // Use imageUrl property for ResponsiveImage component
     heroImage: {
       _type: 'image',
-      asset: {
-        _ref: 'dummy-ref-1',
-        _type: 'reference'
-      },
-      imageUrl: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80'
-    }
+      asset: { _ref: 'dummy-ref-1', _type: 'reference' },
+      imageUrl: '/images/case-studies/regal-home-kilpauk.webp',
+    },
   },
   {
     _id: 'dummy-2',
@@ -43,15 +38,11 @@ const dummyCaseStudies = [
     client: 'Mr. Rajesh Kothari',
     location: 'Nungambakkam, Chennai',
     year: '2024',
-    // Use imageUrl property for ResponsiveImage component
     heroImage: {
       _type: 'image',
-      asset: {
-        _ref: 'dummy-ref-2',
-        _type: 'reference'
-      },
-      imageUrl: 'https://images.unsplash.com/photo-1524758631624-e2822e304a36?auto=format&fit=crop&w=800&q=80'
-    }
+      asset: { _ref: 'dummy-ref-2', _type: 'reference' },
+      imageUrl: '/images/case-studies/luxury-4bhk-nungambakkam.webp',
+    },
   },
   {
     _id: 'dummy-3',
@@ -62,14 +53,11 @@ const dummyCaseStudies = [
     industry: 'hospitality',
     heroImage: {
       _type: 'image',
-      asset: {
-        _ref: 'dummy-ref-3',
-        _type: 'reference'
-      },
-      imageUrl: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80'
+      asset: { _ref: 'dummy-ref-3', _type: 'reference' },
+      imageUrl: '/images/case-studies/boutique-hotel-lobby.webp',
     },
-    comingSoon: true
-  }
+    comingSoon: true,
+  },
 ]
 
 
@@ -77,19 +65,19 @@ const dummyCaseStudies = [
 export const revalidate = 300
 
 
+// Homepage only: upload images to public/images/solutions/ (residential.webp, office.webp, hospitality.webp)
 const defaultSolutionsCards = [
-  { id: 1, title: 'RESIDENTIAL', description: 'Designed around how your family lives, gathers, rests, and grows. A home isn\'t built with furniture. It\'s shaped by how every piece works together.', videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-living-room-1574/1080p.mp4', thumbnail: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80', link: '/solutions/residential' },
-  { id: 2, title: 'OFFICE', description: 'Workspaces engineered for productivity, culture, and growth. An office isn\'t just where work happens. It shapes how teams collaborate, focus, and perform.', videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-boutique-office-6267/1080p.mp4', thumbnail: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=80', link: '/solutions/office' },
-  { id: 3, title: 'HOSPITALITY', description: 'Furniture and furnishings crafted to elevate guest experience. In hospitality, every detail shapes perception. From lobby to guest room, comfort, durability, and aesthetics must work seamlessly together.', videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-cafe-5535/1080p.mp4', thumbnail: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80', link: '/solutions/hospitality' },
+  { id: 1, title: 'RESIDENTIAL', description: 'Designed around how your family lives, gathers, rests, and grows. A home isn\'t built with furniture. It\'s shaped by how every piece works together.', videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-living-room-1574/1080p.mp4', thumbnail: '/images/solutions/residential.webp', link: '/solutions/residential' },
+  { id: 2, title: 'OFFICE', description: 'Workspaces engineered for productivity, culture, and growth. An office isn\'t just where work happens. It shapes how teams collaborate, focus, and perform.', videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-boutique-office-6267/1080p.mp4', thumbnail: '/images/solutions/office.webp', link: '/solutions/office' },
+  { id: 3, title: 'HOSPITALITY', description: 'Furniture and furnishings crafted to elevate guest experience. In hospitality, every detail shapes perception. From lobby to guest room, comfort, durability, and aesthetics must work seamlessly together.', videoUrl: 'https://cdn.coverr.co/videos/coverr-modern-cafe-5535/1080p.mp4', thumbnail: '/images/solutions/hospitality.webp', link: '/solutions/hospitality' },
 ]
 
 const defaultProcessSteps = ['Consultation', 'Design & Selection', 'Manufacturing & Sourcing', 'Quality Checks', 'Delivery & Installation', 'After Sales Support']
 
 export default async function Home() {
-  const [data, homeContent, teamMembers] = await Promise.all([
+  const [data, homeContent] = await Promise.all([
     getHomePageData(),
     getHomePageContent(),
-    getTeamMembers(),
   ])
 
   const heroHeadline = 'Premium Furniture & Furnishings\nfor Homes, Offices & Hospitality'
@@ -104,63 +92,20 @@ export default async function Home() {
     return { id: i + 1, videoUrl: reel.videoUrl || '', posterUrl, posterImage: reel.posterImage }
   })
 
-  // Helper function to get image URL (works with both Sanity images and string URLs)
-  function getImageUrl(image: any) {
-    if (!image) return null
-  
-    // If it's a Sanity image object
-    if (image && typeof image === 'object' && image.asset) {
-      return urlFor(image)?.width(1920).height(1080).url() || null
-    }
-  
-    // If it's a string URL
-    if (typeof image === 'string') {
-      return image
-    }
-  
-    return null
-  }
-
-  // Helper function to get solution image URL (works with both Sanity images and string URLs)
-  function getSolutionImageUrl(image: any) {
-    if (!image) return null
-    
-    try {
-      // If it's a Sanity image object
-      if (image && typeof image === 'object' && image.asset) {
-        return urlFor(image)?.width(800).height(450).url() || null
-      }
-      
-      // If it's a string URL
-      if (typeof image === 'string') {
-        return image
-      }
-    } catch (error) {
-      console.warn('Error getting solution image URL:', error);
-      return null;
-    }
-  
-    return null
-  }
-
-  // Solutions cards: from Sanity or fallback
-  const solutionsVideos = (homeContent?.solutionsCards?.length ? homeContent.solutionsCards : defaultSolutionsCards).map((card: any, i: number) => {
-    const fallback = defaultSolutionsCards[i] || defaultSolutionsCards[0]
-    const thumbnail = getSolutionImageUrl(card.posterImage) || (card.thumbnail ?? fallback?.thumbnail ?? '')
-    return {
-      id: i + 1,
-      title: card.title ?? fallback?.title ?? '',
-      description: card.description ?? fallback?.description ?? '',
-      videoUrl: card.videoUrl ?? fallback?.videoUrl ?? '',
-      thumbnail, // This will be Sanity image URL when uploaded
-      link: card.link ?? fallback?.link ?? '/solutions/residential',
-    }
-  })
+  // Solutions cards on homepage: static only (upload to public/images/solutions/). Internal /solutions/* pages stay Sanity-controlled.
+  const solutionsVideos = defaultSolutionsCards.map((card, i) => ({
+    id: i + 1,
+    title: card.title,
+    description: card.description,
+    videoUrl: card.videoUrl,
+    thumbnail: card.thumbnail,
+    link: card.link,
+  }))
 
   const processSteps = (homeContent?.processSteps?.length ? homeContent.processSteps : defaultProcessSteps) as string[]
 
-  // Use Sanity data if available
-  const projectsToDisplay = data.featuredProjects || []
+  // Homepage "Our Work" section: always use manual cards (uploaded images)
+  const projectsToDisplay = dummyCaseStudies
 
   return (
     <main className="flex min-h-screen flex-col overflow-hidden">
@@ -321,7 +266,7 @@ export default async function Home() {
                   className="group relative rounded-2xl overflow-hidden border-2 border-primary-200/50 bg-white shadow-lg hover:shadow-2xl hover:border-primary-400 transition-all duration-500"
                 >
                 <div className="relative h-[450px] overflow-hidden">
-                  <Image
+                  <NextImage
                     src={item.thumbnail}
                     alt={item.title}
                     fill
@@ -401,22 +346,11 @@ export default async function Home() {
           
           {/* Grid Layout */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            {projectsToDisplay.length > 0 ? (
-              projectsToDisplay.map((item: any, index: number) => (
-                <AnimatedCard key={item._id} index={index}>
-                  <CaseStudyCard 
-                    project={item} 
-                    index={index} 
-                  />
-                </AnimatedCard>
-              ))
-            ) : (
-              dummyCaseStudies.map((project, index) => (
-                <AnimatedCard key={project._id} index={index}>
-                  <CaseStudyCard project={project as any} index={index} />
-                </AnimatedCard>
-              ))
-            )}
+            {projectsToDisplay.map((item: any, index: number) => (
+              <AnimatedCard key={item._id} index={index}>
+                <CaseStudyCard project={item} index={index} />
+              </AnimatedCard>
+            ))}
           </div>
           
           {/* CTA Button */}
@@ -545,9 +479,9 @@ export default async function Home() {
       </section>
       </AnimatedSection>
 
-      {/* Team Section (from Sanity Team or fallback) */}
+      {/* Team Section (manual uploads in public/images/team/) */}
       <AnimatedSection>
-        <TeamSection teamMembers={teamMembers} />
+        <TeamSection />
       </AnimatedSection>
 
       {/* 9. Testimonials/Social Proof */}

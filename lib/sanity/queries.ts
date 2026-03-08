@@ -14,7 +14,8 @@ export async function getHomePageData() {
     }
   }
 
-  const [categories, testimonials, featuredProjects] = await Promise.all([
+  // Homepage "Our Work" uses manual uploads only. Case studies, projects, blogs (internal pages) still use getCaseStudies, getProjects, getBlogPosts.
+  const [categories, testimonials] = await Promise.all([
     client.fetch(
       `*[_type == "productCategory"] | order(_createdAt desc) [0...8]`,
       {},
@@ -25,25 +26,12 @@ export async function getHomePageData() {
       {},
       { next: { tags: ['sanity', 'sanity:testimonial'] } } as any,
     ),
-    client.fetch(
-      `*[_type == "caseStudy"] | order(_createdAt desc) [0...3] {
-        _id,
-        title,
-        slug,
-        summary,
-        heroImage,
-        videoUrl,
-        industry
-      }`,
-      {},
-      { next: { tags: ['sanity', 'sanity:caseStudy'] } } as any,
-    ),
   ])
 
   return {
     categories,
     testimonials,
-    featuredProjects,
+    featuredProjects: [] as any[],
   }
 }
 

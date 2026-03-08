@@ -1,53 +1,43 @@
 import React from 'react'
 import Image from 'next/image'
 import { Section } from '@/components/Section'
-import { ResponsiveImage } from '@/components/ResponsiveImage'
 
 type TeamMember = {
   _id: string
   name: string
   role: string
   bio?: string | null
-  image?: { asset?: { _ref: string } } | null
   socials?: { linkedin?: string; twitter?: string; instagram?: string; email?: string } | null
-  imageUrl?: string
+  imageUrl: string
 }
 
-// Hard-coded leadership copy. Sanity controls only photos & socials.
+// Homepage only: upload to public/images/team/ — use these exact filenames: gobind-chugani.webp, deenu-chugani.png, haresh.png
 const HARD_CODED_TEAM: TeamMember[] = [
   {
     _id: '1',
     name: 'Mr. Gobind Chugani',
     role: 'Founder',
     bio: '“A seasoned industry leader with over 30 years of experience, guiding Fabseating’s vision to create spaces that inspire.”',
-    imageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/images/team/gobind-chugani.webp',
   },
   {
     _id: '2',
     name: 'Mr. Deenu Chugani',
     role: 'Director – Business & Strategy',
     bio: '“A forward-thinking business strategist, driving Fabseating’s growth with innovation and a modern market perspective.”',
-    imageUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/images/team/deenu-chugani.png',
   },
   {
     _id: '3',
     name: 'Mr. Haresh',
     role: 'Operations & Client Relations Manager',
     bio: '“A dedicated operations leader, ensuring seamless coordination and consistent quality across every client experience.”',
-    imageUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/images/team/haresh.png',
   },
 ]
 
-export const TeamSection = ({ teamMembers: sanityMembers }: { teamMembers?: TeamMember[] | null }) => {
-  // Merge hard-coded text with optional images + socials from Sanity (by order)
-  const teamMembers: TeamMember[] = HARD_CODED_TEAM.map((base, index) => {
-    const sanity = sanityMembers?.[index]
-    return {
-      ...base,
-      image: sanity?.image ?? null,
-      socials: sanity?.socials ?? undefined,
-    }
-  })
+export const TeamSection = () => {
+  const teamMembers = HARD_CODED_TEAM
   return (
     <Section className="grainy-gradient py-12 md:py-16 text-white relative overflow-hidden">
       {/* Background decoration */}
@@ -68,7 +58,6 @@ export const TeamSection = ({ teamMembers: sanityMembers }: { teamMembers?: Team
             const socials = member.socials || {}
             const hasSocials =
               !!(socials.linkedin || socials.twitter || socials.instagram || socials.email)
-            const imageSrc = member.image?.asset ? null : member.imageUrl
             return (
             <div 
               key={member._id} 
@@ -77,25 +66,15 @@ export const TeamSection = ({ teamMembers: sanityMembers }: { teamMembers?: Team
               <div className="relative group shrink-0">
                 <div className={`absolute top-3 ${index % 2 === 1 ? '-right-3' : '-left-3'} w-full h-full border-2 border-white/20 rounded-2xl -z-10 transition-transform duration-500 group-hover:translate-x-1 group-hover:translate-y-1`}></div>
                 <div className={`absolute -inset-1 bg-white/10 rounded-[1.2rem] -z-20 blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
-                <div className="relative w-64 h-80 md:w-72 md:h-96 overflow-hidden rounded-2xl shadow-lg bg-gradient-to-br from-primary-100 to-white">
-                  {member.image?.asset ? (
-                    <ResponsiveImage
-                      image={member.image as any}
-                      alt={member.name}
-                      fill
-                      objectFit="cover"
-                      className="!object-cover !object-top transition-opacity duration-300 hover:opacity-95"
-                      sizes="(max-width: 768px) 256px, 288px"
-                    />
-                  ) : (
-                    <Image
-                      src={imageSrc || HARD_CODED_TEAM[0].imageUrl!}
-                      alt={member.name}
-                      fill
-                      className="!object-cover !object-top transition-opacity duration-300 hover:opacity-95"
-                      sizes="(max-width: 768px) 256px, 288px"
-                    />
-                  )}
+                <div className="relative w-64 h-80 md:w-72 md:h-96 overflow-hidden rounded-2xl shadow-lg bg-primary-200/30">
+                  <Image
+                    src={member.imageUrl}
+                    alt={member.name}
+                    fill
+                    unoptimized
+                    className="object-cover object-top transition-opacity duration-300 hover:opacity-95"
+                    sizes="(max-width: 768px) 256px, 288px"
+                  />
                 </div>
               </div>
 

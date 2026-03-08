@@ -4,7 +4,7 @@ import { Container } from './Container'
 
 const footerLinks = {
   company: [
-    { href: '/blog', label: 'Blog' },
+    { href: '/blog', label: 'Blogs' },
     { href: '/legals', label: 'Legals' },
     { href: '/policies', label: 'Policies' },
   ],
