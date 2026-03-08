@@ -191,7 +191,7 @@ export default async function Home() {
             {/* Video Reels Grid - Portrait Mode - Full Width (from Sanity Homepage or fallback) */}
             <div className="w-full mb-8">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-[6px] md:gap-2">
-                {aboutReels.map((reel: { id: number; videoUrl: string; posterUrl: string }, index: number) => (
+                {aboutReels.map((reel: { id: number; videoUrl: string; posterUrl: string | null }, index: number) => (
                   <AnimatedCard key={reel.id} index={index}>
                     <div className="relative w-full aspect-[9/16] overflow-hidden rounded-2xl md:rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.3)] hover:shadow-[0_35px_90px_rgba(0,0,0,0.4)] transition-all duration-500 hover:-translate-y-2">
                       <video
@@ -200,7 +200,7 @@ export default async function Home() {
                         muted
                         playsInline
                         className="w-full h-full object-cover"
-                        poster={reel.posterUrl}
+                        poster={reel.posterUrl ?? undefined}
                       >
                         <source src={reel.videoUrl} type="video/mp4" />
                       </video>
