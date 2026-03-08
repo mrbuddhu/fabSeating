@@ -86,9 +86,14 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const settings = await getSiteSettings()
-  const logoBuilder = settings?.logo ? urlFor(settings.logo as any) : null
-  const logoUrl = logoBuilder ? logoBuilder.width(440).height(128).url() : null
+  let logoUrl: string | null = null
+  try {
+    const settings = await getSiteSettings()
+    const logoBuilder = settings?.logo ? urlFor(settings.logo as any) : null
+    logoUrl = logoBuilder ? logoBuilder.width(440).height(128).url() : null
+  } catch {
+    // Sanity unavailable or misconfigured – still render layout and styles; header/footer use fallback
+  }
 
   return (
     <html lang="en" className={`${playfair.variable} ${montserrat.variable} luxury-scrollbar`}>

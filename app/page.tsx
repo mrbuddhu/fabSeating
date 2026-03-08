@@ -75,22 +75,36 @@ const defaultSolutionsCards = [
 const defaultProcessSteps = ['Consultation', 'Design & Selection', 'Manufacturing & Sourcing', 'Quality Checks', 'Delivery & Installation', 'After Sales Support']
 
 export default async function Home() {
-  const [data, homeContent] = await Promise.all([
-    getHomePageData(),
-    getHomePageContent(),
-  ])
+  let data: Awaited<ReturnType<typeof getHomePageData>> = { categories: [], testimonials: [], featuredProjects: [] }
+  let homeContent: Awaited<ReturnType<typeof getHomePageContent>> = null
+  try {
+    const [dataRes, homeContentRes] = await Promise.all([
+      getHomePageData(),
+      getHomePageContent(),
+    ])
+    data = dataRes ?? data
+    homeContent = homeContentRes ?? null
+  } catch {
+    // Sanity unavailable – use defaults so all sections still render
+  }
 
   const heroHeadline = 'Premium Furniture & Furnishings\nfor Homes, Offices & Hospitality'
   const heroSubheadline = 'Since 2001, Fab Seating has been creating complete furniture and furnishing solutions designed for real spaces and long term use.'
   const primaryCta = 'Contact Us'
   const trustLine = 'Crafted & curated from our Chennai facility | Serving residential & commercial spaces across South India'
 
-  // About reels: from Sanity only (no hardcoded fallback)
-  const aboutReels = (homeContent?.aboutReels?.length ? homeContent.aboutReels : []).map((reel: any, i: number) => {
-    const posterBuilder = reel.posterImage ? urlFor(reel.posterImage) : null
-    const posterUrl = posterBuilder ? posterBuilder.width(800).height(1422).url() : null
-    return { id: i + 1, videoUrl: reel.videoUrl || '', posterUrl, posterImage: reel.posterImage }
-  })
+  // About reels: from Sanity (safe so urlFor never breaks the page)
+  let aboutReels: { id: number; videoUrl: string; posterUrl: string | null }[] = []
+  try {
+    const reels = homeContent?.aboutReels?.length ? homeContent.aboutReels : []
+    aboutReels = reels.map((reel: any, i: number) => {
+      const posterBuilder = reel.posterImage ? urlFor(reel.posterImage) : null
+      const posterUrl = posterBuilder ? posterBuilder.width(800).height(1422).url() : null
+      return { id: i + 1, videoUrl: reel.videoUrl || '', posterUrl, posterImage: reel.posterImage }
+    })
+  } catch {
+    aboutReels = []
+  }
 
   // Solutions cards on homepage: static only (upload to public/images/solutions/). Internal /solutions/* pages stay Sanity-controlled.
   const solutionsVideos = defaultSolutionsCards.map((card, i) => ({
@@ -265,19 +279,20 @@ export default async function Home() {
                 <div 
                   className="group relative rounded-2xl overflow-hidden border-2 border-primary-200/50 bg-white shadow-lg hover:shadow-2xl hover:border-primary-400 transition-all duration-500"
                 >
-                <div className="relative h-[450px] overflow-hidden">
+                <div className="relative h-[380px] overflow-hidden">
                   <NextImage
                     src={item.thumbnail}
                     alt={item.title}
                     fill
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-primary-950/80"></div>
+                  {/* Strong overlay so white text is readable on any background */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
+                <div className="absolute bottom-0 left-0 right-0 p-5 z-20">
 
-                  <h3 className="text-2xl font-serif font-semibold text-white mb-2 tracking-tight">{item.title}</h3>
-                  <p className="text-gray-100 text-sm mb-4 leading-relaxed">{item.description}</p>
+                  <h3 className="text-xl font-serif font-semibold text-white mb-1.5 tracking-tight drop-shadow-sm">{item.title}</h3>
+                  <p className="text-white/95 text-sm leading-snug line-clamp-2 mb-3 drop-shadow-md">{item.description}</p>
                   <div className="inline-block hover:scale-110 transition-transform duration-300">
                     <a 
                       href={item.link}
