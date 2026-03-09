@@ -14,7 +14,8 @@ const dummyCaseStudies: Record<string, any> = {
     location: 'Chennai, Tamil Nadu',
     year: '2024',
     industry: 'office',
-    heroImage: 'https://images.unsplash.com/photo-1497366212-3dadae4b4ace?auto=format&fit=crop&w=800&q=80',
+    // Uses locally uploaded image from /public/images/case-studies/
+    heroImage: '/images/case-studies/tech-hub-workspace.webp',
     challenge: [
       {
         _type: 'block',
@@ -76,7 +77,8 @@ const dummyCaseStudies: Record<string, any> = {
     location: 'Adyar, Chennai',
     year: '2024',
     industry: 'residential',
-    heroImage: 'https://images.unsplash.com/photo-1524758631624-e2822e304a36?auto=format&fit=crop&w=800&q=80',
+    // Uses locally uploaded image from /public/images/case-studies/
+    heroImage: '/images/case-studies/luxury-villa-interiors.webp',
     challenge: [
       {
         _type: 'block',
@@ -132,56 +134,23 @@ const dummyCaseStudies: Record<string, any> = {
     _id: 'dummy-3',
     _type: 'caseStudy',
     title: 'Boutique Hotel Lobby',
-    subtitle: 'Welcoming and elegant seating solutions for hospitality',
-    summary: 'Elegant lobby design with custom furniture pieces for a boutique hotel.',
+    subtitle: 'Coming soon – hospitality case study in progress',
+    summary: 'We are currently documenting this hospitality project. Full details, photos, and metrics will be published soon.',
     client: 'Grand Plaza Hotel',
     location: 'Chennai, Tamil Nadu',
     year: '2024',
     industry: 'hospitality',
-    heroImage: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80',
-    challenge: [
-      {
-        _type: 'block',
-        children: [
-          {
-            _type: 'span',
-            text: 'Hotel needed a lobby that would create a welcoming first impression while reflecting their brand.'
-          }
-        ]
-      }
-    ],
-    solution: [
-      {
-        _type: 'block',
-        children: [
-          {
-            _type: 'span',
-            text: 'We designed custom seating solutions and elegant furniture pieces that balance comfort with style.'
-          }
-        ]
-      }
-    ],
-    result: [
-      {
-        _type: 'block',
-        children: [
-          {
-            _type: 'span',
-            text: 'A transformed lobby space that enhances guest experience and strengthens hotel brand identity.'
-          }
-        ]
-      }
-    ],
+    // Uses locally uploaded image from /public/images/case-studies/
+    heroImage: '/images/case-studies/boutique-hotel-lobby.webp',
+    // No detailed sections yet – this entry is intentionally minimal
+    challenge: [],
+    solution: [],
+    result: [],
     stats: [
       {
         _type: 'object',
         label: 'Project Status',
         value: 'Coming Soon'
-      },
-      {
-        _type: 'object',
-        label: 'Seating Capacity',
-        value: '25+ guests'
       }
     ]
   }
