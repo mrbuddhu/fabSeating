@@ -150,6 +150,13 @@ export default {
       description: 'What was the problem or requirement?',
     },
     {
+      name: 'challengeImage',
+      title: 'Challenge Image',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Image shown alongside the "The Challenge" section.',
+    },
+    {
       name: 'solution',
       title: 'The Solution',
       type: 'array',
@@ -157,11 +164,25 @@ export default {
       description: 'How did we solve it?',
     },
     {
+      name: 'solutionImage',
+      title: 'Solution Image',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Image shown alongside the "The Solution" section.',
+    },
+    {
       name: 'result',
       title: 'The Result',
       type: 'array',
       of: [{ type: 'block' }],
       description: 'What was the outcome?',
+    },
+    {
+      name: 'resultImage',
+      title: 'Result Image',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Image shown alongside the "The Result" section.',
     },
     {
       name: 'stats',

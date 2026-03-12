@@ -6,8 +6,11 @@ type CaseStudy = {
   title: string
   subtitle?: string
   heroImage?: any
+  challengeImage?: any
   challenge?: Array<{ children?: Array<{ _key?: string; text?: string }> }>
+  solutionImage?: any
   solution?: Array<{ children?: Array<{ _key?: string; text?: string }> }>
+  resultImage?: any
   result?: Array<{ children?: Array<{ _key?: string; text?: string }> }>
   stats?: Array<{ label?: string; value?: string }>
   testimonial?: { quote?: string; author?: string; role?: string }
@@ -25,6 +28,9 @@ function normalizeHeroImage(heroImage: any) {
 
 export function CaseStudyDetailContent({ caseStudy }: { caseStudy: CaseStudy }) {
   const heroImage = normalizeHeroImage(caseStudy.heroImage)
+  const challengeImage = normalizeHeroImage(caseStudy.challengeImage)
+  const solutionImage = normalizeHeroImage(caseStudy.solutionImage)
+  const resultImage = normalizeHeroImage(caseStudy.resultImage)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 to-white">
@@ -62,54 +68,108 @@ export function CaseStudyDetailContent({ caseStudy }: { caseStudy: CaseStudy }) 
           <div className="max-w-6xl mx-auto">
             {caseStudy.challenge && caseStudy.challenge.length > 0 && (
               <Section>
-                <div className="text-center max-w-3xl mx-auto mb-16">
-                  <h2 className="font-serif text-3xl md:text-5xl font-bold mb-6 text-primary-900">The Challenge</h2>
-                  <p className="text-primary-200 text-lg">What we needed to overcome</p>
-                </div>
-                <div className="prose prose-lg text-primary-700 max-w-none">
-                  {caseStudy.challenge.map((block, index) => (
-                    <p key={index} className="mb-6">
-                      {block.children?.map((span: any) => (
-                        <span key={span._key}>{span.text}</span>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                  <div className="lg:col-span-6">
+                    <div className="text-left max-w-xl mb-10">
+                      <h2 className="font-serif text-3xl md:text-5xl font-bold mb-6 text-primary-900">
+                        The Challenge
+                      </h2>
+                      <p className="text-primary-200 text-lg">What we needed to overcome</p>
+                    </div>
+                    <div className="prose prose-lg text-primary-700 max-w-none">
+                      {caseStudy.challenge.map((block, index) => (
+                        <p key={index} className="mb-6">
+                          {block.children?.map((span: any) => (
+                            <span key={span._key}>{span.text}</span>
+                          ))}
+                        </p>
                       ))}
-                    </p>
-                  ))}
+                    </div>
+                  </div>
+                  {challengeImage && (
+                    <div className="lg:col-span-6">
+                      <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
+                        <ResponsiveImage
+                          image={challengeImage}
+                          alt={`${caseStudy.title} – The Challenge`}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
               </Section>
             )}
 
             {caseStudy.solution && caseStudy.solution.length > 0 && (
               <Section>
-                <div className="text-center max-w-3xl mx-auto mb-16">
-                  <h2 className="font-serif text-3xl md:text-5xl font-bold mb-6 text-primary-900">The Solution</h2>
-                  <p className="text-primary-200 text-lg">How we solved it</p>
-                </div>
-                <div className="prose prose-lg text-primary-700 max-w-none">
-                  {caseStudy.solution.map((block, index) => (
-                    <p key={index} className="mb-6">
-                      {block.children?.map((span: any) => (
-                        <span key={span._key}>{span.text}</span>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                  {solutionImage && (
+                    <div className="lg:col-span-6 order-last lg:order-first">
+                      <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
+                        <ResponsiveImage
+                          image={solutionImage}
+                          alt={`${caseStudy.title} – The Solution`}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    </div>
+                  )}
+                  <div className="lg:col-span-6">
+                    <div className="text-left max-w-xl mb-10">
+                      <h2 className="font-serif text-3xl md:text-5xl font-bold mb-6 text-primary-900">
+                        The Solution
+                      </h2>
+                      <p className="text-primary-200 text-lg">How we solved it</p>
+                    </div>
+                    <div className="prose prose-lg text-primary-700 max-w-none">
+                      {caseStudy.solution.map((block, index) => (
+                        <p key={index} className="mb-6">
+                          {block.children?.map((span: any) => (
+                            <span key={span._key}>{span.text}</span>
+                          ))}
+                        </p>
                       ))}
-                    </p>
-                  ))}
+                    </div>
+                  </div>
                 </div>
               </Section>
             )}
 
             {caseStudy.result && caseStudy.result.length > 0 && (
               <Section>
-                <div className="text-center max-w-3xl mx-auto mb-16">
-                  <h2 className="font-serif text-3xl md:text-5xl font-bold mb-6 text-primary-900">The Result</h2>
-                  <p className="text-primary-200 text-lg">The outcome</p>
-                </div>
-                <div className="prose prose-lg text-primary-700 max-w-none">
-                  {caseStudy.result.map((block, index) => (
-                    <p key={index} className="mb-6">
-                      {block.children?.map((span: any) => (
-                        <span key={span._key}>{span.text}</span>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                  <div className="lg:col-span-6">
+                    <div className="text-left max-w-xl mb-10">
+                      <h2 className="font-serif text-3xl md:text-5xl font-bold mb-6 text-primary-900">
+                        The Result
+                      </h2>
+                      <p className="text-primary-200 text-lg">The outcome</p>
+                    </div>
+                    <div className="prose prose-lg text-primary-700 max-w-none">
+                      {caseStudy.result.map((block, index) => (
+                        <p key={index} className="mb-6">
+                          {block.children?.map((span: any) => (
+                            <span key={span._key}>{span.text}</span>
+                          ))}
+                        </p>
                       ))}
-                    </p>
-                  ))}
+                    </div>
+                  </div>
+                  {resultImage && (
+                    <div className="lg:col-span-6">
+                      <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
+                        <ResponsiveImage
+                          image={resultImage}
+                          alt={`${caseStudy.title} – The Result`}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
               </Section>
             )}

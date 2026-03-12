@@ -71,8 +71,11 @@ export interface CaseStudy {
     videoUrl?: string
   }>
   challenge?: any
+  challengeImage?: SanityImage
   solution?: any
+  solutionImage?: SanityImage
   result?: any
+  resultImage?: SanityImage
   stats?: Array<{
     label: string
     value: string
