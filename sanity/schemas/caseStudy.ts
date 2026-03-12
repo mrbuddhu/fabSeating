@@ -198,12 +198,12 @@ export default {
     },
     {
       name: 'productsUsed',
-      title: 'Products Used',
+      title: 'Projects Used',
       type: 'array',
       of: [
         {
           type: 'reference',
-          to: [{ type: 'product' }],
+          to: [{ type: 'project' }],
         },
       ],
     },
