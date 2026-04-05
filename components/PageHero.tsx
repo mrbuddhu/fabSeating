@@ -29,6 +29,11 @@ export function PageHero({
           >
             {title}
           </h1>
+          {subtitle ? (
+            <p className="text-base sm:text-lg text-primary-700 leading-relaxed max-w-2xl mt-2">
+              {subtitle}
+            </p>
+          ) : null}
         </div>
       </Container>
     </section>

@@ -29,7 +29,9 @@ export function Footer({ logoUrl }: { logoUrl?: string | null }) {
         <div className="py-16 md:py-20 grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="md:col-span-1">
             <div className="mb-4">
-              <Image src={logoUrl || '/logo.png'} alt="Fab Seating logo" width={440} height={128} className="h-28 w-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)]" />
+              <Link href="/" className="inline-block focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-200 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-950 rounded-lg">
+                <Image src={logoUrl || '/logo.png'} alt="Fab Seating logo" width={440} height={128} className="h-28 w-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)]" />
+              </Link>
             </div>
             <p className="text-primary-200 text-base leading-relaxed mb-4">
               Premium furniture crafted with excellence and attention to detail.
