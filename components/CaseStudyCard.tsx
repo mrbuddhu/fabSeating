@@ -3,6 +3,11 @@ import { ResponsiveImage } from './ResponsiveImage'
 import Image from 'next/image'
 import type { Project, CaseStudy } from '@/types'
 import { cn } from '@/lib/utils'
+import {
+  caseStudyIsComingSoon,
+  normalizeCaseStudyImage,
+  resolveCaseStudyVisualImage,
+} from '@/lib/caseStudy'
 
 interface CaseStudyCardProps {
   project: Project | CaseStudy
@@ -11,110 +16,113 @@ interface CaseStudyCardProps {
 }
 
 export function CaseStudyCard({ project, index = 0, className }: CaseStudyCardProps) {
-  // Helper to get image
   const getImage = () => {
-    if ('heroImage' in project && project.heroImage) return project.heroImage
-    if ('images' in project && project.images?.[0]) return project.images[0]
+    if ('heroImage' in project || 'cardImage' in project) {
+      const v = resolveCaseStudyVisualImage(project as CaseStudy)
+      if (v) return v
+    }
+    if ('images' in project && project.images?.[0]) {
+      return normalizeCaseStudyImage(project.images[0])
+    }
     return null
   }
 
-  // Helper to get category/industry
   const getCategory = () => {
     if ('industry' in project) return project.industry
     if ('category' in project) return project.category
     return 'Project'
   }
 
-  // Helper to get description/summary
   const getDescription = () => {
     if ('summary' in project) return project.summary
     if ('description' in project) return project.description
     return ''
   }
 
-  // Check if coming soon
-  const isComingSoon = (project as any).comingSoon
+  const isComingSoon = caseStudyIsComingSoon(project as CaseStudy)
+  const img = getImage()
+  const thumb = (project as any).thumbnail as string | undefined
 
   return (
     <div
       className={cn(
-        'group relative overflow-hidden bg-gray-900 rounded-lg shadow-xl hover:shadow-2xl transition-all duration-500 block h-full',
+        'group relative block h-full overflow-hidden rounded-lg bg-gray-900 shadow-xl transition-shadow duration-500 hover:shadow-2xl',
         isComingSoon ? 'cursor-not-allowed' : '',
         className
       )}
     >
-      <div className="relative aspect-[4/5] overflow-hidden">
+      {/* Image on top — wider frame + contain so card crop isn’t over-magnified */}
+      <div className="relative aspect-[16/10] overflow-hidden bg-gray-950">
         {project.videoUrl ? (
           <video
             autoPlay
             loop
             muted
             playsInline
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-[1.02]"
           >
             <source src={project.videoUrl} type="video/mp4" />
           </video>
-        ) : getImage() ? (
+        ) : img ? (
           <ResponsiveImage
-            image={getImage()!}
+            image={img as any}
             alt={project.title}
             fill
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            objectFit="contain"
+            className="transition-transform duration-700 group-hover:scale-[1.02]"
           />
-        ) : (project as any).thumbnail ? (
-          <Image 
-            src={(project as any).thumbnail} 
+        ) : thumb ? (
+          <Image
+            src={thumb}
             alt={project.title}
             fill
-            className="object-cover group-hover:scale-110 transition-transform duration-700"
+            className="object-contain transition-transform duration-700 group-hover:scale-[1.02]"
           />
         ) : (
-          <div className="w-full h-full bg-gray-800 flex items-center justify-center">
+          <div className="flex h-full w-full items-center justify-center bg-gray-800">
             <span className="text-gray-500">No media</span>
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
-        <div className="absolute top-4 right-4 z-20">
-          <span className="text-xs font-bold tracking-widest text-white/90 uppercase bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-md border border-white/20">
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
+        <div className="absolute right-4 top-4 z-20">
+          <span className="rounded-md border border-white/20 bg-black/40 px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-white/90 backdrop-blur-sm">
             {getCategory()}
           </span>
           {isComingSoon && (
-            <span className="absolute -top-2 -right-2 text-xs font-bold tracking-widest text-yellow-400 uppercase bg-yellow-900/80 backdrop-blur-sm px-2 py-1 rounded-md border border-yellow-400/30">
-              Coming Soon
+            <span className="absolute -right-1 -top-1 rounded-md border border-yellow-400/30 bg-yellow-900/80 px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-yellow-400 backdrop-blur-sm">
+              Soon
             </span>
           )}
         </div>
         {isComingSoon && (
-          <div className="absolute inset-0 bg-black/60 z-10 flex items-center justify-center">
+          <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/60">
             <div className="text-center">
-              <div className="text-white/90 font-serif text-2xl font-bold mb-2">Coming Soon</div>
-              <div className="text-white/70 text-sm">This case study is under construction</div>
+              <div className="mb-2 font-serif text-2xl font-bold text-white/90">Coming Soon</div>
+              <div className="text-sm text-white/70">This case study is under construction</div>
             </div>
           </div>
         )}
       </div>
-      <div className="p-6 bg-gradient-to-b from-gray-900 to-black h-full">
+
+      {/* Text below */}
+      <div className="h-full bg-gradient-to-b from-gray-900 to-black p-6">
         <div className="mb-2">
-          <span className="text-xs font-semibold tracking-wider text-primary-400 uppercase">
+          <span className="text-xs font-semibold uppercase tracking-wider text-primary-400">
             Case Study {index + 1}
           </span>
         </div>
-        <h3 className="text-xl font-serif font-bold text-white mb-2 tracking-tight">
-          {project.title}
-        </h3>
+        <h3 className="mb-2 font-serif text-xl font-bold tracking-tight text-white">{project.title}</h3>
         {getDescription() && (
-          <p className="text-gray-300 text-sm mb-4 leading-relaxed line-clamp-2">
-            {getDescription()}
-          </p>
+          <p className="mb-4 line-clamp-2 text-sm leading-relaxed text-gray-300">{getDescription()}</p>
         )}
         {!isComingSoon ? (
           <Link
             href={`/case-studies/${project.slug.current}`}
-            className="inline-flex items-center gap-2 text-primary-300 hover:text-primary-200 font-medium text-sm transition-colors duration-300 group/link"
+            className="group/link inline-flex items-center gap-2 text-sm font-medium text-primary-300 transition-colors duration-300 hover:text-primary-200"
           >
             <span className="tracking-wide">View Details</span>
             <svg
-              className="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform"
+              className="h-4 w-4 transition-transform group-hover/link:translate-x-1"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -124,7 +132,7 @@ export function CaseStudyCard({ project, index = 0, className }: CaseStudyCardPr
             </svg>
           </Link>
         ) : (
-          <div className="inline-flex items-center gap-2 text-gray-500 font-medium text-sm">
+          <div className="inline-flex items-center gap-2 text-sm font-medium text-gray-500">
             <span className="tracking-wide">Coming Soon</span>
           </div>
         )}

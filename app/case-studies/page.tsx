@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import { PageHero } from '@/components/PageHero'
 import { Section } from '@/components/Section'
 import { CaseStudyCard } from '@/components/CaseStudyCard'
-import { getCaseStudies } from '@/lib/sanity/queries'
+import { getCaseStudies, SANITY_FETCH_REVALIDATE_SECONDS } from '@/lib/sanity/queries'
 import { generateSEOMetadata } from '@/components/SEOHead'
 import Link from 'next/link'
 import { AnimatedCard } from '@/components/AnimatedCard'
@@ -50,7 +50,7 @@ const dummyCaseStudies = [
   }
 ]
 
-export const revalidate = 900
+export const revalidate = SANITY_FETCH_REVALIDATE_SECONDS
 
 export const metadata: Metadata = generateSEOMetadata({
   title: 'Case Studies',

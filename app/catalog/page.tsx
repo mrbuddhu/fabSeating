@@ -3,12 +3,12 @@ import { Section } from '@/components/Section'
 import { PageHero } from '@/components/PageHero'
 import { MediaCard } from '@/components/MediaCard'
 import { SkeletonCard } from '@/components/SkeletonCard'
-import { getCatalogs } from '@/lib/sanity/queries'
+import { getCatalogs, SANITY_FETCH_REVALIDATE_SECONDS } from '@/lib/sanity/queries'
 import { generateSEOMetadata } from '@/components/SEOHead'
 import { urlFor } from '@/lib/sanity/client'
 
 // Revalidate often so new/updated catalogs appear soon after publish
-export const revalidate = 60
+export const revalidate = SANITY_FETCH_REVALIDATE_SECONDS
 
 export const metadata: Metadata = generateSEOMetadata({
   title: 'Catalog',

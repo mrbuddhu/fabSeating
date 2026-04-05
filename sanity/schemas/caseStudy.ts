@@ -2,6 +2,8 @@ export default {
   name: 'caseStudy',
   title: 'Case Studies',
   type: 'document',
+  description:
+    'Publish a case study here and it appears automatically on the Case studies page. The 3 newest show on the homepage (Our Work). Card image and detail hero use the same photo when Card / listing image is set. Live URL: yourdomain.com/case-studies/[Slug]. Note: slugs regal-home-kilpauk and luxury-4bhk-nungambakkam are reserved by built-in pages.',
   fields: [
     {
       name: 'title',
@@ -23,6 +25,7 @@ export default {
         maxLength: 96,
       },
       validation: (Rule: any) => Rule.required(),
+      description: 'URL segment only, e.g. my-project-name → /case-studies/my-project-name',
     },
     {
       name: 'summary',
@@ -33,11 +36,28 @@ export default {
       validation: (Rule: any) => Rule.required(),
     },
     {
-      name: 'heroImage',
-      title: 'Hero Image',
+      name: 'comingSoon',
+      title: 'Coming soon',
+      type: 'boolean',
+      initialValue: false,
+      description:
+        'When enabled, listing cards show a Coming soon state and the detail page shows a notice. Use for work-in-progress stories (e.g. Boutique Hotel Lobby).',
+    },
+    {
+      name: 'cardImage',
+      title: 'Card / listing image',
       type: 'image',
       options: { hotspot: true },
-      validation: (Rule: any) => Rule.required(),
+      description:
+        'Primary image for homepage & case study grid cards. When set, the detail page hero uses this same image (so card and hero always match).',
+    },
+    {
+      name: 'heroImage',
+      title: 'Hero image (fallback)',
+      type: 'image',
+      options: { hotspot: true },
+      description:
+        'Used only when Card / listing image is empty — same hero slot on the detail page and as card fallback.',
     },
     {
       name: 'client',
@@ -253,7 +273,24 @@ export default {
     select: {
       title: 'title',
       subtitle: 'client',
-      media: 'heroImage',
+      cardImage: 'cardImage',
+      heroImage: 'heroImage',
+    },
+    prepare({ title, subtitle, cardImage, heroImage }: any) {
+      return {
+        title,
+        subtitle,
+        media: cardImage || heroImage,
+      }
     },
   },
+  validation: (Rule: any) =>
+    Rule.custom((document: { cardImage?: { asset?: unknown }; heroImage?: { asset?: unknown } }) => {
+      const hasCard = Boolean(document?.cardImage?.asset)
+      const hasHero = Boolean(document?.heroImage?.asset)
+      if (!hasCard && !hasHero) {
+        return 'Add a Card / listing image or a Hero image (fallback)'
+      }
+      return true
+    }),
 }

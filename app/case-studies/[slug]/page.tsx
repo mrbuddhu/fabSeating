@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
-import { getCaseStudyBySlug } from '@/lib/sanity/queries'
+import { getCaseStudyBySlug, SANITY_FETCH_REVALIDATE_SECONDS } from '@/lib/sanity/queries'
 import { CaseStudyDetailContent } from '@/components/CaseStudyDetailContent'
+import { caseStudyIsComingSoon } from '@/lib/caseStudy'
 
 // Dummy data for preview when no Sanity data is available
 const dummyCaseStudies: Record<string, any> = {
@@ -136,6 +137,7 @@ const dummyCaseStudies: Record<string, any> = {
     title: 'Boutique Hotel Lobby',
     subtitle: 'Coming soon – hospitality case study in progress',
     summary: 'We are currently documenting this hospitality project. Full details, photos, and metrics will be published soon.',
+    comingSoon: true,
     client: 'Grand Plaza Hotel',
     location: 'Chennai, Tamil Nadu',
     year: '2024',
@@ -155,6 +157,8 @@ const dummyCaseStudies: Record<string, any> = {
     ]
   }
 }
+
+export const revalidate = SANITY_FETCH_REVALIDATE_SECONDS
 
 interface CaseStudyPageProps {
   params: { slug: string }
@@ -176,5 +180,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
     return notFound()
   }
 
-  return <CaseStudyDetailContent caseStudy={caseStudy} />
+  const comingSoon = caseStudyIsComingSoon(caseStudy as { slug?: { current?: string }; comingSoon?: boolean })
+
+  return <CaseStudyDetailContent caseStudy={{ ...caseStudy, comingSoon }} />
 }

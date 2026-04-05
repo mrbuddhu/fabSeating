@@ -6,7 +6,7 @@ import { Footer } from '@/components/Footer'
 import { Analytics } from '@/components/Analytics'
 import { StickyBookCTA } from '@/components/StickyBookCTA'
 import { PWARegister } from '@/components/PWARegister'
-import { getSiteSettings } from '@/lib/sanity/queries'
+import { getSiteSettings, SANITY_FETCH_REVALIDATE_SECONDS } from '@/lib/sanity/queries'
 import { urlFor } from '@/lib/sanity/client'
 
 const playfair = Playfair_Display({
@@ -80,6 +80,8 @@ export const metadata: Metadata = {
     maximumScale: 5,
   },
 }
+
+export const revalidate = SANITY_FETCH_REVALIDATE_SECONDS
 
 export default async function RootLayout({
   children,

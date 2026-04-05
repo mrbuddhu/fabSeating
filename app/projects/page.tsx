@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { PageHero } from '@/components/PageHero'
 import { Section } from '@/components/Section'
-import { getProjects } from '@/lib/sanity/queries'
+import { getProjects, SANITY_FETCH_REVALIDATE_SECONDS } from '@/lib/sanity/queries'
 import { generateSEOMetadata } from '@/components/SEOHead'
 import Link from 'next/link'
 import { AnimatedCard } from '@/components/AnimatedCard'
@@ -43,7 +43,7 @@ const dummyProjects = [
   }
 ]
 
-export const revalidate = 900
+export const revalidate = SANITY_FETCH_REVALIDATE_SECONDS
 
 export const metadata: Metadata = generateSEOMetadata({
   title: 'Project Gallery',

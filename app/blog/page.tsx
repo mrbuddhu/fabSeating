@@ -2,7 +2,9 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { generateSEOMetadata } from '@/components/SEOHead'
 import { BLOG_POSTS } from '@/lib/blog/posts'
-import { getBlogPosts } from '@/lib/sanity/queries'
+import { getBlogPosts, SANITY_FETCH_REVALIDATE_SECONDS } from '@/lib/sanity/queries'
+
+export const revalidate = SANITY_FETCH_REVALIDATE_SECONDS
 
 type BlogCard = {
   slug: string

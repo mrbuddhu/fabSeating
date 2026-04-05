@@ -55,7 +55,11 @@ export interface CaseStudy {
   subtitle?: string
   slug: { current: string }
   summary?: string
+  /** When true, cards and detail page show a coming-soon state */
+  comingSoon?: boolean
   heroImage?: SanityImage
+  /** Listing/grid image; falls back to heroImage in UI when unset */
+  cardImage?: SanityImage
   client?: string
   location?: string
   year?: string

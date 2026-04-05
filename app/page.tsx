@@ -6,12 +6,18 @@ import { AnimatedSection } from '@/components/AnimatedSection'
 import { ProcessTypewriter } from '@/components/ProcessTypewriter'
 import { TeamSection } from '@/components/TeamSection'
 import { ResponsiveImage } from '@/components/ResponsiveImage'
-import { getHomePageData, getHomePageContent } from '@/lib/sanity/queries'
+import {
+  getHomePageData,
+  getHomePageContent,
+  getCaseStudies,
+  SANITY_FETCH_REVALIDATE_SECONDS,
+} from '@/lib/sanity/queries'
+import type { CaseStudy } from '@/types'
 import { urlFor } from '@/lib/sanity/client'
 import { CaseStudyCard } from '@/components/CaseStudyCard'
 
-// Homepage only: upload to public/images/case-studies/ — use these exact filenames: regal-home-kilpauk.webp, luxury-4bhk-nungambakkam.webp, boutique-hotel-lobby.webp
-const dummyCaseStudies = [
+// Fallback when Sanity has no case studies or is unavailable (upload to public/images/case-studies/)
+const fallbackCaseStudiesForHome: CaseStudy[] = [
   {
     _id: 'dummy-1',
     _type: 'caseStudy',
@@ -58,11 +64,11 @@ const dummyCaseStudies = [
     },
     comingSoon: true,
   },
-]
+] as CaseStudy[]
 
 
 // Revalidate so Sanity updates (e.g. founders/team) appear on live site within minutes when webhook runs; fallback if webhook not set
-export const revalidate = 300
+export const revalidate = SANITY_FETCH_REVALIDATE_SECONDS
 
 
 // Homepage only: upload images to public/images/solutions/ (residential.webp, office.webp, hospitality.webp)
@@ -77,6 +83,7 @@ const defaultProcessSteps = ['Consultation', 'Design & Selection', 'Manufacturin
 export default async function Home() {
   let data: Awaited<ReturnType<typeof getHomePageData>> = { categories: [], testimonials: [], featuredProjects: [] }
   let homeContent: Awaited<ReturnType<typeof getHomePageContent>> = null
+  let latestCaseStudiesForHome: CaseStudy[] = []
   try {
     const [dataRes, homeContentRes] = await Promise.all([
       getHomePageData(),
@@ -86,6 +93,15 @@ export default async function Home() {
     homeContent = homeContentRes ?? null
   } catch {
     // Sanity unavailable – use defaults so all sections still render
+  }
+
+  try {
+    const caseStudiesRes = await getCaseStudies()
+    latestCaseStudiesForHome = (caseStudiesRes ?? [])
+      .filter((c) => c?.slug?.current)
+      .slice(0, 3)
+  } catch {
+    latestCaseStudiesForHome = []
   }
 
   const heroHeadline = 'Premium Furniture & Furnishings\nfor Homes, Offices & Hospitality'
@@ -118,8 +134,9 @@ export default async function Home() {
 
   const processSteps = (homeContent?.processSteps?.length ? homeContent.processSteps : defaultProcessSteps) as string[]
 
-  // Homepage "Our Work" section: always use manual cards (uploaded images)
-  const projectsToDisplay = dummyCaseStudies
+  // Homepage "Our Work": three latest from Sanity when available; else static fallback cards
+  const projectsToDisplay =
+    latestCaseStudiesForHome.length > 0 ? latestCaseStudiesForHome : fallbackCaseStudiesForHome
 
   return (
     <main className="flex min-h-screen flex-col overflow-hidden">

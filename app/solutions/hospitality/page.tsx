@@ -4,10 +4,10 @@ import { Section } from '@/components/Section'
 import { generateSEOMetadata } from '@/components/SEOHead'
 import Link from 'next/link'
 import Image from 'next/image'
-import { getSolutionPage } from '@/lib/sanity/queries'
+import { getSolutionPage, SANITY_FETCH_REVALIDATE_SECONDS } from '@/lib/sanity/queries'
 import { ResponsiveImage } from '@/components/ResponsiveImage'
 
-export const revalidate = 60
+export const revalidate = SANITY_FETCH_REVALIDATE_SECONDS
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getSolutionPage('hospitality')

@@ -1,6 +1,9 @@
 import { client } from './client'
 import type { Project, CaseStudy, BlogPost, Testimonial, SolutionPage, Catalog } from '@/types'
 
+/** Next.js Data Cache revalidate (seconds) for every Sanity `client.fetch` in this file */
+export const SANITY_FETCH_REVALIDATE_SECONDS = 1
+
 function isSanityConfigured() {
   return !!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
 }
@@ -19,12 +22,12 @@ export async function getHomePageData() {
     client.fetch(
       `*[_type == "productCategory"] | order(_createdAt desc) [0...8]`,
       {},
-      { next: { tags: ['sanity', 'sanity:productCategory'] } } as any,
+      { next: { revalidate: SANITY_FETCH_REVALIDATE_SECONDS, tags: ['sanity', 'sanity:productCategory'] } } as any,
     ),
     client.fetch(
       `*[_type == "testimonial" && featured == true] | order(_createdAt desc) [0...4]`,
       {},
-      { next: { tags: ['sanity', 'sanity:testimonial'] } } as any,
+      { next: { revalidate: SANITY_FETCH_REVALIDATE_SECONDS, tags: ['sanity', 'sanity:testimonial'] } } as any,
     ),
   ])
 
@@ -56,7 +59,7 @@ export async function getProjects(category?: string): Promise<Project[]> {
       seo
     }`,
     category ? { category } : {},
-    { next: { tags: ['sanity', 'sanity:project'] } } as any,
+    { next: { revalidate: SANITY_FETCH_REVALIDATE_SECONDS, tags: ['sanity', 'sanity:project'] } } as any,
   )
 }
 
@@ -81,7 +84,7 @@ export async function getProjectBySlug(slug: string): Promise<Project | null> {
       seo
     }`,
     { slug },
-    { next: { tags: ['sanity', 'sanity:project'] } } as any,
+    { next: { revalidate: SANITY_FETCH_REVALIDATE_SECONDS, tags: ['sanity', 'sanity:project'] } } as any,
   )
 }
 
@@ -96,7 +99,9 @@ export async function getCaseStudies(industry?: string): Promise<CaseStudy[]> {
       title,
       slug,
       summary,
+      comingSoon,
       heroImage,
+      cardImage,
       client,
       location,
       year,
@@ -105,7 +110,7 @@ export async function getCaseStudies(industry?: string): Promise<CaseStudy[]> {
       seo
     }`,
     industry ? { industry } : {},
-    { next: { tags: ['sanity', 'sanity:caseStudy'] } } as any,
+    { next: { revalidate: SANITY_FETCH_REVALIDATE_SECONDS, tags: ['sanity', 'sanity:caseStudy'] } } as any,
   )
 }
 
@@ -120,7 +125,9 @@ export async function getCaseStudyBySlug(slug: string): Promise<CaseStudy | null
       subtitle,
       slug,
       summary,
+      comingSoon,
       heroImage,
+      cardImage,
       client,
       location,
       year,
@@ -146,7 +153,7 @@ export async function getCaseStudyBySlug(slug: string): Promise<CaseStudy | null
       seo
     }`,
     { slug },
-    { next: { tags: ['sanity', 'sanity:caseStudy'] } } as any,
+    { next: { revalidate: SANITY_FETCH_REVALIDATE_SECONDS, tags: ['sanity', 'sanity:caseStudy'] } } as any,
   )
 }
 
@@ -171,7 +178,7 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
       seo
     }`,
     {},
-    { next: { tags: ['sanity', 'sanity:blogPost'] } } as any,
+    { next: { revalidate: SANITY_FETCH_REVALIDATE_SECONDS, tags: ['sanity', 'sanity:blogPost'] } } as any,
   )
 }
 
@@ -214,7 +221,7 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> 
       category
     }`,
     { slug },
-    { next: { tags: ['sanity', 'sanity:blogPost'] } } as any,
+    { next: { revalidate: SANITY_FETCH_REVALIDATE_SECONDS, tags: ['sanity', 'sanity:blogPost'] } } as any,
   )
   return post || null
 }
@@ -234,7 +241,7 @@ export async function getTestimonials(): Promise<Testimonial[]> {
       featured
     }`,
     {},
-    { next: { tags: ['sanity', 'sanity:testimonial'] } } as any,
+    { next: { revalidate: SANITY_FETCH_REVALIDATE_SECONDS, tags: ['sanity', 'sanity:testimonial'] } } as any,
   )
 }
 
@@ -249,7 +256,7 @@ export async function getSiteSettings() {
       logo
     }`,
     {},
-    { next: { tags: ['sanity', 'sanity:siteSettings'] } } as any,
+    { next: { revalidate: SANITY_FETCH_REVALIDATE_SECONDS, tags: ['sanity', 'sanity:siteSettings'] } } as any,
   )
   return {
     announcement: doc?.announcementText ?? null,
@@ -277,7 +284,7 @@ export async function getHomePageContent() {
       processSteps
     }`,
     {},
-    { next: { tags: ['sanity', 'sanity:homePage'] } } as any,
+    { next: { revalidate: SANITY_FETCH_REVALIDATE_SECONDS, tags: ['sanity', 'sanity:homePage'] } } as any,
   )
 }
 
@@ -289,7 +296,7 @@ export async function getContactPageContent() {
       stripImages
     }`,
     {},
-    { next: { tags: ['sanity', 'sanity:contactPage'] } } as any,
+    { next: { revalidate: SANITY_FETCH_REVALIDATE_SECONDS, tags: ['sanity', 'sanity:contactPage'] } } as any,
   )
 }
 
@@ -306,7 +313,7 @@ export async function getTeamMembers() {
       socials
     }`,
     {},
-    { next: { tags: ['sanity', 'sanity:teamMember'] } } as any,
+    { next: { revalidate: SANITY_FETCH_REVALIDATE_SECONDS, tags: ['sanity', 'sanity:teamMember'] } } as any,
   )
 }
 
@@ -345,7 +352,7 @@ export async function getSolutionPage(
       seo
     }`,
     { type },
-    { next: { tags: ['sanity', 'sanity:solutionPage'] } } as any,
+    { next: { revalidate: SANITY_FETCH_REVALIDATE_SECONDS, tags: ['sanity', 'sanity:solutionPage'] } } as any,
   )
   return page || null
 }
@@ -372,7 +379,7 @@ export async function getCatalogs(): Promise<Catalog[]> {
     }`,
     {},
     {
-      next: { tags: ['sanity', 'sanity:catalog'], revalidate: 60 },
+      next: { revalidate: SANITY_FETCH_REVALIDATE_SECONDS, tags: ['sanity', 'sanity:catalog'] },
     } as any,
   )
 }

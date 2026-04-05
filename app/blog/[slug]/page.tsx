@@ -4,7 +4,13 @@ import { generateSEOMetadata } from '@/components/SEOHead'
 import { BlogPostRenderer } from '@/app/blog/_components/BlogPostRenderer'
 import { SanityBlogPostView } from '@/app/blog/_components/SanityBlogPostView'
 import { BLOG_POSTS, getBlogPostBySlug as getStaticBlogPostBySlug } from '@/lib/blog/posts'
-import { getBlogPosts, getBlogPostBySlug as getSanityBlogPostBySlug } from '@/lib/sanity/queries'
+import {
+  getBlogPosts,
+  getBlogPostBySlug as getSanityBlogPostBySlug,
+  SANITY_FETCH_REVALIDATE_SECONDS,
+} from '@/lib/sanity/queries'
+
+export const revalidate = SANITY_FETCH_REVALIDATE_SECONDS
 
 export async function generateStaticParams() {
   const staticSlugs = BLOG_POSTS.map((p) => ({ slug: p.slug }))

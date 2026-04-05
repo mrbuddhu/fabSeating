@@ -52,36 +52,26 @@ export function SkeletonCard({ className, variant = 'default' }: SkeletonCardPro
   return (
     <div
       className={cn(
-        "relative overflow-hidden bg-gray-900 rounded-lg shadow-xl block h-full",
+        'relative block h-full overflow-hidden rounded-lg bg-gray-900 shadow-xl',
         className
       )}
     >
-      {/* Image Area Skeleton */}
-      <div className="relative aspect-[4/5] overflow-hidden">
-        <Skeleton className="w-full h-full bg-gray-800 animate-pulse" />
-        
-        {/* Badge Skeleton */}
-        <div className="absolute top-4 right-4 z-20">
+      <div className="relative aspect-[16/10] overflow-hidden">
+        <Skeleton className="h-full w-full animate-pulse bg-gray-800" />
+        <div className="absolute right-4 top-4 z-20">
           <Skeleton className="h-6 w-20 bg-gray-700" />
         </div>
       </div>
 
-      {/* Content Area - Stacked below image to match CaseStudyCard layout */}
-      <div className="p-6 bg-gradient-to-b from-gray-900 to-black">
-        <div className="mb-2">
-          <Skeleton className="h-3 w-24 bg-gray-800" />
-        </div>
-        <Skeleton className="h-8 w-3/4 bg-gray-800 mb-2" />
-        <Skeleton className="h-4 w-full bg-gray-800 mb-1" />
-        <Skeleton className="h-4 w-2/3 bg-gray-800 mb-4" />
-        
-        <div className="flex items-center gap-2">
-          <Skeleton className="h-4 w-24 bg-gray-800" />
-        </div>
+      <div className="bg-gradient-to-b from-gray-900 to-black p-6">
+        <Skeleton className="mb-2 h-3 w-24 bg-gray-800" />
+        <Skeleton className="mb-2 h-8 w-3/4 bg-gray-800" />
+        <Skeleton className="mb-1 h-4 w-full bg-gray-800" />
+        <Skeleton className="mb-4 h-4 w-2/3 bg-gray-800" />
+        <Skeleton className="h-4 w-24 bg-gray-800" />
       </div>
-      
-      {/* Shimmer Overlay (Shining Screen Effect) */}
-      <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/5 to-transparent" />
+
+      <div className="pointer-events-none absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/5 to-transparent" />
     </div>
   )
 }
