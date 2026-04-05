@@ -4,7 +4,7 @@ export function StickyBookCTA() {
   return (
     <div className="fixed bottom-3 right-3 sm:bottom-4 sm:right-4 md:bottom-6 md:right-6 z-40 flex flex-col items-end gap-2 sm:gap-3">
       <a
-        href="https://wa.me/15551234567?text=Hi%20Fab%20Seating%2C%20I%E2%80%99d%20like%20to%20book%20a%20design%20visit."
+        href="https://wa.me/919841066135"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="WhatsApp Chat"
@@ -19,7 +19,7 @@ export function StickyBookCTA() {
       </a>
 
       <a
-        href="tel:+15551234567"
+        href="tel:+919841066135"
         aria-label="Call Fab Seating"
         className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-white/20 via-white/10 to-white/5 px-3 py-2 sm:px-4 sm:py-2.5 text-xs sm:text-sm font-semibold text-primary-50 shadow-[0_18px_45px_rgba(0,0,0,0.3)] border border-white/30 backdrop-blur-xl transition transform hover:-translate-y-1 hover:shadow-[0_26px_70px_rgba(0,0,0,0.35)]"
       >
