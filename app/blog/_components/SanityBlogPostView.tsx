@@ -35,9 +35,6 @@ const portableTextComponents: Partial<PortableTextReactComponents> = {
 }
 
 export function SanityBlogPostView({ post }: { post: BlogPost }) {
-  const heroImageUrl = post.featuredImage
-    ? urlFor(post.featuredImage)?.width(2000).height(1200).url() ?? null
-    : null
   const useJournal = post.useJournalLayout !== false && (post.sections?.length ?? 0) > 0
 
   if (!useJournal) {
@@ -78,18 +75,6 @@ export function SanityBlogPostView({ post }: { post: BlogPost }) {
           <p className="mt-5 text-sm text-white/60 tracking-wide">{post.byline}</p>
         )}
       </header>
-
-      {/* Hero image */}
-      {heroImageUrl && (
-        <div className="w-full h-[70vh] md:h-[80vh] lg:h-[90vh] max-h-[980px] overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={heroImageUrl}
-            alt=""
-            className="w-full h-full object-cover block"
-          />
-        </div>
-      )}
 
       {/* Article */}
       <div className="max-w-[1140px] mx-auto px-4 sm:px-6 py-12 md:py-16">
