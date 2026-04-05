@@ -1,4 +1,4 @@
-import NextImage from 'next/image'
+import Image from 'next/image'
 import { HomeHero } from '@/components/HomeHero'
 import { TestimonialsPreview } from '@/components/TestimonialsPreview'
 import { AnimatedCard } from '@/components/AnimatedCard'
@@ -280,11 +280,12 @@ export default async function Home() {
                   className="group relative rounded-2xl overflow-hidden border-2 border-primary-200/50 bg-white shadow-lg hover:shadow-2xl hover:border-primary-400 transition-all duration-500"
                 >
                 <div className="relative h-[380px] overflow-hidden">
-                  <NextImage
+                  <Image
                     src={item.thumbnail}
                     alt={item.title}
                     fill
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    sizes="(max-width: 768px) 100vw, 33vw"
                   />
                   {/* Strong overlay so white text is readable on any background */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />

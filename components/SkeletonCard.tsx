@@ -15,22 +15,17 @@ export function SkeletonCard({ className, variant = 'default' }: SkeletonCardPro
           className
         )}
       >
-        {/* Image Area Skeleton (Aspect Video) */}
-        <div className="relative aspect-video w-full overflow-hidden">
-          <Skeleton className="w-full h-full bg-gray-200 animate-pulse" />
+        {/* Match catalog MediaCard: flexible image area */}
+        <div className="flex min-h-[220px] w-full items-center justify-center overflow-hidden bg-neutral-100 px-2 py-6 sm:min-h-[260px]">
+          <Skeleton className="aspect-[3/4] w-4/5 max-w-[240px] bg-gray-200 animate-pulse rounded-md" />
         </div>
 
-        {/* Content Area */}
-        <div className="p-6">
-          {/* Title */}
-          <Skeleton className="h-8 w-3/4 bg-gray-200 mb-4" />
-          
-          {/* Description */}
-          <Skeleton className="h-4 w-full bg-gray-100 mb-2" />
-          <Skeleton className="h-4 w-2/3 bg-gray-100 mb-6" />
-
-          {/* CTA Link */}
-          <Skeleton className="h-6 w-24 bg-gray-200" />
+        {/* Content Area — compact like catalog variant */}
+        <div className="p-4 sm:p-5">
+          <Skeleton className="h-7 w-3/4 bg-gray-200 mb-3" />
+          <Skeleton className="h-3.5 w-full bg-gray-100 mb-1.5" />
+          <Skeleton className="h-3.5 w-2/3 bg-gray-100 mb-3" />
+          <Skeleton className="h-4 w-20 bg-gray-200" />
         </div>
 
         {/* Shimmer Overlay */}

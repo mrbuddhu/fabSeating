@@ -206,6 +206,8 @@ export interface Catalog {
   title: string
   description?: string
   coverImage?: SanityImage
+  /** From GROQ: coverImage.asset->metadata.dimensions */
+  coverDimensions?: { width: number; height: number; aspectRatio?: number } | null
   fileUrl?: string | null
   seo?: SEO
 }

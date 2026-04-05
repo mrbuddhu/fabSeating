@@ -32,10 +32,11 @@ export default async function CatalogPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {catalogs && catalogs.length > 0 ? (
               catalogs.map((item) => {
-                const coverUrl = item.coverImage ? urlFor(item.coverImage)?.width(1200).height(675).url() : null
+                const coverUrl = item.coverImage ? urlFor(item.coverImage)?.width(1600).url() : null
                 return (
                   <MediaCard
                     key={item._id}
+                    variant="catalog"
                     media={{
                       type: 'image',
                       src: coverUrl || '/logo.png',
@@ -45,6 +46,8 @@ export default async function CatalogPage() {
                       ctaText: item.fileUrl ? 'Download' : 'Coming soon',
                       ctaLink: item.fileUrl || '#',
                       download: !!item.fileUrl,
+                      intrinsicWidth: item.coverDimensions?.width,
+                      intrinsicHeight: item.coverDimensions?.height,
                     }}
                   />
                 )

@@ -366,6 +366,7 @@ export async function getCatalogs(): Promise<Catalog[]> {
       title,
       description,
       coverImage,
+      "coverDimensions": coverImage.asset->metadata.dimensions,
       "fileUrl": file.asset->url,
       seo
     }`,
