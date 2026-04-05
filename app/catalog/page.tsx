@@ -24,10 +24,11 @@ export default async function CatalogPage() {
       <PageHero
         title="Catalog"
         subtitle="Browse and download our catalogs"
+        className="pb-6 md:pb-8"
         contentClassName="max-w-6xl"
-        titleClassName="text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]"
+        titleClassName="text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] mb-3 md:mb-4"
       />
-      <Section>
+      <Section className="pt-2 pb-12 md:pt-4 md:pb-16">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {catalogs && catalogs.length > 0 ? (

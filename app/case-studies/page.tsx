@@ -84,8 +84,10 @@ export default async function CaseStudiesPage({ searchParams }: CaseStudiesPageP
       <PageHero
         title="Case Studies"
         subtitle="In-depth stories behind our most significant projects"
+        className="pb-6 md:pb-8"
+        titleClassName="mb-3 md:mb-4"
       />
-      <Section>
+      <Section className="pt-2 pb-12 md:pt-4 md:pb-16">
         <div className="mb-12 flex flex-wrap justify-center gap-4">
           {categories.map((cat) => (
             <Link
