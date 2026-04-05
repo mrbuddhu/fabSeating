@@ -1,19 +1,16 @@
 import { Metadata } from 'next'
-import Image from 'next/image'
 import { PageHero } from '@/components/PageHero'
 import { Section } from '@/components/Section'
 import { EnquiryForm } from '@/components/EnquiryForm'
 import { generateSEOMetadata } from '@/components/SEOHead'
-import { getContactPageContent } from '@/lib/sanity/queries'
-import { ResponsiveImage } from '@/components/ResponsiveImage'
+
+/** Short link from Google Maps “Share” — opens the saved place in Maps (not for iframe embed). */
+const GOOGLE_MAPS_OPEN_LINK = 'https://share.google/BYpJogg5iF7lQ5LYI'
+
+const MAP_ADDRESS_QUERY =
+  '428 Kilpauk Garden Road, Aspiran Garden Colony, Kilpauk, Chennai, Tamil Nadu 600010, India'
 
 export const revalidate = 86400
-
-const defaultStripImages = [
-  { url: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=80', alt: 'Carpenter working on wooden furniture' },
-  { url: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=80', alt: 'Upholstery and fabric detailing' },
-  { url: 'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=900&q=80', alt: 'Finishing and paint work on site' },
-]
 
 export const metadata: Metadata = generateSEOMetadata({
   title: 'Contact Us',
@@ -21,10 +18,7 @@ export const metadata: Metadata = generateSEOMetadata({
   path: '/contact',
 })
 
-export default async function ContactPage() {
-  const content = await getContactPageContent()
-  const stripImages = content?.stripImages?.length >= 3 ? content.stripImages : null
-
+export default function ContactPage() {
   return (
     <>
       <PageHero
@@ -45,27 +39,51 @@ export default async function ContactPage() {
         </div>
       </section>
       <Section>
-        <div className="max-w-6xl mx-auto space-y-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div>
-              <h2 className="font-serif text-2xl font-semibold mb-6">Get in Touch</h2>
-              <div className="space-y-4 text-primary-700">
+        <div className="max-w-6xl mx-auto space-y-12 md:space-y-14">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 lg:items-stretch">
+            <div className="flex flex-col min-h-0 lg:h-full">
+              <h2 className="font-serif text-2xl font-semibold mb-4 md:mb-5 shrink-0">Get in Touch</h2>
+              <div className="space-y-3 text-sm sm:text-base text-primary-700 shrink-0">
                 <p>
-                  <strong>Email:</strong> info@fabseating.com
+                  <strong className="text-primary-950">Email:</strong> info@fabseating.com
                 </p>
                 <p>
-                  <strong>Phone:</strong> 098410 66135
+                  <strong className="text-primary-950">Phone:</strong> 098410 66135
                 </p>
                 <p>
-                  <strong>Address:</strong><br />
-                  428, Kilpauk Garden Road, Aspiran Garden Colony<br />
+                  <strong className="text-primary-950">Address:</strong>
+                  <br />
+                  428, Kilpauk Garden Road, Aspiran Garden Colony
+                  <br />
                   Kilpauk, Chennai, Tamil Nadu 600010
                 </p>
               </div>
+
+              <div className="mt-6 flex flex-col flex-1 min-h-[240px] lg:min-h-0">
+                <h3 className="font-serif text-lg font-semibold text-primary-950 mb-2 shrink-0">Find us</h3>
+                <div className="rounded-xl overflow-hidden border border-primary-200 shadow-sm bg-primary-50/50 flex-1 min-h-[200px] w-full">
+                  <iframe
+                    title="Fab Seating on Google Maps"
+                    src={`https://www.google.com/maps?q=${encodeURIComponent(MAP_ADDRESS_QUERY)}&output=embed`}
+                    className="w-full h-full min-h-[200px] border-0"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    allowFullScreen
+                  />
+                </div>
+                <a
+                  href={GOOGLE_MAPS_OPEN_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block mt-2 text-sm font-medium text-primary-600 hover:text-primary-800 underline underline-offset-2 shrink-0"
+                >
+                  Open in Google Maps
+                </a>
+              </div>
             </div>
-            <div>
-              <h2 className="font-serif text-2xl font-semibold mb-6">Send Us a Message</h2>
-              <EnquiryForm originPage="/contact" />
+            <div className="flex flex-col min-h-0 lg:h-full">
+              <h2 className="font-serif text-2xl font-semibold mb-4 md:mb-5 shrink-0">Send Us a Message</h2>
+              <EnquiryForm originPage="/contact" layout="stretch" />
             </div>
           </div>
         </div>
