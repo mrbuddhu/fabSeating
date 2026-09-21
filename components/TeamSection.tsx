@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { Section } from '@/components/Section'
-import { ResponsiveImage } from '@/components/ResponsiveImage'
+import { urlFor } from '@/lib/sanity/client'
 
 type TeamMember = {
   _id: string
@@ -79,10 +79,12 @@ export const TeamSection = ({ teamMembers: sanityMembers }: { teamMembers?: Team
                 <div className={`absolute -inset-1 bg-white/10 rounded-[1.2rem] -z-20 blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
                 <div className="relative w-64 h-80 md:w-72 md:h-96 overflow-hidden rounded-2xl shadow-lg bg-gradient-to-br from-primary-100 to-white">
                   {member.image?.asset ? (
-                    <ResponsiveImage
-                      image={member.image as any}
+                    <Image
+                      // Use the full original photo (no Studio crop / forced aspect ratio)
+                      src={urlFor({ asset: member.image.asset } as any)!.width(1000).fit('max').url()}
                       alt={member.name}
                       fill
+                      sizes="(max-width: 768px) 256px, 288px"
                       className="object-contain transition-transform duration-700 group-hover:scale-105 p-4"
                     />
                   ) : (

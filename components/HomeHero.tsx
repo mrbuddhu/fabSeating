@@ -79,7 +79,7 @@ export function HomeHero({
                         loop
                         muted
                         playsInline
-                        preload="auto"
+                        preload="metadata"
                         crossOrigin="anonymous"
                         poster={(slide as any).poster || fallbackPoster}
                         style={{ objectFit: 'cover' }}

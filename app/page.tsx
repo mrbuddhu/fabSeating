@@ -5,6 +5,7 @@ import { AnimatedCard } from '@/components/AnimatedCard'
 import { AnimatedSection } from '@/components/AnimatedSection'
 import { ProcessTypewriter } from '@/components/ProcessTypewriter'
 import { TeamSection } from '@/components/TeamSection'
+import { LazyVideo } from '@/components/LazyVideo'
 import { ResponsiveImage } from '@/components/ResponsiveImage'
 import { getHomePageData, getHomePageContent, getTeamMembers } from '@/lib/sanity/queries'
 import { urlFor } from '@/lib/sanity/client'
@@ -231,16 +232,7 @@ export default async function Home() {
                 {aboutReels.map((reel: { id: number; videoUrl: string; posterUrl: string }, index: number) => (
                   <AnimatedCard key={reel.id} index={index}>
                     <div className="relative w-full aspect-[9/16] overflow-hidden rounded-2xl md:rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.3)] hover:shadow-[0_35px_90px_rgba(0,0,0,0.4)] transition-all duration-500 hover:-translate-y-2">
-                      <video
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="w-full h-full object-cover"
-                        poster={reel.posterUrl}
-                      >
-                        <source src={reel.videoUrl} type="video/mp4" />
-                      </video>
+                      <LazyVideo src={reel.videoUrl} poster={reel.posterUrl} className="w-full h-full object-cover" />
                     </div>
                   </AnimatedCard>
                 ))}
