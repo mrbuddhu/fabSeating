@@ -10,6 +10,12 @@ import { getHomePageData, getHomePageContent, getTeamMembers } from '@/lib/sanit
 import { urlFor } from '@/lib/sanity/client'
 import { CaseStudyCard } from '@/components/CaseStudyCard'
 import { SkeletonCard } from '@/components/SkeletonCard'
+import { PartnersStrip } from '@/components/PartnersStrip'
+import { FurnitureCategories } from '@/components/FurnitureCategories'
+import { IndustriesServed } from '@/components/IndustriesServed'
+import { FaqTeal } from '@/components/FaqTeal'
+import { GoogleReviewsCta } from '@/components/GoogleReviewsCta'
+import { CONTACT } from '@/lib/siteContent'
 
 // Dummy data for preview when no Sanity data is available
 const dummyCaseStudies = [
@@ -163,6 +169,8 @@ export default async function Home() {
         }}
       />
 
+      <PartnersStrip />
+
       {/* 2. Quote Section - Social Proof */}
       <section className="relative py-8 md:py-10 grainy-gradient text-white overflow-hidden">
         {/* Decorative background elements */}
@@ -275,71 +283,13 @@ export default async function Home() {
 
       {/* Categories Section Moved to Solutions */}
 
-      {/* 5. Solutions Section - Carousel Only (Commercial, Residential, Hospitality) */}
+      {/* 5. Furniture & Furnishing Solutions */}
       <AnimatedSection delay={0.2}>
-        <section id="solutions" className="relative py-16 md:py-20 bg-white overflow-hidden">
-        {/* Background decoration */}
-        <div className="absolute inset-0 opacity-[0.02]">
-          <div className="absolute top-1/4 right-0 w-[600px] h-[600px] bg-primary-600 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-primary-400 rounded-full blur-3xl"></div>
-        </div>
-        
-        <div className="container mx-auto px-4 relative z-10">
-          {/* Section Header */}
-          <AnimatedSection>
-            <div className="text-center mb-12">
-              <div className="inline-block mb-2">
-                <span className="text-xs font-bold tracking-[0.2em] uppercase text-primary-700">What We Offer</span>
-              </div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold mb-2 text-primary-950 tracking-tight">
-                Our Solutions
-              </h2>
-              <div className="w-24 h-px bg-gradient-to-r from-transparent via-primary-700 to-transparent mx-auto mb-3"></div>
-              <p className="text-lg md:text-xl text-gray-800 font-medium max-w-3xl mx-auto leading-relaxed">
-                Fab Seating delivers integrated furniture and furnishings solutions designed around how a space is used not just how it looks.
-              </p>
-            </div>
-          </AnimatedSection>
-
-          {/* Solutions Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            {solutionsVideos.map((item: { id: number; title: string; description: string; videoUrl: string; thumbnail: string; link: string }, index: number) => (
-              <AnimatedCard key={item.id} index={index}>
-                <div 
-                  className="group relative rounded-2xl overflow-hidden border-2 border-primary-200/50 bg-white shadow-lg hover:shadow-2xl hover:border-primary-400 transition-all duration-500"
-                >
-                <div className="relative h-[450px] overflow-hidden">
-                  <Image
-                    src={item.thumbnail}
-                    alt={item.title}
-                    fill
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-primary-950/80"></div>
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
-
-                  <h3 className="text-2xl font-serif font-semibold text-white mb-2 tracking-tight">{item.title}</h3>
-                  <p className="text-gray-100 text-sm mb-4 leading-relaxed">{item.description}</p>
-                  <div className="inline-block hover:scale-110 transition-transform duration-300">
-                    <a 
-                      href={item.link}
-                      className="inline-flex items-center gap-2 bg-white text-primary-950 px-5 py-2.5 rounded-full font-semibold text-sm hover:bg-primary-50 hover:animate-shake transition-colors duration-300 shadow-lg"
-                    >
-                      <span className="tracking-wide">Explore</span>
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-              </div>
-              </AnimatedCard>
-            ))}
-          </div>
-        </div>
-      </section>
+        <FurnitureCategories />
       </AnimatedSection>
+
+      {/* Industries We Serve */}
+      <IndustriesServed />
 
       {/* Teal Strip Divider with Process Typewriter */}
       <section className="relative py-8 md:py-10 grainy-gradient text-white overflow-hidden">
@@ -520,7 +470,7 @@ export default async function Home() {
           {/* CTA Button */}
           <div className="text-center">
             <a 
-              href="/contact" 
+              href="/custom-bespoke" 
               className="inline-flex items-center gap-3 px-8 py-4 bg-primary-950 text-white font-medium rounded-full hover:bg-primary-900 transition-all duration-300 hover:gap-5 shadow-lg hover:-translate-y-1 hover:shadow-2xl group"
             >
               <span className="text-sm tracking-wider uppercase">Get a Custom Quote</span>
@@ -550,35 +500,47 @@ export default async function Home() {
         </AnimatedSection>
       ) : null}
 
-      {/* 10. Call to Action */}
+      {/* Google Reviews */}
+      <GoogleReviewsCta />
+
+      {/* FAQ Section */}
+      <FaqTeal />
+
+      {/* Final CTA - Visit Our Showroom */}
       <section className="relative py-12 md:py-16 bg-white text-primary-950 overflow-hidden">
-        {/* Background decoration */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
           <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-600 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary-400 rounded-full blur-3xl"></div>
         </div>
-        
         <div className="container mx-auto px-4 text-center relative z-10">
           <div className="max-w-4xl mx-auto">
             <div className="inline-block mb-2">
-              <span className="text-xs font-bold tracking-[0.2em] uppercase text-primary-600">Let&apos;s Begin</span>
+              <span className="text-xs font-bold tracking-[0.2em] uppercase text-primary-600">Come See Us</span>
             </div>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold mb-3 text-primary-950 tracking-tight">
-              Planning a new space or upgrading an existing one?
+              Visit Our Showroom
             </h2>
             <div className="w-24 h-px bg-gradient-to-r from-transparent via-primary-300 to-transparent mx-auto mb-4"></div>
             <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto text-gray-600 font-medium leading-relaxed">
-              Let&apos;s design it thoughtfully with Fabseating&apos;s expertise in furniture and furnishings.
+              Explore our collections, materials, and customization options in person at our Kilpauk, Chennai showroom &mdash; or reach us on WhatsApp to plan your visit.
             </p>
-            <a 
-              href="/contact" 
-              className="inline-flex items-center gap-2 px-8 py-4 bg-primary-950 text-white font-medium rounded-full hover:bg-primary-900 transition-all duration-300 hover:gap-3 shadow-xl hover:-translate-y-1 hover:shadow-2xl group text-base"
-            >
-              <span className="tracking-wider uppercase">Talk to Us</span>
-              <svg className="w-6 h-6 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </a>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <a
+                href={CONTACT.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-primary-950 text-white font-medium rounded-full hover:bg-primary-900 transition-all duration-300 hover:gap-3 shadow-xl hover:-translate-y-1 hover:shadow-2xl group text-base"
+              >
+                <span className="tracking-wider uppercase text-sm">Get Directions</span>
+                <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              </a>
+              <a
+                href="/contact"
+                className="inline-flex items-center gap-2 px-8 py-4 border border-primary-300 text-primary-900 font-medium rounded-full hover:bg-primary-50 transition-all duration-300 text-base"
+              >
+                <span className="tracking-wider uppercase text-sm">Contact Us</span>
+              </a>
+            </div>
           </div>
         </div>
       </section>

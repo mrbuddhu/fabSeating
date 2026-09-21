@@ -62,7 +62,7 @@ export function HomeHero({
                 key={slide.src ?? `fallback-${idx}`}
                 className="relative min-w-full snap-start"
               >
-                <div className="relative h-[75vh] sm:h-[75vh] md:h-[75vh] lg:h-[75vh] min-h-[520px] sm:min-h-[560px] md:min-h-[580px] lg:min-h-[600px] overflow-hidden rounded-[28px] md:rounded-[32px]">
+                <div className="relative min-h-[70vh] overflow-hidden rounded-[28px] md:rounded-[32px]">
                   <div
                     className="absolute inset-0"
                     style={{
@@ -98,9 +98,9 @@ export function HomeHero({
                     <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/15 to-black/30" />
                   </div>
 
-                  <div className="absolute inset-0 z-10 flex flex-col justify-center px-4 sm:px-6 md:px-10 lg:px-14 overflow-hidden">
-                    <div className="w-full max-w-full sm:max-w-4xl md:max-w-5xl lg:max-w-6xl mx-auto space-y-4 rounded-2xl bg-black/15 p-4 sm:p-5 md:p-6 lg:p-8 shadow-[0_18px_50px_rgba(0,0,0,0.35)] overflow-hidden">
-                      <div className="space-y-3 md:space-y-4 overflow-hidden">
+                  <div className="relative z-10 flex min-h-[70vh] flex-col justify-center px-4 sm:px-6 md:px-10 lg:px-14 py-24 sm:py-28">
+                    <div className="w-full max-w-full sm:max-w-4xl md:max-w-5xl lg:max-w-6xl mx-auto space-y-4 rounded-2xl bg-black/15 p-4 sm:p-5 md:p-6 lg:p-8 shadow-[0_18px_50px_rgba(0,0,0,0.35)]">
+                      <div className="space-y-3 md:space-y-4">
                         <motion.h1
                           initial={{ opacity: 0, y: 20 }}
                           whileInView={{ opacity: 1, y: 0 }}
@@ -114,18 +114,6 @@ export function HomeHero({
                             </span>
                           ))}
                         </motion.h1>
-                        {trustIndicators?.length > 0 && (
-                          <div className="invisible space-y-1">
-                            {trustIndicators.map((ti, idx) => (
-                              <p
-                                key={idx}
-                                className="text-xs sm:text-sm font-medium text-primary-50"
-                              >
-                                {ti}
-                              </p>
-                            ))}
-                          </div>
-                        )}
                       </div>
 
                       <div className="flex flex-wrap items-center gap-2 sm:gap-3">

@@ -20,21 +20,21 @@ const HARD_CODED_TEAM: TeamMember[] = [
     name: 'Mr. Gobind Chugani',
     role: 'Founder',
     bio: '“A seasoned industry leader with over 30 years of experience, guiding Fabseating’s vision to create spaces that inspire.”',
-    imageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/images/team/gobind-chugani.png',
   },
   {
     _id: '2',
     name: 'Mr. Deenu Chugani',
     role: 'Director – Business & Strategy',
     bio: '“A forward-thinking business strategist, driving Fabseating’s growth with innovation and a modern market perspective.”',
-    imageUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/images/team/deenu-chugani.jpg',
   },
   {
     _id: '3',
     name: 'Mr. Haresh',
     role: 'Operations & Client Relations Manager',
     bio: '“A dedicated operations leader, ensuring seamless coordination and consistent quality across every client experience.”',
-    imageUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/images/team/haresh.jpg',
   },
 ]
 

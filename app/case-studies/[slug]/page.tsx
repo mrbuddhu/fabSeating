@@ -2,7 +2,9 @@ import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { urlFor } from '@/lib/sanity/client'
-import { generateSEOMetadata } from '@/lib/seo'
+import type { Metadata } from 'next'
+import { generateSEOMetadata } from '@/components/SEOHead'
+import { getCaseStudyBySlug } from '@/lib/sanity/queries'
 import type { CaseStudy } from '@/types'
 import { Section } from '@/components/Section'
 import { Container } from '@/components/Container'
@@ -197,6 +199,19 @@ interface CaseStudyPageProps {
   params: { slug: string }
 }
 
+export async function generateMetadata({ params }: CaseStudyPageProps): Promise<Metadata> {
+  const caseStudy = await getCaseStudyBySlug(params.slug)
+  if (!caseStudy) {
+    return generateSEOMetadata({ title: 'Case Study', path: `/case-studies/${params.slug}` })
+  }
+  return generateSEOMetadata({
+    title: caseStudy.seo?.title || caseStudy.title,
+    description: caseStudy.seo?.description || caseStudy.summary,
+    image: caseStudy.seo?.image,
+    path: `/case-studies/${params.slug}`,
+  })
+}
+
 export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
   let caseStudy = await getCaseStudyBySlug(params.slug)
 
@@ -234,13 +249,6 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
   
     return null
   }
-
-  return generateSEOMetadata({
-    title: caseStudy.seo?.title || caseStudy.title,
-    description: caseStudy.seo?.description || caseStudy.summary,
-    image: caseStudy.seo?.image || caseStudy.heroImage,
-    path: `/case-studies/${params.slug}`,
-  })
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 to-white">
@@ -286,7 +294,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                   <p className="text-primary-200 text-lg">What we needed to overcome</p>
                 </div>
                 <div className="prose prose-lg text-primary-700 max-w-none">
-                  {caseStudy.challenge.map((block, index) => (
+                  {caseStudy.challenge.map((block: any, index: number) => (
                     <p key={index} className="mb-6">
                       {block.children?.map((span: any) => (
                         <span key={span._key}>{span.text}</span>
@@ -305,7 +313,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                   <p className="text-primary-200 text-lg">How we solved it</p>
                 </div>
                 <div className="prose prose-lg text-primary-700 max-w-none">
-                  {caseStudy.solution.map((block, index) => (
+                  {caseStudy.solution.map((block: any, index: number) => (
                     <p key={index} className="mb-6">
                       {block.children?.map((span: any) => (
                         <span key={span._key}>{span.text}</span>
@@ -324,7 +332,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                   <p className="text-primary-200 text-lg">The outcome</p>
                 </div>
                 <div className="prose prose-lg text-primary-700 max-w-none">
-                  {caseStudy.result.map((block, index) => (
+                  {caseStudy.result.map((block: any, index: number) => (
                     <p key={index} className="mb-6">
                       {block.children?.map((span: any) => (
                         <span key={span._key}>{span.text}</span>
@@ -343,7 +351,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                   <p className="text-primary-200 text-lg">Key metrics and achievements</p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {caseStudy.stats.map((stat, idx) => (
+                  {caseStudy.stats.map((stat: any, idx: number) => (
                     <div key={idx} className="bg-gradient-to-br from-primary-50 to-white rounded-2xl p-8 shadow-lg">
                       <h3 className="font-bold text-primary-950 mb-2">{stat.label}</h3>
                       <p className="text-3xl font-serif text-primary-900">{stat.value}</p>
@@ -375,7 +383,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
               <Section>
                 <h2 className="font-serif text-3xl font-bold mb-12 text-center text-primary-900">Featured Products</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                  {caseStudy.productsUsed.map((product) => (
+                  {caseStudy.productsUsed.map((product: any) => (
                     <div key={product._id} className="group block bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:ring-2 hover:ring-primary-300">
                       <div className="flex items-center justify-between mb-4">
                         <h3 className="text-xl font-bold text-primary-900 group-hover:text-primary-700">{product.title}</h3>
@@ -396,7 +404,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {/* Prioritize new showcase field, fallback to old gallery */}
-              {caseStudy.showcase ? caseStudy.showcase.map((item, idx) => (
+              {caseStudy.showcase ? caseStudy.showcase.map((item: any, idx: number) => (
                 <div key={idx} className="group relative aspect-square rounded-2xl overflow-hidden bg-primary-900 shadow-2xl">
                   {item.type === 'image' ? (
                     <ResponsiveImage
@@ -422,9 +430,9 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                 <Section className="py-24">
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
                     <div className="lg:col-span-8">
-                      {caseStudy.gallery?.length > 0 ? (
+                      {(caseStudy.gallery?.length ?? 0) > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                          {caseStudy.gallery.map((image, idx) => (
+                          {caseStudy.gallery!.map((image: any, idx: number) => (
                             <div key={idx} className="group relative aspect-square rounded-2xl overflow-hidden bg-primary-900 shadow-2xl">
                               <ResponsiveImage
                                 image={image}
@@ -453,8 +461,8 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                     
                     <div className="lg:col-span-4">
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {caseStudy.gallery?.length > 0 ? (
-                          caseStudy.gallery.map((image, idx) => (
+                        {(caseStudy.gallery?.length ?? 0) > 0 ? (
+                          caseStudy.gallery!.map((image: any, idx: number) => (
                             <div key={idx} className="group relative aspect-square rounded-2xl overflow-hidden bg-primary-900 shadow-2xl">
                               <ResponsiveImage
                                 image={image}
@@ -483,8 +491,8 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                 </Section>
               )}
             </div>
-          </Container>
-        </div>
+          </div>
+        </Container>
       </div>
     </div>
   )

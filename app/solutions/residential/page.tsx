@@ -1,256 +1,188 @@
+import fs from 'fs'
+import path from 'path'
 import { Metadata } from 'next'
+import Image from 'next/image'
+import Link from 'next/link'
 import { PageHero } from '@/components/PageHero'
 import { Section } from '@/components/Section'
 import { generateSEOMetadata } from '@/components/SEOHead'
-import Link from 'next/link'
-import Image from 'next/image'
-import { getSolutionPage } from '@/lib/sanity/queries'
-import { ResponsiveImage } from '@/components/ResponsiveImage'
+import { CONTACT, waLink } from '@/lib/siteContent'
 
-export const revalidate = 60
+export const revalidate = 3600
 
-export async function generateMetadata(): Promise<Metadata> {
-  const page = await getSolutionPage('residential')
-  const defaultTitle = 'Residential Furniture and Furnishings'
-  const defaultDescription = 'Premium furniture and furnishings solutions for residential spaces'
-  
-  if (!page) {
-    return generateSEOMetadata({
-      title: defaultTitle,
-      description: defaultDescription,
-      path: '/solutions/residential',
-    })
+export const metadata: Metadata = generateSEOMetadata({
+  title: 'Custom Furniture & Home Interiors in Chennai',
+  description: 'Custom furniture and complete home furnishing solutions in Chennai — sofas, beds, wardrobes, dining sets, curtains and rugs, designed around your life.',
+  path: '/solutions/residential',
+})
+
+function galleryImages(dirs: string[], limit = 12) {
+  const out: string[] = []
+  for (const dir of dirs) {
+    try {
+      for (const f of fs.readdirSync(path.join(process.cwd(), 'public', 'images', dir))) {
+        if (/\.(png|jpe?g|webp|avif)$/i.test(f)) out.push(`/images/${dir}/${f}`)
+      }
+    } catch {}
   }
-  return page.seo ? generateSEOMetadata({
-    seo: page.seo,
-    title: defaultTitle,
-    description: defaultDescription,
-    image: page.heroImage,
-    path: '/solutions/residential',
-  }) : generateSEOMetadata({
-    title: defaultTitle,
-    description: defaultDescription,
-    path: '/solutions/residential',
-  })
+  return out.slice(0, limit)
 }
 
-const furnitureIcons: Record<string, string> = {}
-const furnishingsIcons: Record<string, string> = {}
+const WHAT_WE_DESIGN = [
+  ['Living Room Furniture', 'Sofas, lounge chairs, centre tables, TV units.'],
+  ['Bedroom Furniture', 'Beds, wardrobes, side tables, storage solutions.'],
+  ['Dining Spaces', 'Dining tables, chairs, and space-optimised layouts.'],
+  ['Smart Storage', 'Wardrobes, modular storage, space-saving designs.'],
+  ['Home Office Furniture', 'Functional, comfortable work-from-home setups.'],
+  ['Furnishings & Decor', 'Curtains, blinds, rugs, mattresses, and soft furnishings.'],
+]
+const WHY_CHOOSE = [
+  'Over 20+ years of furniture manufacturing experience',
+  'Fully custom-made furniture tailored to your space',
+  'Premium materials suited for Indian climate and usage',
+  'Seamless integration of furniture + furnishings + decor',
+  'One team handling design, production, and installation',
+  'Strong focus on comfort, durability, and usability',
+]
+const DIFFERENT = [
+  'Consistent design language across rooms',
+  'Better space utilisation',
+  'Long-term durability',
+  'A more premium, finished look',
+]
+const APPROACH = [
+  'Understand your space, layout, and lifestyle',
+  'Develop concepts and optimise layouts',
+  'Select materials, finishes, and custom details',
+  'Manufacture with precision and quality control',
+  'Deliver, install, and complete final styling',
+]
 
-export default async function ResidentialPage() {
-  const page = await getSolutionPage('residential')
-
-  // Fallback content if no Sanity data exists
-  const fallbackContent = {
-    emoji: '🏠',
-    title: 'RESIDENTIAL',
-    subtitle: 'Designed around how your family lives, gathers, rests, and grows.',
-    tagline: 'A home isn\'t built with furniture. It\'s shaped by how every piece works together.',
-    introText: 'At Fab Seating, we create integrated residential environments — where sofas, storage, fabrics, lighting, and finishes are thoughtfully curated to function beautifully and last for years.',
-    imageOptions: [
-      'https://images.unsplash.com/photo-1556911220-bff31c812d0c?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1448630360428-65456885c650?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1200&q=80'
-    ],
-    whatWeDesign: [
-      'Living spaces that invite conversation',
-      'Bedrooms built for comfort and quiet',
-      'Dining areas that bring families together',
-      'Smart storage that keeps spaces uncluttered',
-      'Home offices that feel focused yet warm',
-      'Custom-built solutions tailored to your layout'
-    ],
-    whyChooseUs: [
-      '20+ years of craftsmanship',
-      'Made-to-measure customization',
-      'Premium materials built for Indian conditions',
-      'Complete furniture + furnishing integration',
-      'End-to-end guidance from concept to installation'
-    ],
-    approach: [
-      'Understand your space and usage',
-      'Concept development and layout planning',
-      'Material selection and customization',
-      'Production and quality control',
-      'Installation and final styling'
-    ],
-    bestSuitedFor: 'Perfect for homeowners seeking cohesive, well-designed living spaces. Ideal for new homes, renovations, or room-by-room updates across apartments, villas, and independent houses.',
-  }
-
-  // Use Sanity data if available, otherwise use fallback
-  const content = {
-    title: `${page?.emoji || fallbackContent.emoji} ${page?.title || fallbackContent.title}`,
-    subtitle: page?.subtitle || fallbackContent.subtitle,
-    tagline: page?.tagline || fallbackContent.tagline,
-    introText: page?.introText || fallbackContent.introText,
-    imageOptions: (page?.galleryImages && page.galleryImages.length > 0) ? [] : fallbackContent.imageOptions,
-    whatWeDesign: page?.whatWeDesign || fallbackContent.whatWeDesign,
-    whyChooseUs: page?.whyChooseUs || fallbackContent.whyChooseUs,
-    approach: page?.approach || fallbackContent.approach,
-    bestSuitedFor: page?.bestSuitedFor || fallbackContent.bestSuitedFor,
-  }
+export default function ResidentialPage() {
+  const homes = galleryImages(['gallery/case-study-murugan-kilpauk', 'gallery/case-study-kothari-nungambakkam', 'gallery'], 12)
+  const hero = homes.slice(0, 3)
 
   return (
     <>
       <PageHero
-        title={content.title}
-        subtitle={content.subtitle}
-        contentClassName="max-w-6xl"
-        titleClassName="text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]"
+        title="Custom Furniture & Home Interiors Designed Around Your Life"
+        subtitle="Custom furniture in Chennai for homes that need more than just good-looking pieces."
+        titleClassName="text-3xl sm:text-4xl md:text-5xl leading-[1.05]"
+        contentClassName="max-w-5xl"
       />
-      <Section>
+      <Section className="pt-0">
         <div className="max-w-6xl mx-auto space-y-16">
+          {/* Intro + CTAs */}
+          <div className="text-center max-w-4xl mx-auto space-y-6">
+            <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
+              At Fab Seating, we design and manufacture <strong>custom furniture in Chennai</strong> for homes that need more than just good-looking pieces. From sofas and beds to wardrobes, dining sets, curtains, and rugs — every element is built to fit your space, your lifestyle, and your comfort.
+            </p>
+            <p className="text-base md:text-lg text-primary-800 font-medium">
+              Not a display showroom — a walk-in experience studio where your ideas take shape.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+              <a href={waLink('Hi Fab Seating, I would like to design my home.')} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-primary-950 px-7 py-3.5 text-white font-semibold text-sm shadow-lg hover:bg-primary-900 hover:-translate-y-1 transition-all">Design My Home</a>
+              <a href={CONTACT.mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-primary-300 px-7 py-3.5 text-primary-900 font-semibold text-sm hover:bg-primary-50 transition-all">Visit Our Showroom</a>
+            </div>
+          </div>
+
           {/* Hero gallery */}
-          <div className="space-y-8">
-            <div className="grid gap-6 md:gap-8 md:grid-cols-3">
-              {[
-                page?.galleryImages?.[0] || page?.heroImage || content.imageOptions[0],
-                page?.galleryImages?.[1] || page?.secondaryImage || page?.heroImage || content.imageOptions[1],
-                page?.galleryImages?.[2] || page?.heroImage || page?.secondaryImage || content.imageOptions[2],
-              ].map((image, index) => (
-                <div
-                  key={index}
-                  className="group relative aspect-[4/3] md:aspect-[3/4] rounded-3xl overflow-hidden shadow-xl ring-1 ring-black/5 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:ring-primary-300/40"
-                >
-                  {typeof image === 'string' ? (
-                    <Image
-                      src={image}
-                      alt={`${content.title} - Image ${index + 1}`}
-                      fill
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                    />
-                  ) : (
-                    <ResponsiveImage
-                      image={image}
-                      alt={`${content.title} - Image ${index + 1}`}
-                      fill
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                    />
-                  )}
+          {hero.length > 0 && (
+            <div className="grid gap-6 md:grid-cols-3">
+              {hero.map((src, i) => (
+                <div key={i} className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-xl ring-1 ring-black/5">
+                  <Image src={src} alt={`Fab Seating residential project ${i + 1}`} fill className="object-cover" sizes="(max-width:768px) 100vw, 33vw" />
                 </div>
               ))}
             </div>
-            <div className="text-center space-y-4">
-              <p className="text-xl text-primary-700 leading-relaxed max-w-4xl mx-auto">
-                {content.tagline}
-              </p>
-              <p className="text-lg text-primary-600 leading-relaxed max-w-4xl mx-auto">
-                {content.introText}
-              </p>
-            </div>
+          )}
+
+          {/* Positioning */}
+          <div className="text-center max-w-4xl mx-auto space-y-4">
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-primary-950">A home isn&apos;t defined by individual furniture pieces</h2>
+            <p className="text-lg text-gray-700 leading-relaxed">
+              It&apos;s shaped by how everything works together. At Fab Seating, we create <strong>complete home furniture and furnishing solutions</strong> where sofas, storage, fabrics, lighting, and finishes are thoughtfully designed as one system. The result is a home that feels cohesive, functional, and built to last for years.
+            </p>
           </div>
 
           {/* What We Design */}
           <div className="bg-gradient-to-br from-primary-50 to-white rounded-3xl p-8 md:p-12 shadow-lg">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-16 h-16 rounded-full bg-primary-950 flex items-center justify-center">
-                <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                </svg>
-              </div>
-              <h2 className="font-serif text-3xl font-bold text-primary-950">What We Design For Homes</h2>
-            </div>
-            <div className="grid md:grid-cols-2 gap-4">
-              {content.whatWeDesign.map((item, index) => (
-                <div key={index} className="flex items-center gap-4 p-4 rounded-xl bg-white/60 backdrop-blur-sm">
-                  <div className="w-2 h-2 rounded-full bg-primary-950"></div>
-                  <span className="text-primary-800 font-medium">{item}</span>
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-primary-950 mb-2 text-center">Complete Residential Furniture Solutions</h2>
+            <p className="text-center text-gray-600 mb-8">We design and deliver custom home furniture in Chennai across every part of your home.</p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {WHAT_WE_DESIGN.map(([t, d]) => (
+                <div key={t} className="rounded-2xl bg-white p-5 shadow-sm">
+                  <h3 className="font-serif text-lg font-semibold text-primary-950 mb-1">{t}</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">{d}</p>
                 </div>
               ))}
             </div>
+            <p className="text-center text-primary-800 font-medium mt-6">Built for apartments, villas, and independent homes.</p>
           </div>
 
-          {/* Why Choose Us */}
-          <div className="bg-gradient-to-br from-primary-950 to-primary-900 rounded-3xl p-8 md:p-12 shadow-xl text-white">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center">
-                <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h2 className="font-serif text-3xl font-bold">Why Homeowners Choose Fab Seating</h2>
-            </div>
-            <div className="grid md:grid-cols-2 gap-4">
-              {content.whyChooseUs.map((item, index) => (
-                <div key={index} className="flex items-center gap-4 p-4 rounded-xl bg-white/10 backdrop-blur-sm">
-                  <div className="w-2 h-2 rounded-full bg-white"></div>
+          {/* Why Choose */}
+          <div className="grainy-gradient rounded-3xl p-8 md:p-12 shadow-xl text-white">
+            <h2 className="font-serif text-2xl md:text-3xl font-bold mb-2 relative z-10">Trusted for Custom Furniture &amp; Interiors in Chennai</h2>
+            <div className="grid md:grid-cols-2 gap-3 mt-6 relative z-10">
+              {WHY_CHOOSE.map((item) => (
+                <div key={item} className="flex items-start gap-3 rounded-xl bg-white/10 p-4">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-white flex-shrink-0"></span>
                   <span className="font-medium">{item}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Our Approach */}
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-xl">
-              {page?.secondaryImage ? (
-                <ResponsiveImage
-                  image={page.secondaryImage}
-                  alt={content.title}
-                  fill
-                  className="object-cover"
-                />
-              ) : (
-                <Image
-                  src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1200&q=80"
-                  alt={content.title}
-                  fill
-                  className="object-cover"
-                />
-              )}
-            </div>
-            <div className="space-y-6">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-primary-200 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-primary-950" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                  </svg>
+          {/* What Makes Us Different */}
+          <div className="text-center max-w-4xl mx-auto">
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-primary-950 mb-3">Not Just Furniture — Complete Home Solutions</h2>
+            <p className="text-gray-700 mb-6">Unlike standard furniture stores, we don&apos;t sell isolated pieces. We design your home as a complete system — ensuring:</p>
+            <div className="grid sm:grid-cols-2 gap-3 max-w-2xl mx-auto text-left">
+              {DIFFERENT.map((d) => (
+                <div key={d} className="flex items-center gap-3 rounded-xl border border-primary-100 bg-white p-4 shadow-sm">
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary-500"></span>
+                  <span className="text-primary-900 font-medium">{d}</span>
                 </div>
-                <h2 className="font-serif text-3xl font-bold text-primary-950">Our Approach</h2>
-              </div>
-              <div className="space-y-3">
-                {content.approach.map((step, index) => (
-                  <div key={index} className="flex items-center gap-4">
-                    <div className="w-8 h-8 rounded-full bg-primary-950 text-white flex items-center justify-center text-sm font-bold">
-                      {index + 1}
-                    </div>
-                    <span className="text-primary-700 font-medium">{step}</span>
+              ))}
+            </div>
+          </div>
+
+          {/* Our Approach */}
+          <div>
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-primary-950 mb-2 text-center">From Idea to Installation</h2>
+            <div className="w-24 h-px bg-gradient-to-r from-transparent via-primary-700 to-transparent mx-auto mb-8"></div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+              {APPROACH.map((step, i) => (
+                <div key={i} className="rounded-2xl border border-primary-100 bg-white p-5 shadow-sm text-center">
+                  <div className="mx-auto mb-3 w-9 h-9 rounded-full bg-primary-950 text-white flex items-center justify-center text-sm font-bold">{i + 1}</div>
+                  <p className="text-sm text-primary-800 leading-relaxed">{step}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Homes We've Designed */}
+          {homes.length > 0 && (
+            <div>
+              <h2 className="font-serif text-2xl md:text-3xl font-bold text-primary-950 mb-2 text-center">Homes We&apos;ve Designed</h2>
+              <p className="text-center text-gray-600 mb-8">Living room setups, bedrooms, and full home projects.</p>
+              <div className="columns-2 md:columns-3 gap-4 [&>*]:mb-4">
+                {homes.map((src, i) => (
+                  <div key={i} className="relative overflow-hidden rounded-2xl shadow-md ring-1 ring-black/5 break-inside-avoid">
+                    <Image src={src} alt={`Fab Seating home project ${i + 1}`} width={600} height={800} className="w-full h-auto object-cover" />
                   </div>
                 ))}
               </div>
             </div>
-          </div>
+          )}
 
-          {/* CTA Section */}
+          {/* Final CTA */}
           <div className="bg-gradient-to-r from-primary-100 to-primary-50 rounded-3xl p-8 md:p-12 text-center">
-            <h2 className="font-serif text-3xl font-bold text-primary-950 mb-4">
-              Ready to Transform Your Home?
-            </h2>
-            <p className="text-lg text-primary-700 mb-8 max-w-2xl mx-auto">
-              {content.bestSuitedFor}
-            </p>
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-primary-950 mb-3">Ready to Design a Home That Feels Complete?</h2>
+            <p className="text-lg text-primary-700 mb-8 max-w-2xl mx-auto">Ideal for homeowners planning new homes, renovations, or custom furniture upgrades — across apartments, villas, and independent houses.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-950 text-white font-medium rounded-full hover:bg-primary-900 transition-all duration-300 hover:gap-3 shadow-lg hover:-translate-y-1 hover:shadow-2xl group"
-              >
-                <span className="text-sm tracking-wider uppercase">Start Your Project</span>
-                <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </Link>
-              <Link
-                href="/projects?category=residential"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-primary-950 text-primary-950 font-medium rounded-full hover:bg-primary-950 hover:text-white transition-all duration-300 hover:gap-3 group"
-              >
-                <span className="text-sm tracking-wider uppercase">View Homes</span>
-                <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </Link>
+              <a href={waLink('Hi Fab Seating, I would like to start my home project.')} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-950 text-white font-medium rounded-full hover:bg-primary-900 transition-all hover:-translate-y-1 shadow-lg text-sm tracking-wider uppercase">Start Your Home Project</a>
+              <Link href="/contact" className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-primary-950 text-primary-950 font-medium rounded-full hover:bg-primary-950 hover:text-white transition-all text-sm tracking-wider uppercase">Book a Consultation</Link>
             </div>
           </div>
         </div>
@@ -258,4 +190,3 @@ export default async function ResidentialPage() {
     </>
   )
 }
-
