@@ -4,6 +4,12 @@ import { useEffect } from 'react'
 
 export function PWARegister() {
   useEffect(() => {
+    if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+      // Dev: remove any stale service worker + caches so changes always show
+      navigator.serviceWorker.getRegistrations().then((rs) => rs.forEach((r) => r.unregister()))
+      if ('caches' in window) caches.keys().then((ks) => ks.forEach((k) => caches.delete(k)))
+      return
+    }
     if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {

@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { Section } from '@/components/Section'
-import { ResponsiveImage } from '@/components/ResponsiveImage'
+import { urlFor } from '@/lib/sanity/client'
 
 type TeamMember = {
   _id: string
@@ -20,21 +20,21 @@ const HARD_CODED_TEAM: TeamMember[] = [
     name: 'Mr. Gobind Chugani',
     role: 'Founder',
     bio: '“A seasoned industry leader with over 30 years of experience, guiding Fabseating’s vision to create spaces that inspire.”',
-    imageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/images/team/gobind-chugani.png',
   },
   {
     _id: '2',
     name: 'Mr. Deenu Chugani',
     role: 'Director – Business & Strategy',
     bio: '“A forward-thinking business strategist, driving Fabseating’s growth with innovation and a modern market perspective.”',
-    imageUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/images/team/deenu-chugani.jpg',
   },
   {
     _id: '3',
     name: 'Mr. Haresh',
     role: 'Operations & Client Relations Manager',
     bio: '“A dedicated operations leader, ensuring seamless coordination and consistent quality across every client experience.”',
-    imageUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/images/team/haresh.jpg',
   },
 ]
 
@@ -79,10 +79,12 @@ export const TeamSection = ({ teamMembers: sanityMembers }: { teamMembers?: Team
                 <div className={`absolute -inset-1 bg-white/10 rounded-[1.2rem] -z-20 blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
                 <div className="relative w-64 h-80 md:w-72 md:h-96 overflow-hidden rounded-2xl shadow-lg bg-gradient-to-br from-primary-100 to-white">
                   {member.image?.asset ? (
-                    <ResponsiveImage
-                      image={member.image as any}
+                    <Image
+                      // Use the full original photo (no Studio crop / forced aspect ratio)
+                      src={urlFor({ asset: member.image.asset } as any)!.width(1000).fit('max').url()}
                       alt={member.name}
                       fill
+                      sizes="(max-width: 768px) 256px, 288px"
                       className="object-contain transition-transform duration-700 group-hover:scale-105 p-4"
                     />
                   ) : (

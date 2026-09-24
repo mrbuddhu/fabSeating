@@ -1,0 +1,98 @@
+import fs from 'fs'
+import path from 'path'
+import { notFound } from 'next/navigation'
+import Image from 'next/image'
+import Link from 'next/link'
+import { Metadata } from 'next'
+import { PageHero } from '@/components/PageHero'
+import { Section } from '@/components/Section'
+import { CATEGORIES, waLink } from '@/lib/siteContent'
+import { generateSEOMetadata } from '@/components/SEOHead'
+
+function titleFromFile(file: string) {
+  const base = file.replace(/\.[^.]+$/, '').replace(/^fabseating-/, '').replace(/[-_]+/g, ' ')
+  return base.replace(/\b\w/g, (c) => c.toUpperCase())
+}
+
+function getImages(dirs: string[]) {
+  const out: { src: string; title: string }[] = []
+  for (const dir of dirs) {
+    const abs = path.join(process.cwd(), 'public', 'images', dir)
+    try {
+      for (const file of fs.readdirSync(abs)) {
+        if (/\.(png|jpe?g|webp|avif)$/i.test(file)) {
+          out.push({ src: `/images/${dir}/${file}`, title: titleFromFile(file) })
+        }
+      }
+    } catch {
+      // dir may not exist yet
+    }
+  }
+  return out
+}
+
+export function generateStaticParams() {
+  return CATEGORIES.map((c) => ({ slug: c.slug }))
+}
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const cat = CATEGORIES.find((c) => c.slug === params.slug)
+  if (!cat) return {}
+  return generateSEOMetadata({
+    title: `${cat.title} in Chennai`,
+    description: cat.blurb,
+    path: `/category/${cat.slug}`,
+  })
+}
+
+export const revalidate = 3600
+
+export default function CategoryPage({ params }: { params: { slug: string } }) {
+  const cat = CATEGORIES.find((c) => c.slug === params.slug)
+  if (!cat) notFound()
+
+  const images = getImages(cat.imageDirs)
+
+  return (
+    <>
+      <PageHero title={cat.title} subtitle={cat.blurb} />
+      <Section>
+        <div className="max-w-6xl mx-auto">
+          {images.length > 0 ? (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+              {images.map((img) => (
+                <div key={img.src} className="group rounded-2xl overflow-hidden border border-primary-100 bg-white shadow-sm hover:shadow-xl transition-all duration-500">
+                  <div className="relative aspect-square overflow-hidden bg-[#f7f5f0]">
+                    <Image src={img.src} alt={img.title} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                  </div>
+                  <div className="p-3">
+                    <p className="text-sm font-medium text-primary-900 truncate" title={img.title}>{img.title}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-16 rounded-3xl border border-primary-100 bg-primary-50/40">
+              <h3 className="font-serif text-2xl font-semibold text-primary-950 mb-3">Collection coming soon</h3>
+              <p className="text-gray-600 max-w-xl mx-auto mb-6">We craft {cat.title.toLowerCase()} fully custom to your space. Message us on WhatsApp with your requirements for designs and a personalized quote.</p>
+            </div>
+          )}
+
+          <div className="text-center mt-12">
+            <a
+              href={waLink(`Hi Fab Seating, I'm interested in ${cat.title}. Please share details.`)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2.5 rounded-full bg-[#25D366] px-8 py-4 text-white font-semibold text-sm shadow-lg hover:bg-[#1eb955] hover:-translate-y-1 hover:shadow-2xl transition-all duration-300"
+            >
+              Enquire on WhatsApp
+            </a>
+            <div className="mt-6">
+              <Link href="/#solutions" className="text-sm text-primary-700 hover:text-primary-900 underline underline-offset-4">&larr; Back to all categories</Link>
+            </div>
+          </div>
+        </div>
+      </Section>
+    </>
+  )
+}

@@ -26,7 +26,6 @@ export async function POST(req: NextRequest) {
     const pathsToRevalidate = [
       '/',
       '/projects',
-      '/catalog',
       '/contact',
       '/solutions/residential',
       '/solutions/office',

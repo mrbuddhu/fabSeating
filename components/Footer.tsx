@@ -9,14 +9,15 @@ const footerLinks = {
     { href: '/policies', label: 'Policies' },
   ],
   products: [
-    { href: '/catalog', label: 'Catalog' },
+    { href: '/#solutions', label: 'Solutions' },
     { href: '/case-studies', label: 'Case Studies' },
-    { href: '/projects', label: 'Projects' },
+    { href: '/projects', label: 'Gallery' },
   ],
   support: [
     { href: '/contact', label: 'Contact' },
     { href: 'mailto:info@fabseating.com', label: 'info@fabseating.com' },
     { href: 'tel:+919841066135', label: '098410 66135' },
+    { href: 'https://www.google.com/maps/search/?api=1&query=Fab+Seating+Kilpauk+Chennai', label: 'Find us on Google' },
   ],
 }
 
@@ -32,7 +33,7 @@ export function Footer({ logoUrl }: { logoUrl?: string | null }) {
               <Image src={logoUrl || '/logo.png'} alt="Fab Seating logo" width={440} height={128} className="h-28 w-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)]" />
             </div>
             <p className="text-primary-200 text-base leading-relaxed mb-4">
-              Premium furniture crafted with excellence and attention to detail.
+              Premium furniture & furnishings crafted with excellence. Based in Kilpauk, Chennai &mdash; delivering Pan India.
             </p>
             <div className="flex items-center gap-4">
               <a

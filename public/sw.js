@@ -1,5 +1,5 @@
 // Service Worker for Fab Seating PWA
-const CACHE_NAME = 'fabseating-v1'
+const CACHE_NAME = 'fabseating-v2'
 const urlsToCache = [
   '/',
   '/projects',
@@ -36,40 +36,25 @@ self.addEventListener('activate', (event) => {
   self.clients.claim()
 })
 
-// Fetch event - serve from cache, fallback to network
+// Fetch event - network first for pages (so updates show immediately),
+// cache used only as an offline fallback. Media and Next.js assets are not intercepted.
 self.addEventListener('fetch', (event) => {
-  // Skip non-GET requests
-  if (event.request.method !== 'GET') {
-    return
-  }
-
-  // Skip API routes
-  if (event.request.url.includes('/api/')) {
-    return
-  }
+  const req = event.request
+  if (req.method !== 'GET') return
+  const url = new URL(req.url)
+  if (url.origin !== self.location.origin) return
+  if (url.pathname.startsWith('/api/') || url.pathname.startsWith('/_next/')) return
+  if (/\.(mp4|webm|mov)$/i.test(url.pathname) || req.headers.has('range')) return
 
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      // Return cached version or fetch from network
-      return (
-        response ||
-        fetch(event.request).then((response) => {
-          // Don't cache if not a valid response
-          if (!response || response.status !== 200 || response.type !== 'basic') {
-            return response
-          }
-
-          // Clone the response
-          const responseToCache = response.clone()
-
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache)
-          })
-
-          return response
-        })
-      )
-    })
+    fetch(req)
+      .then((res) => {
+        if (res && res.status === 200 && res.type === 'basic') {
+          const copy = res.clone()
+          caches.open(CACHE_NAME).then((cache) => cache.put(req, copy))
+        }
+        return res
+      })
+      .catch(() => caches.match(req))
   )
 })
-

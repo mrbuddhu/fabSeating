@@ -7,6 +7,7 @@ import { Analytics } from '@/components/Analytics'
 import { StickyBookCTA } from '@/components/StickyBookCTA'
 import { PWARegister } from '@/components/PWARegister'
 import { getSiteSettings } from '@/lib/sanity/queries'
+import { CONTACT } from '@/lib/siteContent'
 import { urlFor } from '@/lib/sanity/client'
 
 const playfair = Playfair_Display({
@@ -100,6 +101,28 @@ export default async function RootLayout({
           Skip to main content
         </a>
         <PWARegister />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'FurnitureStore',
+              name: 'Fab Seating',
+              description: 'Premium custom furniture and furnishings for homes, offices and commercial spaces since 2001.',
+              url: process.env.NEXT_PUBLIC_SITE_URL || 'https://fabseating.com',
+              telephone: CONTACT.phoneTel,
+              email: CONTACT.email,
+              image: (process.env.NEXT_PUBLIC_SITE_URL || 'https://fabseating.com') + '/logo.png',
+              address: { '@type': 'PostalAddress', streetAddress: CONTACT.addressLine, addressLocality: 'Chennai', addressRegion: 'Tamil Nadu', addressCountry: 'IN' },
+              areaServed: 'India',
+              foundingDate: '2001',
+              sameAs: [
+                'https://www.instagram.com/fabseating/',
+                'https://www.youtube.com/@FabSeating',
+              ],
+            }),
+          }}
+        />
         <Header logoUrl={logoUrl} />
         <main id="main-content">{children}</main>
         <StickyBookCTA />
