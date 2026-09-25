@@ -5,7 +5,9 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { FAQS } from '@/lib/siteContent'
 
-export function FaqTeal() {
+type Faq = { q: string; a: string }
+
+export function FaqTeal({ faqs = FAQS }: { faqs?: Faq[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
   return (
@@ -18,7 +20,7 @@ export function FaqTeal() {
         </div>
 
         <div className="max-w-3xl mx-auto space-y-3">
-          {FAQS.map((faq, index) => {
+          {faqs.map((faq, index) => {
             const isOpen = openIndex === index
             return (
               <div key={index}>

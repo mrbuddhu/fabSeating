@@ -1,0 +1,41 @@
+name: Sync content to Sanity
+
+# On merge to main: upload NEW product images from public/images to Sanity,
+# and fill any EMPTY homepage sections (partners, categories, industries, FAQs).
+# Nothing already in Sanity is overwritten, so Studio edits are always safe.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'public/images/**'
+      - 'lib/siteDefaults.json'
+      - 'scripts/upload-products-to-sanity.js'
+      - 'scripts/seed-home-sections-to-sanity.js'
+  workflow_dispatch: {}
+
+concurrency:
+  group: sanity-product-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Upload new products to Sanity
+        run: node scripts/upload-products-to-sanity.js --commit
+        env:
+          SANITY_API_WRITE_TOKEN: ${{ secrets.SANITY_API_WRITE_TOKEN }}
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ vars.NEXT_PUBLIC_SANITY_PROJECT_ID || 'n59kaaxb' }}
+          NEXT_PUBLIC_SANITY_DATASET: ${{ vars.NEXT_PUBLIC_SANITY_DATASET || 'production' }}
+      - name: Fill empty homepage sections in Sanity
+        run: node scripts/seed-home-sections-to-sanity.js --commit
+        env:
+          SANITY_API_WRITE_TOKEN: ${{ secrets.SANITY_API_WRITE_TOKEN }}
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ vars.NEXT_PUBLIC_SANITY_PROJECT_ID || 'n59kaaxb' }}
+          NEXT_PUBLIC_SANITY_DATASET: ${{ vars.NEXT_PUBLIC_SANITY_DATASET || 'production' }}

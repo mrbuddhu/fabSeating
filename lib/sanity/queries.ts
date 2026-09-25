@@ -384,3 +384,23 @@ export async function getCatalogs(): Promise<Catalog[]> {
     } as any,
   )
 }
+
+export type ProductImage = { src: string; title: string }
+
+/** Product images from Sanity for the given productCategory slugs (used by /category pages). */
+export async function getProductImagesByCategory(categorySlugs: string[]): Promise<ProductImage[]> {
+  if (!isSanityConfigured() || categorySlugs.length === 0) return []
+  try {
+    const rows = await client.fetch<{ title: string; src: string | null }[]>(
+      `*[_type == "product" && category->slug.current in $slugs && defined(images[0].asset)] | order(title asc) {
+        title,
+        "src": images[0].asset->url
+      }`,
+      { slugs: categorySlugs },
+      { next: { revalidate: 3600, tags: ['sanity', 'sanity:product'] } } as any
+    )
+    return (rows || []).filter((r): r is ProductImage => !!r.src)
+  } catch {
+    return []
+  }
+}

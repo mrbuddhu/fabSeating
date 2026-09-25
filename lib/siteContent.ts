@@ -1,4 +1,8 @@
 // Central content config for FabSeating site updates (2026).
+// Section defaults (categories, partners, industries, FAQs) live in siteDefaults.json so the
+// Sanity seed script can reuse them. Edit them in Sanity Studio (Homepage) once seeded.
+import defaults from './siteDefaults.json'
+
 // Business contact details — single source of truth.
 export const CONTACT = {
   phoneDisplay: '098410 66135',
@@ -27,46 +31,10 @@ export type Category = {
 
 // The 13 categories from the client brief. Covers wired to organized Drive images
 // where product shots exist; the rest await client photography.
-export const CATEGORIES: Category[] = [
-  { slug: 'sofas', title: 'Sofas', blurb: 'Handcrafted sofas — modern, sectional, chesterfield and bespoke.', cover: '/images/sofas/fabseating-monarch-luxury-sofa.png', imageDirs: ['sofas'] },
-  { slug: 'office-furniture', title: 'Office Furniture', blurb: 'Executive chairs and workspace furniture built for long days.', cover: '/images/chairs/office/fabseating-tan-high-back-executive-office-chair.png', imageDirs: ['chairs/office'] },
-  { slug: 'beds-mattresses', title: 'Beds & Mattresses', blurb: 'Upholstered beds, storage beds and premium mattresses.', cover: '/images/beds/cream-upholstered-bed-with-panel-headboard.png', imageDirs: ['beds'] },
-  { slug: 'wardrobes', title: 'Wardrobes', blurb: 'Custom wardrobes and closet systems designed to your space.', cover: null, imageDirs: [] },
-  { slug: 'dining-furniture', title: 'Dining Furniture', blurb: 'Marble and wood dining tables with matching chairs.', cover: '/images/dining-tables/fabseating-round-marble-dining-table-with-brass-legs.png', imageDirs: ['dining-tables', 'chairs/dining'] },
-  { slug: 'chairs-recliners', title: 'Chairs & Recliners', blurb: 'Lounge chairs, accent chairs and recliners in premium finishes.', cover: '/images/chairs/lounge/fabseating-green-velvet-lounge-chair-with-armrests.png', imageDirs: ['chairs/lounge', 'chairs/dining'] },
-  { slug: 'tv-consoles', title: 'TV Consoles', blurb: 'Media units and TV consoles tailored to your living room.', cover: null, imageDirs: [] },
-  { slug: 'storage-solutions', title: 'Storage Solutions', blurb: 'Smart, space-saving storage for every room.', cover: null, imageDirs: [] },
-  { slug: 'modular-kitchens', title: 'Modular Kitchens', blurb: 'Functional, beautiful modular kitchens built around your workflow.', cover: null, imageDirs: [] },
-  { slug: 'curtains-blinds', title: 'Curtains & Blinds', blurb: 'Custom curtains, drapes and blinds in premium fabrics.', cover: null, imageDirs: [] },
-  { slug: 'wallpapers', title: 'Wallpapers', blurb: 'Designer wallpapers to transform any wall.', cover: null, imageDirs: [] },
-  { slug: 'carpets-rugs', title: 'Carpets & Rugs', blurb: 'Hand-finished carpets and area rugs in classic and modern designs.', cover: '/images/rugs/fabseating-traditional-medallion-area-rug.png', imageDirs: ['rugs'] },
-  { slug: 'doors', title: 'Doors', blurb: 'Bespoke doors crafted to complement your interiors.', cover: null, imageDirs: [] },
-]
+export const CATEGORIES: Category[] = defaults.categories
 
-export const BRAND_PARTNERS = [
-  { name: 'Sarom', logo: '/images/brand-logos/sarom.svg' },
-  { name: 'Warwick', logo: '/images/brand-logos/warwick.webp' },
-  { name: "D'Decor", logo: '/images/brand-logos/ddecor.jpeg' },
-  { name: 'V&J Furnishings', logo: '/images/brand-logos/vj-furnishings.png' },
-  { name: 'Vaya', logo: '/images/brand-logos/vaya.png' },
-  { name: 'Sansaar', logo: '/images/brand-logos/sansaar.webp' },
-  { name: 'Azco', logo: '/images/brand-logos/azco.jpeg' },
-  { name: 'Decomax', logo: '/images/brand-logos/decomax.png' },
-]
+export const BRAND_PARTNERS: { name: string; logo: string }[] = defaults.brandPartners
 
-export const INDUSTRIES = [
-  'Apartments', 'Villas & Independent Homes', 'Corporate Offices', 'Retail Stores & Showrooms',
-  'Hotels & Resorts', 'Restaurants & Cafés', 'Healthcare Facilities', 'Educational Institutions',
-  'Clubhouses & Community Spaces', 'Builders & Developers', 'Religious & Cultural Spaces', 'Jewellery Showrooms', 'Commercial Projects',
-]
+export const INDUSTRIES: string[] = defaults.industries
 
-export const FAQS = [
-  { q: 'What makes Fab Seating different from other furniture stores in Chennai?', a: "Fab Seating has been crafting premium custom furniture in Chennai since 2003. We combine quality craftsmanship, personalized designs, and premium materials to create furniture that's built around your space and lifestyle." },
-  { q: 'What products do you offer?', a: 'We offer custom sofas, beds, dining tables, chairs, coffee tables, TV units, mattresses, curtains, blinds, wallpapers, rugs, and complete home furnishing solutions.' },
-  { q: 'Can I customize my furniture?', a: 'Yes. Every piece can be customized to your preferred size, design, fabric, colour, finish, and comfort requirements, ensuring it perfectly fits your home.' },
-  { q: 'Where is Fab Seating located?', a: 'Our showroom is located in Kilpauk, Chennai, where you can explore our furniture collections, materials, and customization options in person.' },
-  { q: 'Do you deliver and install furniture across Chennai?', a: "Yes. We provide professional delivery and installation across Chennai. If you're located outside Chennai, our team can also discuss Pan-India delivery options with you." },
-  { q: 'How long does it take to manufacture custom furniture?', a: 'Production timelines vary depending on the design and level of customization. Our team will provide an estimated delivery schedule once your order is finalized.' },
-  { q: 'Do you help furnish an entire home?', a: "Absolutely. Whether you're furnishing a single room or an entire home, we can help with furniture, curtains, blinds, wallpapers, rugs, and mattresses to create a cohesive living space." },
-  { q: 'How can I get a quote for custom furniture?', a: 'Simply visit our showroom, call us, message us on WhatsApp, or fill out the enquiry form on our website. Share your requirements, and our team will provide a personalized quotation.' },
-]
+export const FAQS: { q: string; a: string }[] = defaults.faqs

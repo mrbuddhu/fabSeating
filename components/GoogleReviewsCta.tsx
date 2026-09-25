@@ -1,6 +1,6 @@
 import { CONTACT } from '@/lib/siteContent'
 
-export function GoogleReviewsCta() {
+export function GoogleReviewsCta({ reviewsUrl = CONTACT.reviewsUrl }: { reviewsUrl?: string }) {
   return (
     <section className="relative bg-gradient-to-b from-white via-primary-50/40 to-white py-16 md:py-20">
       <div className="container mx-auto px-4">
@@ -18,7 +18,7 @@ export function GoogleReviewsCta() {
             Our customers rate their Fab Seating experience on Google. Read what homeowners and businesses across Chennai say about working with us.
           </p>
           <a
-            href={CONTACT.reviewsUrl}
+            href={reviewsUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2.5 rounded-full bg-primary-950 px-8 py-4 text-white font-semibold text-sm shadow-lg hover:bg-primary-900 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300"

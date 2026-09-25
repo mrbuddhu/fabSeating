@@ -1,8 +1,9 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { CATEGORIES, waLink } from '@/lib/siteContent'
+import { waLink } from '@/lib/siteContent'
+import { DEFAULT_SECTIONS, type SiteCategory } from '@/lib/siteSections'
 
-export function FurnitureCategories() {
+export function FurnitureCategories({ categories = DEFAULT_SECTIONS.categories }: { categories?: SiteCategory[] }) {
   return (
     <section id="solutions" className="relative bg-white py-16 md:py-20">
       <div className="container mx-auto px-4">
@@ -16,7 +17,7 @@ export function FurnitureCategories() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto">
-          {CATEGORIES.map((cat) => (
+          {categories.map((cat) => (
             <Link
               key={cat.slug}
               href={`/category/${cat.slug}`}

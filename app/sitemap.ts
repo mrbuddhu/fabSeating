@@ -1,10 +1,10 @@
 import { MetadataRoute } from 'next'
 import { getSitemapData } from '@/lib/sanity/queries'
-import { CATEGORIES } from '@/lib/siteContent'
+import { getSiteSections } from '@/lib/siteSections'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://fabseating.com'
-  const data = await getSitemapData()
+  const [data, sections] = await Promise.all([getSitemapData(), getSiteSections()])
 
   const routes = [
     '',
@@ -14,7 +14,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/solutions/residential',
     '/solutions/office',
     '/solutions/hospitality',
-    ...CATEGORIES.map((c) => `/category/${c.slug}`),
+    ...sections.categories.map((c) => `/category/${c.slug}`),
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),

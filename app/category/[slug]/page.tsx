@@ -1,13 +1,15 @@
-import fs from 'fs'
-import path from 'path'
+import { listImageFiles } from '@/lib/localImages'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Metadata } from 'next'
 import { PageHero } from '@/components/PageHero'
 import { Section } from '@/components/Section'
-import { CATEGORIES, waLink } from '@/lib/siteContent'
+import { waLink } from '@/lib/siteContent'
+import { getSiteSections, DEFAULT_SECTIONS } from '@/lib/siteSections'
 import { generateSEOMetadata } from '@/components/SEOHead'
+import { getProductImagesByCategory } from '@/lib/sanity/queries'
+
 
 function titleFromFile(file: string) {
   const base = file.replace(/\.[^.]+$/, '').replace(/^fabseating-/, '').replace(/[-_]+/g, ' ')
@@ -17,9 +19,8 @@ function titleFromFile(file: string) {
 function getImages(dirs: string[]) {
   const out: { src: string; title: string }[] = []
   for (const dir of dirs) {
-    const abs = path.join(process.cwd(), 'public', 'images', dir)
     try {
-      for (const file of fs.readdirSync(abs)) {
+      for (const file of listImageFiles(dir)) {
         if (/\.(png|jpe?g|webp|avif)$/i.test(file)) {
           out.push({ src: `/images/${dir}/${file}`, title: titleFromFile(file) })
         }
@@ -31,12 +32,19 @@ function getImages(dirs: string[]) {
   return out
 }
 
-export function generateStaticParams() {
-  return CATEGORIES.map((c) => ({ slug: c.slug }))
+export async function generateStaticParams() {
+  const { categories } = await getSiteSections()
+  const slugs = new Set([...categories, ...DEFAULT_SECTIONS.categories].map((c) => c.slug))
+  return Array.from(slugs, (slug) => ({ slug }))
+}
+
+async function findCategory(slug: string) {
+  const { categories } = await getSiteSections()
+  return categories.find((c) => c.slug === slug) || DEFAULT_SECTIONS.categories.find((c) => c.slug === slug)
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const cat = CATEGORIES.find((c) => c.slug === params.slug)
+  const cat = await findCategory(params.slug)
   if (!cat) return {}
   return generateSEOMetadata({
     title: `${cat.title} in Chennai`,
@@ -47,11 +55,13 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 export const revalidate = 3600
 
-export default function CategoryPage({ params }: { params: { slug: string } }) {
-  const cat = CATEGORIES.find((c) => c.slug === params.slug)
+export default async function CategoryPage({ params }: { params: { slug: string } }) {
+  const cat = await findCategory(params.slug)
   if (!cat) notFound()
 
-  const images = getImages(cat.imageDirs)
+  // Prefer products managed in Sanity; fall back to the local image library until they're uploaded.
+  const fromSanity = await getProductImagesByCategory(cat.productCategorySlugs)
+  const images = fromSanity.length > 0 ? fromSanity : getImages(cat.imageDirs)
 
   return (
     <>

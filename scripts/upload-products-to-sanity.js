@@ -7,8 +7,10 @@
  *   node scripts/upload-products-to-sanity.js --commit   # actually upload
  *
  * Needs SANITY_API_WRITE_TOKEN (Editor role) in .env.local.
- * Safe to re-run: document _ids are deterministic and Sanity de-duplicates
- * identical image files.
+ * Safe to re-run: only NEW images are uploaded. Products that already exist in
+ * Sanity are left untouched, so edits made in Sanity Studio (title, price,
+ * description, extra photos) are never overwritten. Runs automatically from
+ * .github/workflows/sync-products-to-sanity.yml when images change on main.
  */
 const fs = require('fs')
 const path = require('path')
@@ -83,7 +85,7 @@ async function main() {
 
   const token = process.env.SANITY_API_WRITE_TOKEN
   if (!token || token.startsWith('your_')) {
-    console.error('\nMissing SANITY_API_WRITE_TOKEN in .env.local')
+    console.error('\nMissing SANITY_API_WRITE_TOKEN (.env.local locally, or a GitHub Actions secret)')
     process.exit(1)
   }
   const { createClient } = require('@sanity/client')
@@ -95,21 +97,26 @@ async function main() {
     useCdn: false,
   })
 
+  const existing = new Set(await client.fetch(`*[_type == "product"]._id`))
   let done = 0
+  let added = 0
   for (const c of cats) {
     const catId = `productCategory-${c.slug}`
-    await client.createOrReplace({
+    await client.createIfNotExists({
       _id: catId,
       _type: 'productCategory',
       title: c.title,
       slug: { _type: 'slug', current: c.slug },
     })
     for (const p of c.products) {
+      const id = `product-${c.slug}-${p.slug}`.slice(0, 120)
+      done++
+      if (existing.has(id)) continue
       const asset = await client.assets.upload('image', fs.createReadStream(p.file), {
         filename: p.filename,
       })
-      await client.createOrReplace({
-        _id: `product-${c.slug}-${p.slug}`.slice(0, 120),
+      await client.createIfNotExists({
+        _id: id,
         _type: 'product',
         title: p.title,
         slug: { _type: 'slug', current: p.slug.slice(0, 96) },
@@ -119,11 +126,11 @@ async function main() {
         ],
         featured: false,
       })
-      done++
-      if (done % 10 === 0 || done === total) console.log(`  ${done}/${total}`)
+      added++
+      console.log(`  + ${c.title}: ${p.title}`)
     }
   }
-  console.log('Done.')
+  console.log(`Done. ${added} new product(s) uploaded, ${done - added} already in Sanity.`)
 }
 
 main().catch((e) => {
