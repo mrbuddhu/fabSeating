@@ -62,7 +62,7 @@ export function HomeHero({
                 key={slide.src ?? `fallback-${idx}`}
                 className="relative min-w-full snap-start"
               >
-                <div className="relative min-h-[70vh] overflow-hidden rounded-[28px] md:rounded-[32px]">
+                <div className="relative min-h-[70vh] overflow-hidden rounded-[28px] md:rounded-[32px] md:min-h-0 md:h-[calc(100vh-12.5rem)] lg:h-[calc(100vh-13rem)]">
                   <div
                     className="absolute inset-0"
                     style={{
@@ -98,14 +98,14 @@ export function HomeHero({
                     <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/15 to-black/30" />
                   </div>
 
-                  <div className="relative z-10 flex min-h-[70vh] flex-col justify-center px-4 sm:px-6 md:px-10 lg:px-14 py-24 sm:py-28">
-                    <div className="w-full max-w-full sm:max-w-4xl md:max-w-5xl lg:max-w-6xl mx-auto space-y-4 rounded-2xl bg-black/15 p-4 sm:p-5 md:p-6 lg:p-8 shadow-[0_18px_50px_rgba(0,0,0,0.35)]">
+                  <div className="relative z-10 flex min-h-[70vh] flex-col justify-center px-4 sm:px-6 md:px-10 lg:px-14 py-24 sm:py-28 md:min-h-0 md:h-full md:py-[clamp(1rem,5vh,4rem)]">
+                    <div className="w-full max-w-full sm:max-w-4xl md:max-w-5xl lg:max-w-6xl mx-auto space-y-[clamp(0.75rem,2vmin,1.25rem)] rounded-2xl bg-black/15 p-[clamp(1rem,2.5vmin,2rem)] shadow-[0_18px_50px_rgba(0,0,0,0.35)]">
                       <div className="space-y-3 md:space-y-4">
                         <motion.h1
                           initial={{ opacity: 0, y: 20 }}
                           whileInView={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.6 }}
-                          className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight font-black text-white drop-shadow-[0_15px_45px_rgba(0,0,0,0.6)] break-words"
+                          className="font-serif text-[clamp(1.5rem,6vmin,3.75rem)] leading-tight font-black text-white drop-shadow-[0_15px_45px_rgba(0,0,0,0.6)] break-words"
                           style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}
                         >
                           {heroData.title?.split('\n').map((line, i) => (
@@ -119,14 +119,14 @@ export function HomeHero({
                       <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                         <Link
                           href="/projects"
-                          className="inline-flex items-center justify-center rounded-full bg-primary-50 px-4 py-2.5 sm:px-6 sm:py-3 text-xs sm:text-sm font-semibold text-primary-900 shadow-lg shadow-primary-900/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+                          className="inline-flex items-center justify-center rounded-full bg-primary-50 px-[clamp(1rem,2.4vmin,1.5rem)] py-[clamp(0.625rem,1.5vmin,0.75rem)] text-[clamp(0.75rem,1.7vmin,0.875rem)] font-semibold text-primary-900 shadow-lg shadow-primary-900/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
                         >
                           View Projects
                         </Link>
                         {heroData.ctaLink && (
                           <Link
                             href={heroData.ctaLink}
-                            className="inline-flex items-center justify-center rounded-full border border-primary-200/40 bg-white/10 px-4 py-2.5 sm:px-6 sm:py-3 text-xs sm:text-sm font-semibold text-primary-50 backdrop-blur transition-all duration-300 hover:bg-white/20 hover:-translate-y-1 hover:shadow-xl"
+                            className="inline-flex items-center justify-center rounded-full border border-primary-200/40 bg-white/10 px-[clamp(1rem,2.4vmin,1.5rem)] py-[clamp(0.625rem,1.5vmin,0.75rem)] text-[clamp(0.75rem,1.7vmin,0.875rem)] font-semibold text-primary-50 backdrop-blur transition-all duration-300 hover:bg-white/20 hover:-translate-y-1 hover:shadow-xl"
                           >
                             {heroData.ctaText}
                           </Link>
