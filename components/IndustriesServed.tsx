@@ -1,6 +1,6 @@
-import { INDUSTRIES } from '@/lib/siteContent'
+import { DEFAULT_SECTIONS } from '@/lib/siteSections'
 
-export function IndustriesServed() {
+export function IndustriesServed({ industries = DEFAULT_SECTIONS.industries }: { industries?: string[] }) {
   return (
     <section className="relative bg-gradient-to-b from-white via-primary-50/30 to-white py-16 md:py-20">
       <div className="container mx-auto px-4">
@@ -13,7 +13,7 @@ export function IndustriesServed() {
           </p>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 max-w-5xl mx-auto">
-          {INDUSTRIES.map((industry) => (
+          {industries.map((industry) => (
             <div
               key={industry}
               className="flex items-center gap-2 rounded-xl border border-primary-100 bg-white px-4 py-3.5 shadow-sm hover:shadow-md hover:border-primary-300/70 hover:-translate-y-0.5 transition-all duration-300"

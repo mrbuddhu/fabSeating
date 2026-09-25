@@ -17,6 +17,7 @@ import { IndustriesServed } from '@/components/IndustriesServed'
 import { FaqTeal } from '@/components/FaqTeal'
 import { GoogleReviewsCta } from '@/components/GoogleReviewsCta'
 import { CONTACT } from '@/lib/siteContent'
+import { getSiteSections } from '@/lib/siteSections'
 
 // Dummy data for preview when no Sanity data is available
 const dummyCaseStudies = [
@@ -78,10 +79,11 @@ const defaultSolutionsCards = [
 const defaultProcessSteps = ['Consultation', 'Design & Selection', 'Manufacturing & Sourcing', 'Quality Checks', 'Delivery & Installation', 'After Sales Support']
 
 export default async function Home() {
-  const [data, homeContent, teamMembers] = await Promise.all([
+  const [data, homeContent, teamMembers, sections] = await Promise.all([
     getHomePageData(),
     getHomePageContent(),
     getTeamMembers(),
+    getSiteSections(),
   ])
 
   const heroHeadline = 'Premium Furniture & Furnishings\nfor Homes, Offices & Hospitality'
@@ -170,7 +172,7 @@ export default async function Home() {
         }}
       />
 
-      <PartnersStrip />
+      <PartnersStrip partners={sections.brandPartners} />
 
       {/* 2. Quote Section - Social Proof */}
       <section className="relative py-8 md:py-10 grainy-gradient text-white overflow-hidden">
@@ -277,11 +279,11 @@ export default async function Home() {
 
       {/* 5. Furniture & Furnishing Solutions */}
       <AnimatedSection delay={0.2}>
-        <FurnitureCategories />
+        <FurnitureCategories categories={sections.categories} />
       </AnimatedSection>
 
       {/* Industries We Serve */}
-      <IndustriesServed />
+      <IndustriesServed industries={sections.industries} />
 
       {/* Teal Strip Divider with Process Typewriter */}
       <section className="relative py-8 md:py-10 grainy-gradient text-white overflow-hidden">
@@ -493,10 +495,10 @@ export default async function Home() {
       ) : null}
 
       {/* Google Reviews */}
-      <GoogleReviewsCta />
+      <GoogleReviewsCta reviewsUrl={sections.reviewsUrl} />
 
       {/* FAQ Section */}
-      <FaqTeal />
+      <FaqTeal faqs={sections.faqs} />
 
       {/* Final CTA - Visit Our Showroom */}
       <section className="relative py-12 md:py-16 bg-white text-primary-950 overflow-hidden">

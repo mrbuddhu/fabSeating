@@ -7,6 +7,8 @@ import caseStudy from '../../schemas/caseStudy'
 import homePage from '../../schemas/homePage'
 import contactPage from '../../schemas/contactPage'
 import teamMember from '../../schemas/teamMember'
+import product from '../../schemas/product'
+import productCategory from '../../schemas/productCategory'
 
 export const schemaTypes = [
   project,
@@ -18,4 +20,6 @@ export const schemaTypes = [
   homePage,
   contactPage,
   teamMember,
+  product,
+  productCategory,
 ]
