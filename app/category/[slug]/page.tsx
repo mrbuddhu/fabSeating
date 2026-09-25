@@ -1,5 +1,4 @@
-import fs from 'fs'
-import path from 'path'
+import { listImageFiles } from '@/lib/localImages'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -17,9 +16,8 @@ function titleFromFile(file: string) {
 function getImages(dirs: string[]) {
   const out: { src: string; title: string }[] = []
   for (const dir of dirs) {
-    const abs = path.join(process.cwd(), 'public', 'images', dir)
     try {
-      for (const file of fs.readdirSync(abs)) {
+      for (const file of listImageFiles(dir)) {
         if (/\.(png|jpe?g|webp|avif)$/i.test(file)) {
           out.push({ src: `/images/${dir}/${file}`, title: titleFromFile(file) })
         }

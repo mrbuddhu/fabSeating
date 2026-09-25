@@ -10,7 +10,8 @@
     "generate-favicons": "node scripts/generate-favicons.js",
     "seed-sanity": "node scripts/seed-sanity.js",
     "studio": "cd sanity/fabseating-website && npm run dev",
-    "studio:deploy": "cd sanity/fabseating-website && npm run build && npm run deploy"
+    "studio:deploy": "cd sanity/fabseating-website && npm run build && npm run deploy",
+    "prebuild": "node scripts/build-image-manifest.js"
   },
   "dependencies": {
     "@portabletext/react": "^6.0.2",

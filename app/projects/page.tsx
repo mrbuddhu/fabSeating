@@ -1,5 +1,4 @@
-import fs from 'fs'
-import path from 'path'
+import { listImageFiles } from '@/lib/localImages'
 import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -22,7 +21,7 @@ function galleryImages(dirs: string[]) {
   const out: string[] = []
   for (const dir of dirs) {
     try {
-      for (const f of fs.readdirSync(path.join(process.cwd(), 'public', 'images', dir))) {
+      for (const f of listImageFiles(dir)) {
         if (/\.(png|jpe?g|webp|avif)$/i.test(f)) out.push(`/images/${dir}/${f}`)
       }
     } catch {}
