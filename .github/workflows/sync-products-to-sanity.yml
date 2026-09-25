@@ -1,0 +1,33 @@
+name: Sync product images to Sanity
+
+# When product images are added under public/images and merged to main,
+# upload the new ones to Sanity as products. Existing products are never
+# overwritten, so edits made in Sanity Studio are safe.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'public/images/**'
+      - 'scripts/upload-products-to-sanity.js'
+  workflow_dispatch: {}
+
+concurrency:
+  group: sanity-product-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Upload new products to Sanity
+        run: node scripts/upload-products-to-sanity.js --commit
+        env:
+          SANITY_API_WRITE_TOKEN: ${{ secrets.SANITY_API_WRITE_TOKEN }}
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ vars.NEXT_PUBLIC_SANITY_PROJECT_ID || 'n59kaaxb' }}
+          NEXT_PUBLIC_SANITY_DATASET: ${{ vars.NEXT_PUBLIC_SANITY_DATASET || 'production' }}

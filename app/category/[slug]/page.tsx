@@ -7,6 +7,20 @@ import { PageHero } from '@/components/PageHero'
 import { Section } from '@/components/Section'
 import { CATEGORIES, waLink } from '@/lib/siteContent'
 import { generateSEOMetadata } from '@/components/SEOHead'
+import { getProductImagesByCategory } from '@/lib/sanity/queries'
+
+// public/images folder -> Sanity productCategory slug (same mapping as scripts/upload-products-to-sanity.js)
+const DIR_TO_SANITY_CATEGORY: Record<string, string> = {
+  sofas: 'sofas',
+  'chairs/dining': 'dining-chairs',
+  'chairs/office': 'office-chairs',
+  'chairs/lounge': 'lounge-chairs',
+  'dining-tables': 'dining-tables',
+  'center-side-tables': 'center-side-tables',
+  beds: 'beds',
+  poufs: 'poufs',
+  rugs: 'rugs',
+}
 
 function titleFromFile(file: string) {
   const base = file.replace(/\.[^.]+$/, '').replace(/^fabseating-/, '').replace(/[-_]+/g, ' ')
@@ -45,11 +59,14 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 export const revalidate = 3600
 
-export default function CategoryPage({ params }: { params: { slug: string } }) {
+export default async function CategoryPage({ params }: { params: { slug: string } }) {
   const cat = CATEGORIES.find((c) => c.slug === params.slug)
   if (!cat) notFound()
 
-  const images = getImages(cat.imageDirs)
+  // Prefer products managed in Sanity; fall back to the local image library until they're uploaded.
+  const sanitySlugs = cat.imageDirs.map((d) => DIR_TO_SANITY_CATEGORY[d]).filter(Boolean)
+  const fromSanity = await getProductImagesByCategory(sanitySlugs)
+  const images = fromSanity.length > 0 ? fromSanity : getImages(cat.imageDirs)
 
   return (
     <>
