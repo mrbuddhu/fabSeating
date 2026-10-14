@@ -84,6 +84,7 @@ export async function getProjectBySlug(slug: string): Promise<Project | null> {
       description,
       content,
       images,
+      videoUrl,
       location,
       year,
       category,
@@ -272,8 +273,9 @@ export async function getHomePageContent() {
   return client.fetch(
     `*[_type == "homePage" && !(_id in path("drafts.**"))] | order(_id asc)[0] {
       heroImage,
+      "heroVideoUrl": heroVideoFile.asset->url,
       aboutReels[] {
-        videoUrl,
+        "videoUrl": coalesce(videoFile.asset->url, videoUrl),
         posterImage
       },
       solutionsCards[] {
@@ -405,4 +407,14 @@ export async function getProductImagesByCategory(categorySlugs: string[]): Promi
   } catch {
     return []
   }
+}
+
+/** Only published CMS images appear on the main Gallery page. An empty list stays empty. */
+export async function getMainGalleryImages(): Promise<import('@/types').SanityImage[]> {
+  if (!isSanityConfigured()) return []
+  return client.fetch(
+    `*[_type == "homePage" && !(_id in path("drafts.**"))] | order(_id asc)[0].galleryImages[defined(asset)]`,
+    {},
+    { next: { revalidate: 300, tags: ['sanity', 'sanity:homePage'] } } as any,
+  ).then((images: import('@/types').SanityImage[] | null) => images || [])
 }
