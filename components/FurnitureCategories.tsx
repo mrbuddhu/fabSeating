@@ -24,10 +24,11 @@ export function FurnitureCategories({ categories }: { categories: SiteCategory[]
           </div>
           <div ref={collection} id="furniture-collection" className="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-5" aria-label="Furniture categories">
             {categories.map((category) => <Link key={category.slug} href={`/category/${category.slug}`} className="group w-40 shrink-0 snap-start text-center md:w-52">
-              <div className="relative aspect-square overflow-hidden rounded-full border border-primary-100 bg-primary-50">
-                {category.cover ? <Image src={category.cover} alt={category.title} fill sizes="(max-width:768px) 160px, 208px" className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-105" /> : <div className="flex h-full items-center justify-center p-6 font-serif text-xl text-primary-800">{category.title}</div>}
+              <div className="relative aspect-square overflow-hidden rounded-full bg-primary-50 shadow-sm ring-1 ring-primary-100 transition-all duration-500 group-hover:-translate-y-1.5 group-hover:shadow-[0_18px_40px_rgba(26,44,45,0.16)] group-hover:ring-primary-400">
+                {category.cover ? <Image src={category.cover} alt={category.title} fill sizes="(max-width:768px) 160px, 208px" className="object-cover transition-transform duration-700 motion-safe:group-hover:scale-105" /> : <div className="flex h-full items-center justify-center p-6 font-serif text-xl text-primary-800">{category.title}</div>}
               </div>
-              <h3 className="mt-4 text-sm font-semibold uppercase tracking-wide text-primary-950">{category.title}</h3>
+              <h3 className="mt-4 text-sm font-semibold uppercase tracking-wide text-primary-950 transition-colors duration-300 group-hover:text-primary-600">{category.title}</h3>
+              <span aria-hidden className="mx-auto mt-2 block h-0.5 w-8 origin-center scale-x-0 rounded-full bg-primary-400 transition-transform duration-500 group-hover:scale-x-100" />
             </Link>)}
           </div>
         </div>

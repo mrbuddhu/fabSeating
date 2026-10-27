@@ -16,7 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/case-studies',
     ...studies.map((study) => `/case-studies/${study.slug.current}`),
     '/contact',
-    '/custom-bespoke',
+    '/catalog',
     '/solutions/residential',
     '/solutions/office',
     '/solutions/hospitality',

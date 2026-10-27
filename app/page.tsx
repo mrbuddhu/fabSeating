@@ -16,7 +16,7 @@ import { FurnitureCategories } from '@/components/FurnitureCategories'
 import { IndustriesServed } from '@/components/IndustriesServed'
 import { FaqTeal } from '@/components/FaqTeal'
 import { GoogleReviewsCta } from '@/components/GoogleReviewsCta'
-import { CONTACT } from '@/lib/siteContent'
+import { CONTACT, waLink } from '@/lib/siteContent'
 import { getSiteSections } from '@/lib/siteSections'
 
 // Dummy data for preview when no Sanity data is available
@@ -455,7 +455,9 @@ export default async function Home() {
           {/* CTA Button */}
           <div className="text-center">
             <a 
-              href="/custom-bespoke" 
+              href={waLink('Hi Fab Seating, I would like a custom quote for a bespoke piece.')}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-8 py-4 bg-primary-950 text-white font-medium rounded-full hover:bg-primary-900 transition-all duration-300 hover:gap-5 shadow-lg hover:-translate-y-1 hover:shadow-2xl group"
             >
               <span className="text-sm tracking-wider uppercase">Get a Custom Quote</span>

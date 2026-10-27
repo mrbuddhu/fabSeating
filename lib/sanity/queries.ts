@@ -387,15 +387,16 @@ export async function getCatalogs(): Promise<Catalog[]> {
   )
 }
 
-export type ProductImage = { id?: string; src: string; title: string; images?: string[] }
+export type ProductImage = { id?: string; src: string; title: string; description?: string; images?: string[] }
 
 /** Product images from Sanity for the given productCategory slugs (used by /category pages). */
 export async function getProductImagesByCategory(categorySlugs: string[]): Promise<ProductImage[]> {
   if (!isSanityConfigured() || categorySlugs.length === 0) return []
   try {
-    const rows = await client.fetch<{ _id: string; title: string; src: string | null; images: string[] }[]>(
+    const rows = await client.fetch<{ _id: string; title: string; description?: string | null; src: string | null; images: string[] }[]>(
       `*[_type == "product" && category->slug.current in $slugs && defined(images[0].asset)] | order(title asc) {
         title,
+        description,
         _id,
         "src": images[0].asset->url,
         "images": images[defined(asset)][].asset->url
@@ -403,7 +404,7 @@ export async function getProductImagesByCategory(categorySlugs: string[]): Promi
       { slugs: categorySlugs },
       { next: { revalidate: 300, tags: ['sanity', 'sanity:product'] } } as any
     )
-    return (rows || []).flatMap((r) => r.src ? [{ id: r._id, title: r.title, src: r.src, images: (r.images || []).filter(Boolean) }] : [])
+    return (rows || []).flatMap((r) => r.src ? [{ id: r._id, title: r.title, description: r.description?.trim() || undefined, src: r.src, images: (r.images || []).filter(Boolean) }] : [])
   } catch {
     return []
   }
