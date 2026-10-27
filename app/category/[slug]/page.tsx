@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { Metadata } from 'next'
 import { PageHero } from '@/components/PageHero'
 import { Section } from '@/components/Section'
-import { waLink } from '@/lib/siteContent'
 import { getSiteSections } from '@/lib/siteSections'
 import { generateSEOMetadata } from '@/components/SEOHead'
 import { getProductImagesByCategory } from '@/lib/sanity/queries'
@@ -42,7 +41,7 @@ export default async function CategoryPage({ params }: { params: { slug: string 
   return (
     <>
       <PageHero title={cat.title} subtitle={cat.blurb} />
-      <Section>
+      <Section className="pt-2 md:pt-4">
         <div className="max-w-6xl mx-auto">
           {images.length > 0 ? (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
@@ -58,17 +57,7 @@ export default async function CategoryPage({ params }: { params: { slug: string 
           )}
 
           <div className="text-center mt-12">
-            <a
-              href={waLink(`Hi Fab Seating, I'm interested in ${cat.title}. Please share details.`)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 rounded-full bg-[#25D366] px-8 py-4 text-white font-semibold text-sm shadow-lg hover:bg-[#1eb955] hover:-translate-y-1 hover:shadow-2xl transition-all duration-300"
-            >
-              Enquire on WhatsApp
-            </a>
-            <div className="mt-6">
-              <Link href="/#solutions" className="text-sm text-primary-700 hover:text-primary-900 underline underline-offset-4">&larr; Back to all categories</Link>
-            </div>
+            <Link href="/#solutions" className="text-sm text-primary-700 hover:text-primary-900 underline underline-offset-4">&larr; Back to all categories</Link>
           </div>
         </div>
       </Section>

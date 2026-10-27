@@ -27,7 +27,7 @@ export default async function CatalogPage() {
         contentClassName="max-w-6xl"
         titleClassName="text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]"
       />
-      <Section>
+      <Section className="pt-2 md:pt-4">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {catalogs && catalogs.length > 0 ? (

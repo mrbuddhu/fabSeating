@@ -55,7 +55,7 @@ export default async function BlogIndexPage() {
       <section className="relative pt-24 pb-14 md:pt-28 md:pb-16">
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-primary-950/90 to-transparent pointer-events-none" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-10 relative z-10">
-          <header className="max-w-3xl mx-auto text-center mb-12 md:mb-14">
+          <header className="max-w-3xl mx-auto text-center mb-8 md:mb-10">
             <p className="text-xs font-semibold tracking-[0.24em] uppercase text-primary-500 mb-3">
               Fab Seating · Journal
             </p>

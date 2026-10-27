@@ -58,7 +58,7 @@ export default async function ResidentialPage() {
         titleClassName="text-3xl sm:text-4xl md:text-5xl leading-[1.05]"
         contentClassName="max-w-5xl"
       />
-      <Section className="pt-0">
+      <Section className="pt-2 md:pt-4">
         <div className="max-w-6xl mx-auto space-y-16">
           {/* Intro + CTAs */}
           <div className="text-center max-w-4xl mx-auto space-y-6">

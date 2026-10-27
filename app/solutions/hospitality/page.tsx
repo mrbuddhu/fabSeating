@@ -100,7 +100,7 @@ export default async function HospitalityPage() {
         contentClassName="max-w-6xl"
         titleClassName="text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]"
       />
-      <Section>
+      <Section className="pt-2 md:pt-4">
         <div className="max-w-6xl mx-auto space-y-16">
           {/* Hero gallery */}
           <div className="space-y-8">

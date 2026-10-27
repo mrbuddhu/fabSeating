@@ -444,11 +444,6 @@ export default async function Home() {
                   Dimensions, comfort, upholstery, wood, finishes — every detail is designed, refined, and crafted specifically for you.
                 </p>
               </AnimatedSection>
-              <AnimatedSection delay={0.3} once={false}>
-                <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
-                  From one-of-a-kind sofas to fully bespoke dining, bedroom, and statement pieces, we build furniture that fits perfectly, looks intentional, and lasts for years.
-                </p>
-              </AnimatedSection>
             </div>
           </div>
           

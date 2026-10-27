@@ -43,7 +43,7 @@ export default async function CaseStudiesPage({ searchParams }: CaseStudiesPageP
         title="Case Studies"
         subtitle="In-depth stories behind our most significant projects"
       />
-      <Section>
+      <Section className="pt-2 md:pt-4">
         <div className="mb-12 flex flex-wrap justify-center gap-4">
           {categories.map((cat) => (
             <Link

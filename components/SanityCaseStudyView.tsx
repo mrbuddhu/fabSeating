@@ -25,7 +25,7 @@ export function SanityCaseStudyView({ study, backHref = '/case-studies', backLab
   return (
     <>
       <PageHero title={study.title} subtitle={study.subtitle || study.summary} />
-      <Section>
+      <Section className="pt-2 md:pt-4">
         <div className="mx-auto max-w-6xl">
           {study.heroImage && <div className="relative mb-8 aspect-[16/9] overflow-hidden rounded-2xl"><ResponsiveImage image={study.heroImage} alt={study.title} fill priority sizes="(max-width: 1200px) 100vw, 1152px" /></div>}
           <dl className="mb-12 grid grid-cols-2 gap-6 md:grid-cols-4">

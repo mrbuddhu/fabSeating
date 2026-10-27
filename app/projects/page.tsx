@@ -21,7 +21,7 @@ export default async function GalleryPage() {
   return (
     <>
       <PageHero title="Gallery" subtitle="A visual collection of our work across homes and commercial spaces" />
-      <Section>
+      <Section className="pt-2 md:pt-4">
         {/* Sanity-managed projects (if any) */}
         {projects.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
