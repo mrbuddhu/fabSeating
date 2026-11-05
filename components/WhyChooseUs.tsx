@@ -33,7 +33,7 @@ const defaultFeatures = [
 
 export function WhyChooseUs({ data }: WhyChooseUsProps) {
   const features = data?.features || defaultFeatures
-  const title = data?.title || 'Why Choose FabSeating'
+  const title = data?.title || 'Why Choose Fab Seating'
   const subtitle = data?.subtitle || 'Excellence in every detail'
 
   return (

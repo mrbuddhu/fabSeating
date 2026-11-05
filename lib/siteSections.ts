@@ -105,9 +105,16 @@ export async function getSiteSections(): Promise<SiteSections> {
     })
 
   const industries = (raw.industries || []).filter(Boolean)
+  const customQuote =
+    'Simply visit our showroom in Kilpauk, call or message us on WhatsApp (+91 8870666135) or fill out the enquiry form on our website. Share your requirements, and our team will provide a personalized quotation.'
   const faqs = (raw.faqs || [])
     .filter((f) => f?.question && f.answer)
-    .map((f) => ({ q: f.question!, a: f.answer! }))
+    .map((f) => ({
+      q: f.question!,
+      a: /quote for custom furniture/i.test(f.question!)
+        ? customQuote
+        : f.answer!.replace(/\b2003\b/g, '2001'),
+    }))
 
   return {
     categories,

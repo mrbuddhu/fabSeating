@@ -6,6 +6,7 @@ import { EnquiryForm } from '@/components/EnquiryForm'
 import { generateSEOMetadata } from '@/components/SEOHead'
 import { getContactPageContent } from '@/lib/sanity/queries'
 import { ResponsiveImage } from '@/components/ResponsiveImage'
+import { CONTACT } from '@/lib/siteContent'
 
 export const revalidate = 86400
 
@@ -51,10 +52,10 @@ export default async function ContactPage() {
               <h2 className="font-serif text-2xl font-semibold mb-6">Get in Touch</h2>
               <div className="space-y-4 text-primary-700">
                 <p>
-                  <strong>Email:</strong> info@fabseating.com
+                  <strong>Email:</strong> {CONTACT.email}
                 </p>
                 <p>
-                  <strong>Phone:</strong> 098410 66135
+                  <strong>Phone:</strong> {CONTACT.phoneDisplay}
                 </p>
                 <p>
                   <strong>Address:</strong><br />

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Container } from './Container'
+import { CONTACT } from '@/lib/siteContent'
 
 const footerLinks = {
   company: [
@@ -9,16 +10,15 @@ const footerLinks = {
     { href: '/policies', label: 'Policies' },
   ],
   products: [
-    { href: '/catalog', label: 'Catalog' },
-    { href: '/#solutions', label: 'Solutions' },
-    { href: '/case-studies', label: 'Case Studies' },
+    { href: '/catalogues', label: 'Catalogues' },
+    { href: '/#solutions', label: 'Explore' },
     { href: '/projects', label: 'Gallery' },
   ],
   support: [
     { href: '/contact', label: 'Contact' },
-    { href: 'mailto:info@fabseating.com', label: 'info@fabseating.com' },
-    { href: 'tel:+919841066135', label: '098410 66135' },
-    { href: 'https://www.google.com/maps/search/?api=1&query=Fab+Seating+Kilpauk+Chennai', label: 'Find us on Google' },
+    { href: `mailto:${CONTACT.email}`, label: CONTACT.email },
+    { href: `tel:${CONTACT.phoneTel}`, label: CONTACT.phoneDisplay },
+    { href: CONTACT.mapsUrl, label: 'Find us on Google' },
   ],
 }
 

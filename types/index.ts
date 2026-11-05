@@ -202,8 +202,11 @@ export interface Catalog {
   _id: string
   _type: 'catalog'
   title: string
+  eyebrow?: string
   description?: string
+  sortOrder?: number
   coverImage?: SanityImage
   fileUrl?: string | null
+  fileName?: string | null
   seo?: SEO
 }

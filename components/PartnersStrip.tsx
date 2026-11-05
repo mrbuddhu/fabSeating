@@ -6,7 +6,7 @@ export function PartnersStrip({ partners = DEFAULT_SECTIONS.brandPartners }: { p
     <section className="relative bg-white py-12 md:py-16 border-y border-primary-100/60">
       <div className="container mx-auto px-4">
         <div className="text-center mb-8 md:mb-10">
-          <span className="text-xs font-bold tracking-[0.2em] uppercase text-primary-700">Explore by Brands</span>
+          <span className="text-xs font-bold tracking-[0.2em] uppercase text-primary-700">Trusted by brands</span>
           <p className="mt-3 text-sm md:text-base text-gray-600 max-w-3xl mx-auto leading-relaxed">
             We source premium fabrics, furnishings, wallpapers, and interior materials from some of the industry&apos;s most trusted brands&mdash;ensuring exceptional quality, durability, and timeless design in every project.
           </p>

@@ -4,8 +4,8 @@ export default function manifest(): MetadataRoute.Manifest {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://fabseating.com'
   
   return {
-    name: 'FabSeating | Premium Furniture',
-    short_name: 'FabSeating',
+    name: 'Fab Seating | Premium Furniture',
+    short_name: 'Fab Seating',
     description: 'Premium furniture crafted with excellence and attention to detail.',
     start_url: '/',
     display: 'standalone',

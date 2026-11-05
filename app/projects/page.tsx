@@ -6,6 +6,8 @@ import { getProjects, getMainGalleryImages } from '@/lib/sanity/queries'
 import { generateSEOMetadata } from '@/components/SEOHead'
 import { AnimatedCard } from '@/components/AnimatedCard'
 import { ResponsiveImage } from '@/components/ResponsiveImage'
+import { GalleryGrid } from '@/components/GalleryGrid'
+import { urlFor } from '@/lib/sanity/client'
 
 export const revalidate = 300
 
@@ -21,7 +23,7 @@ export default async function GalleryPage() {
   return (
     <>
       <PageHero title="Gallery" subtitle="A visual collection of our work across homes and commercial spaces" />
-      <Section className="pt-2 md:pt-4">
+      <Section className="pt-3 md:pt-4">
         {/* Sanity-managed projects (if any) */}
         {projects.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
@@ -48,19 +50,19 @@ export default async function GalleryPage() {
 
         {/* Main Gallery photos from the published Sanity Homepage document */}
         {images.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {images.map((image, i) => (
-              <div key={image._key || `${image.asset?._ref}-${i}`} className="relative aspect-[3/4] overflow-hidden rounded-2xl shadow-md ring-1 ring-black/5 group">
-                <ResponsiveImage
-                  image={image}
-                  alt={image.alt || `Fab Seating gallery ${i + 1}`}
-                  fill
-                  sizes="(max-width:768px) 50vw, 25vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-              </div>
-            ))}
-          </div>
+          <GalleryGrid
+            photos={images.flatMap((image, i) => {
+              const src = urlFor(image)?.width(1400).auto('format').url()
+              if (!src) return []
+              const alt = image.alt || `Fab Seating gallery ${i + 1}`
+              return [{
+                id: image._key || `${image.asset?._ref}-${i}`,
+                src,
+                alt,
+                description: image.caption || alt,
+              }]
+            })}
+          />
         ) : (
           projects.length === 0 && (
             <div className="text-center py-12"><p className="text-xl text-primary-600">Gallery coming soon.</p></div>

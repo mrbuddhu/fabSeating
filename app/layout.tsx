@@ -5,6 +5,7 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Analytics } from '@/components/Analytics'
 import { StickyBookCTA } from '@/components/StickyBookCTA'
+import { ExperienceStrip } from '@/components/ExperienceStrip'
 import { PWARegister } from '@/components/PWARegister'
 import { getSiteSettings } from '@/lib/sanity/queries'
 import { CONTACT } from '@/lib/siteContent'
@@ -30,10 +31,10 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Fabseating | Premium Furniture & Furnishings',
-    template: '%s | Fabseating',
+    default: 'Fab Seating | Premium Furniture & Furnishings',
+    template: '%s | Fab Seating',
   },
-  description: 'Fabseating designs, manufactures, and curates premium furniture and furnishings for homes, offices, and hospitality spaces in Chennai since 2001.',
+  description: 'Fab Seating designs, manufactures, and curates premium furniture and furnishings for homes, offices, and hospitality spaces in Chennai since 2001.',
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://fabseating.com'),
   manifest: '/manifest.json',
   icons: {
@@ -53,10 +54,10 @@ export const metadata: Metadata = {
     title: 'Fab Seating',
   },
   openGraph: {
-    title: 'Fabseating | Premium Furniture & Furnishings',
-    description: 'Fabseating designs, manufactures, and curates premium furniture and furnishings for homes, offices, and hospitality spaces in Chennai since 2001.',
+    title: 'Fab Seating | Premium Furniture & Furnishings',
+    description: 'Fab Seating designs, manufactures, and curates premium furniture and furnishings for homes, offices, and hospitality spaces in Chennai since 2001.',
     url: process.env.NEXT_PUBLIC_SITE_URL || 'https://fabseating.com',
-    siteName: 'Fabseating',
+    siteName: 'Fab Seating',
     images: [
       {
         url: '/logo.png',
@@ -70,8 +71,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Fabseating | Premium Furniture & Furnishings',
-    description: 'Fabseating designs, manufactures, and curates premium furniture and furnishings for homes, offices, and hospitality spaces in Chennai since 2001.',
+    title: 'Fab Seating | Premium Furniture & Furnishings',
+    description: 'Fab Seating designs, manufactures, and curates premium furniture and furnishings for homes, offices, and hospitality spaces in Chennai since 2001.',
     images: ['/logo.png'],
   },
 }
@@ -121,6 +122,7 @@ export default async function RootLayout({
         />
         <Header logoUrl={logoUrl} />
         <main id="main-content">{children}</main>
+        <ExperienceStrip />
         <StickyBookCTA />
         <Footer logoUrl={logoUrl} />
         <Analytics />

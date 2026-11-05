@@ -17,7 +17,7 @@ export function PageHero({
   contentClassName,
 }: PageHeroProps) {
   return (
-    <section className={cn('pt-32 pb-6 md:pt-40 md:pb-8', className)}>
+    <section className={cn('pb-0 pt-28 md:pb-0 md:pt-36', className)}>
       <Container>
         <div className={cn('max-w-3xl', contentClassName)}>
           <h1

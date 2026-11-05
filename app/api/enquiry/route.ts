@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
     const data = enquirySchema.parse(body)
 
     const emailContent = `
-New Enquiry from FabSeating Website
+New Enquiry from Fab Seating Website
 
 Name: ${data.name}
 Email: ${data.email}

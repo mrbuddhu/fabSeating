@@ -5,15 +5,14 @@ import defaults from './siteDefaults.json'
 
 // Business contact details — single source of truth.
 export const CONTACT = {
-  phoneDisplay: '098410 66135',
-  phoneTel: '+919841066135',
-  whatsapp: '919841066135', // wa.me/<this>
+  phoneDisplay: '+91 88706 66135',
+  phoneTel: '+918870666135',
+  whatsapp: '918870666135', // wa.me/<this>
   email: 'info@fabseating.com',
   showroom: 'Kilpauk, Chennai',
-  addressLine: '439, Kilpauk Garden Road, Chennai, Tamil Nadu',
-  // GMP (Google Maps / My Business) — replace with the live GMB share link when available.
-  mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Fab+Seating+Kilpauk+Chennai',
-  reviewsUrl: 'https://www.google.com/maps/search/?api=1&query=Fab+Seating+Kilpauk+Chennai',
+  addressLine: '428, Kilpauk Garden Road, Aspiran Garden Colony, Kilpauk, Chennai, Tamil Nadu 600010',
+  mapsUrl: 'https://www.google.com/maps/search/Fab+Seating+Kilpauk/@13.08379,80.23497,17z',
+  reviewsUrl: 'https://www.google.com/maps/search/Fab+Seating+Kilpauk/@13.08379,80.23497,17z',
   serviceArea: 'Chennai · Pan India delivery & installation',
 }
 

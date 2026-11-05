@@ -9,8 +9,6 @@ import { LazyVideo } from '@/components/LazyVideo'
 import { ResponsiveImage } from '@/components/ResponsiveImage'
 import { getHomePageData, getHomePageContent, getTeamMembers } from '@/lib/sanity/queries'
 import { urlFor } from '@/lib/sanity/client'
-import { CaseStudyCard } from '@/components/CaseStudyCard'
-import { SkeletonCard } from '@/components/SkeletonCard'
 import { PartnersStrip } from '@/components/PartnersStrip'
 import { FurnitureCategories } from '@/components/FurnitureCategories'
 import { IndustriesServed } from '@/components/IndustriesServed'
@@ -18,47 +16,6 @@ import { FaqTeal } from '@/components/FaqTeal'
 import { GoogleReviewsCta } from '@/components/GoogleReviewsCta'
 import { CONTACT, waLink } from '@/lib/siteContent'
 import { getSiteSections } from '@/lib/siteSections'
-
-// Dummy data for preview when no Sanity data is available
-const dummyCaseStudies = [
-  {
-    _id: 'dummy-1',
-    _type: 'caseStudy',
-    title: 'A Regal Home Transformation in Kilpauk',
-    slug: { current: 'regal-home-kilpauk' },
-    summary: 'Complete furniture and furnishings for a 3-storey residence featuring custom throne chairs and bespoke accent pieces.',
-    industry: 'residential',
-    client: 'Murugan',
-    location: 'Kilpauk, Chennai',
-    year: '2024',
-    // Replace this with Sanity image URL when uploaded
-    heroImage: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80'
-  },
-  {
-    _id: 'dummy-2',
-    _type: 'caseStudy',
-    title: 'Luxury 4BHK Residence in Nungambakkam',
-    slug: { current: 'luxury-4bhk-nungambakkam' },
-    summary: 'Complete home furniture and furnishings featuring Italian marble dining table, home theatre recliners, and motorized curtains.',
-    industry: 'residential',
-    client: 'Mr. Rajesh Kothari',
-    location: 'Nungambakkam, Chennai',
-    year: '2024',
-    // Replace this with Sanity image URL when uploaded
-    heroImage: 'https://images.unsplash.com/photo-1524758631624-e2822e304a36?auto=format&fit=crop&w=800&q=80'
-  },
-  {
-    _id: 'dummy-3',
-    _type: 'caseStudy',
-    title: 'Boutique Hotel Lobby',
-    slug: { current: 'boutique-hotel-lobby' },
-    summary: 'Welcoming and elegant seating solutions for hospitality. Coming Soon.',
-    industry: 'hospitality',
-    heroImage: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80',
-    comingSoon: true
-  }
-]
-
 
 // Revalidate so Sanity updates (e.g. founders/team) appear on live site within minutes when webhook runs; fallback if webhook not set
 export const revalidate = 300
@@ -155,9 +112,6 @@ export default async function Home() {
 
   const processSteps = (homeContent?.processSteps?.length ? homeContent.processSteps : defaultProcessSteps) as string[]
 
-  // Use Sanity data if available
-  const projectsToDisplay = data.featuredProjects || []
-
   return (
     <main className="flex min-h-screen flex-col overflow-hidden">
       {/* 1. Hero Section */}
@@ -200,7 +154,7 @@ export default async function Home() {
             <div className="flex items-center justify-center gap-2 mt-3">
               <div className="h-px w-16 bg-gradient-to-r from-transparent to-primary-400/40"></div>
               <p className="text-sm md:text-base text-primary-200/90 font-serif font-light tracking-wider uppercase">
-                Fabseating Furniture & Furnishings
+                Fab Seating Furniture & Furnishings
               </p>
               <div className="h-px w-16 bg-gradient-to-l from-transparent to-primary-400/40"></div>
             </div>
@@ -315,50 +269,7 @@ export default async function Home() {
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
       </section>
 
-      {/* 6. Projects Showcase - Carousel/Bento Grid */}
-      <AnimatedSection delay={0.3}>
-        <section id="projects" className="relative py-16 md:py-20 bg-gradient-to-b from-white via-gray-50/50 to-white">
-        <div className="container mx-auto px-4">
-          {/* Section Header */}
-          <div className="text-center mb-12">
-            <div className="inline-block mb-2">
-              <span className="text-xs font-bold tracking-[0.2em] uppercase text-primary-700">Portfolio</span>
-            </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold mb-2 text-primary-950 tracking-tight">
-              Our Work
-            </h2>
-            <div className="w-24 h-px bg-gradient-to-r from-transparent via-primary-700 to-transparent mx-auto mb-3"></div>
-            <p className="text-lg md:text-xl text-gray-800 font-medium max-w-3xl mx-auto leading-relaxed">
-              Explore our portfolio of completed projects across residential, office, and hospitality spaces.
-            </p>
-          </div>
-          
-          {/* Grid Layout */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            {projectsToDisplay.map((item: any, index: number) => (
-              <AnimatedCard key={item._id} index={index}>
-                <CaseStudyCard project={item} index={index} />
-              </AnimatedCard>
-            ))}
-          </div>
-          
-          {/* CTA Button */}
-          <div className="text-center">
-            <a 
-              href="/case-studies" 
-              className="inline-flex items-center gap-3 px-8 py-4 bg-primary-950 text-white font-medium rounded-full hover:bg-primary-900 transition-all duration-300 hover:gap-5 shadow-lg hover:-translate-y-1 hover:shadow-2xl group"
-            >
-              <span className="text-sm tracking-wider uppercase">View All Case Studies</span>
-              <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </section>
-      </AnimatedSection>
-
-      {/* 7. Leadership Section - Legacy Entry */}
+      {/* Leadership Section */}
       <section className="relative py-8 md:py-10 grainy-gradient text-white overflow-hidden">
         {/* Background decoration */}
         <div className="absolute inset-0 opacity-10">
@@ -379,7 +290,7 @@ export default async function Home() {
             </h2>
             <div className="w-24 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent mx-auto mb-4"></div>
             <p className="text-sm md:text-base leading-relaxed mb-6 text-white/90 font-light max-w-4xl mx-auto">
-              Established in 2001, Fabseating has been at the forefront of furniture manufacturing and furnishings curation. With over two decades of hands-on experience, we&apos;ve built a reputation for excellence, quality, and customer satisfaction across South India.
+              Established in 2001, Fab Seating has been at the forefront of furniture manufacturing and furnishings curation. With over two decades of hands-on experience, we&apos;ve built a reputation for excellence, quality, and customer satisfaction across South India.
             </p>
             
             {/* Stats Grid */}
@@ -436,7 +347,7 @@ export default async function Home() {
             <div className="text-center max-w-5xl mx-auto space-y-6">
               <AnimatedSection delay={0.1} once={false}>
                 <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
-                  At Fabseating, furniture doesn&apos;t start with a template. It starts with your space.
+                  At Fab Seating, furniture doesn&apos;t start with a template. It starts with your space.
                 </p>
               </AnimatedSection>
               <AnimatedSection delay={0.2} once={false}>
@@ -483,7 +394,7 @@ export default async function Home() {
       ) : null}
 
       {/* Google Reviews */}
-      <GoogleReviewsCta reviewsUrl={sections.reviewsUrl} />
+      <GoogleReviewsCta />
 
       {/* FAQ Section */}
       <FaqTeal faqs={sections.faqs} />

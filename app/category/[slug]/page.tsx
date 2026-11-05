@@ -41,7 +41,7 @@ export default async function CategoryPage({ params }: { params: { slug: string 
   return (
     <>
       <PageHero title={cat.title} subtitle={cat.blurb} />
-      <Section className="pt-2 md:pt-4">
+      <Section className="pt-3 md:pt-4">
         <div className="max-w-6xl mx-auto">
           {images.length > 0 ? (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
@@ -56,7 +56,8 @@ export default async function CategoryPage({ params }: { params: { slug: string 
             </div>
           )}
 
-          <div className="text-center mt-12">
+          <div className="mt-12 flex flex-col items-center gap-3 text-center">
+            <Link href="/catalogues" className="text-sm font-semibold text-primary-800 hover:text-primary-950 underline underline-offset-4">Browse catalogues</Link>
             <Link href="/#solutions" className="text-sm text-primary-700 hover:text-primary-900 underline underline-offset-4">&larr; Back to all categories</Link>
           </div>
         </div>

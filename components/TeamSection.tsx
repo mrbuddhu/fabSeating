@@ -19,13 +19,13 @@ const HARD_CODED_TEAM: TeamMember[] = [
     _id: '1',
     name: 'Mr. Gobind Chugani',
     role: 'Founder',
-    bio: '“A seasoned industry leader with over 30 years of experience, guiding Fabseating’s vision to create spaces that inspire.”',
+    bio: '“A seasoned industry leader with over 30 years of experience, guiding Fab Seating’s vision to create spaces that inspire.”',
   },
   {
     _id: '2',
     name: 'Mr. Deenu Chugani',
     role: 'Director – Business & Strategy',
-    bio: '“A forward-thinking business strategist, driving Fabseating’s growth with innovation and a modern market perspective.”',
+    bio: '“A forward-thinking business strategist, driving Fab Seating’s growth with innovation and a modern market perspective.”',
   },
   {
     _id: '3',

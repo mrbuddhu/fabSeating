@@ -15,7 +15,7 @@ export function Section({
   containerSize = '2xl',
 }: SectionProps) {
   return (
-    <section className={cn('py-16 md:py-24', className)}>
+    <section className={cn('pb-16 pt-16 md:pb-24 md:pt-24', className)}>
       <Container size={containerSize} className={containerClassName}>
         {children}
       </Container>

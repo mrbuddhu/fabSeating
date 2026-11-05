@@ -12,6 +12,11 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      { source: '/catalog', destination: '/catalogues', permanent: true },
+    ]
+  },
   // PWA support
   async headers() {
     return [

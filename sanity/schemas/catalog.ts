@@ -3,8 +3,20 @@ export default {
   title: 'Catalogs',
   type: 'document',
   fields: [
-    { name: 'title', title: 'Title', type: 'string' },
+    { name: 'title', title: 'Title', type: 'string', validation: (Rule: any) => Rule.required() },
+    {
+      name: 'eyebrow',
+      title: 'Label',
+      type: 'string',
+      description: 'Small label above the title, such as Furniture or Furnishings.',
+    },
     { name: 'description', title: 'Description', type: 'text' },
+    {
+      name: 'sortOrder',
+      title: 'Sort order',
+      type: 'number',
+      description: 'Lower numbers appear first on the Catalogues page.',
+    },
     {
       name: 'coverImage',
       title: 'Cover Image',

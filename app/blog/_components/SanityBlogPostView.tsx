@@ -189,7 +189,7 @@ export function SanityBlogPostView({ post }: { post: BlogPost }) {
                 Fab Seating — Design &amp; Craftsmanship Team
               </h3>
               <p className="text-sm text-primary-700 leading-relaxed">
-                Founded in 2003, Fab Seating has spent over two decades designing and crafting
+                Founded in 2001, Fab Seating has spent over two decades designing and crafting
                 custom furniture for residential and commercial spaces across South India.
               </p>
             </div>

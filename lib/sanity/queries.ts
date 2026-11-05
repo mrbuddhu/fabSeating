@@ -371,13 +371,16 @@ export async function getSitemapData() {
 export async function getCatalogs(): Promise<Catalog[]> {
   if (!isSanityConfigured()) return []
   return client.fetch(
-    `*[_type == "catalog"] | order(_createdAt desc) {
+    `*[_type == "catalog" && !(_id in path("drafts.**"))] | order(coalesce(sortOrder, 100) asc, _createdAt desc) {
       _id,
       _type,
       title,
+      eyebrow,
       description,
+      sortOrder,
       coverImage,
       "fileUrl": file.asset->url,
+      "fileName": file.asset->originalFilename,
       seo
     }`,
     {},

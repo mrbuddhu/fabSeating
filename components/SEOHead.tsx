@@ -22,7 +22,7 @@ export function generateSEOMetadata({
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://fabseating.com'
   const fullUrl = `${siteUrl}${path}`
   
-  const metaTitle = seo?.title || title || 'FabSeating | Premium Furniture'
+  const metaTitle = seo?.title || title || 'Fab Seating | Premium Furniture'
   const metaDescription = seo?.description || description || 'Premium furniture crafted with excellence and attention to detail.'
   const metaImage = seo?.image || image
   const imageUrl = metaImage ? urlFor(metaImage)?.width(1200).height(630).url() : `${siteUrl}/logo.png`
@@ -35,7 +35,7 @@ export function generateSEOMetadata({
       title: metaTitle,
       description: metaDescription,
       url: fullUrl,
-      siteName: 'FabSeating',
+      siteName: 'Fab Seating',
       images: [
         {
           url: imageUrl || '',
