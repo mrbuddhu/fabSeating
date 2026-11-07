@@ -40,6 +40,8 @@ export async function POST(req: NextRequest) {
     revalidateTag('sanity:testimonial')
     revalidateTag('sanity:productCategory')
     revalidateTag('sanity:product')
+    revalidateTag('sanity:categoryLanding')
+    revalidateTag('sanity:articleMedia')
 
     return NextResponse.json({ revalidated: true, paths: pathsToRevalidate })
   } catch (error) {

@@ -11,6 +11,7 @@ import teamMember from '../../schemas/teamMember'
 import product from '../../schemas/product'
 import productCategory from '../../schemas/productCategory'
 import categoryLanding from '../../schemas/categoryLanding'
+import author from '../../schemas/author'
 
 export const schemaTypes = [
   articleMedia,
@@ -26,4 +27,5 @@ export const schemaTypes = [
   product,
   productCategory,
   categoryLanding,
+  author,
 ]

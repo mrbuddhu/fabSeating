@@ -25,6 +25,14 @@ export async function POST(req: Request) {
   revalidateTag('sanity:testimonial')
   revalidateTag('sanity:productCategory')
   revalidateTag('sanity:catalog')
+  revalidateTag('sanity:product')
+  revalidateTag('sanity:categoryLanding')
+  revalidateTag('sanity:articleMedia')
+  revalidateTag('sanity:homePage')
+  revalidateTag('sanity:contactPage')
+  revalidateTag('sanity:siteSettings')
+  revalidateTag('sanity:teamMember')
+  revalidateTag('sanity:caseStudy')
 
   return NextResponse.json({ ok: true })
 }
