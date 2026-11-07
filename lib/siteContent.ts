@@ -14,10 +14,20 @@ export const CONTACT = {
   mapsUrl: 'https://www.google.com/maps/search/Fab+Seating+Kilpauk/@13.08379,80.23497,17z',
   reviewsUrl: 'https://www.google.com/maps/search/Fab+Seating+Kilpauk/@13.08379,80.23497,17z',
   serviceArea: 'Chennai · Pan India delivery & installation',
+  instagram: 'https://www.instagram.com/fabseating/',
+  youtube: 'https://www.youtube.com/@FabSeating',
+  footerBlurb: 'Premium furniture & furnishings crafted with excellence. Based in Kilpauk, Chennai — delivering Pan India.',
 }
 
-export function waLink(message: string) {
-  return `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(message)}`
+export type SiteContact = typeof CONTACT
+
+export function waLink(message: string, whatsapp = CONTACT.whatsapp) {
+  return `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`
+}
+
+export function filled(value: string | null | undefined, fallback: string) {
+  const trimmed = value?.trim()
+  return trimmed ? trimmed : fallback
 }
 
 export type Category = {

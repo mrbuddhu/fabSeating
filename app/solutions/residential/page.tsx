@@ -4,16 +4,21 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { PageHero } from '@/components/PageHero'
 import { Section } from '@/components/Section'
-import { generateSEOMetadata } from '@/components/SEOHead'
-import { CONTACT, waLink } from '@/lib/siteContent'
+import { waLink } from '@/lib/siteContent'
+import { getSiteSettings } from '@/lib/sanity/queries'
+import { metadataForPath } from '@/lib/pageMetadata'
 
 export const revalidate = 300
 
-export const metadata: Metadata = generateSEOMetadata({
-  title: 'Custom Furniture & Home Interiors in Chennai',
-  description: 'Custom furniture and complete home furnishing solutions in Chennai — sofas, beds, wardrobes, dining sets, curtains and rugs, designed around your life.',
-  path: '/solutions/residential',
-})
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getSolutionPage('residential')
+  return metadataForPath(
+    '/solutions/residential',
+    'Custom Furniture & Home Interiors in Chennai',
+    'Custom furniture and complete home furnishing solutions in Chennai — sofas, beds, wardrobes, dining sets, curtains and rugs, designed around your life.',
+    page?.seo,
+  )
+}
 
 const WHAT_WE_DESIGN = [
   ['Living Room Furniture', 'Sofas, lounge chairs, centre tables, TV units.'],
@@ -46,9 +51,14 @@ const APPROACH = [
 ]
 
 export default async function ResidentialPage() {
-  const page = await getSolutionPage('residential')
+  const [page, settings] = await Promise.all([getSolutionPage('residential'), getSiteSettings()])
   const homes = page?.galleryImages ?? []
   const hero = homes.slice(0, 3)
+  const designItems = page?.whatWeDesign?.length ? page.whatWeDesign.map((item) => [item, '']) : WHAT_WE_DESIGN
+  const whyItems = page?.whyChooseUs?.length ? page.whyChooseUs : WHY_CHOOSE
+  const approachItems = page?.approach?.length ? page.approach : APPROACH
+  const designHome = waLink('Hi Fab Seating, I would like to design my home.', settings.contact.whatsapp)
+  const startProject = waLink('Hi Fab Seating, I would like to start my home project.', settings.contact.whatsapp)
 
   return (
     <>
@@ -63,14 +73,14 @@ export default async function ResidentialPage() {
           {/* Intro + CTAs */}
           <div className="text-center max-w-4xl mx-auto space-y-6">
             <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
-              At Fab Seating, we design and manufacture <strong>custom furniture in Chennai</strong> for homes that need more than just good-looking pieces. From sofas and beds to wardrobes, dining sets, curtains, and rugs — every element is built to fit your space, your lifestyle, and your comfort.
+              {page?.introText || <>At Fab Seating, we design and manufacture <strong>custom furniture in Chennai</strong> for homes that need more than just good-looking pieces. From sofas and beds to wardrobes, dining sets, curtains, and rugs — every element is built to fit your space, your lifestyle, and your comfort.</>}
             </p>
             <p className="text-base md:text-lg text-primary-800 font-medium">
-              Not a display showroom — a walk-in experience studio where your ideas take shape.
+              {page?.tagline || 'Not a display showroom — a walk-in experience studio where your ideas take shape.'}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-              <a href={waLink('Hi Fab Seating, I would like to design my home.')} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-primary-950 px-7 py-3.5 text-white font-semibold text-sm shadow-lg hover:bg-primary-900 hover:-translate-y-1 transition-all">Design My Home</a>
-              <a href={CONTACT.mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-primary-300 px-7 py-3.5 text-primary-900 font-semibold text-sm hover:bg-primary-50 transition-all">Visit Our Showroom</a>
+              <a href={designHome} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-primary-950 px-7 py-3.5 text-white font-semibold text-sm shadow-lg hover:bg-primary-900 hover:-translate-y-1 transition-all">Design My Home</a>
+              <a href={settings.contact.mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-primary-300 px-7 py-3.5 text-primary-900 font-semibold text-sm hover:bg-primary-50 transition-all">Visit Our Showroom</a>
             </div>
           </div>
 
@@ -98,7 +108,7 @@ export default async function ResidentialPage() {
             <h2 className="font-serif text-2xl md:text-3xl font-bold text-primary-950 mb-2 text-center">Complete Residential Furniture Solutions</h2>
             <p className="text-center text-gray-600 mb-8">We design and deliver custom home furniture in Chennai across every part of your home.</p>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {WHAT_WE_DESIGN.map(([t, d]) => (
+              {designItems.map(([t, d]) => (
                 <div key={t} className="rounded-2xl bg-white p-5 shadow-sm">
                   <h3 className="font-serif text-lg font-semibold text-primary-950 mb-1">{t}</h3>
                   <p className="text-sm text-gray-600 leading-relaxed">{d}</p>
@@ -112,7 +122,7 @@ export default async function ResidentialPage() {
           <div className="grainy-gradient rounded-3xl p-8 md:p-12 shadow-xl text-white">
             <h2 className="font-serif text-2xl md:text-3xl font-bold mb-2 relative z-10">Trusted for Custom Furniture &amp; Interiors in Chennai</h2>
             <div className="grid md:grid-cols-2 gap-3 mt-6 relative z-10">
-              {WHY_CHOOSE.map((item) => (
+              {whyItems.map((item) => (
                 <div key={item} className="flex items-start gap-3 rounded-xl bg-white/10 p-4">
                   <span className="mt-1 h-2 w-2 rounded-full bg-white flex-shrink-0"></span>
                   <span className="font-medium">{item}</span>
@@ -140,7 +150,7 @@ export default async function ResidentialPage() {
             <h2 className="font-serif text-2xl md:text-3xl font-bold text-primary-950 mb-2 text-center">From Idea to Installation</h2>
             <div className="w-24 h-px bg-gradient-to-r from-transparent via-primary-700 to-transparent mx-auto mb-8"></div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
-              {APPROACH.map((step, i) => (
+              {approachItems.map((step, i) => (
                 <div key={i} className="rounded-2xl border border-primary-100 bg-white p-5 shadow-sm text-center">
                   <div className="mx-auto mb-3 w-9 h-9 rounded-full bg-primary-950 text-white flex items-center justify-center text-sm font-bold">{i + 1}</div>
                   <p className="text-sm text-primary-800 leading-relaxed">{step}</p>
@@ -167,9 +177,9 @@ export default async function ResidentialPage() {
           {/* Final CTA */}
           <div className="bg-gradient-to-r from-primary-100 to-primary-50 rounded-3xl p-8 md:p-12 text-center">
             <h2 className="font-serif text-2xl md:text-3xl font-bold text-primary-950 mb-3">Ready to Design a Home That Feels Complete?</h2>
-            <p className="text-lg text-primary-700 mb-8 max-w-2xl mx-auto">Ideal for homeowners planning new homes, renovations, or custom furniture upgrades — across apartments, villas, and independent houses.</p>
+            <p className="text-lg text-primary-700 mb-8 max-w-2xl mx-auto">{page?.bestSuitedFor || 'Ideal for homeowners planning new homes, renovations, or custom furniture upgrades — across apartments, villas, and independent houses.'}</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href={waLink('Hi Fab Seating, I would like to start my home project.')} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-950 text-white font-medium rounded-full hover:bg-primary-900 transition-all hover:-translate-y-1 shadow-lg text-sm tracking-wider uppercase">Start Your Home Project</a>
+              <a href={startProject} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-950 text-white font-medium rounded-full hover:bg-primary-900 transition-all hover:-translate-y-1 shadow-lg text-sm tracking-wider uppercase">Start Your Home Project</a>
               <Link href="/contact" className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-primary-950 text-primary-950 font-medium rounded-full hover:bg-primary-950 hover:text-white transition-all text-sm tracking-wider uppercase">Book a Consultation</Link>
             </div>
           </div>

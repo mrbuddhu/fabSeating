@@ -3,7 +3,7 @@ import { PageHero } from '@/components/PageHero'
 import { Section } from '@/components/Section'
 import { CaseStudyCard } from '@/components/CaseStudyCard'
 import { getCaseStudies } from '@/lib/sanity/queries'
-import { generateSEOMetadata } from '@/components/SEOHead'
+import { metadataForPath } from '@/lib/pageMetadata'
 import Link from 'next/link'
 import { AnimatedCard } from '@/components/AnimatedCard'
 
@@ -11,11 +11,9 @@ import { AnimatedCard } from '@/components/AnimatedCard'
 
 export const revalidate = 300
 
-export const metadata: Metadata = generateSEOMetadata({
-  title: 'Case Studies',
-  description: 'In-depth stories behind our most significant projects',
-  path: '/case-studies',
-})
+export async function generateMetadata(): Promise<Metadata> {
+  return metadataForPath('/case-studies', 'Case Studies', 'In-depth stories behind our most significant projects')
+}
 
 interface CaseStudiesPageProps {
   searchParams: { category?: string }

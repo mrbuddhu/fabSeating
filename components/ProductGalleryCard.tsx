@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import type { ProductImage } from '@/lib/sanity/queries'
 import { waLink } from '@/lib/siteContent'
+import { useSiteContact } from '@/components/SiteContactProvider'
 
 function WhatsAppIcon() {
   return (
@@ -15,7 +16,8 @@ function WhatsAppIcon() {
 
 export function ProductGalleryCard({ product, variant = 'card' }: { product: ProductImage; variant?: 'card' | 'photo' }) {
   const [open, setOpen] = useState(false)
-  const enquire = waLink(`Hi Fab Seating, I want to enquire about ${product.title}.`)
+  const contact = useSiteContact()
+  const enquire = waLink(`Hi Fab Seating, I want to enquire about ${product.title}.`, contact.whatsapp)
 
   useEffect(() => {
     if (!open) return

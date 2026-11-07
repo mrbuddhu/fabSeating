@@ -180,10 +180,12 @@ export function buildCategoryLanding(input: {
   doc: CategoryLandingDoc
   products: ProductImage[]
   others: CategoryRef[]
+  whatsapp?: string
+  mapsUrl?: string
 }): CategoryLandingModel {
   const base = input.slug === 'sofas' ? sofaCopy(input.title) : genericCopy(input.title)
   const doc = input.doc
-  const whatsappHref = waLink(`Hi Fab Seating, I want to enquire about ${input.title}.`)
+  const whatsappHref = waLink(`Hi Fab Seating, I want to enquire about ${input.title}.`, input.whatsapp)
   const cover = input.cover ? { src: input.cover, alt: input.title, fit: 'contain' as const } : undefined
   const firstProduct = input.products[0] ? { src: input.products[0].src, alt: input.products[0].title, fit: 'contain' as const } : undefined
   const heroImage = picture(doc?.hero?.image, input.title, cover || firstProduct)
@@ -281,7 +283,7 @@ export function buildCategoryLanding(input: {
       description: text(doc?.showroom?.description, base.showroomDescription),
       address: text(doc?.showroom?.address, 'Fab Seating, Kilpauk, Chennai – 600010'),
       image: picture(doc?.showroom?.image, 'Fab Seating showroom', { src: '/images/experience-showroom.jpg', alt: 'Fab Seating showroom' }),
-      mapsUrl: CONTACT.mapsUrl,
+      mapsUrl: input.mapsUrl || CONTACT.mapsUrl,
       whatsappHref,
     },
     closing: {

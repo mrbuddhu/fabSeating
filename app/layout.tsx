@@ -7,9 +7,11 @@ import { Analytics } from '@/components/Analytics'
 import { StickyBookCTA } from '@/components/StickyBookCTA'
 import { ExperienceStrip } from '@/components/ExperienceStrip'
 import { PWARegister } from '@/components/PWARegister'
-import { getSiteSettings } from '@/lib/sanity/queries'
-import { CONTACT } from '@/lib/siteContent'
+import { getHomePageContent, getSiteSettings } from '@/lib/sanity/queries'
+import { CONTACT, filled } from '@/lib/siteContent'
 import { urlFor } from '@/lib/sanity/client'
+import { generateSEOMetadata } from '@/components/SEOHead'
+import { SiteContactProvider } from '@/components/SiteContactProvider'
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -29,13 +31,18 @@ const montserrat = Montserrat({
   adjustFontFallback: true,
 })
 
-export const metadata: Metadata = {
-  title: {
-    default: 'Fab Seating | Premium Furniture & Furnishings',
-    template: '%s | Fab Seating',
-  },
-  description: 'Fab Seating designs, manufactures, and curates premium furniture and furnishings for homes, offices, and hospitality spaces in Chennai since 2001.',
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://fabseating.com'),
+const defaultTitle = 'Fab Seating | Premium Furniture & Furnishings'
+const defaultDescription = 'Fab Seating designs, manufactures, and curates premium furniture and furnishings for homes, offices, and hospitality spaces in Chennai since 2001.'
+
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings()
+  const title = filled(settings.seoTitle, defaultTitle)
+  const description = filled(settings.seoDescription, defaultDescription)
+  const seo = generateSEOMetadata({ title, description, image: settings.seoImage || undefined, path: '' })
+  return {
+    ...seo,
+    title: { default: title, template: '%s | Fab Seating' },
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://fabseating.com'),
   manifest: '/manifest.json',
   icons: {
     icon: [
@@ -53,28 +60,7 @@ export const metadata: Metadata = {
     statusBarStyle: 'default',
     title: 'Fab Seating',
   },
-  openGraph: {
-    title: 'Fab Seating | Premium Furniture & Furnishings',
-    description: 'Fab Seating designs, manufactures, and curates premium furniture and furnishings for homes, offices, and hospitality spaces in Chennai since 2001.',
-    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://fabseating.com',
-    siteName: 'Fab Seating',
-    images: [
-      {
-        url: '/logo.png',
-        width: 1200,
-        height: 630,
-        alt: 'Fab Seating',
-      },
-    ],
-    locale: 'en_US',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Fab Seating | Premium Furniture & Furnishings',
-    description: 'Fab Seating designs, manufactures, and curates premium furniture and furnishings for homes, offices, and hospitality spaces in Chennai since 2001.',
-    images: ['/logo.png'],
-  },
+  }
 }
 
 export const viewport: Viewport = { width: 'device-width', initialScale: 1, maximumScale: 5, themeColor: '#2a2520' }
@@ -84,9 +70,14 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const settings = await getSiteSettings()
+  const [settings, home] = await Promise.all([getSiteSettings(), getHomePageContent()])
+  const contact = settings.contact || CONTACT
   const logoBuilder = settings?.logo ? urlFor(settings.logo as any) : null
   const logoUrl = logoBuilder ? logoBuilder.width(440).fit('max').url() : null
+  const experienceImage = home?.experience?.image
+  const experienceBuilder = experienceImage ? urlFor(experienceImage) : null
+  const experienceSrc = experienceBuilder ? experienceBuilder.width(1800).height(800).url() : undefined
+  const experienceTitles = (home?.experience?.items || []).map((item: { title?: string }) => item.title || '').filter(Boolean)
 
   return (
     <html lang="en" className={`${playfair.variable} ${montserrat.variable} luxury-scrollbar`}>
@@ -105,26 +96,25 @@ export default async function RootLayout({
               '@context': 'https://schema.org',
               '@type': 'FurnitureStore',
               name: 'Fab Seating',
-              description: 'Premium custom furniture and furnishings for homes, offices and commercial spaces since 2001.',
+              description: filled(settings.seoDescription, defaultDescription),
               url: process.env.NEXT_PUBLIC_SITE_URL || 'https://fabseating.com',
-              telephone: CONTACT.phoneTel,
-              email: CONTACT.email,
+              telephone: contact.phoneTel,
+              email: contact.email,
               image: (process.env.NEXT_PUBLIC_SITE_URL || 'https://fabseating.com') + '/logo.png',
-              address: { '@type': 'PostalAddress', streetAddress: CONTACT.addressLine, addressLocality: 'Chennai', addressRegion: 'Tamil Nadu', addressCountry: 'IN' },
+              address: { '@type': 'PostalAddress', streetAddress: contact.addressLine, addressLocality: 'Chennai', addressRegion: 'Tamil Nadu', addressCountry: 'IN' },
               areaServed: 'India',
               foundingDate: '2001',
-              sameAs: [
-                'https://www.instagram.com/fabseating/',
-                'https://www.youtube.com/@FabSeating',
-              ],
+              sameAs: [contact.instagram, contact.youtube],
             }),
           }}
         />
+        <SiteContactProvider value={contact}>
         <Header logoUrl={logoUrl} />
         <main id="main-content">{children}</main>
-        <ExperienceStrip />
+        <ExperienceStrip imageSrc={experienceSrc} imageAlt={experienceImage?.alt} titles={experienceTitles} />
         <StickyBookCTA />
-        <Footer logoUrl={logoUrl} />
+        <Footer logoUrl={logoUrl} contact={contact} />
+        </SiteContactProvider>
         <Analytics />
       </body>
     </html>

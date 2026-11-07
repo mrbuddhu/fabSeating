@@ -1,5 +1,6 @@
 import { client } from './client'
 import type { Project, CaseStudy, BlogPost, Testimonial, SolutionPage, Catalog } from '@/types'
+import { CONTACT, filled, type SiteContact } from '@/lib/siteContent'
 
 function isSanityConfigured() {
   return !!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
@@ -249,14 +250,43 @@ export async function getTestimonials(): Promise<Testimonial[]> {
 }
 
 
-export async function getSiteSettings() {
-  if (!isSanityConfigured()) {
-    return { announcement: null, logo: null }
+export type PageSeoOverride = { path?: string; title?: string; description?: string; image?: any; noIndex?: boolean }
+
+export type SiteSettings = {
+  announcement: string | null
+  logo: any
+  contact: SiteContact
+  seoTitle: string | null
+  seoDescription: string | null
+  seoImage: any
+  pageSeo: PageSeoOverride[]
+  cataloguesPage: Record<string, string | null | undefined> | null
+  journalPage: { eyebrow?: string; title?: string; description?: string } | null
+}
+
+export async function getSiteSettings(): Promise<SiteSettings> {
+  const empty: SiteSettings = {
+    announcement: null,
+    logo: null,
+    contact: CONTACT,
+    seoTitle: null,
+    seoDescription: null,
+    seoImage: null,
+    pageSeo: [],
+    cataloguesPage: null,
+    journalPage: null,
   }
+  if (!isSanityConfigured()) return empty
   const doc = await client.fetch(
     `*[_type == "siteSettings"][0] {
       announcementText,
-      logo
+      logo,
+      phoneDisplay, phoneTel, whatsapp, email, addressLine, showroom, mapsUrl, reviewsUrl,
+      instagramUrl, youtubeUrl, footerBlurb,
+      seoTitle, seoDescription, seoImage,
+      pageSeo[]{ path, title, description, image, noIndex },
+      cataloguesPage,
+      journalPage
     }`,
     {},
     { next: { tags: ['sanity', 'sanity:siteSettings'] } } as any,
@@ -264,6 +294,26 @@ export async function getSiteSettings() {
   return {
     announcement: doc?.announcementText ?? null,
     logo: doc?.logo ?? null,
+    contact: {
+      phoneDisplay: filled(doc?.phoneDisplay, CONTACT.phoneDisplay),
+      phoneTel: filled(doc?.phoneTel, CONTACT.phoneTel),
+      whatsapp: filled(doc?.whatsapp, CONTACT.whatsapp),
+      email: filled(doc?.email, CONTACT.email),
+      showroom: filled(doc?.showroom, CONTACT.showroom),
+      addressLine: filled(doc?.addressLine, CONTACT.addressLine),
+      mapsUrl: filled(doc?.mapsUrl, CONTACT.mapsUrl),
+      reviewsUrl: filled(doc?.reviewsUrl, CONTACT.reviewsUrl),
+      serviceArea: CONTACT.serviceArea,
+      instagram: filled(doc?.instagramUrl, CONTACT.instagram),
+      youtube: filled(doc?.youtubeUrl, CONTACT.youtube),
+      footerBlurb: filled(doc?.footerBlurb, CONTACT.footerBlurb),
+    },
+    seoTitle: doc?.seoTitle ?? null,
+    seoDescription: doc?.seoDescription ?? null,
+    seoImage: doc?.seoImage ?? null,
+    pageSeo: doc?.pageSeo || [],
+    cataloguesPage: doc?.cataloguesPage ?? null,
+    journalPage: doc?.journalPage ?? null,
   }
 }
 
@@ -283,9 +333,14 @@ export async function getHomePageContent() {
         description,
         link,
         posterImage,
-        videoUrl
+        "videoUrl": coalesce(videoFile.asset->url, videoUrl)
       },
-      processSteps
+      processSteps,
+      googleReviewsUrl,
+      hero, quote, about, legacy, bespoke, showroomCta,
+      experience { image, items[]{ title } },
+      googleReviews { heading, summary, items[]{ text, date } },
+      seo
     }`,
     {},
     { next: { tags: ['sanity', 'sanity:homePage'] } } as any,
@@ -297,10 +352,27 @@ export async function getContactPageContent() {
   if (!isSanityConfigured()) return null
   return client.fetch(
     `*[_type == "contactPage"][0] {
-      stripImages
+      stripImages,
+      title,
+      afterTitle,
+      afterBody,
+      seo
     }`,
     {},
     { next: { tags: ['sanity', 'sanity:contactPage'] } } as any,
+  )
+}
+
+export async function getLegalDocument(slug: 'policies' | 'legals') {
+  if (!isSanityConfigured()) return null
+  return client.fetch(
+    `*[_type == "legalDocument" && slug.current == $slug && !(_id in path("drafts.**"))][0]{
+      title,
+      blocks[]{ kind, text },
+      seo
+    }`,
+    { slug },
+    { next: { tags: ['sanity', 'sanity:legalDocument'] } } as any,
   )
 }
 

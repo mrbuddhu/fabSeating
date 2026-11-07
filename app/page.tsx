@@ -7,18 +7,31 @@ import { ProcessTypewriter } from '@/components/ProcessTypewriter'
 import { TeamSection } from '@/components/TeamSection'
 import { LazyVideo } from '@/components/LazyVideo'
 import { ResponsiveImage } from '@/components/ResponsiveImage'
-import { getHomePageData, getHomePageContent, getTeamMembers } from '@/lib/sanity/queries'
+import { getHomePageData, getHomePageContent, getSiteSettings, getTeamMembers } from '@/lib/sanity/queries'
 import { urlFor } from '@/lib/sanity/client'
 import { PartnersStrip } from '@/components/PartnersStrip'
 import { FurnitureCategories } from '@/components/FurnitureCategories'
 import { IndustriesServed } from '@/components/IndustriesServed'
 import { FaqTeal } from '@/components/FaqTeal'
 import { GoogleReviewsCta } from '@/components/GoogleReviewsCta'
-import { CONTACT, waLink } from '@/lib/siteContent'
+import { filled, waLink } from '@/lib/siteContent'
 import { getSiteSections } from '@/lib/siteSections'
+import { generateSEOMetadata } from '@/components/SEOHead'
+import type { Metadata } from 'next'
 
 // Revalidate so Sanity updates (e.g. founders/team) appear on live site within minutes when webhook runs; fallback if webhook not set
 export const revalidate = 300
+
+export async function generateMetadata(): Promise<Metadata> {
+  const home = await getHomePageContent()
+  if (!home?.seo?.title && !home?.seo?.description && !home?.seo?.image) return {}
+  return generateSEOMetadata({
+    seo: home.seo,
+    title: 'Fab Seating | Premium Furniture & Furnishings',
+    description: 'Fab Seating designs, manufactures, and curates premium furniture and furnishings for homes, offices, and hospitality spaces in Chennai since 2001.',
+    path: '/',
+  })
+}
 
 const defaultReels = [
   { id: 1, videoUrl: '/videos/video1.mp4', thumbnail: 'https://images.unsplash.com/photo-1556911220-bff31c812d0c?auto=format&fit=crop&w=800&q=80' },
@@ -36,26 +49,66 @@ const defaultSolutionsCards = [
 const defaultProcessSteps = ['Consultation', 'Design & Selection', 'Manufacturing & Sourcing', 'Quality Checks', 'Delivery & Installation', 'After Sales Support']
 
 export default async function Home() {
-  const [data, homeContent, teamMembers, sections] = await Promise.all([
+  const [data, homeContent, teamMembers, sections, settings] = await Promise.all([
     getHomePageData(),
     getHomePageContent(),
     getTeamMembers(),
     getSiteSections(),
+    getSiteSettings(),
   ])
 
-  const heroHeadline = 'Premium Furniture & Furnishings\nfor Homes, Offices & Hospitality'
-  const heroSubheadline = 'Since 2001, Fab Seating has been creating complete furniture and furnishing solutions designed for real spaces and long term use.'
-  const primaryCta = 'Contact Us'
-  const trustLine = 'Crafted & curated from our Chennai facility | Serving residential & commercial spaces across South India'
+  const heroHeadline = filled(homeContent?.hero?.headline, 'Premium Furniture & Furnishings\nfor Homes, Offices & Hospitality')
+  const heroSubheadline = filled(homeContent?.hero?.subheadline, 'Since 2001, Fab Seating has been creating complete furniture and furnishing solutions designed for real spaces and long term use.')
+  const primaryCta = filled(homeContent?.hero?.ctaText, 'Contact Us')
+  const trustIndicators = [
+    filled(homeContent?.hero?.trustLine1, 'Crafted & curated from our Chennai facility'),
+    filled(homeContent?.hero?.trustLine2, 'Serving residential & commercial spaces across South India'),
+  ]
+  const badges = [
+    filled(homeContent?.hero?.badge1, 'Premium Quality'),
+    filled(homeContent?.hero?.badge2, '20+ Years Experience'),
+    filled(homeContent?.hero?.badge3, 'Custom Solutions'),
+  ]
+  const quoteText = filled(homeContent?.quote?.text, 'We are the most experienced makers of exceptional upholstered furniture. Using materials of the highest quality, we ensure every handmade piece is comfortable, beautifully finished, and built to last.')
+  const quoteAttribution = filled(homeContent?.quote?.attribution, 'Fab Seating Furniture & Furnishings')
+  const aboutEyebrow = filled(homeContent?.about?.eyebrow, 'Our Story')
+  const aboutTitle = filled(homeContent?.about?.title, 'About Fab Seating')
+  const aboutBody = filled(homeContent?.about?.body, 'Founded in 2001, Fab Seating is a Chennai based furniture and furnishings solutions brand focused on building spaces that last. We bring together furniture, furnishings, planning and execution under one roof.')
+  const instagramUrl = filled(homeContent?.about?.instagramUrl, settings.contact.instagram)
+  const legacyEyebrow = filled(homeContent?.legacy?.eyebrow, 'Our Heritage')
+  const legacyTitle = filled(homeContent?.legacy?.title, 'Our Legacy')
+  const legacyBody = filled(homeContent?.legacy?.body, "Established in 2001, Fab Seating has been at the forefront of furniture manufacturing and furnishings curation. With over two decades of hands-on experience, we've built a reputation for excellence, quality, and customer satisfaction across South India.")
+  const legacyStats = homeContent?.legacy?.stats?.filter((stat: { number?: string; label?: string }) => stat.number && stat.label)?.length
+    ? homeContent.legacy.stats
+    : [
+        { number: '20+', label: 'Years of Experience' },
+        { number: '1000+', label: 'Projects Completed' },
+        { number: '500+', label: 'Happy Clients' },
+      ]
+  const bespokeEyebrow = filled(homeContent?.bespoke?.eyebrow, 'Bespoke Craftsmanship')
+  const bespokeTitle = filled(homeContent?.bespoke?.title, 'Custom & Bespoke Solutions')
+  const bespokeIntro = filled(homeContent?.bespoke?.intro, 'Tailored furniture solutions designed specifically for your space and style.')
+  const bespokeParagraph1 = filled(homeContent?.bespoke?.paragraph1, "At Fab Seating, furniture doesn't start with a template. It starts with your space.")
+  const bespokeParagraph2 = filled(homeContent?.bespoke?.paragraph2, 'Dimensions, comfort, upholstery, wood, finishes — every detail is designed, refined, and crafted specifically for you.')
+  const bespokeCta = filled(homeContent?.bespoke?.ctaLabel, 'Get a Custom Quote')
+  const showroomEyebrow = filled(homeContent?.showroomCta?.eyebrow, 'Come See Us')
+  const showroomTitle = filled(homeContent?.showroomCta?.title, 'Visit Our Showroom')
+  const showroomBody = filled(homeContent?.showroomCta?.body, 'Explore our collections, materials, and customization options in person at our Kilpauk, Chennai showroom — or reach us on WhatsApp to plan your visit.')
+  const showroomDirections = filled(homeContent?.showroomCta?.directionsLabel, 'Get Directions')
+  const showroomContact = filled(homeContent?.showroomCta?.contactLabel, 'Contact Us')
+  const reviewCards = (homeContent?.googleReviews?.items || []).filter((item: { text?: string }) => item.text?.trim())
 
   // About reels: from Sanity or fallback (with poster URL for Sanity images)
-  const aboutReels = (homeContent?.aboutReels || []).map((reel: any, i: number) => {
+  const sanityReels = (homeContent?.aboutReels || []).map((reel: any, i: number) => {
     const videoUrl = reel.videoUrl || ''
     const posterImage = reel.posterImage
     const posterBuilder = posterImage ? urlFor(posterImage) : null
     const posterUrl = posterBuilder ? posterBuilder.width(800).height(1422).url() : ''
     return { id: i + 1, videoUrl, posterUrl, posterImage }
-  })
+  }).filter((reel: { videoUrl: string }) => reel.videoUrl)
+  const aboutReels = sanityReels.length
+    ? sanityReels
+    : defaultReels.map((reel) => ({ id: reel.id, videoUrl: reel.videoUrl, posterUrl: reel.thumbnail }))
 
   // Helper function to get image URL (works with both Sanity images and string URLs)
   function getImageUrl(image: any) {
@@ -119,8 +172,9 @@ export default async function Home() {
         videoUrl={homeContent?.heroVideoUrl}
         heroPoster={homeContent?.heroImage ? urlFor(homeContent.heroImage)?.width(1600).auto('format').url() : undefined}
         headline={heroHeadline}
-        trustIndicators={['Crafted & curated from our Chennai facility', 'Serving residential & commercial spaces across South India']}
-        brands={['Premium Quality', '20+ Years Experience', 'Custom Solutions']}
+        subheadline={heroSubheadline}
+        trustIndicators={trustIndicators}
+        brands={badges}
         data={{
           ctaText: primaryCta,
           ctaLink: '/contact',
@@ -149,12 +203,12 @@ export default async function Home() {
               </svg>
             </div>
             <blockquote className="text-lg md:text-2xl lg:text-3xl font-serif font-light mb-3 italic leading-[1.2] tracking-[-0.02em] text-white/95">
-              We are the most experienced makers of exceptional upholstered furniture. Using materials of the highest quality, we ensure every handmade piece is comfortable, beautifully finished, and built to last.
+              {quoteText}
             </blockquote>
             <div className="flex items-center justify-center gap-2 mt-3">
               <div className="h-px w-16 bg-gradient-to-r from-transparent to-primary-400/40"></div>
               <p className="text-sm md:text-base text-primary-200/90 font-serif font-light tracking-wider uppercase">
-                Fab Seating Furniture & Furnishings
+                {quoteAttribution}
               </p>
               <div className="h-px w-16 bg-gradient-to-l from-transparent to-primary-400/40"></div>
             </div>
@@ -173,14 +227,14 @@ export default async function Home() {
             {/* Section Header */}
             <div className="text-center mb-8">
               <div className="inline-block mb-2">
-                <span className="text-xs font-bold tracking-[0.2em] uppercase text-primary-700">Our Story</span>
+                <span className="text-xs font-bold tracking-[0.2em] uppercase text-primary-700">{aboutEyebrow}</span>
               </div>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold mb-2 text-primary-950 tracking-tight">
-                About Fab Seating
+                {aboutTitle}
               </h2>
               <div className="w-24 h-px bg-gradient-to-r from-transparent via-primary-700 to-transparent mx-auto mb-3"></div>
               <p className="text-base md:text-lg text-gray-800 font-medium max-w-2xl mx-auto leading-relaxed">
-                Founded in 2001, Fab Seating is a Chennai based furniture and furnishings solutions brand focused on building spaces that last. We bring together furniture, furnishings, planning and execution under one roof.
+                {aboutBody}
               </p>
             </div>
             
@@ -200,7 +254,7 @@ export default async function Home() {
             {/* Minimal Instagram link for Fabseating */}
             <div className="w-full mb-12 flex justify-center">
               <a
-                href="https://instagram.com/fabseating"
+                href={instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/80 px-5 py-2 text-xs md:text-sm text-gray-800 shadow-[0_14px_35px_rgba(15,23,42,0.22)] hover:shadow-[0_20px_55px_rgba(15,23,42,0.3)] hover:-translate-y-0.5 hover:border-primary-400/80 hover:bg-primary-50/95 hover:text-primary-900 transition-all duration-300 backdrop-blur-md"
@@ -283,23 +337,19 @@ export default async function Home() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-5xl mx-auto text-center">
             <div className="inline-block mb-2">
-              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-primary-300/60">Our Heritage</span>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-primary-300/60">{legacyEyebrow}</span>
             </div>
             <h2 className="text-xl md:text-2xl lg:text-3xl font-serif font-light mb-3 text-white tracking-tight">
-              Our Legacy
+              {legacyTitle}
             </h2>
             <div className="w-24 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent mx-auto mb-4"></div>
             <p className="text-sm md:text-base leading-relaxed mb-6 text-white/90 font-light max-w-4xl mx-auto">
-              Established in 2001, Fab Seating has been at the forefront of furniture manufacturing and furnishings curation. With over two decades of hands-on experience, we&apos;ve built a reputation for excellence, quality, and customer satisfaction across South India.
+              {legacyBody}
             </p>
             
             {/* Stats Grid */}
             <div className="grid md:grid-cols-3 gap-4 md:gap-6">
-              {[
-                { number: '20+', label: 'Years of Experience' },
-                { number: '1000+', label: 'Projects Completed' },
-                { number: '500+', label: 'Happy Clients' }
-              ].map((stat, index) => (
+              {legacyStats.map((stat: { number: string; label: string }, index: number) => (
                 <AnimatedCard key={index} index={index}>
                   <div className="group">
                   <div className="text-3xl md:text-4xl lg:text-5xl font-serif font-light text-white mb-1 tracking-tight group-hover:scale-110 transition-transform duration-500">
@@ -331,14 +381,14 @@ export default async function Home() {
           {/* Section Header */}
           <div className="text-center mb-12">
             <div className="inline-block mb-2">
-              <span className="text-xs font-bold tracking-[0.2em] uppercase text-primary-700">Bespoke Craftsmanship</span>
+              <span className="text-xs font-bold tracking-[0.2em] uppercase text-primary-700">{bespokeEyebrow}</span>
             </div>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold mb-2 text-primary-950 tracking-tight">
-              Custom & Bespoke Solutions
+              {bespokeTitle}
             </h2>
             <div className="w-24 h-px bg-gradient-to-r from-transparent via-primary-700 to-transparent mx-auto mb-3"></div>
             <p className="text-lg md:text-xl text-gray-800 font-medium max-w-3xl mx-auto leading-relaxed">
-              Tailored furniture solutions designed specifically for your space and style.
+              {bespokeIntro}
             </p>
           </div>
           
@@ -347,12 +397,12 @@ export default async function Home() {
             <div className="text-center max-w-5xl mx-auto space-y-6">
               <AnimatedSection delay={0.1} once={false}>
                 <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
-                  At Fab Seating, furniture doesn&apos;t start with a template. It starts with your space.
+                  {bespokeParagraph1}
                 </p>
               </AnimatedSection>
               <AnimatedSection delay={0.2} once={false}>
                 <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
-                  Dimensions, comfort, upholstery, wood, finishes — every detail is designed, refined, and crafted specifically for you.
+                  {bespokeParagraph2}
                 </p>
               </AnimatedSection>
             </div>
@@ -361,12 +411,12 @@ export default async function Home() {
           {/* CTA Button */}
           <div className="text-center">
             <a 
-              href={waLink('Hi Fab Seating, I would like a custom quote for a bespoke piece.')}
+              href={waLink('Hi Fab Seating, I would like a custom quote for a bespoke piece.', settings.contact.whatsapp)}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-8 py-4 bg-primary-950 text-white font-medium rounded-full hover:bg-primary-900 transition-all duration-300 hover:gap-5 shadow-lg hover:-translate-y-1 hover:shadow-2xl group"
             >
-              <span className="text-sm tracking-wider uppercase">Get a Custom Quote</span>
+              <span className="text-sm tracking-wider uppercase">{bespokeCta}</span>
               <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
@@ -394,7 +444,12 @@ export default async function Home() {
       ) : null}
 
       {/* Google Reviews */}
-      <GoogleReviewsCta />
+      <GoogleReviewsCta
+        reviews={reviewCards.length ? reviewCards : undefined}
+        heading={filled(homeContent?.googleReviews?.heading, 'Google reviews')}
+        summary={filled(homeContent?.googleReviews?.summary, '4.8 from Google · five recent reviews')}
+        reviewsUrl={filled(homeContent?.googleReviewsUrl, settings.contact.reviewsUrl)}
+      />
 
       {/* FAQ Section */}
       <FaqTeal faqs={sections.faqs} />
@@ -408,30 +463,30 @@ export default async function Home() {
         <div className="container mx-auto px-4 text-center relative z-10">
           <div className="max-w-4xl mx-auto">
             <div className="inline-block mb-2">
-              <span className="text-xs font-bold tracking-[0.2em] uppercase text-primary-600">Come See Us</span>
+              <span className="text-xs font-bold tracking-[0.2em] uppercase text-primary-600">{showroomEyebrow}</span>
             </div>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold mb-3 text-primary-950 tracking-tight">
-              Visit Our Showroom
+              {showroomTitle}
             </h2>
             <div className="w-24 h-px bg-gradient-to-r from-transparent via-primary-300 to-transparent mx-auto mb-4"></div>
             <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto text-gray-600 font-medium leading-relaxed">
-              Explore our collections, materials, and customization options in person at our Kilpauk, Chennai showroom &mdash; or reach us on WhatsApp to plan your visit.
+              {showroomBody}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
               <a
-                href={CONTACT.mapsUrl}
+                href={settings.contact.mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-8 py-4 bg-primary-950 text-white font-medium rounded-full hover:bg-primary-900 transition-all duration-300 hover:gap-3 shadow-xl hover:-translate-y-1 hover:shadow-2xl group text-base"
               >
-                <span className="tracking-wider uppercase text-sm">Get Directions</span>
+                <span className="tracking-wider uppercase text-sm">{showroomDirections}</span>
                 <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
               </a>
               <a
                 href="/contact"
                 className="inline-flex items-center gap-2 px-8 py-4 border border-primary-300 text-primary-900 font-medium rounded-full hover:bg-primary-50 transition-all duration-300 text-base"
               >
-                <span className="tracking-wider uppercase text-sm">Contact Us</span>
+                <span className="tracking-wider uppercase text-sm">{showroomContact}</span>
               </a>
             </div>
           </div>

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { waLink } from '@/lib/siteContent'
+import { useSiteContact } from '@/components/SiteContactProvider'
 
 export type GalleryPhoto = {
   id: string
@@ -21,10 +22,12 @@ function WhatsAppIcon() {
 
 export function GalleryGrid({ photos }: { photos: GalleryPhoto[] }) {
   const [open, setOpen] = useState<GalleryPhoto | null>(null)
+  const contact = useSiteContact()
   const enquire = waLink(
     open
       ? `Hi Fab Seating, I want to enquire about ${open.alt}.`
       : 'Hi Fab Seating, I want to enquire about a piece from your gallery.',
+    contact.whatsapp,
   )
 
   return (

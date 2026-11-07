@@ -24,19 +24,19 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  const staticPost = getStaticBlogPostBySlug(slug)
-  if (staticPost)
-    return generateSEOMetadata({
-      title: staticPost.title,
-      description: staticPost.description,
-      path: `/blog/${staticPost.slug}`,
-    })
   const sanityPost = await getSanityBlogPostBySlug(slug)
   if (sanityPost)
     return generateSEOMetadata({
       title: sanityPost.seo?.title ?? sanityPost.title,
       description: sanityPost.seo?.description ?? sanityPost.excerpt ?? undefined,
       path: `/blog/${sanityPost.slug.current}`,
+    })
+  const staticPost = getStaticBlogPostBySlug(slug)
+  if (staticPost)
+    return generateSEOMetadata({
+      title: staticPost.title,
+      description: staticPost.description,
+      path: `/blog/${staticPost.slug}`,
     })
   return {}
 }
@@ -47,12 +47,10 @@ export default async function BlogPostPage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const staticPost = getStaticBlogPostBySlug(slug)
-  if (staticPost) return <BlogPostRenderer slug={slug} />
-
   const sanityPost = await getSanityBlogPostBySlug(slug)
   if (sanityPost) return <SanityBlogPostView post={sanityPost} />
-
+  const staticPost = getStaticBlogPostBySlug(slug)
+  if (staticPost) return <BlogPostRenderer slug={slug} />
   notFound()
 }
 

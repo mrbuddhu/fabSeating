@@ -49,26 +49,28 @@ const items = [
   },
 ]
 
-export function ExperienceStrip() {
+export function ExperienceStrip({ imageSrc = '/images/experience-showroom.jpg', imageAlt = 'Fab Seating showroom with a beige sectional and round wood coffee table', titles }: { imageSrc?: string; imageAlt?: string; titles?: string[] }) {
   const pathname = usePathname()
   if (pathname.startsWith('/admin') || pathname.startsWith('/studio')) return null
+  const labels = (titles || []).map((title) => title.trim()).filter(Boolean)
+  const shown = (labels.length ? labels : items.map((item) => item.title)).slice(0, 4)
 
   return (
     <section className="mx-4 mb-2 overflow-hidden rounded-3xl bg-[#f6f1e8] shadow-[0_12px_40px_rgba(26,44,45,0.08)] md:mx-6 lg:mx-8">
       <div className="relative h-36 w-full sm:h-44 md:h-52">
         <Image
-          src="/images/experience-showroom.jpg"
-          alt="Fab Seating showroom with a beige sectional and round wood coffee table"
+          src={imageSrc}
+          alt={imageAlt}
           fill
           sizes="100vw"
           className="object-cover object-center"
         />
       </div>
       <ul className="grid grid-cols-2 gap-4 px-4 py-5 text-[#1a2c2d] md:grid-cols-4 md:gap-6 md:px-8 md:py-6">
-        {items.map((item) => (
-          <li key={item.title} className="flex items-center gap-3">
-            <span className="shrink-0 text-[#1a2c2d]">{item.icon}</span>
-            <span className="font-serif text-sm font-semibold leading-snug md:text-base">{item.title}</span>
+        {shown.map((title, index) => (
+          <li key={title} className="flex items-center gap-3">
+            <span className="shrink-0 text-[#1a2c2d]">{items[index]?.icon || items[0].icon}</span>
+            <span className="font-serif text-sm font-semibold leading-snug md:text-base">{title}</span>
           </li>
         ))}
       </ul>

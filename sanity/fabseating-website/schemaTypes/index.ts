@@ -12,6 +12,7 @@ import product from '../../schemas/product'
 import productCategory from '../../schemas/productCategory'
 import categoryLanding from '../../schemas/categoryLanding'
 import author from '../../schemas/author'
+import legalDocument from '../../schemas/legalDocument'
 
 export const schemaTypes = [
   articleMedia,
@@ -28,4 +29,5 @@ export const schemaTypes = [
   productCategory,
   categoryLanding,
   author,
+  legalDocument,
 ]

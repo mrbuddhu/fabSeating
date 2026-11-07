@@ -1,10 +1,14 @@
-import { waLink, CONTACT } from '@/lib/siteContent'
+'use client'
+
+import { waLink } from '@/lib/siteContent'
+import { useSiteContact } from '@/components/SiteContactProvider'
 
 export function StickyBookCTA() {
+  const contact = useSiteContact()
   return (
     <div className="fixed bottom-3 right-3 sm:bottom-4 sm:right-4 md:bottom-6 md:right-6 z-40 flex flex-col items-end gap-2 sm:gap-3">
       <a
-        href={waLink('Hi Fab Seating, I’d like to book a design visit.')}
+        href={waLink('Hi Fab Seating, I’d like to book a design visit.', contact.whatsapp)}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="WhatsApp Chat"
@@ -19,7 +23,7 @@ export function StickyBookCTA() {
       </a>
 
       <a
-        href={`tel:${CONTACT.phoneTel}`}
+        href={`tel:${contact.phoneTel}`}
         aria-label="Call Fab Seating"
         className="group inline-flex h-12 w-12 items-center justify-center rounded-full sm:h-auto sm:w-auto sm:gap-2 bg-gradient-to-br from-white/20 via-white/10 to-white/5 sm:px-4 sm:py-2.5 text-xs sm:text-sm font-semibold text-primary-50 shadow-[0_18px_45px_rgba(0,0,0,0.3)] border border-white/30 backdrop-blur-xl transition transform hover:-translate-y-1 hover:shadow-[0_26px_70px_rgba(0,0,0,0.35)]"
       >

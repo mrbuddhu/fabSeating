@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { generateSEOMetadata } from '@/components/SEOHead'
 import { BLOG_POSTS } from '@/lib/blog/posts'
-import { getBlogPosts } from '@/lib/sanity/queries'
+import { getBlogPosts, getSiteSettings } from '@/lib/sanity/queries'
+import { filled } from '@/lib/siteContent'
+import { metadataForPath } from '@/lib/pageMetadata'
 
 type BlogCard = {
   slug: string
@@ -34,21 +35,24 @@ async function toBlogCards(): Promise<BlogCard[]> {
         ? new Date(p.publishedAt).toLocaleDateString('en-IN', { month: 'short', year: 'numeric' })
         : '',
     }))
-    return [...staticCards, ...sanityCards]
+    const sanitySlugs = new Set(sanityCards.map((card) => card.slug))
+    return [...sanityCards, ...staticCards.filter((card) => !sanitySlugs.has(card.slug))]
   } catch {
     return staticCards
   }
 }
 
-export const metadata: Metadata = generateSEOMetadata({
-  title: 'Journal & Guides',
-  description:
+export async function generateMetadata(): Promise<Metadata> {
+  return metadataForPath(
+    '/blog',
+    'Journal & Guides',
     'Long-form guides, buying advice, and project thinking from the Fab Seating team — for homes, offices, and hospitality spaces across South India.',
-  path: '/blog',
-})
+  )
+}
 
 export default async function BlogIndexPage() {
-  const blogs = await toBlogCards()
+  const [blogs, settings] = await Promise.all([toBlogCards(), getSiteSettings()])
+  const journal = settings.journalPage || {}
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-white via-primary-50/40 to-white">
@@ -57,14 +61,13 @@ export default async function BlogIndexPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-10 relative z-10">
           <header className="max-w-3xl mx-auto text-center mb-5 md:mb-6">
             <p className="text-xs font-semibold tracking-[0.24em] uppercase text-primary-500 mb-3">
-              Fab Seating · Journal
+              {filled(journal.eyebrow, 'Fab Seating · Journal')}
             </p>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold tracking-tight text-primary-950">
-              Articles, Guides &amp; Long-Form Thinking
+              {filled(journal.title, 'Articles, Guides & Long-Form Thinking')}
             </h1>
             <p className="mt-4 text-sm md:text-base text-slate-700 font-medium max-w-2xl mx-auto">
-              Deep-dive guides on furniture, interiors, and project execution — written from two decades of work across
-              residential, office, and hospitality spaces in Chennai and South India.
+              {filled(journal.description, 'Deep-dive guides on furniture, interiors, and project execution — written from two decades of work across residential, office, and hospitality spaces in Chennai and South India.')}
             </p>
           </header>
 

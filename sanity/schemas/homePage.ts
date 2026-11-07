@@ -52,7 +52,8 @@ export default {
             { name: 'description', title: 'Description', type: 'text' },
             { name: 'link', title: 'Link', type: 'string', description: 'e.g. /solutions/residential' },
             { name: 'posterImage', title: 'Poster / thumbnail image', type: 'image', options: { hotspot: true } },
-            { name: 'videoUrl', title: 'Video URL (optional)', type: 'url' },
+            { name: 'videoFile', title: 'Video upload', type: 'file', options: { accept: 'video/*' } },
+            { name: 'videoUrl', title: 'Video URL (optional)', type: 'url', description: 'Used when no video file is uploaded.' },
           ],
           preview: {
             select: { title: 'title' },
@@ -140,6 +141,138 @@ export default {
       title: 'Google reviews link',
       type: 'url',
       description: 'Your Google Business Profile reviews link, used by the "Loved on Google" section.',
+    },
+    {
+      name: 'hero',
+      title: 'Hero text',
+      type: 'object',
+      fields: [
+        { name: 'headline', title: 'Headline', type: 'text', rows: 2 },
+        { name: 'subheadline', title: 'Subheadline', type: 'text', rows: 3 },
+        { name: 'ctaText', title: 'Button label', type: 'string' },
+        { name: 'trustLine1', title: 'Trust line 1', type: 'string' },
+        { name: 'trustLine2', title: 'Trust line 2', type: 'string' },
+        { name: 'badge1', title: 'Badge 1', type: 'string' },
+        { name: 'badge2', title: 'Badge 2', type: 'string' },
+        { name: 'badge3', title: 'Badge 3', type: 'string' },
+      ],
+    },
+    {
+      name: 'quote',
+      title: 'Quote band',
+      type: 'object',
+      fields: [
+        { name: 'text', title: 'Quote', type: 'text', rows: 4 },
+        { name: 'attribution', title: 'Attribution', type: 'string' },
+      ],
+    },
+    {
+      name: 'about',
+      title: 'About section',
+      type: 'object',
+      fields: [
+        { name: 'eyebrow', title: 'Eyebrow', type: 'string' },
+        { name: 'title', title: 'Heading', type: 'string' },
+        { name: 'body', title: 'Text', type: 'text', rows: 4 },
+        { name: 'instagramUrl', title: 'Instagram link', type: 'url' },
+      ],
+    },
+    {
+      name: 'legacy',
+      title: 'Legacy section',
+      type: 'object',
+      fields: [
+        { name: 'eyebrow', title: 'Eyebrow', type: 'string' },
+        { name: 'title', title: 'Heading', type: 'string' },
+        { name: 'body', title: 'Text', type: 'text', rows: 4 },
+        {
+          name: 'stats',
+          title: 'Stats',
+          type: 'array',
+          of: [{
+            type: 'object',
+            fields: [
+              { name: 'number', title: 'Number', type: 'string' },
+              { name: 'label', title: 'Label', type: 'string' },
+            ],
+            preview: { select: { title: 'number', subtitle: 'label' } },
+          }],
+        },
+      ],
+    },
+    {
+      name: 'bespoke',
+      title: 'Custom solutions section',
+      type: 'object',
+      fields: [
+        { name: 'eyebrow', title: 'Eyebrow', type: 'string' },
+        { name: 'title', title: 'Heading', type: 'string' },
+        { name: 'intro', title: 'Intro', type: 'text', rows: 2 },
+        { name: 'paragraph1', title: 'Paragraph 1', type: 'text', rows: 3 },
+        { name: 'paragraph2', title: 'Paragraph 2', type: 'text', rows: 3 },
+        { name: 'ctaLabel', title: 'Button label', type: 'string' },
+      ],
+    },
+    {
+      name: 'showroomCta',
+      title: 'Showroom closing section',
+      type: 'object',
+      fields: [
+        { name: 'eyebrow', title: 'Eyebrow', type: 'string' },
+        { name: 'title', title: 'Heading', type: 'string' },
+        { name: 'body', title: 'Text', type: 'text', rows: 3 },
+        { name: 'directionsLabel', title: 'Directions button', type: 'string' },
+        { name: 'contactLabel', title: 'Contact button', type: 'string' },
+      ],
+    },
+    {
+      name: 'experience',
+      title: 'Experience strip',
+      description: 'The photo and four labels shown above the footer on every page.',
+      type: 'object',
+      fields: [
+        { name: 'image', title: 'Photo', type: 'image', options: { hotspot: true }, fields: [{ name: 'alt', title: 'Alt text', type: 'string' }] },
+        {
+          name: 'items',
+          title: 'Labels',
+          type: 'array',
+          of: [{ type: 'object', fields: [{ name: 'title', title: 'Label', type: 'string' }], preview: { select: { title: 'title' } } }],
+          validation: (Rule: any) => Rule.max(4),
+        },
+      ],
+    },
+    {
+      name: 'googleReviews',
+      title: 'Google review cards',
+      type: 'object',
+      fields: [
+        { name: 'heading', title: 'Heading', type: 'string' },
+        { name: 'summary', title: 'Summary line', type: 'string' },
+        {
+          name: 'items',
+          title: 'Reviews',
+          type: 'array',
+          of: [{
+            type: 'object',
+            fields: [
+              { name: 'text', title: 'Review', type: 'text', rows: 4 },
+              { name: 'date', title: 'Date', type: 'string' },
+            ],
+            preview: { select: { title: 'date', subtitle: 'text' } },
+          }],
+        },
+      ],
+    },
+    {
+      name: 'seo',
+      title: 'Homepage SEO',
+      type: 'object',
+      fields: [
+        { name: 'title', title: 'SEO title', type: 'string' },
+        { name: 'description', title: 'SEO description', type: 'text', rows: 3 },
+        { name: 'image', title: 'Share image', type: 'image', options: { hotspot: true } },
+        { name: 'noIndex', title: 'Hide from search engines', type: 'boolean', initialValue: false },
+      ],
     },
   ],
   preview: {

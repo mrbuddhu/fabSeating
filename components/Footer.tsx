@@ -1,28 +1,27 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Container } from './Container'
-import { CONTACT } from '@/lib/siteContent'
+import type { SiteContact } from '@/lib/siteContent'
 
-const footerLinks = {
-  company: [
-    { href: '/blog', label: 'Blog' },
-    { href: '/legals', label: 'Legals' },
-    { href: '/policies', label: 'Policies' },
-  ],
-  products: [
-    { href: '/catalogues', label: 'Catalogues' },
-    { href: '/#solutions', label: 'Explore' },
-    { href: '/projects', label: 'Gallery' },
-  ],
-  support: [
-    { href: '/contact', label: 'Contact' },
-    { href: `mailto:${CONTACT.email}`, label: CONTACT.email },
-    { href: `tel:${CONTACT.phoneTel}`, label: CONTACT.phoneDisplay },
-    { href: CONTACT.mapsUrl, label: 'Find us on Google' },
-  ],
-}
-
-export function Footer({ logoUrl }: { logoUrl?: string | null }) {
+export function Footer({ logoUrl, contact }: { logoUrl?: string | null; contact: SiteContact }) {
+  const footerLinks = {
+    company: [
+      { href: '/blog', label: 'Blog' },
+      { href: '/legals', label: 'Legals' },
+      { href: '/policies', label: 'Policies' },
+    ],
+    products: [
+      { href: '/catalogues', label: 'Catalogues' },
+      { href: '/#solutions', label: 'Explore' },
+      { href: '/projects', label: 'Gallery' },
+    ],
+    support: [
+      { href: '/contact', label: 'Contact' },
+      { href: `mailto:${contact.email}`, label: contact.email },
+      { href: `tel:${contact.phoneTel}`, label: contact.phoneDisplay },
+      { href: contact.mapsUrl, label: 'Find us on Google' },
+    ],
+  }
   const currentYear = new Date().getFullYear()
 
   return (
@@ -34,11 +33,11 @@ export function Footer({ logoUrl }: { logoUrl?: string | null }) {
               <Image src={logoUrl || '/logo.png'} alt="Fab Seating logo" width={440} height={128} className="h-28 w-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)]" />
             </div>
             <p className="text-primary-200 text-base leading-relaxed mb-4">
-              Premium furniture & furnishings crafted with excellence. Based in Kilpauk, Chennai &mdash; delivering Pan India.
+              {contact.footerBlurb}
             </p>
             <div className="flex items-center gap-4">
               <a
-                href="https://www.instagram.com/fabseating/?hl=en"
+                href={contact.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary-900/60 text-primary-50 shadow-[0_10px_25px_rgba(15,23,42,0.6)] hover:shadow-[0_16px_40px_rgba(15,23,42,0.75)] hover:-translate-y-0.5 hover:bg-primary-50 hover:text-primary-900 transition-all duration-300 backdrop-blur-sm"
@@ -59,7 +58,7 @@ export function Footer({ logoUrl }: { logoUrl?: string | null }) {
                 </svg>
               </a>
               <a
-                href="https://www.youtube.com/@FabSeating"
+                href={contact.youtube}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary-900/60 text-primary-50 shadow-[0_10px_25px_rgba(15,23,42,0.6)] hover:shadow-[0_16px_40px_rgba(15,23,42,0.75)] hover:-translate-y-0.5 hover:bg-primary-50 hover:text-primary-900 transition-all duration-300 backdrop-blur-sm"

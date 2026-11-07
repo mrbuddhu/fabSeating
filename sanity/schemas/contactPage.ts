@@ -15,7 +15,21 @@ export default {
         },
       ],
       validation: (Rule: any) => Rule.max(3),
-      description: 'Three images shown in the strip below the contact title: e.g. carpentry, upholstery, finishing.',
+      description: 'Kept for later use. The contact page currently shows the text below this field.',
+    },
+    { name: 'title', title: 'Page heading', type: 'string' },
+    { name: 'afterTitle', title: 'Section heading', type: 'string' },
+    { name: 'afterBody', title: 'Section text', type: 'text', rows: 4 },
+    {
+      name: 'seo',
+      title: 'SEO',
+      type: 'object',
+      fields: [
+        { name: 'title', title: 'SEO title', type: 'string' },
+        { name: 'description', title: 'SEO description', type: 'text', rows: 3 },
+        { name: 'image', title: 'Share image', type: 'image', options: { hotspot: true } },
+        { name: 'noIndex', title: 'Hide from search engines', type: 'boolean', initialValue: false },
+      ],
     },
   ],
   preview: {

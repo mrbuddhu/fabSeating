@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { PageHero } from '@/components/PageHero'
 import { Section } from '@/components/Section'
 import { getProjects, getMainGalleryImages } from '@/lib/sanity/queries'
-import { generateSEOMetadata } from '@/components/SEOHead'
+import { metadataForPath } from '@/lib/pageMetadata'
 import { AnimatedCard } from '@/components/AnimatedCard'
 import { ResponsiveImage } from '@/components/ResponsiveImage'
 import { GalleryGrid } from '@/components/GalleryGrid'
@@ -11,11 +11,9 @@ import { urlFor } from '@/lib/sanity/client'
 
 export const revalidate = 300
 
-export const metadata: Metadata = generateSEOMetadata({
-  title: 'Gallery',
-  description: 'A visual gallery of Fab Seating furniture, furnishings and completed projects.',
-  path: '/projects',
-})
+export async function generateMetadata(): Promise<Metadata> {
+  return metadataForPath('/projects', 'Gallery', 'A visual gallery of Fab Seating furniture, furnishings and completed projects.')
+}
 
 export default async function GalleryPage() {
   const [projects, images] = await Promise.all([getProjects(), getMainGalleryImages()])
