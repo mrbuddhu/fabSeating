@@ -1,67 +1,63 @@
 import { notFound } from 'next/navigation'
-import { ProductGalleryCard } from '@/components/ProductGalleryCard'
-import Link from 'next/link'
 import { Metadata } from 'next'
-import { PageHero } from '@/components/PageHero'
-import { Section } from '@/components/Section'
 import { getSiteSections } from '@/lib/siteSections'
 import { generateSEOMetadata } from '@/components/SEOHead'
-import { getProductImagesByCategory } from '@/lib/sanity/queries'
-
-
-export async function generateStaticParams() {
-  const { categories } = await getSiteSections()
-  const slugs = new Set(categories.map((c) => c.slug))
-  return Array.from(slugs, (slug) => ({ slug }))
-}
-
-async function findCategory(slug: string) {
-  const { categories } = await getSiteSections()
-  return categories.find((c) => c.slug === slug)
-}
-
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const cat = await findCategory(params.slug)
-  if (!cat) return {}
-  return generateSEOMetadata({
-    title: `${cat.title} in Chennai`,
-    description: cat.blurb,
-    path: `/category/${cat.slug}`,
-  })
-}
+import { getCategoryLanding, getProductImagesByCategory } from '@/lib/sanity/queries'
+import { buildCategoryLanding } from '@/lib/categoryLandingContent'
+import { CategoryLandingView } from '@/components/CategoryLandingView'
 
 export const revalidate = 300
 
+export async function generateStaticParams() {
+  const { categories } = await getSiteSections()
+  return categories.map((category) => ({ slug: category.slug }))
+}
+
+async function loadCategory(slug: string) {
+  const { categories } = await getSiteSections()
+  const category = categories.find((item) => item.slug === slug)
+  if (!category) return null
+  const [doc, products] = await Promise.all([
+    getCategoryLanding(category.slug),
+    getProductImagesByCategory(category.productCategorySlugs),
+  ])
+  return buildCategoryLanding({
+    slug: category.slug,
+    title: category.title,
+    blurb: category.blurb,
+    cover: category.cover,
+    doc,
+    products,
+    others: categories
+      .filter((item) => item.slug !== category.slug)
+      .map((item) => ({ slug: item.slug, title: item.title, cover: item.cover })),
+  })
+}
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const { categories } = await getSiteSections()
+  const category = categories.find((item) => item.slug === params.slug)
+  if (!category) return {}
+  const doc = await getCategoryLanding(category.slug)
+  const model = buildCategoryLanding({
+    slug: category.slug,
+    title: category.title,
+    blurb: category.blurb,
+    cover: category.cover,
+    doc,
+    products: [],
+    others: [],
+  })
+  return generateSEOMetadata({
+    seo: model.seo,
+    title: model.seoTitle,
+    description: model.seoDescription,
+    path: `/category/${category.slug}`,
+  })
+}
+
 export default async function CategoryPage({ params }: { params: { slug: string } }) {
-  const cat = await findCategory(params.slug)
-  if (!cat) notFound()
-
-  const images = await getProductImagesByCategory(cat.productCategorySlugs)
-
-  return (
-    <>
-      <PageHero title={cat.title} subtitle={cat.blurb} />
-      <Section className="pt-3 md:pt-4">
-        <div className="max-w-6xl mx-auto">
-          {images.length > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-              {images.map((img) => (
-                <ProductGalleryCard key={img.src} product={img} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-16 rounded-3xl border border-primary-100 bg-primary-50/40">
-              <h3 className="font-serif text-2xl font-semibold text-primary-950 mb-3">Collection coming soon</h3>
-              <p className="text-gray-600 max-w-xl mx-auto mb-6">We craft {cat.title.toLowerCase()} fully custom to your space. Message us on WhatsApp with your requirements for designs and a personalized quote.</p>
-            </div>
-          )}
-
-          <div className="mt-12 flex flex-col items-center gap-3 text-center">
-            <Link href="/catalogues" className="text-sm font-semibold text-primary-800 hover:text-primary-950 underline underline-offset-4">Browse catalogues</Link>
-            <Link href="/#solutions" className="text-sm text-primary-700 hover:text-primary-900 underline underline-offset-4">&larr; Back to all categories</Link>
-          </div>
-        </div>
-      </Section>
-    </>
-  )
+  const model = await loadCategory(params.slug)
+  if (!model) notFound()
+  return <CategoryLandingView model={model} />
 }

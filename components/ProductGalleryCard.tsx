@@ -13,7 +13,7 @@ function WhatsAppIcon() {
   )
 }
 
-export function ProductGalleryCard({ product }: { product: ProductImage }) {
+export function ProductGalleryCard({ product, variant = 'card' }: { product: ProductImage; variant?: 'card' | 'photo' }) {
   const [open, setOpen] = useState(false)
   const enquire = waLink(`Hi Fab Seating, I want to enquire about ${product.title}.`)
 
@@ -43,9 +43,11 @@ export function ProductGalleryCard({ product }: { product: ProductImage }) {
             setOpen(true)
           }
         }}
-        className="group w-full cursor-pointer overflow-hidden rounded-2xl bg-white text-left shadow-sm ring-1 ring-primary-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(26,44,45,0.14)] hover:ring-primary-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-700"
+        className={variant === 'photo'
+          ? 'group w-full cursor-pointer overflow-hidden rounded-2xl bg-[#f3efe8] text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1c3f38]'
+          : 'group w-full cursor-pointer overflow-hidden rounded-2xl bg-white text-left shadow-sm ring-1 ring-primary-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(26,44,45,0.14)] hover:ring-primary-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-700'}
       >
-          <div className="relative aspect-square bg-[#f7f5f0]">
+          <div className={variant === 'photo' ? 'relative aspect-[16/10] bg-[#f3efe8]' : 'relative aspect-square bg-[#f7f5f0]'}>
             <Image
               src={product.src}
               alt={product.title}
@@ -54,10 +56,10 @@ export function ProductGalleryCard({ product }: { product: ProductImage }) {
               className="object-contain p-3 transition-transform duration-700 motion-safe:group-hover:scale-105"
             />
           </div>
-          <div className="p-3 md:p-4">
+          <div className={variant === 'photo' ? 'px-1 py-3 text-center' : 'p-3 md:p-4'}>
             <h2 className="font-serif text-base font-semibold leading-snug text-primary-950 md:text-lg">{product.title}</h2>
             {product.description ? (
-              <p className="mt-1 line-clamp-2 text-sm leading-relaxed text-gray-600">{product.description}</p>
+              <p className="mt-1 line-clamp-3 text-sm leading-relaxed text-gray-600">{product.description}</p>
             ) : null}
           </div>
       </article>
@@ -101,7 +103,7 @@ export function ProductGalleryCard({ product }: { product: ProductImage }) {
                 {product.title}
               </h2>
               {product.description ? (
-                <p className="mt-3 text-base leading-relaxed text-gray-700">{product.description}</p>
+                <p className="mt-3 whitespace-pre-line text-sm leading-relaxed text-gray-700 md:text-base">{product.description}</p>
               ) : null}
             </div>
           </div>

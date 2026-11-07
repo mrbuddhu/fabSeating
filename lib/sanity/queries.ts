@@ -413,6 +413,87 @@ export async function getProductImagesByCategory(categorySlugs: string[]): Promi
   }
 }
 
+const landingImage = `{
+  alt,
+  asset,
+  "url": asset->url
+}`
+
+export type CategoryLandingDoc = {
+  hero?: {
+    eyebrow?: string
+    title?: string
+    description?: string
+    exploreLabel?: string
+    whatsappLabel?: string
+    image?: { url?: string; alt?: string; asset?: { _ref: string; _type: 'reference' } }
+  }
+  collection?: {
+    eyebrow?: string
+    title?: string
+    description?: string
+    moreLabel?: string
+    items?: { image?: { url?: string; alt?: string } }[]
+  }
+  lifestyle?: { title?: string; points?: { title?: string }[] }
+  guide?: {
+    eyebrow?: string
+    title?: string
+    description?: string
+    image?: { url?: string; alt?: string }
+    tips?: { title?: string; body?: string }[]
+  }
+  spaces?: {
+    eyebrow?: string
+    title?: string
+    description?: string
+    items?: { title?: string; image?: { url?: string; alt?: string } }[]
+  }
+  related?: {
+    eyebrow?: string
+    title?: string
+    description?: string
+    items?: { title?: string; href?: string; image?: { url?: string; alt?: string } }[]
+  }
+  faq?: { title?: string; intro?: string; items?: { question?: string; answer?: string }[] }
+  showroom?: {
+    eyebrow?: string
+    title?: string
+    description?: string
+    address?: string
+    image?: { url?: string; alt?: string }
+  }
+  closing?: { title?: string; description?: string; whatsappLabel?: string; exploreLabel?: string }
+  seo?: { title?: string; description?: string; noIndex?: boolean; image?: import('@/types').SanityImage }
+} | null
+
+export async function getCategoryLanding(slug: string): Promise<CategoryLandingDoc> {
+  if (!isSanityConfigured()) return null
+  try {
+    return await client.fetch(
+      `*[_type == "categoryLanding" && slug.current == $slug && !(_id in path("drafts.**"))][0]{
+        hero{ eyebrow, title, description, exploreLabel, whatsappLabel, image${landingImage} },
+        collection{
+          eyebrow, title, description, moreLabel,
+          items[]{ image${landingImage} }
+        },
+        lifestyle{ title, points[]{ title } },
+        guide{ eyebrow, title, description, image${landingImage}, tips[]{ title, body } },
+        spaces{ eyebrow, title, description, items[]{ title, image${landingImage} } },
+        related{ eyebrow, title, description, items[]{ title, href, image${landingImage} } },
+        faq{ title, intro, items[]{ question, answer } },
+        showroom{ eyebrow, title, description, address, image${landingImage} },
+        closing{ title, description, whatsappLabel, exploreLabel },
+        seo{ title, description, noIndex, image }
+      }`,
+      { slug },
+      { next: { revalidate: 300, tags: ['sanity', 'sanity:categoryLanding'] } } as any,
+    )
+  } catch {
+    return null
+  }
+}
+
 /** Only published CMS images appear on the main Gallery page. An empty list stays empty. */
 export async function getMainGalleryImages(): Promise<import('@/types').SanityImage[]> {
   if (!isSanityConfigured()) return []

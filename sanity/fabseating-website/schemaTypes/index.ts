@@ -10,6 +10,7 @@ import contactPage from '../../schemas/contactPage'
 import teamMember from '../../schemas/teamMember'
 import product from '../../schemas/product'
 import productCategory from '../../schemas/productCategory'
+import categoryLanding from '../../schemas/categoryLanding'
 
 export const schemaTypes = [
   articleMedia,
@@ -24,4 +25,5 @@ export const schemaTypes = [
   teamMember,
   product,
   productCategory,
+  categoryLanding,
 ]
