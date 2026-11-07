@@ -1,11 +1,13 @@
 export default {
   name: 'contactPage',
-  title: 'Contact Page',
+  title: 'Contact page',
   type: 'document',
+  description: 'The words on the Contact page. Phone, address, and WhatsApp are under Logo, phone and address.',
   fields: [
     {
       name: 'stripImages',
       title: 'Craft strip images (3 images)',
+      hidden: true,
       type: 'array',
       of: [
         {

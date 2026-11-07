@@ -40,6 +40,7 @@ export function SanityBlogPostView({ post }: { post: BlogPost }) {
     : null
   const heroAlt = (post.featuredImage as { alt?: string } | undefined)?.alt || post.title || ''
   const useJournal = post.useJournalLayout !== false && (post.sections?.length ?? 0) > 0
+  const byline = post.byline?.trim() || (post.author?.name ? `By ${post.author.name}` : '')
 
   if (!useJournal) {
     return (
@@ -84,9 +85,9 @@ export function SanityBlogPostView({ post }: { post: BlogPost }) {
         <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold max-w-3xl mx-auto leading-tight">
           {post.title}
         </h1>
-        {post.byline && (
-          <p className="mt-5 text-sm text-white/60 tracking-wide">{post.byline}</p>
-        )}
+        {byline ? (
+          <p className="mt-5 text-sm text-white/60 tracking-wide">{byline}</p>
+        ) : null}
       </header>
 
       {/* Hero image */}

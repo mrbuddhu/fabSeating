@@ -24,17 +24,13 @@ const fallbackExploreLinks = [
   { href: '/#solutions', label: 'All Categories', arrow: true },
 ]
 
-export function Header({ logoUrl, exploreLinks = fallbackExploreLinks }: { logoUrl?: string | null; exploreLinks?: { href: string; label: string; arrow?: boolean }[] }) {
+export function Header({ logoUrl, exploreLinks = fallbackExploreLinks, announcement }: { logoUrl?: string | null; exploreLinks?: { href: string; label: string; arrow?: boolean }[]; announcement?: string | null }) {
   const contact = useSiteContact()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [showAnnouncement, setShowAnnouncement] = useState(true)
   const pathname = usePathname()
-  const announcement = {
-    message: 'Serving residential & commercial spaces across Chennai & Pan India since 2001.',
-    ctaLabel: '',
-    ctaHref: '',
-  }
+  const announcementMessage = announcement?.trim() || 'Serving residential & commercial spaces across Chennai & Pan India since 2001.'
 
   useEffect(() => {
     const handleScroll = () => {
@@ -90,27 +86,11 @@ export function Header({ logoUrl, exploreLinks = fallbackExploreLinks }: { logoU
               transition={{ duration: 12, ease: 'linear', repeat: Infinity }}
             >
               <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/90">
-                {announcement.message}
+                {announcementMessage}
               </span>
-              {announcement.ctaLabel && (
-                <Link
-                  href={announcement.ctaHref}
-                  className="text-[10px] font-medium underline underline-offset-4 text-white/90"
-                >
-                  {announcement.ctaLabel}
-                </Link>
-              )}
               <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/90">
-                {announcement.message}
+                {announcementMessage}
               </span>
-              {announcement.ctaLabel && (
-                <Link
-                  href={announcement.ctaHref}
-                  className="text-[10px] font-medium underline underline-offset-4 text-white/90"
-                >
-                  {announcement.ctaLabel}
-                </Link>
-              )}
             </motion.div>
           </div>
         </div>

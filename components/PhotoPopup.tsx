@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useId } from 'react'
+import { useEffect, useId, useState } from 'react'
 import Image from 'next/image'
 
 function WhatsAppIcon() {
@@ -15,15 +15,20 @@ export function PhotoPopup({
   title,
   description,
   imageSrc,
+  images,
   enquireHref,
   onClose,
 }: {
   title: string
   description?: string
   imageSrc: string
+  images?: string[]
   enquireHref: string
   onClose: () => void
 }) {
+  const views = (images || []).filter(Boolean)
+  const photos = views.length ? views : [imageSrc]
+  const [active, setActive] = useState(photos[0])
   const titleId = useId()
   const text = description?.trim() && description.trim() !== title.trim() ? description.trim() : undefined
 
@@ -58,7 +63,20 @@ export function PhotoPopup({
           <span aria-hidden className="text-2xl leading-none">×</span>
         </button>
         <div className="relative h-[34vh] min-h-[168px] w-full shrink-0 bg-[#f7f5f0] md:h-full md:min-h-0 md:w-[54%]">
-          <Image src={imageSrc} alt={title} fill sizes="(max-width: 768px) 100vw, 560px" className="object-contain p-4 md:p-8" />
+          <Image src={active} alt={title} fill sizes="(max-width: 768px) 100vw, 560px" className="object-contain p-4 md:p-8" />
+          {photos.length > 1 ? (
+            <div className="absolute inset-x-3 bottom-3 z-20 flex justify-center gap-2">
+              {photos.map((src) => (
+                <button
+                  key={src}
+                  type="button"
+                  aria-label="Show this view"
+                  onClick={() => setActive(src)}
+                  className={`h-2.5 w-2.5 rounded-full ${src === active ? 'bg-primary-950' : 'bg-white shadow ring-1 ring-primary-950/20'}`}
+                />
+              ))}
+            </div>
+          ) : null}
         </div>
         <div className="flex min-h-0 flex-1 flex-col px-5 pb-5 pt-4 md:px-8 md:py-8">
           <h2 id={titleId} className="shrink-0 break-words font-serif text-2xl font-semibold leading-snug text-primary-950 md:text-3xl">

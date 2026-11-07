@@ -36,13 +36,16 @@ const HARD_CODED_TEAM: TeamMember[] = [
 ]
 
 export const TeamSection = ({ teamMembers: sanityMembers }: { teamMembers?: TeamMember[] | null }) => {
-  // Merge hard-coded text with optional images + socials from Sanity (by order)
-  const teamMembers: TeamMember[] = HARD_CODED_TEAM.map((base, index) => {
-    const sanity = sanityMembers?.[index]
+  const published = (sanityMembers || []).filter((member) => member?.name?.trim())
+  const teamMembers: TeamMember[] = (published.length ? published : HARD_CODED_TEAM).map((member, index) => {
+    const fallback = HARD_CODED_TEAM[index]
     return {
-      ...base,
-      image: sanity?.image ?? null,
-      socials: sanity?.socials ?? undefined,
+      _id: member._id || fallback?._id || String(index),
+      name: member.name?.trim() || fallback?.name || '',
+      role: member.role?.trim() || fallback?.role || '',
+      bio: member.bio?.trim() || fallback?.bio || '',
+      image: member.image ?? fallback?.image ?? null,
+      socials: member.socials ?? fallback?.socials,
     }
   })
   return (

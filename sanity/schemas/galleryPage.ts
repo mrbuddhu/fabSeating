@@ -13,9 +13,10 @@ export default {
   name: 'galleryPage',
   title: 'Gallery',
   type: 'document',
+  description: 'The Gallery page in the menu. Words at the top, then the photos.',
   groups: [
-    { name: 'page', title: 'Page text', default: true },
-    { name: 'photos', title: 'Photos' },
+    { name: 'page', title: '1. Words at the top', default: true },
+    { name: 'photos', title: '2. Photos' },
   ],
   fields: [
     {

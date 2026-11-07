@@ -21,7 +21,12 @@ const GALLERY_FILTERS = [
 export const revalidate = 300
 
 export async function generateMetadata(): Promise<Metadata> {
-  return metadataForPath('/projects', 'Gallery', 'A visual gallery of Fab Seating furniture, furnishings and completed projects.')
+  const gallery = await getGalleryPage()
+  return metadataForPath(
+    '/projects',
+    gallery?.title || 'Gallery',
+    gallery?.subtitle || 'A visual gallery of Fab Seating furniture, furnishings and completed projects.',
+  )
 }
 
 export default async function GalleryPage() {
@@ -68,6 +73,7 @@ export default async function GalleryPage() {
         src: product.src,
         alt: product.title,
         description: product.description,
+        images: product.images,
         categories: groups.map((group) => group.id),
         categoryLabel: groups.map((group) => group.label).join(' · '),
       }]

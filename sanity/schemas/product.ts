@@ -27,8 +27,9 @@ export default {
     },
     {
       name: 'category',
-      title: 'Category',
+      title: 'Folder',
       type: 'reference',
+      description: 'Where this product sits, such as Sofas or Rugs. The folder decides which category page shows it.',
       to: [{ type: 'productCategory' }],
     },
     {

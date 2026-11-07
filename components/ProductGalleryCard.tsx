@@ -52,6 +52,7 @@ export function ProductGalleryCard({ product, variant = 'card' }: { product: Pro
           title={product.title}
           description={product.description}
           imageSrc={product.src}
+          images={product.images}
           enquireHref={enquire}
           onClose={() => setOpen(false)}
         />

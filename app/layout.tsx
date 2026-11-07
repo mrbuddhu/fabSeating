@@ -87,7 +87,7 @@ export default async function RootLayout({
       const category = sections.categories.find((entry) => entry.slug === item.slug)
       return { href: `/category/${item.slug}`, label: category?.title || item.label }
     }),
-    { href: '/#solutions', label: 'All Categories', arrow: true as const },
+    { href: '/#solutions', label: filled(home?.exploreIntro?.title, 'All Categories'), arrow: true as const },
   ]
   const contact = settings.contact || CONTACT
   const logoBuilder = settings?.logo ? urlFor(settings.logo as any) : null
@@ -130,7 +130,7 @@ export default async function RootLayout({
           }}
         />
         <SiteContactProvider value={contact}>
-        <Header logoUrl={logoUrl} exploreLinks={exploreLinks} />
+        <Header logoUrl={logoUrl} exploreLinks={exploreLinks} announcement={settings.announcement} />
         <main id="main-content">{children}</main>
         <ExperienceStrip imageSrc={experienceSrc} imageAlt={experienceImage?.alt} titles={experienceTitles} />
         <StickyBookCTA />

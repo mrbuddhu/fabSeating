@@ -1,6 +1,6 @@
     export default {
   name: 'productCategory',
-  title: 'Product Category',
+  title: 'Product folder',
   type: 'document',
   fields: [
     {
@@ -23,6 +23,7 @@
       name: 'description',
       title: 'Description',
       type: 'text',
+      hidden: true,
     },
     {
       name: 'image',
@@ -31,6 +32,7 @@
       options: {
         hotspot: true,
       },
+      hidden: true,
     },
   ],
   preview: {

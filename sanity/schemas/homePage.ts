@@ -2,22 +2,41 @@ export default {
   name: 'homePage',
   title: 'Homepage',
   type: 'document',
+  description: 'The tabs follow the home page from top to bottom. Open a tab, edit that section, then Publish.',
+  groups: [
+    { name: 'hero', title: '1. Top of the page', default: true },
+    { name: 'brands', title: '2. Brand logos' },
+    { name: 'quote', title: '3. Quote' },
+    { name: 'about', title: '4. About' },
+    { name: 'categories', title: '5. All Categories' },
+    { name: 'industries', title: '6. Industries' },
+    { name: 'process', title: '7. Our process' },
+    { name: 'legacy', title: '8. Our legacy' },
+    { name: 'custom', title: '9. Custom solutions' },
+    { name: 'reviews', title: '10. Google reviews' },
+    { name: 'faq', title: '11. Questions' },
+    { name: 'showroom', title: '12. Visit the showroom' },
+    { name: 'seo', title: 'Search listing' },
+  ],
   fields: [
     {
       name: 'exploreIntro',
       title: 'All Categories text',
       type: 'object',
+      group: 'categories',
+      description: 'The small line, the heading, and the sentence above the circles.',
       fields: [
-        { name: 'eyebrow', title: 'Eyebrow', type: 'string', description: 'The small line above the title. Leave empty to keep “Explore”.' },
-        { name: 'title', title: 'Title', type: 'string', description: 'Leave empty to keep “All Categories”.' },
+        { name: 'eyebrow', title: 'Small line', type: 'string', description: 'Leave empty to keep “Explore”.' },
+        { name: 'title', title: 'Heading', type: 'string', description: 'Leave empty to keep “All Categories”.' },
         { name: 'description', title: 'Description', type: 'text', rows: 2, description: 'The line under the title.' },
       ],
     },
     {
       name: 'furnitureCategories',
-      title: 'All Categories',
+      title: 'Circles',
       type: 'array',
-      description: 'Each tile is one circle. Open a tile, replace Image, then Publish. The same image is used on the homepage and on the category circles across the site.',
+      group: 'categories',
+      description: 'Each tile is one circle on the home page. Open it to change the photo or the name. The same photo is used wherever that category appears.',
       options: { layout: 'grid' },
       of: [
         {
@@ -25,24 +44,26 @@ export default {
           fields: [
             { name: 'coverImage', title: 'Image', type: 'image', options: { hotspot: true }, description: 'The photo inside the circle.' },
             { name: 'title', title: 'Category name', type: 'string', validation: (Rule: any) => Rule.required() },
-            { name: 'slug', title: 'Landing page address', type: 'slug', description: 'Sofas is sofas, which opens /category/sofas. This must match the landing page slug.', options: { source: (_doc: any, ctx: any) => ctx.parent?.title, maxLength: 96 }, validation: (Rule: any) => Rule.required() },
-            { name: 'blurb', title: 'Description', type: 'text', rows: 2 },
+            { name: 'slug', title: 'Landing page address', type: 'slug', options: { source: (_doc: any, ctx: any) => ctx.parent?.title, maxLength: 96 }, hidden: true },
+            { name: 'blurb', title: 'Description', type: 'text', rows: 2, hidden: true },
             {
               name: 'productCategories',
               title: 'Products on the landing page',
               type: 'array',
               of: [{ type: 'reference', to: [{ type: 'productCategory' }] }],
-              description: 'These products fill the landing page collection when no custom collection images are uploaded.',
+              hidden: true,
             },
           ],
-          preview: { select: { title: 'title', subtitle: 'slug.current', media: 'coverImage' } },
+          preview: { select: { title: 'title', media: 'coverImage' } },
         },
       ],
     },
-    { name: 'heroVideoFile', title: 'Hero video upload', type: 'file', options: { accept: 'video/*' } },
+    { name: 'heroVideoFile', title: 'Video', type: 'file', group: 'hero', description: 'The video at the top of the home page.', options: { accept: 'video/*' } },
     {
       name: 'galleryImages',
       title: 'Main Gallery Photos',
+      group: 'hero',
+      hidden: true,
       type: 'array',
       description: 'Older gallery photos. New photos, names, text, and filters are edited under Gallery in the Studio menu.',
       of: [{
@@ -63,14 +84,17 @@ export default {
     },
     {
       name: 'heroImage',
-      title: 'Hero background image',
+      title: 'Photo',
+      group: 'hero',
       type: 'image',
       options: { hotspot: true },
-      description: 'Main hero section background. Used as fallback if no video.',
+      description: 'Shown behind the words when the video is not playing.',
     },
     {
       name: 'aboutReels',
-      title: 'About section – video reels (4 items)',
+      title: 'Four videos',
+      group: 'about',
+      description: 'The four videos under About Fab Seating.',
       type: 'array',
       of: [
         {
@@ -93,6 +117,8 @@ export default {
     {
       name: 'solutionsCards',
       title: 'Our Solutions – 3 cards (Residential, Office, Hospitality)',
+      group: 'about',
+      hidden: true,
       type: 'array',
       of: [
         {
@@ -117,14 +143,17 @@ export default {
     },
     {
       name: 'processSteps',
-      title: 'Process steps (typewriter strip)',
+      title: 'Steps',
+      group: 'process',
+      description: 'The words in the coloured strip that says Our Process. Example: Consultation, Design & Selection, Manufacturing.',
       type: 'array',
       of: [{ type: 'string' }],
-      description: 'e.g. Consultation, Design & Selection, Manufacturing…',
     },
     {
       name: 'brandPartners',
-      title: 'Brand partners strip',
+      title: 'Logos',
+      group: 'brands',
+      description: 'The row of brand logos under the top banner. Leave empty to keep the current logos.',
       type: 'array',
       of: [
         {
@@ -136,18 +165,20 @@ export default {
           preview: { select: { title: 'name', media: 'logo' } },
         },
       ],
-      description: 'Leave empty to use the built-in list.',
     },
     {
       name: 'industries',
-      title: 'Industries we serve',
+      title: 'Industries',
+      group: 'industries',
+      description: 'The list under the circles. Leave empty to keep the current list.',
       type: 'array',
       of: [{ type: 'string' }],
-      description: 'Leave empty to use the built-in list.',
     },
     {
       name: 'faqs',
-      title: 'FAQ section',
+      title: 'Questions and answers',
+      group: 'faq',
+      description: 'The questions near the bottom of the home page. Leave empty to keep the current questions.',
       type: 'array',
       of: [
         {
@@ -159,22 +190,24 @@ export default {
           preview: { select: { title: 'question' } },
         },
       ],
-      description: 'Leave empty to use the built-in list.',
     },
     {
       name: 'googleReviewsUrl',
       title: 'Google reviews link',
+      group: 'reviews',
       type: 'url',
       description: 'Your Google Business Profile reviews link, used by the "Loved on Google" section.',
     },
     {
       name: 'hero',
-      title: 'Hero text',
+      title: 'Words',
+      group: 'hero',
+      description: 'The headline, the line under it, and the button at the top of the home page.',
       type: 'object',
       fields: [
-        { name: 'headline', title: 'Headline', type: 'text', rows: 2 },
-        { name: 'subheadline', title: 'Subheadline', type: 'text', rows: 3 },
-        { name: 'ctaText', title: 'Button label', type: 'string' },
+        { name: 'headline', title: 'Heading', type: 'text', rows: 2 },
+        { name: 'subheadline', title: 'Line under the heading', type: 'text', rows: 3 },
+        { name: 'ctaText', title: 'Button', type: 'string' },
         { name: 'trustLine1', title: 'Trust line 1', type: 'string' },
         { name: 'trustLine2', title: 'Trust line 2', type: 'string' },
         { name: 'badge1', title: 'Badge 1', type: 'string' },
@@ -184,7 +217,9 @@ export default {
     },
     {
       name: 'quote',
-      title: 'Quote band',
+      title: 'Quote',
+      group: 'quote',
+      description: 'The sentence on the coloured band under the brand logos.',
       type: 'object',
       fields: [
         { name: 'text', title: 'Quote', type: 'text', rows: 4 },
@@ -193,10 +228,12 @@ export default {
     },
     {
       name: 'about',
-      title: 'About section',
+      title: 'About text',
+      group: 'about',
+      description: 'The heading and paragraph above the four videos.',
       type: 'object',
       fields: [
-        { name: 'eyebrow', title: 'Eyebrow', type: 'string' },
+        { name: 'eyebrow', title: 'Small line', type: 'string' },
         { name: 'title', title: 'Heading', type: 'string' },
         { name: 'body', title: 'Text', type: 'text', rows: 4 },
         { name: 'instagramUrl', title: 'Instagram link', type: 'url' },
@@ -204,10 +241,12 @@ export default {
     },
     {
       name: 'legacy',
-      title: 'Legacy section',
+      title: 'Legacy',
+      group: 'legacy',
+      description: 'The coloured block with the years and the three numbers.',
       type: 'object',
       fields: [
-        { name: 'eyebrow', title: 'Eyebrow', type: 'string' },
+        { name: 'eyebrow', title: 'Small line', type: 'string' },
         { name: 'title', title: 'Heading', type: 'string' },
         { name: 'body', title: 'Text', type: 'text', rows: 4 },
         {
@@ -227,10 +266,12 @@ export default {
     },
     {
       name: 'bespoke',
-      title: 'Custom solutions section',
+      title: 'Custom solutions',
+      group: 'custom',
+      description: 'The white section with the custom quote button.',
       type: 'object',
       fields: [
-        { name: 'eyebrow', title: 'Eyebrow', type: 'string' },
+        { name: 'eyebrow', title: 'Small line', type: 'string' },
         { name: 'title', title: 'Heading', type: 'string' },
         { name: 'intro', title: 'Intro', type: 'text', rows: 2 },
         { name: 'paragraph1', title: 'Paragraph 1', type: 'text', rows: 3 },
@@ -240,10 +281,12 @@ export default {
     },
     {
       name: 'showroomCta',
-      title: 'Showroom closing section',
+      title: 'Showroom',
+      group: 'showroom',
+      description: 'The last section on the home page, before the banner and the footer.',
       type: 'object',
       fields: [
-        { name: 'eyebrow', title: 'Eyebrow', type: 'string' },
+        { name: 'eyebrow', title: 'Small line', type: 'string' },
         { name: 'title', title: 'Heading', type: 'string' },
         { name: 'body', title: 'Text', type: 'text', rows: 3 },
         { name: 'directionsLabel', title: 'Directions button', type: 'string' },
@@ -253,6 +296,8 @@ export default {
     {
       name: 'experience',
       title: 'Banner',
+      group: 'showroom',
+      hidden: true,
       description: 'Older copy of the banner. Edit Banner in the Studio menu. This is used only when that Banner is empty.',
       type: 'object',
       fields: [
@@ -268,7 +313,9 @@ export default {
     },
     {
       name: 'googleReviews',
-      title: 'Google review cards',
+      title: 'Review cards',
+      group: 'reviews',
+      description: 'The review cards above the questions.',
       type: 'object',
       fields: [
         { name: 'heading', title: 'Heading', type: 'string' },
@@ -290,7 +337,9 @@ export default {
     },
     {
       name: 'seo',
-      title: 'Homepage SEO',
+      title: 'Search result',
+      group: 'seo',
+      description: 'The title and description Google shows for the home page. Visitors do not see this on the page.',
       type: 'object',
       fields: [
         { name: 'title', title: 'SEO title', type: 'string' },

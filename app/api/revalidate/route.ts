@@ -33,6 +33,9 @@ export async function POST(req: Request) {
   revalidateTag('sanity:siteSettings')
   revalidateTag('sanity:teamMember')
   revalidateTag('sanity:caseStudy')
+  revalidateTag('sanity:legalDocument')
+  revalidateTag('sanity:galleryPage')
+  revalidateTag('sanity:footerBanner')
 
   return NextResponse.json({ ok: true })
 }

@@ -508,6 +508,7 @@ export type GalleryProduct = {
   title: string
   description?: string
   src: string
+  images?: string[]
   categorySlug?: string
   categoryTitle?: string
 }
@@ -522,6 +523,7 @@ export async function getGalleryProducts(): Promise<GalleryProduct[]> {
         title,
         description,
         "src": images[0].asset->url,
+        "images": images[defined(asset)][].asset->url,
         "categorySlug": category->slug.current,
         "categoryTitle": category->title
       }`,
@@ -531,6 +533,7 @@ export async function getGalleryProducts(): Promise<GalleryProduct[]> {
     return (rows || []).flatMap((row) => row.src ? [{
       ...row,
       description: row.description?.trim() || undefined,
+      images: (row.images || []).filter(Boolean),
       categorySlug: row.categorySlug || undefined,
       categoryTitle: row.categoryTitle || undefined,
     }] : [])

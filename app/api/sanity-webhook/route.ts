@@ -17,11 +17,15 @@ export async function POST(req: NextRequest) {
       '/',
       '/projects',
       '/contact',
+      '/catalogues',
+      '/policies',
+      '/legals',
       '/solutions/residential',
       '/solutions/office',
       '/solutions/hospitality',
     ]
     pathsToRevalidate.forEach((path) => revalidatePath(path))
+    revalidatePath('/', 'layout')
     revalidatePath('/case-studies', 'layout')
     revalidatePath('/blog', 'layout')
     revalidatePath('/category', 'layout')
@@ -43,6 +47,8 @@ export async function POST(req: NextRequest) {
     revalidateTag('sanity:categoryLanding')
     revalidateTag('sanity:articleMedia')
     revalidateTag('sanity:legalDocument')
+    revalidateTag('sanity:galleryPage')
+    revalidateTag('sanity:footerBanner')
 
     return NextResponse.json({ revalidated: true, paths: pathsToRevalidate })
   } catch (error) {

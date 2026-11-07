@@ -11,6 +11,7 @@ export type GalleryPhoto = {
   src: string
   alt: string
   description?: string
+  images?: string[]
   category?: string
   categories?: string[]
   categoryLabel?: string
@@ -96,6 +97,7 @@ export function GalleryGrid({ photos, filters }: { photos: GalleryPhoto[]; filte
           title={open.alt}
           description={open.description}
           imageSrc={open.src}
+          images={open.images}
           enquireHref={enquire}
           onClose={() => setOpen(null)}
         />
