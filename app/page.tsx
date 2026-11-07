@@ -289,7 +289,12 @@ export default async function Home() {
 
       {/* 5. Furniture & Furnishing Solutions */}
       <AnimatedSection delay={0.2}>
-        <FurnitureCategories categories={sections.categories} />
+        <FurnitureCategories
+          categories={sections.categories}
+          eyebrow={filled(homeContent?.exploreIntro?.eyebrow, 'Explore')}
+          title={filled(homeContent?.exploreIntro?.title, 'All Categories')}
+          description={filled(homeContent?.exploreIntro?.description, 'Custom furniture and furnishings for homes, offices and hospitality spaces.')}
+        />
       </AnimatedSection>
 
       {/* Industries We Serve */}

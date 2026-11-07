@@ -4,17 +4,28 @@ export default {
   type: 'document',
   fields: [
     {
+      name: 'exploreIntro',
+      title: 'All Categories text',
+      type: 'object',
+      fields: [
+        { name: 'eyebrow', title: 'Eyebrow', type: 'string', description: 'The small line above the title. Leave empty to keep “Explore”.' },
+        { name: 'title', title: 'Title', type: 'string', description: 'Leave empty to keep “All Categories”.' },
+        { name: 'description', title: 'Description', type: 'text', rows: 2, description: 'The line under the title.' },
+      ],
+    },
+    {
       name: 'furnitureCategories',
       title: 'All Categories',
       type: 'array',
-      description: 'Names and images in All Categories on the homepage. The name is the label on the circle and in the Explore menu. Clicking a circle opens that category at /category/<slug>. Drag to reorder, then Publish.',
+      description: 'Each tile is one circle. Open a tile, replace Image, then Publish. The same image is used on the homepage and on the category circles across the site.',
+      options: { layout: 'grid' },
       of: [
         {
           type: 'object',
           fields: [
+            { name: 'coverImage', title: 'Image', type: 'image', options: { hotspot: true }, description: 'The photo inside the circle.' },
             { name: 'title', title: 'Category name', type: 'string', validation: (Rule: any) => Rule.required() },
             { name: 'slug', title: 'Landing page address', type: 'slug', description: 'Sofas is sofas, which opens /category/sofas. This must match the landing page slug.', options: { source: (_doc: any, ctx: any) => ctx.parent?.title, maxLength: 96 }, validation: (Rule: any) => Rule.required() },
-            { name: 'coverImage', title: 'Category image', type: 'image', options: { hotspot: true } },
             { name: 'blurb', title: 'Description', type: 'text', rows: 2 },
             {
               name: 'productCategories',

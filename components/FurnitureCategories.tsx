@@ -5,7 +5,17 @@ import Link from 'next/link'
 import Image from 'next/image'
 import type { SiteCategory } from '@/lib/siteSections'
 
-export function FurnitureCategories({ categories }: { categories: SiteCategory[] }) {
+export function FurnitureCategories({
+  categories,
+  eyebrow = 'Explore',
+  title = 'All Categories',
+  description = 'Custom furniture and furnishings for homes, offices and hospitality spaces.',
+}: {
+  categories: SiteCategory[]
+  eyebrow?: string
+  title?: string
+  description?: string
+}) {
   const collection = useRef<HTMLDivElement>(null)
   const move = (direction: number) => collection.current?.scrollBy({ left: direction * collection.current.clientWidth * 0.8, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })
 
@@ -29,9 +39,9 @@ export function FurnitureCategories({ categories }: { categories: SiteCategory[]
     <section id="solutions" className="scroll-mt-32 bg-white py-16 md:py-20">
       <div className="container mx-auto px-4">
         <div className="mb-10 text-center">
-          <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary-700">Explore</span>
-          <h2 className="mt-3 font-serif text-3xl font-bold text-primary-950 md:text-4xl">All Categories</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-gray-600">Custom furniture and furnishings for homes, offices and hospitality spaces.</p>
+          <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary-700">{eyebrow}</span>
+          <h2 className="mt-3 font-serif text-3xl font-bold text-primary-950 md:text-4xl">{title}</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-gray-600">{description}</p>
         </div>
         <div className="mx-auto max-w-6xl">
           <div className="mb-4 flex justify-end gap-2">

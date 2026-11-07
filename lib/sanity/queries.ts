@@ -375,6 +375,7 @@ export async function getHomePageContent() {
       },
       processSteps,
       googleReviewsUrl,
+      exploreIntro { eyebrow, title, description },
       hero, quote, about, legacy, bespoke, showroomCta,
       experience { image, items[]{ title } },
       googleReviews { heading, summary, items[]{ text, date } },
