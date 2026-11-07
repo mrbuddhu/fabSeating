@@ -77,11 +77,11 @@ export default async function Home() {
   const instagramUrl = filled(homeContent?.about?.instagramUrl, settings.contact.instagram)
   const legacyEyebrow = filled(homeContent?.legacy?.eyebrow, 'Our Heritage')
   const legacyTitle = filled(homeContent?.legacy?.title, 'Our Legacy')
-  const legacyBody = filled(homeContent?.legacy?.body, "Established in 2001, Fab Seating has been at the forefront of furniture manufacturing and furnishings curation. With over two decades of hands-on experience, we've built a reputation for excellence, quality, and customer satisfaction across South India.")
+  const legacyBody = filled(homeContent?.legacy?.body, "Established in 2001, Fab Seating has been at the forefront of furniture manufacturing and furnishings curation. With 25 years of hands-on experience, we've built a reputation for excellence, quality, and customer satisfaction across South India.")
   const legacyStats = homeContent?.legacy?.stats?.filter((stat: { number?: string; label?: string }) => stat.number && stat.label)?.length
     ? homeContent.legacy.stats
     : [
-        { number: '20+', label: 'Years of Experience' },
+        { number: '25+', label: 'Years of Experience' },
         { number: '1000+', label: 'Projects Completed' },
         { number: '500+', label: 'Happy Clients' },
       ]

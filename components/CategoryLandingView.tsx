@@ -38,8 +38,9 @@ function Collection({ model }: { model: CategoryLandingModel['collection'] }) {
   const [open, setOpen] = useState(false)
   const photos = model.photos
   const usingPhotos = photos.length > 0
-  const extraPhotos = usingPhotos ? photos.slice(4) : []
-  const extraProducts = usingPhotos ? model.products : model.products.slice(4)
+  const previewCount = 8
+  const extraPhotos = usingPhotos ? photos.slice(previewCount) : []
+  const extraProducts = usingPhotos ? model.products : model.products.slice(previewCount)
   const hasMore = extraPhotos.length + extraProducts.length > 0
 
   return (
@@ -48,23 +49,19 @@ function Collection({ model }: { model: CategoryLandingModel['collection'] }) {
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#1c3f38]/70">{model.eyebrow}</p>
         <h2 className="mt-3 font-serif text-3xl font-semibold text-[#1c3f38] md:text-5xl">{model.title}</h2>
         <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-[#1c3f38]/80 md:text-base">{model.description}</p>
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-5">
           {usingPhotos
-            ? photos.slice(0, 4).map((photo) => (
-                <div key={photo.src} className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-[#efeae3]">
-                  <Photo image={photo} sizes="(max-width: 1024px) 50vw, 25vw" />
-                </div>
+            ? photos.slice(0, previewCount).map((photo) => (
+                <ProductGalleryCard key={photo.src} product={{ src: photo.src, title: photo.alt }} variant="frame" />
               ))
-            : model.products.slice(0, 4).map((product) => (
+            : model.products.slice(0, previewCount).map((product) => (
                 <ProductGalleryCard key={product.id || product.src} product={product} variant="photo" />
               ))}
         </div>
         {open ? (
-          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-3 grid grid-cols-2 gap-3 sm:mt-5 sm:gap-5">
             {extraPhotos.map((photo) => (
-              <div key={photo.src} className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-[#efeae3]">
-                <Photo image={photo} sizes="(max-width: 1024px) 50vw, 25vw" />
-              </div>
+              <ProductGalleryCard key={photo.src} product={{ src: photo.src, title: photo.alt }} variant="frame" />
             ))}
             {extraProducts.map((product) => (
               <ProductGalleryCard key={product.id || product.src} product={product} />

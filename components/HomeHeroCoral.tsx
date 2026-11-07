@@ -115,7 +115,7 @@ export function HomeHeroCoral({
                           href="/projects"
                           className="inline-flex items-center justify-center rounded-full bg-white px-4 py-2.5 sm:px-6 sm:py-3 text-xs sm:text-sm font-semibold text-[#da5863] shadow-lg shadow-black/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
                         >
-                          View Projects
+                          Gallery
                         </Link>
                         {heroData.ctaLink && (
                           <Link

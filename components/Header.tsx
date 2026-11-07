@@ -17,14 +17,14 @@ const navItems = [
   { href: '/contact', label: 'Contact' },
 ]
 
-const exploreLinks = [
-  { href: '/solutions/residential', label: 'Residential' },
-  { href: '/solutions/office', label: 'Office' },
-  { href: '/solutions/hospitality', label: 'Hospitality' },
-  { href: '/#solutions', label: 'Furniture' },
+const fallbackExploreLinks = [
+  { href: '/category/sofas', label: 'Sofas' },
+  { href: '/category/dining-furniture', label: 'Dining Furniture' },
+  { href: '/category/chairs-recliners', label: 'Chairs & Recliners' },
+  { href: '/#solutions', label: 'All Categories', arrow: true },
 ]
 
-export function Header({ logoUrl }: { logoUrl?: string | null }) {
+export function Header({ logoUrl, exploreLinks = fallbackExploreLinks }: { logoUrl?: string | null; exploreLinks?: { href: string; label: string; arrow?: boolean }[] }) {
   const contact = useSiteContact()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -186,14 +186,18 @@ export function Header({ logoUrl }: { logoUrl?: string | null }) {
                 <div key={item.href} className="group/explore relative">
                   {link}
                   <div className="invisible absolute left-0 top-full z-50 pt-2 opacity-0 transition group-hover/explore:visible group-hover/explore:opacity-100 group-focus-within/explore:visible group-focus-within/explore:opacity-100">
-                    <div className="min-w-[200px] rounded-2xl border border-primary-100 bg-white p-2 shadow-xl">
+                    <div className="min-w-[240px] rounded-2xl border border-primary-100 bg-white p-2 shadow-xl">
                       {exploreLinks.map((linkItem) => (
                         <Link
                           key={linkItem.href}
                           href={linkItem.href}
-                          className="block rounded-xl px-3 py-2 text-sm font-medium text-primary-800 hover:bg-primary-50"
+                          className={cn(
+                            'flex items-center justify-between gap-3 rounded-xl px-3 py-2 text-sm font-medium text-primary-800 hover:bg-primary-50',
+                            linkItem.arrow && 'mt-1 border-t border-primary-100 pt-3'
+                          )}
                         >
                           {linkItem.label}
+                          {linkItem.arrow ? <span aria-hidden className="text-base leading-none">→</span> : null}
                         </Link>
                       ))}
                     </div>
@@ -304,9 +308,13 @@ export function Header({ logoUrl }: { logoUrl?: string | null }) {
                               key={linkItem.href}
                               href={linkItem.href}
                               onClick={() => setIsMobileMenuOpen(false)}
-                              className="block rounded-xl px-4 py-2 text-base text-primary-700 hover:bg-primary-50"
+                              className={cn(
+                                'flex items-center justify-between gap-3 rounded-xl px-4 py-2 text-base text-primary-700 hover:bg-primary-50',
+                                linkItem.arrow && 'mt-1 border-t border-primary-100 pt-3'
+                              )}
                             >
                               {linkItem.label}
+                              {linkItem.arrow ? <span aria-hidden className="text-lg leading-none">→</span> : null}
                             </Link>
                           ))}
                         </div>

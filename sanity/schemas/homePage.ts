@@ -3,13 +3,52 @@ export default {
   title: 'Homepage',
   type: 'document',
   fields: [
+    {
+      name: 'furnitureCategories',
+      title: 'All Categories',
+      type: 'array',
+      description: 'Names and images in All Categories on the homepage. The name is the label on the circle and in the Explore menu. Clicking a circle opens that category at /category/<slug>. Drag to reorder, then Publish.',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            { name: 'title', title: 'Category name', type: 'string', validation: (Rule: any) => Rule.required() },
+            { name: 'slug', title: 'Landing page address', type: 'slug', description: 'Sofas is sofas, which opens /category/sofas. This must match the landing page slug.', options: { source: (_doc: any, ctx: any) => ctx.parent?.title, maxLength: 96 }, validation: (Rule: any) => Rule.required() },
+            { name: 'coverImage', title: 'Category image', type: 'image', options: { hotspot: true } },
+            { name: 'blurb', title: 'Description', type: 'text', rows: 2 },
+            {
+              name: 'productCategories',
+              title: 'Products on the landing page',
+              type: 'array',
+              of: [{ type: 'reference', to: [{ type: 'productCategory' }] }],
+              description: 'These products fill the landing page collection when no custom collection images are uploaded.',
+            },
+          ],
+          preview: { select: { title: 'title', subtitle: 'slug.current', media: 'coverImage' } },
+        },
+      ],
+    },
     { name: 'heroVideoFile', title: 'Hero video upload', type: 'file', options: { accept: 'video/*' } },
     {
       name: 'galleryImages',
       title: 'Main Gallery Photos',
       type: 'array',
-      description: 'Photos shown on /projects (Gallery). Drag to reorder, add or remove photos, then Publish. No local photo fallback is used.',
-      of: [{ type: 'image', options: { hotspot: true }, fields: [{ name: 'alt', title: 'Image description', type: 'string' }] }],
+      description: 'Older gallery photos. New photos, names, text, and filters are edited under Gallery in the Studio menu.',
+      of: [{
+        type: 'image',
+        options: { hotspot: true },
+        fields: [
+          { name: 'alt', title: 'Image description', type: 'string' },
+          { name: 'caption', title: 'Caption', type: 'text', rows: 2 },
+          {
+            name: 'category',
+            title: 'Category',
+            type: 'reference',
+            to: [{ type: 'productCategory' }],
+            description: 'Used by the category filters on the Gallery page.',
+          },
+        ],
+      }],
     },
     {
       name: 'heroImage',
@@ -87,31 +126,6 @@ export default {
         },
       ],
       description: 'Leave empty to use the built-in list.',
-    },
-    {
-      name: 'furnitureCategories',
-      title: 'Furniture & furnishing categories',
-      type: 'array',
-      description: 'Cards in the "What We Make" section. Each gets its own /category/<slug> page. Leave empty to use the built-in list.',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            { name: 'title', title: 'Title', type: 'string', validation: (Rule: any) => Rule.required() },
-            { name: 'slug', title: 'Slug', type: 'slug', options: { source: (_doc: any, ctx: any) => ctx.parent?.title, maxLength: 96 }, validation: (Rule: any) => Rule.required() },
-            { name: 'blurb', title: 'Short description', type: 'text', rows: 2 },
-            { name: 'coverImage', title: 'Cover image', type: 'image', options: { hotspot: true } },
-            {
-              name: 'productCategories',
-              title: 'Products shown on this category page',
-              type: 'array',
-              of: [{ type: 'reference', to: [{ type: 'productCategory' }] }],
-              description: 'Products from these product categories are listed on the page.',
-            },
-          ],
-          preview: { select: { title: 'title', subtitle: 'slug.current', media: 'coverImage' } },
-        },
-      ],
     },
     {
       name: 'industries',
@@ -227,8 +241,8 @@ export default {
     },
     {
       name: 'experience',
-      title: 'Experience strip',
-      description: 'The photo and four labels shown above the footer on every page.',
+      title: 'Banner',
+      description: 'Older copy of the banner. Edit Banner in the Studio menu. This is used only when that Banner is empty.',
       type: 'object',
       fields: [
         { name: 'image', title: 'Photo', type: 'image', options: { hotspot: true }, fields: [{ name: 'alt', title: 'Alt text', type: 'string' }] },

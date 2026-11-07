@@ -11,7 +11,7 @@ export function StickyBookCTA() {
         href={waLink('Hi Fab Seating, I’d like to book a design visit.', contact.whatsapp)}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="WhatsApp Chat"
+        aria-label="Enquire on WhatsApp"
         className="group inline-flex h-12 w-12 items-center justify-center rounded-full sm:h-auto sm:w-auto sm:gap-2 bg-gradient-to-br from-white/20 via-white/10 to-white/5 sm:px-4 sm:py-2.5 text-xs sm:text-sm font-semibold text-primary-50 shadow-[0_18px_45px_rgba(0,0,0,0.3)] border border-white/30 backdrop-blur-xl transition transform hover:-translate-y-1 hover:shadow-[0_26px_70px_rgba(0,0,0,0.35)]"
       >
         <span className="inline-flex h-full w-full sm:h-8 sm:w-8 items-center justify-center rounded-full sm:bg-white/20 sm:backdrop-blur-md sm:ring-1 sm:ring-white/40 text-[#25D366] transition-all duration-300 group-hover:animate-bounce group-hover:scale-110">

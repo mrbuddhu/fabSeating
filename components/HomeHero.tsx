@@ -115,7 +115,7 @@ export function HomeHero({
                           href="/projects"
                           className="inline-flex items-center justify-center rounded-full bg-primary-50 px-[clamp(1rem,2.4vmin,1.5rem)] py-[clamp(0.625rem,1.5vmin,0.75rem)] text-[clamp(0.75rem,1.7vmin,0.875rem)] font-semibold text-primary-900 shadow-lg shadow-primary-900/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
                         >
-                          View Projects
+                          Gallery
                         </Link>
                         {heroData.ctaLink && (
                           <Link

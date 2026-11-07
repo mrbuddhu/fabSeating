@@ -332,6 +332,29 @@ export async function getSiteSettings(): Promise<SiteSettings> {
   }
 }
 
+export type FooterBanner = {
+  image?: import('@/types').SanityImage
+  items?: { title?: string }[]
+}
+
+/** The photo and titles above the footer on every page. */
+export async function getFooterBanner(): Promise<FooterBanner | null> {
+  if (!isSanityConfigured()) return null
+  try {
+    const banner = await client.fetch<FooterBanner | null>(
+      `*[_type == "footerBanner" && _id == "footerBanner" && !(_id in path("drafts.**"))][0]{
+        image,
+        items[]{ title }
+      }`,
+      {},
+      { next: { revalidate: 300, tags: ['sanity', 'sanity:footerBanner'] } } as any,
+    )
+    return banner || null
+  } catch {
+    return null
+  }
+}
+
 /** Homepage singleton: hero, about reels, solutions cards, process steps */
 export async function getHomePageContent() {
   if (!isSanityConfigured()) return null
@@ -479,6 +502,42 @@ export async function getCatalogs(): Promise<Catalog[]> {
 
 export type ProductImage = { id?: string; src: string; title: string; description?: string; images?: string[] }
 
+export type GalleryProduct = {
+  id: string
+  title: string
+  description?: string
+  src: string
+  categorySlug?: string
+  categoryTitle?: string
+}
+
+/** Published products for the Gallery page, including the category used by the filters. */
+export async function getGalleryProducts(): Promise<GalleryProduct[]> {
+  if (!isSanityConfigured()) return []
+  try {
+    const rows = await client.fetch<GalleryProduct[]>(
+      `*[_type == "product" && defined(images[0].asset) && !(_id in path("drafts.**"))] | order(title asc) {
+        "id": _id,
+        title,
+        description,
+        "src": images[0].asset->url,
+        "categorySlug": category->slug.current,
+        "categoryTitle": category->title
+      }`,
+      {},
+      { next: { revalidate: 300, tags: ['sanity', 'sanity:product', 'sanity:productCategory'] } } as any,
+    )
+    return (rows || []).flatMap((row) => row.src ? [{
+      ...row,
+      description: row.description?.trim() || undefined,
+      categorySlug: row.categorySlug || undefined,
+      categoryTitle: row.categoryTitle || undefined,
+    }] : [])
+  } catch {
+    return []
+  }
+}
+
 /** Product images from Sanity for the given productCategory slugs (used by /category pages). */
 export async function getProductImagesByCategory(categorySlugs: string[]): Promise<ProductImage[]> {
   if (!isSanityConfigured() || categorySlugs.length === 0) return []
@@ -581,12 +640,72 @@ export async function getCategoryLanding(slug: string): Promise<CategoryLandingD
   }
 }
 
+export type MainGalleryImage = import('@/types').SanityImage & {
+  categorySlug?: string
+  categoryTitle?: string
+}
+
+export type GalleryPagePhoto = {
+  _key: string
+  title?: string
+  text?: string
+  filters?: string[]
+  image?: import('@/types').SanityImage
+}
+
+export type GalleryPageContent = {
+  title?: string
+  subtitle?: string
+  includeProducts: boolean
+  photos: GalleryPagePhoto[]
+}
+
+/** Published Gallery page: heading, intro, and the photos an editor added. */
+export async function getGalleryPage(): Promise<GalleryPageContent | null> {
+  if (!isSanityConfigured()) return null
+  try {
+    const page = await client.fetch<GalleryPageContent | null>(
+      `*[_type == "galleryPage" && _id == "galleryPage" && !(_id in path("drafts.**"))][0]{
+        title,
+        subtitle,
+        includeProducts,
+        photos[]{
+          _key,
+          title,
+          text,
+          filters,
+          image
+        }
+      }`,
+      {},
+      { next: { revalidate: 300, tags: ['sanity', 'sanity:galleryPage'] } } as any,
+    )
+    if (!page) return null
+    return {
+      title: page.title?.trim() || undefined,
+      subtitle: page.subtitle?.trim() || undefined,
+      includeProducts: page.includeProducts !== false,
+      photos: (page.photos || []).filter((photo) => photo?.image),
+    }
+  } catch {
+    return null
+  }
+}
+
 /** Only published CMS images appear on the main Gallery page. An empty list stays empty. */
-export async function getMainGalleryImages(): Promise<import('@/types').SanityImage[]> {
+export async function getMainGalleryImages(): Promise<MainGalleryImage[]> {
   if (!isSanityConfigured()) return []
   return client.fetch(
-    `*[_type == "homePage" && !(_id in path("drafts.**"))] | order(_id asc)[0].galleryImages[defined(asset)]`,
+    `*[_type == "homePage" && !(_id in path("drafts.**"))] | order(_id asc)[0].galleryImages[defined(asset)]{
+      _key,
+      _type,
+      asset,
+      alt,
+      caption,
+      "categorySlug": category->slug.current,
+      "categoryTitle": category->title
+    }`,
     {},
     { next: { revalidate: 300, tags: ['sanity', 'sanity:homePage'] } } as any,
-  ).then((images: import('@/types').SanityImage[] | null) => images || [])
+  ).then((images: MainGalleryImage[] | null) => images || [])
 }

@@ -118,7 +118,7 @@ function sofaCopy(title: string) {
     showroomDescription: 'Visit Fab Seating in Kilpauk, Chennai, to explore our sofa collection and discover options that suit your home and lifestyle.',
     closingTitle: "Bring Home a Sofa You'll Love",
     closingDescription: 'Explore the sofa collection at Fab Seating or contact our team to learn more about the available options.',
-    closingWhatsapp: 'Discover on WhatsApp',
+    closingWhatsapp: 'Enquire on WhatsApp',
     title,
   }
 }
@@ -167,7 +167,7 @@ function genericCopy(title: string) {
     showroomDescription: `Visit Fab Seating in Kilpauk, Chennai, to explore our ${lower} collection and discover options that suit your home and lifestyle.`,
     closingTitle: `Bring Home ${title} You'll Love`,
     closingDescription: `Explore the ${lower} collection at Fab Seating or contact our team to learn more about the available options.`,
-    closingWhatsapp: 'Discover on WhatsApp',
+    closingWhatsapp: 'Enquire on WhatsApp',
     title,
   }
 }

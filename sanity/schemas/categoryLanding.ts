@@ -8,30 +8,46 @@ export default {
   name: 'categoryLanding',
   title: 'Category landing pages',
   type: 'document',
-  description: 'The full landing page for a furniture category, for example /category/sofas. Images, text, and SEO are edited here.',
+  description: 'Every image and every line of text on a category landing page, such as /category/sofas.',
+  groups: [
+    { name: 'setup', title: 'Page', default: true },
+    { name: 'hero', title: 'Hero' },
+    { name: 'collection', title: 'Collection' },
+    { name: 'lifestyle', title: 'Lifestyle' },
+    { name: 'guide', title: 'Guide' },
+    { name: 'spaces', title: 'Spaces' },
+    { name: 'related', title: 'More categories' },
+    { name: 'faq', title: 'FAQ' },
+    { name: 'showroom', title: 'Showroom' },
+    { name: 'closing', title: 'Closing' },
+    { name: 'seo', title: 'SEO' },
+  ],
   fields: [
     {
       name: 'label',
-      title: 'Page name',
+      title: 'Category name',
       type: 'string',
       description: 'Studio label only, for example Sofas.',
+      group: 'setup',
       validation: (Rule: any) => Rule.required(),
     },
     {
       name: 'slug',
-      title: 'Category slug',
+      title: 'Landing page address',
       type: 'slug',
       description: 'Must match the category URL. Sofas is sofas, which publishes at /category/sofas.',
       options: { source: 'label', maxLength: 96 },
+      group: 'setup',
       validation: (Rule: any) => Rule.required(),
     },
     {
       name: 'hero',
-      title: 'Hero',
+      title: 'Hero image and text',
+      group: 'hero',
       type: 'object',
       fields: [
         { name: 'eyebrow', title: 'Eyebrow', type: 'string' },
-        { name: 'title', title: 'Heading', type: 'string' },
+        { name: 'title', title: 'Title', type: 'string' },
         { name: 'description', title: 'Description', type: 'text', rows: 3 },
         { name: 'image', title: 'Hero image', ...imageWithAlt },
         { name: 'exploreLabel', title: 'Explore button label', type: 'string' },
@@ -40,28 +56,30 @@ export default {
     },
     {
       name: 'collection',
-      title: 'Collection',
+      title: 'Collection images and text',
+      group: 'collection',
       type: 'object',
       fields: [
         { name: 'eyebrow', title: 'Eyebrow', type: 'string' },
-        { name: 'title', title: 'Heading', type: 'string' },
+        { name: 'title', title: 'Title', type: 'string' },
         { name: 'description', title: 'Description', type: 'text', rows: 3 },
         { name: 'moreLabel', title: 'Explore more label', type: 'string' },
         {
           name: 'items',
           title: 'Images',
           type: 'array',
-          description: 'Wide photos in the collection row. Leave empty to use this category’s product photos.',
+          description: 'Upload the photos for this section. Leave empty to use the products chosen on the Explore category.',
           of: [{ type: 'object', fields: [{ name: 'image', title: 'Image', ...imageWithAlt }] }],
         },
       ],
     },
     {
       name: 'lifestyle',
-      title: 'Lifestyle strip',
+      title: 'Lifestyle text',
+      group: 'lifestyle',
       type: 'object',
       fields: [
-        { name: 'title', title: 'Heading', type: 'string' },
+        { name: 'title', title: 'Title', type: 'string' },
         {
           name: 'points',
           title: 'Points',
@@ -72,11 +90,12 @@ export default {
     },
     {
       name: 'guide',
-      title: 'Choosing guide',
+      title: 'Guide image and text',
+      group: 'guide',
       type: 'object',
       fields: [
         { name: 'eyebrow', title: 'Eyebrow', type: 'string' },
-        { name: 'title', title: 'Heading', type: 'string' },
+        { name: 'title', title: 'Title', type: 'string' },
         { name: 'description', title: 'Description', type: 'text', rows: 3 },
         { name: 'image', title: 'Image', ...imageWithAlt },
         {
@@ -95,11 +114,12 @@ export default {
     },
     {
       name: 'spaces',
-      title: 'Spaces',
+      title: 'Spaces images and text',
+      group: 'spaces',
       type: 'object',
       fields: [
         { name: 'eyebrow', title: 'Eyebrow', type: 'string' },
-        { name: 'title', title: 'Heading', type: 'string' },
+        { name: 'title', title: 'Title', type: 'string' },
         { name: 'description', title: 'Description', type: 'text', rows: 2 },
         {
           name: 'items',
@@ -117,11 +137,12 @@ export default {
     },
     {
       name: 'related',
-      title: 'Explore more categories',
+      title: 'More categories images and text',
+      group: 'related',
       type: 'object',
       fields: [
         { name: 'eyebrow', title: 'Eyebrow', type: 'string' },
-        { name: 'title', title: 'Heading', type: 'string' },
+        { name: 'title', title: 'Title', type: 'string' },
         { name: 'description', title: 'Description', type: 'text', rows: 2 },
         {
           name: 'items',
@@ -141,10 +162,11 @@ export default {
     },
     {
       name: 'faq',
-      title: 'FAQ',
+      title: 'FAQ text',
+      group: 'faq',
       type: 'object',
       fields: [
-        { name: 'title', title: 'Heading', type: 'string' },
+        { name: 'title', title: 'Title', type: 'string' },
         { name: 'intro', title: 'Intro', type: 'text', rows: 2 },
         {
           name: 'items',
@@ -162,11 +184,12 @@ export default {
     },
     {
       name: 'showroom',
-      title: 'Showroom',
+      title: 'Showroom image and text',
+      group: 'showroom',
       type: 'object',
       fields: [
         { name: 'eyebrow', title: 'Eyebrow', type: 'string' },
-        { name: 'title', title: 'Heading', type: 'string' },
+        { name: 'title', title: 'Title', type: 'string' },
         { name: 'description', title: 'Description', type: 'text', rows: 3 },
         { name: 'address', title: 'Address line', type: 'string' },
         { name: 'image', title: 'Image', ...imageWithAlt },
@@ -174,10 +197,11 @@ export default {
     },
     {
       name: 'closing',
-      title: 'Closing bar',
+      title: 'Closing text',
+      group: 'closing',
       type: 'object',
       fields: [
-        { name: 'title', title: 'Heading', type: 'string' },
+        { name: 'title', title: 'Title', type: 'string' },
         { name: 'description', title: 'Description', type: 'text', rows: 2 },
         { name: 'whatsappLabel', title: 'WhatsApp button label', type: 'string' },
         { name: 'exploreLabel', title: 'Explore button label', type: 'string' },
@@ -185,7 +209,8 @@ export default {
     },
     {
       name: 'seo',
-      title: 'SEO',
+      title: 'SEO text and image',
+      group: 'seo',
       type: 'object',
       fields: [
         { name: 'title', title: 'SEO title', type: 'string' },

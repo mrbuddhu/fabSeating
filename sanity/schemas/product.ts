@@ -20,10 +20,10 @@ export default {
     },
     {
       name: 'description',
-      title: 'Short description',
+      title: 'Description',
       type: 'text',
       rows: 3,
-      description: 'A few lines shown on the product card and in the popup when the card is clicked.',
+      description: 'Shown under the title in the popup. Leave empty when there is no description.',
     },
     {
       name: 'category',

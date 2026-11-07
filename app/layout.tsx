@@ -7,7 +7,8 @@ import { Analytics } from '@/components/Analytics'
 import { StickyBookCTA } from '@/components/StickyBookCTA'
 import { ExperienceStrip } from '@/components/ExperienceStrip'
 import { PWARegister } from '@/components/PWARegister'
-import { getHomePageContent, getSiteSettings } from '@/lib/sanity/queries'
+import { getFooterBanner, getHomePageContent, getSiteSettings } from '@/lib/sanity/queries'
+import { getSiteSections } from '@/lib/siteSections'
 import { CONTACT, filled } from '@/lib/siteContent'
 import { urlFor } from '@/lib/sanity/client'
 import { generateSEOMetadata } from '@/components/SEOHead'
@@ -70,14 +71,34 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const [settings, home] = await Promise.all([getSiteSettings(), getHomePageContent()])
+  const [settings, home, sections, banner] = await Promise.all([
+    getSiteSettings(),
+    getHomePageContent(),
+    getSiteSections(),
+    getFooterBanner(),
+  ])
+  const exploreSlugs = [
+    { slug: 'sofas', label: 'Sofas' },
+    { slug: 'dining-furniture', label: 'Dining Furniture' },
+    { slug: 'chairs-recliners', label: 'Chairs & Recliners' },
+  ]
+  const exploreLinks = [
+    ...exploreSlugs.map((item) => {
+      const category = sections.categories.find((entry) => entry.slug === item.slug)
+      return { href: `/category/${item.slug}`, label: category?.title || item.label }
+    }),
+    { href: '/#solutions', label: 'All Categories', arrow: true as const },
+  ]
   const contact = settings.contact || CONTACT
   const logoBuilder = settings?.logo ? urlFor(settings.logo as any) : null
   const logoUrl = logoBuilder ? logoBuilder.width(440).fit('max').url() : null
-  const experienceImage = home?.experience?.image
+  const experienceImage = banner?.image?.asset ? banner.image : home?.experience?.image
   const experienceBuilder = experienceImage ? urlFor(experienceImage) : null
-  const experienceSrc = experienceBuilder ? experienceBuilder.width(1800).height(800).url() : undefined
-  const experienceTitles = (home?.experience?.items || []).map((item: { title?: string }) => item.title || '').filter(Boolean)
+  const experienceSrc = experienceBuilder ? experienceBuilder.width(1800).height(700).fit('crop').url() : undefined
+  const bannerTitles = (banner?.items || []).map((item) => item.title || '').filter(Boolean)
+  const experienceTitles = bannerTitles.length
+    ? bannerTitles
+    : (home?.experience?.items || []).map((item: { title?: string }) => item.title || '').filter(Boolean)
 
   return (
     <html lang="en" className={`${playfair.variable} ${montserrat.variable} luxury-scrollbar`}>
@@ -109,7 +130,7 @@ export default async function RootLayout({
           }}
         />
         <SiteContactProvider value={contact}>
-        <Header logoUrl={logoUrl} />
+        <Header logoUrl={logoUrl} exploreLinks={exploreLinks} />
         <main id="main-content">{children}</main>
         <ExperienceStrip imageSrc={experienceSrc} imageAlt={experienceImage?.alt} titles={experienceTitles} />
         <StickyBookCTA />

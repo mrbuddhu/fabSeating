@@ -11,6 +11,8 @@ import teamMember from '../../schemas/teamMember'
 import product from '../../schemas/product'
 import productCategory from '../../schemas/productCategory'
 import categoryLanding from '../../schemas/categoryLanding'
+import galleryPage from '../../schemas/galleryPage'
+import footerBanner from '../../schemas/footerBanner'
 import author from '../../schemas/author'
 import legalDocument from '../../schemas/legalDocument'
 
@@ -28,6 +30,8 @@ export const schemaTypes = [
   product,
   productCategory,
   categoryLanding,
+  galleryPage,
+  footerBanner,
   author,
   legalDocument,
 ]
