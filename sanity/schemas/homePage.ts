@@ -2,7 +2,8 @@ export default {
   name: 'homePage',
   title: 'Homepage',
   type: 'document',
-  description: 'The tabs follow the home page from top to bottom. Open a tab, edit that section, then Publish.',
+  liveEdit: true,
+  description: 'The tabs follow the home page from top to bottom. Edits on this page save as you make them.',
   groups: [
     { name: 'hero', title: '1. Top of the page', default: true },
     { name: 'brands', title: '2. Brand logos' },
