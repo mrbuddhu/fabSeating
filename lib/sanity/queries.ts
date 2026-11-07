@@ -172,6 +172,7 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
       slug,
       excerpt,
       featuredImage,
+      thumbnail,
       author->{
         name,
         image
@@ -183,6 +184,19 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
     }`,
     {},
     { next: { tags: ['sanity', 'sanity:blogPost'] } } as any,
+  )
+}
+
+export async function getArticleMedia(): Promise<{ slug: string; image?: import('@/types').SanityImage; thumbnail?: import('@/types').SanityImage }[]> {
+  if (!isSanityConfigured()) return []
+  return client.fetch(
+    `*[_type == "articleMedia" && !(_id in path("drafts.**"))]{
+      slug,
+      image,
+      thumbnail
+    }`,
+    {},
+    { next: { tags: ['sanity', 'sanity:articleMedia'] } } as any,
   )
 }
 
@@ -198,6 +212,7 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> 
       excerpt,
       content,
       featuredImage,
+      thumbnail,
       author->{
         name,
         image

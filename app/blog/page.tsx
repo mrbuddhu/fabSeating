@@ -1,9 +1,14 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
+import { readFileSync } from 'fs'
+import path from 'path'
 import { BLOG_POSTS } from '@/lib/blog/posts'
-import { getBlogPosts, getSiteSettings } from '@/lib/sanity/queries'
+import { getArticleMedia, getBlogPosts, getSiteSettings } from '@/lib/sanity/queries'
+import { urlFor } from '@/lib/sanity/client'
 import { filled } from '@/lib/siteContent'
 import { metadataForPath } from '@/lib/pageMetadata'
+import type { SanityImage } from '@/types'
 
 type BlogCard = {
   slug: string
@@ -12,17 +17,47 @@ type BlogCard = {
   category: string
   readTime: string
   date: string
+  imageUrl?: string
+  imageAlt?: string
+}
+
+function fileHero(htmlFile: string) {
+  try {
+    const html = readFileSync(path.join(process.cwd(), 'public/blog', htmlFile), 'utf8')
+    const tag = html.match(/<img\b[^>]*>/i)?.[0]
+    const src = tag?.match(/\ssrc="([^"]+)"/i)?.[1]
+    const alt = tag?.match(/\salt="([^"]*)"/i)?.[1]
+    return src ? { imageUrl: src, imageAlt: alt } : {}
+  } catch {
+    return {}
+  }
+}
+
+function listingImage(thumbnail?: SanityImage, hero?: SanityImage) {
+  const image = thumbnail?.asset ? thumbnail : hero
+  if (!image?.asset) return {}
+  return {
+    imageUrl: urlFor(image)?.width(1200).fit('max').auto('format').url() || undefined,
+    imageAlt: image.alt || undefined,
+  }
 }
 
 async function toBlogCards(): Promise<BlogCard[]> {
-  const staticCards: BlogCard[] = BLOG_POSTS.map((p) => ({
-    slug: p.slug,
-    title: p.title,
-    description: p.description,
-    category: p.category,
-    readTime: p.readTime,
-    date: p.date,
-  }))
+  const media = await getArticleMedia().catch(() => [])
+  const mediaBySlug = new Map(media.map((item) => [item.slug, item]))
+  const staticCards: BlogCard[] = BLOG_POSTS.map((p) => {
+    const images = mediaBySlug.get(p.slug)
+    const chosen = listingImage(images?.thumbnail, images?.image)
+    return {
+      slug: p.slug,
+      title: p.title,
+      description: p.description,
+      category: p.category,
+      readTime: p.readTime,
+      date: p.date,
+      ...(chosen.imageUrl ? chosen : fileHero(p.htmlFile)),
+    }
+  })
   try {
     const sanityPosts = await getBlogPosts()
     const sanityCards: BlogCard[] = sanityPosts.map((p) => ({
@@ -34,6 +69,7 @@ async function toBlogCards(): Promise<BlogCard[]> {
       date: p.publishedAt
         ? new Date(p.publishedAt).toLocaleDateString('en-IN', { month: 'short', year: 'numeric' })
         : '',
+      ...listingImage(p.thumbnail, p.featuredImage),
     }))
     const sanitySlugs = new Set(sanityCards.map((card) => card.slug))
     return [...sanityCards, ...staticCards.filter((card) => !sanitySlugs.has(card.slug))]
@@ -85,11 +121,24 @@ export default async function BlogIndexPage() {
                   <div className="relative grid gap-0 md:grid-cols-2">
                     {/* Image side (decorative, using CSS background to stay theme-consistent) */}
                     <div
-                      className={`relative h-56 md:h-full overflow-hidden ${
+                      className={`relative h-56 overflow-hidden bg-[#efeae3] md:h-full md:min-h-64 ${
                         imageFirst ? 'md:order-1' : 'md:order-2'
-                      } bg-gradient-to-br from-primary-900 via-primary-700 to-primary-500`}
+                      }`}
                     >
-                      <div className="absolute inset-0 opacity-20 mix-blend-soft-light bg-[radial-gradient(circle_at_0%_0%,white_0,transparent_55%),radial-gradient(circle_at_100%_100%,white_0,transparent_55%)]" />
+                      {blog.imageUrl ? (
+                        <Image
+                          src={blog.imageUrl}
+                          alt={blog.imageAlt || blog.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className="object-contain"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary-900 via-primary-700 to-primary-500" />
+                      )}
+                      {!blog.imageUrl && (
+                        <div className="absolute inset-0 opacity-20 mix-blend-soft-light bg-[radial-gradient(circle_at_0%_0%,white_0,transparent_55%),radial-gradient(circle_at_100%_100%,white_0,transparent_55%)]" />
+                      )}
                       <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-[10px] uppercase tracking-[0.18em] text-primary-50/90 font-medium">
                         <span className="px-2 py-1 rounded-full bg-black/35 backdrop-blur">
                           {blog.category}

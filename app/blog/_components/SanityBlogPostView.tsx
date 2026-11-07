@@ -36,8 +36,9 @@ const portableTextComponents: Partial<PortableTextReactComponents> = {
 
 export function SanityBlogPostView({ post }: { post: BlogPost }) {
   const heroImageUrl = post.featuredImage
-    ? urlFor(post.featuredImage)?.width(2000).height(1200).url() ?? null
+    ? urlFor(post.featuredImage)?.width(2000).fit('max').auto('format').url() ?? null
     : null
+  const heroAlt = (post.featuredImage as { alt?: string } | undefined)?.alt || post.title || ''
   const useJournal = post.useJournalLayout !== false && (post.sections?.length ?? 0) > 0
 
   if (!useJournal) {
@@ -51,6 +52,15 @@ export function SanityBlogPostView({ post }: { post: BlogPost }) {
           )}
           {post.excerpt && (
             <p className="text-primary-700 text-lg mb-8">{post.excerpt}</p>
+          )}
+          {heroImageUrl && (
+            <div className="mb-8 overflow-hidden rounded-2xl bg-[#efeae3]">
+              <img
+                src={heroImageUrl}
+                alt={heroAlt}
+                className="mx-auto block h-auto w-full object-contain"
+              />
+            </div>
           )}
           {post.content && (
             <div className="prose prose-primary max-w-none">
@@ -81,12 +91,12 @@ export function SanityBlogPostView({ post }: { post: BlogPost }) {
 
       {/* Hero image */}
       {heroImageUrl && (
-        <div className="w-full h-[70vh] md:h-[80vh] lg:h-[90vh] max-h-[980px] overflow-hidden">
+        <div className="w-full bg-[#efeae3]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={heroImageUrl}
-            alt=""
-            className="w-full h-full object-cover block"
+            alt={heroAlt}
+            className="mx-auto block h-auto w-full max-w-none object-contain"
           />
         </div>
       )}

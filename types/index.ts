@@ -106,6 +106,7 @@ export interface BlogPost {
   excerpt?: string
   content?: any
   featuredImage?: SanityImage
+  thumbnail?: SanityImage
   author?: {
     name: string
     image?: SanityImage

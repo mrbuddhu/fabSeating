@@ -16,9 +16,9 @@ export async function GET(_request: Request, { params }: { params: { slug: strin
       { slug: post.slug },
       { next: { revalidate: 300, tags: ['sanity', 'sanity:articleMedia'] } } as any,
     ) : null
-  const source = urlFor(media?.image)?.width(1200).auto('format').url()
+  const source = urlFor(media?.image)?.width(2000).fit('max').auto('format').url()
   // The template is a trusted repository file; only its image URL is changed.
   const escaped = source?.replace(/&/g, '&amp;').replace(/"/g, '&quot;')
-  const content = html.replace(/<img\b[^>]*>/gi, (tag) => escaped ? tag.replace(/src="[^"]*"/, `src="${escaped}"`) : '')
+  const content = html.replace(/<img\b[^>]*>/gi, (tag) => escaped ? tag.replace(/src="[^"]*"/, `src="${escaped}"`) : tag)
   return new Response(content, { headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=0, must-revalidate' } })
 }

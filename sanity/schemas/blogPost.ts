@@ -42,15 +42,25 @@ export default {
     },
     {
       name: 'featuredImage',
-      title: 'Hero / Featured Image',
+      title: 'Hero image',
+      description: 'The picture under the title on the article page. It is shown in full and is not cropped.',
       type: 'image',
       options: { hotspot: true },
+      fields: [{ name: 'alt', title: 'Alt text', type: 'string' }],
       validation: (Rule: any) =>
         Rule.custom((value: any, context: any) => {
           const useJournalLayout = !!context?.document?.useJournalLayout
           if (useJournalLayout && !value) return 'Required when using Journal layout'
           return true
         }),
+    },
+    {
+      name: 'thumbnail',
+      title: 'Listing thumbnail',
+      description: 'The picture on the journal list. Choose any image. If this is empty, the hero image is used.',
+      type: 'image',
+      options: { hotspot: true },
+      fields: [{ name: 'alt', title: 'Alt text', type: 'string' }],
     },
     {
       name: 'intro',
