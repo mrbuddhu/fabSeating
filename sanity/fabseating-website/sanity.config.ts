@@ -12,6 +12,9 @@ export default defineConfig({
   projectId: 'n59kaaxb',
   dataset: 'production',
 
+  // The published view was locking fields, including the round photos.
+  releases: {enabled: false},
+
   plugins: [structureTool({structure}), visionTool()],
 
   schema: {

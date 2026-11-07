@@ -36,13 +36,12 @@ export default {
       title: 'Circles',
       type: 'array',
       group: 'categories',
-      description: 'Each tile is one circle on the home page. Open it to change the photo or the name. The same photo is used wherever that category appears.',
-      options: { layout: 'grid' },
+      description: 'Open a name, upload Round photo, then Publish. TV Consoles, Wardrobes, Storage Solutions, Modular Kitchens, Wallpapers, and Doors have no photo yet.',
       of: [
         {
           type: 'object',
           fields: [
-            { name: 'coverImage', title: 'Image', type: 'image', options: { hotspot: true }, description: 'The photo inside the circle.' },
+            { name: 'coverImage', title: 'Round photo', type: 'image', options: { hotspot: true }, description: 'The photo inside the circle on the home page. Upload or replace it here.' },
             { name: 'title', title: 'Category name', type: 'string', validation: (Rule: any) => Rule.required() },
             { name: 'slug', title: 'Landing page address', type: 'slug', options: { source: (_doc: any, ctx: any) => ctx.parent?.title, maxLength: 96 }, hidden: true },
             { name: 'blurb', title: 'Description', type: 'text', rows: 2, hidden: true },
@@ -54,7 +53,12 @@ export default {
               hidden: true,
             },
           ],
-          preview: { select: { title: 'title', media: 'coverImage' } },
+          preview: {
+            select: { title: 'title', media: 'coverImage' },
+            prepare({ title, media }: { title?: string; media?: unknown }) {
+              return { title: title || 'Category', subtitle: media ? 'Round photo' : 'No photo yet — open and upload', media }
+            },
+          },
         },
       ],
     },

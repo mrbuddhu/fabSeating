@@ -27,11 +27,11 @@ export const structure: StructureResolver = (S) =>
                   .title(category.title)
                   .id(`landing-${category.slug}`)
                   .child(
-                    S.documentList()
-                      .title(`${category.title} page`)
-                      .filter('_type == "categoryLanding" && slug.current == $slug')
-                      .params({slug: category.slug})
-                      .initialValueTemplates([S.initialValueTemplateItem(`landing-${category.slug}`)]),
+                    S.document()
+                      .schemaType('categoryLanding')
+                      .documentId(`categoryLanding-${category.slug}`)
+                      .title(category.title)
+                      .initialValueTemplate(`landing-${category.slug}`),
                   ),
               ),
             ),
