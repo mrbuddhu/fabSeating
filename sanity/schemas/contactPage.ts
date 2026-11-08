@@ -23,6 +23,21 @@ export default {
     { name: 'afterTitle', title: 'Section heading', type: 'string' },
     { name: 'afterBody', title: 'Section text', type: 'text', rows: 4 },
     {
+      name: 'form',
+      title: 'The form',
+      type: 'object',
+      description: 'Leave a field empty to keep the words already on the form.',
+      fields: [
+        { name: 'touchTitle', title: 'Left heading', type: 'string', description: 'Leave empty to keep “Get in Touch”.' },
+        { name: 'messageTitle', title: 'Right heading', type: 'string', description: 'Leave empty to keep “Send Us a Message”.' },
+        { name: 'nameLabel', title: 'Name label', type: 'string' },
+        { name: 'emailLabel', title: 'Email label', type: 'string' },
+        { name: 'phoneLabel', title: 'Phone label', type: 'string' },
+        { name: 'messageLabel', title: 'Message label', type: 'string' },
+        { name: 'button', title: 'Send button', type: 'string', description: 'Leave empty to keep “Send Enquiry”.' },
+      ],
+    },
+    {
       name: 'seo',
       title: 'SEO',
       type: 'object',

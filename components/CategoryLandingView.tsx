@@ -236,11 +236,11 @@ export function CategoryLandingView({ model }: { model: CategoryLandingModel }) 
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a href={model.showroom.mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold leading-none text-[#1c3f38]">
-                Get Directions
+                {model.showroom.directionsLabel}
                 <Arrow />
               </a>
               <a href={model.showroom.whatsappHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-white/50 px-5 py-3 text-sm font-semibold leading-none text-white">
-                Enquire on WhatsApp
+                {model.showroom.whatsappLabel}
               </a>
             </div>
           </div>

@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react'
 import Image from 'next/image'
 import { waLink } from '@/lib/siteContent'
-import { useSiteContact } from '@/components/SiteContactProvider'
+import { useSiteContact, useSiteLabels } from '@/components/SiteContactProvider'
 import { PhotoPopup } from '@/components/PhotoPopup'
 
 export type GalleryPhoto = {
@@ -23,6 +23,7 @@ export function GalleryGrid({ photos, filters }: { photos: GalleryPhoto[]; filte
   const [filter, setFilter] = useState('all')
   const [open, setOpen] = useState<GalleryPhoto | null>(null)
   const contact = useSiteContact()
+  const labels = useSiteLabels()
   const categories = useMemo(() => {
     if (filters?.length) return filters
     const labels = new Map<string, string>()
@@ -46,7 +47,7 @@ export function GalleryGrid({ photos, filters }: { photos: GalleryPhoto[]; filte
     <>
       {categories.length > 0 ? (
         <div className="mb-8 flex flex-wrap justify-center gap-2" role="toolbar" aria-label="Filter gallery by category">
-          {[{ id: 'all', label: 'All' }, ...categories].map((item) => {
+          {[{ id: 'all', label: labels.galleryAll }, ...categories].map((item) => {
             const active = filter === item.id
             return (
               <button

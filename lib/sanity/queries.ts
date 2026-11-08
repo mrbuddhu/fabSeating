@@ -1,6 +1,6 @@
 import { client } from './client'
 import type { Project, CaseStudy, BlogPost, Testimonial, SolutionPage, Catalog } from '@/types'
-import { CONTACT, filled, type SiteContact } from '@/lib/siteContent'
+import { CONTACT, LABELS, filled, type SiteContact, type SiteLabels } from '@/lib/siteContent'
 
 function isSanityConfigured() {
   return !!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
@@ -277,6 +277,8 @@ export type SiteSettings = {
   pageSeo: PageSeoOverride[]
   cataloguesPage: Record<string, string | null | undefined> | null
   journalPage: { eyebrow?: string; title?: string; description?: string } | null
+  labels: SiteLabels
+  siteName: string
 }
 
 export async function getSiteSettings(): Promise<SiteSettings> {
@@ -290,12 +292,16 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     pageSeo: [],
     cataloguesPage: null,
     journalPage: null,
+    labels: LABELS,
+    siteName: 'Fab Seating',
   }
   if (!isSanityConfigured()) return empty
   const doc = await client.fetch(
     `*[_type == "siteSettings"][0] {
+      siteTitle,
       announcementText,
       logo,
+      labels,
       phoneDisplay, phoneTel, whatsapp, email, addressLine, showroom, mapsUrl, reviewsUrl,
       instagramUrl, youtubeUrl, footerBlurb,
       seoTitle, seoDescription, seoImage,
@@ -329,6 +335,30 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     pageSeo: doc?.pageSeo || [],
     cataloguesPage: doc?.cataloguesPage ?? null,
     journalPage: doc?.journalPage ?? null,
+    labels: {
+      menuHome: filled(doc?.labels?.menuHome, LABELS.menuHome),
+      menuExplore: filled(doc?.labels?.menuExplore, LABELS.menuExplore),
+      menuGallery: filled(doc?.labels?.menuGallery, LABELS.menuGallery),
+      menuCatalogues: filled(doc?.labels?.menuCatalogues, LABELS.menuCatalogues),
+      menuContact: filled(doc?.labels?.menuContact, LABELS.menuContact),
+      footerCompany: filled(doc?.labels?.footerCompany, LABELS.footerCompany),
+      footerProducts: filled(doc?.labels?.footerProducts, LABELS.footerProducts),
+      footerSupport: filled(doc?.labels?.footerSupport, LABELS.footerSupport),
+      footerBlog: filled(doc?.labels?.footerBlog, LABELS.footerBlog),
+      footerLegals: filled(doc?.labels?.footerLegals, LABELS.footerLegals),
+      footerPolicies: filled(doc?.labels?.footerPolicies, LABELS.footerPolicies),
+      footerMaps: filled(doc?.labels?.footerMaps, LABELS.footerMaps),
+      whatsappButton: filled(doc?.labels?.whatsappButton, LABELS.whatsappButton),
+      stickyWhatsApp: filled(doc?.labels?.stickyWhatsApp, LABELS.stickyWhatsApp),
+      callButton: filled(doc?.labels?.callButton, LABELS.callButton),
+      galleryAll: filled(doc?.labels?.galleryAll, LABELS.galleryAll),
+      notFoundEyebrow: filled(doc?.labels?.notFoundEyebrow, LABELS.notFoundEyebrow),
+      notFoundTitle: filled(doc?.labels?.notFoundTitle, LABELS.notFoundTitle),
+      notFoundBody: filled(doc?.labels?.notFoundBody, LABELS.notFoundBody),
+      notFoundHome: filled(doc?.labels?.notFoundHome, LABELS.notFoundHome),
+      notFoundContact: filled(doc?.labels?.notFoundContact, LABELS.notFoundContact),
+    },
+    siteName: filled(doc?.siteTitle, 'Fab Seating'),
   }
 }
 
@@ -399,6 +429,7 @@ export async function getContactPageContent() {
       title,
       afterTitle,
       afterBody,
+      form,
       seo
     }`,
     {},
@@ -636,7 +667,7 @@ export async function getCategoryLanding(slug: string): Promise<CategoryLandingD
         spaces{ eyebrow, title, description, items[]{ title, image${landingImage} } },
         related{ eyebrow, title, description, items[]{ title, href, image${landingImage} } },
         faq{ title, intro, items[]{ question, answer } },
-        showroom{ eyebrow, title, description, address, image${landingImage} },
+        showroom{ eyebrow, title, description, address, directionsLabel, whatsappLabel, image${landingImage} },
         closing{ title, description, whatsappLabel, exploreLabel },
         seo{ title, description, noIndex, image }
       }`,

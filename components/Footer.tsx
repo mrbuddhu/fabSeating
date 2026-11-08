@@ -1,25 +1,25 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Container } from './Container'
-import type { SiteContact } from '@/lib/siteContent'
+import { LABELS, type SiteContact, type SiteLabels } from '@/lib/siteContent'
 
-export function Footer({ logoUrl, contact }: { logoUrl?: string | null; contact: SiteContact }) {
+export function Footer({ logoUrl, contact, labels = LABELS, siteName = 'Fab Seating' }: { logoUrl?: string | null; contact: SiteContact; labels?: SiteLabels; siteName?: string }) {
   const footerLinks = {
     company: [
-      { href: '/blog', label: 'Blog' },
-      { href: '/legals', label: 'Legals' },
-      { href: '/policies', label: 'Policies' },
+      { href: '/blog', label: labels.footerBlog },
+      { href: '/legals', label: labels.footerLegals },
+      { href: '/policies', label: labels.footerPolicies },
     ],
     products: [
-      { href: '/catalogues', label: 'Catalogues' },
-      { href: '/#solutions', label: 'Explore' },
-      { href: '/projects', label: 'Gallery' },
+      { href: '/catalogues', label: labels.menuCatalogues },
+      { href: '/#solutions', label: labels.menuExplore },
+      { href: '/projects', label: labels.menuGallery },
     ],
     support: [
-      { href: '/contact', label: 'Contact' },
+      { href: '/contact', label: labels.menuContact },
       { href: `mailto:${contact.email}`, label: contact.email },
       { href: `tel:${contact.phoneTel}`, label: contact.phoneDisplay },
-      { href: contact.mapsUrl, label: 'Find us on Google' },
+      { href: contact.mapsUrl, label: labels.footerMaps },
     ],
   }
   const currentYear = new Date().getFullYear()
@@ -82,7 +82,7 @@ export function Footer({ logoUrl, contact }: { logoUrl?: string | null; contact:
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4 text-base uppercase tracking-[0.12em] text-primary-50">Company</h4>
+            <h4 className="font-semibold mb-4 text-base uppercase tracking-[0.12em] text-primary-50">{labels.footerCompany}</h4>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.href}>
@@ -98,7 +98,7 @@ export function Footer({ logoUrl, contact }: { logoUrl?: string | null; contact:
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4 text-base uppercase tracking-[0.12em] text-primary-50">Products</h4>
+            <h4 className="font-semibold mb-4 text-base uppercase tracking-[0.12em] text-primary-50">{labels.footerProducts}</h4>
             <ul className="space-y-3">
               {footerLinks.products.map((link) => (
                 <li key={link.href}>
@@ -114,7 +114,7 @@ export function Footer({ logoUrl, contact }: { logoUrl?: string | null; contact:
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4 text-base uppercase tracking-[0.12em] text-primary-50">Support</h4>
+            <h4 className="font-semibold mb-4 text-base uppercase tracking-[0.12em] text-primary-50">{labels.footerSupport}</h4>
             <ul className="space-y-3">
               {footerLinks.support.map((link) => (
                 <li key={link.href}>
@@ -131,7 +131,7 @@ export function Footer({ logoUrl, contact }: { logoUrl?: string | null; contact:
         </div>
 
         <div className="border-t border-primary-800 py-8 text-center text-sm text-primary-400">
-          <p>&copy; {currentYear} Fab Seating. All rights reserved.</p>
+          <p>&copy; {currentYear} {siteName}. All rights reserved.</p>
         </div>
       </Container>
     </footer>

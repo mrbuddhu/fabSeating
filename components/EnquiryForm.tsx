@@ -9,9 +9,24 @@ interface EnquiryFormProps {
   projectId?: string
   originPage?: string
   className?: string
+  nameLabel?: string
+  emailLabel?: string
+  phoneLabel?: string
+  messageLabel?: string
+  buttonLabel?: string
 }
 
-export function EnquiryForm({ productId, projectId, originPage, className }: EnquiryFormProps) {
+export function EnquiryForm({
+  productId,
+  projectId,
+  originPage,
+  className,
+  nameLabel = 'Name',
+  emailLabel = 'Email',
+  phoneLabel = 'Phone',
+  messageLabel = 'Message',
+  buttonLabel = 'Send Enquiry',
+}: EnquiryFormProps) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -78,7 +93,7 @@ export function EnquiryForm({ productId, projectId, originPage, className }: Enq
       </div>
       <div>
         <label htmlFor="name" className="block text-sm font-medium mb-2">
-          Name *
+          {nameLabel} *
         </label>
         <input
           type="text"
@@ -92,7 +107,7 @@ export function EnquiryForm({ productId, projectId, originPage, className }: Enq
 
       <div>
         <label htmlFor="email" className="block text-sm font-medium mb-2">
-          Email *
+          {emailLabel} *
         </label>
         <input
           type="email"
@@ -106,7 +121,7 @@ export function EnquiryForm({ productId, projectId, originPage, className }: Enq
 
       <div>
         <label htmlFor="phone" className="block text-sm font-medium mb-2">
-          Phone *
+          {phoneLabel} *
         </label>
         <input
           type="tel"
@@ -120,7 +135,7 @@ export function EnquiryForm({ productId, projectId, originPage, className }: Enq
 
       <div>
         <label htmlFor="message" className="block text-sm font-medium mb-2">
-          Message *
+          {messageLabel} *
         </label>
         <textarea
           id="message"
@@ -149,7 +164,7 @@ export function EnquiryForm({ productId, projectId, originPage, className }: Enq
         disabled={isSubmitting}
         className="w-full px-8 py-3 bg-primary-950 text-primary-50 hover:bg-primary-900 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {isSubmitting ? 'Submitting...' : 'Send Enquiry'}
+        {isSubmitting ? 'Submitting...' : buttonLabel}
       </button>
     </form>
   )

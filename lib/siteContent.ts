@@ -21,6 +21,32 @@ export const CONTACT = {
 
 export type SiteContact = typeof CONTACT
 
+export const LABELS = {
+  menuHome: 'Home',
+  menuExplore: 'Explore',
+  menuGallery: 'Gallery',
+  menuCatalogues: 'Catalogues',
+  menuContact: 'Contact',
+  footerCompany: 'Company',
+  footerProducts: 'Products',
+  footerSupport: 'Support',
+  footerBlog: 'Blog',
+  footerLegals: 'Legals',
+  footerPolicies: 'Policies',
+  footerMaps: 'Find us on Google',
+  whatsappButton: 'Enquire on WhatsApp',
+  stickyWhatsApp: 'WhatsApp',
+  callButton: 'Call Us',
+  galleryAll: 'All',
+  notFoundEyebrow: 'Fab Seating · Kilpauk',
+  notFoundTitle: 'This page is not in the showroom.',
+  notFoundBody: 'The address may have changed. The collections, catalogues, and the Kilpauk showroom are still here.',
+  notFoundHome: 'Back to Home',
+  notFoundContact: 'Contact the showroom',
+}
+
+export type SiteLabels = typeof LABELS
+
 export function waLink(message: string, whatsapp = CONTACT.whatsapp) {
   return `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`
 }

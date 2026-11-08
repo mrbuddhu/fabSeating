@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useState } from 'react'
 import Image from 'next/image'
+import { useSiteLabels } from '@/components/SiteContactProvider'
 
 function WhatsAppIcon() {
   return (
@@ -26,6 +27,7 @@ export function PhotoPopup({
   enquireHref: string
   onClose: () => void
 }) {
+  const labels = useSiteLabels()
   const views = (images || []).filter(Boolean)
   const photos = views.length ? views : [imageSrc]
   const [active, setActive] = useState(photos[0])
@@ -96,7 +98,7 @@ export function PhotoPopup({
             className="mt-4 inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#25D366] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#1eb955]"
           >
             <WhatsAppIcon />
-            Enquire on WhatsApp
+            {labels.whatsappButton}
           </a>
         </div>
       </div>

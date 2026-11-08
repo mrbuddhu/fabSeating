@@ -53,6 +53,8 @@ export type CategoryLandingModel = {
     image?: LandingImage
     mapsUrl: string
     whatsappHref: string
+    directionsLabel: string
+    whatsappLabel: string
   }
   closing: {
     title: string
@@ -285,6 +287,8 @@ export function buildCategoryLanding(input: {
       image: picture(doc?.showroom?.image, 'Fab Seating showroom', { src: '/images/experience-showroom.jpg', alt: 'Fab Seating showroom' }),
       mapsUrl: input.mapsUrl || CONTACT.mapsUrl,
       whatsappHref,
+      directionsLabel: text(doc?.showroom?.directionsLabel, 'Get Directions'),
+      whatsappLabel: text(doc?.showroom?.whatsappLabel, 'Enquire on WhatsApp'),
     },
     closing: {
       title: text(doc?.closing?.title, base.closingTitle),

@@ -39,7 +39,7 @@ export default async function ContactPage() {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
             <div>
-              <h2 className="font-serif text-2xl font-semibold mb-6">Get in Touch</h2>
+              <h2 className="font-serif text-2xl font-semibold mb-6">{filled(content?.form?.touchTitle, 'Get in Touch')}</h2>
               <div className="space-y-4 text-primary-700">
                 <p>
                   <strong>Email:</strong> {settings.contact.email}
@@ -54,8 +54,15 @@ export default async function ContactPage() {
               </div>
             </div>
             <div>
-              <h2 className="font-serif text-2xl font-semibold mb-6">Send Us a Message</h2>
-              <EnquiryForm originPage="/contact" />
+              <h2 className="font-serif text-2xl font-semibold mb-6">{filled(content?.form?.messageTitle, 'Send Us a Message')}</h2>
+              <EnquiryForm
+                originPage="/contact"
+                nameLabel={filled(content?.form?.nameLabel, 'Name')}
+                emailLabel={filled(content?.form?.emailLabel, 'Email')}
+                phoneLabel={filled(content?.form?.phoneLabel, 'Phone')}
+                messageLabel={filled(content?.form?.messageLabel, 'Message')}
+                buttonLabel={filled(content?.form?.button, 'Send Enquiry')}
+              />
             </div>
           </div>
         </div>

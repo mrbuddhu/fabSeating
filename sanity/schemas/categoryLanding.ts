@@ -192,6 +192,8 @@ export default {
         { name: 'title', title: 'Title', type: 'string' },
         { name: 'description', title: 'Description', type: 'text', rows: 3 },
         { name: 'address', title: 'Address line', type: 'string' },
+        { name: 'directionsLabel', title: 'Directions button', type: 'string', description: 'Leave empty to keep “Get Directions”.' },
+        { name: 'whatsappLabel', title: 'WhatsApp button', type: 'string', description: 'Leave empty to keep “Enquire on WhatsApp”.' },
         { name: 'image', title: 'Image', ...imageWithAlt },
       ],
     },

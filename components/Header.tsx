@@ -8,14 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Container } from './Container'
 import { cn } from '@/lib/utils'
 import { useSiteContact } from '@/components/SiteContactProvider'
-
-const navItems = [
-  { href: '/', label: 'Home' },
-  { href: '/#solutions', label: 'Explore' },
-  { href: '/projects', label: 'Gallery' },
-  { href: '/catalogues', label: 'Catalogues' },
-  { href: '/contact', label: 'Contact' },
-]
+import { LABELS, type SiteLabels } from '@/lib/siteContent'
 
 const fallbackExploreLinks = [
   { href: '/category/sofas', label: 'Sofas' },
@@ -24,7 +17,14 @@ const fallbackExploreLinks = [
   { href: '/#solutions', label: 'All Categories', arrow: true },
 ]
 
-export function Header({ logoUrl, exploreLinks = fallbackExploreLinks, announcement }: { logoUrl?: string | null; exploreLinks?: { href: string; label: string; arrow?: boolean }[]; announcement?: string | null }) {
+export function Header({ logoUrl, exploreLinks = fallbackExploreLinks, announcement, labels = LABELS }: { logoUrl?: string | null; exploreLinks?: { href: string; label: string; arrow?: boolean }[]; announcement?: string | null; labels?: SiteLabels }) {
+  const navItems = [
+    { href: '/', label: labels.menuHome },
+    { href: '/#solutions', label: labels.menuExplore },
+    { href: '/projects', label: labels.menuGallery },
+    { href: '/catalogues', label: labels.menuCatalogues },
+    { href: '/contact', label: labels.menuContact },
+  ]
   const contact = useSiteContact()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)

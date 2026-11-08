@@ -129,12 +129,12 @@ export default async function RootLayout({
             }),
           }}
         />
-        <SiteContactProvider value={contact}>
-        <Header logoUrl={logoUrl} exploreLinks={exploreLinks} announcement={settings.announcement} />
+        <SiteContactProvider value={contact} labels={settings.labels}>
+        <Header logoUrl={logoUrl} exploreLinks={exploreLinks} announcement={settings.announcement} labels={settings.labels} />
         <main id="main-content">{children}</main>
         <ExperienceStrip imageSrc={experienceSrc} imageAlt={experienceImage?.alt} titles={experienceTitles} />
         <StickyBookCTA />
-        <Footer logoUrl={logoUrl} contact={contact} />
+        <Footer logoUrl={logoUrl} contact={contact} labels={settings.labels} siteName={settings.siteName} />
         </SiteContactProvider>
         <Analytics />
       </body>
