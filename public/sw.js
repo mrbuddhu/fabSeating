@@ -1,5 +1,5 @@
 // Cache only full public HTML navigations, never Next.js RSC/prefetch responses.
-const CACHE_NAME = 'fabseating-v3'
+const CACHE_NAME = 'fabseating-v4'
 const MAX_PAGES = 30
 
 self.addEventListener('install', (event) => {
@@ -18,7 +18,7 @@ self.addEventListener('fetch', (event) => {
   const request = event.request
   const url = new URL(request.url)
   if (request.method !== 'GET' || request.mode !== 'navigate' || url.origin !== self.location.origin) return
-  if (/^\/(api|admin|_next)(\/|$)/.test(url.pathname) || request.headers.has('range')) return
+  if (/^\/(api|_next)(\/|$)/.test(url.pathname) || request.headers.has('range')) return
   // Query variants must not accumulate unbounded offline copies.
   const key = url.origin + url.pathname
   let save = Promise.resolve()

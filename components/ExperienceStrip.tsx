@@ -51,7 +51,7 @@ const items = [
 
 export function ExperienceStrip({ imageSrc = '/images/experience-showroom.jpg', imageAlt = 'Fab Seating showroom with a beige sectional and round wood coffee table', titles }: { imageSrc?: string; imageAlt?: string; titles?: string[] }) {
   const pathname = usePathname()
-  if (pathname.startsWith('/admin') || pathname.startsWith('/studio')) return null
+  if (pathname.startsWith('/studio')) return null
   const labels = (titles || []).map((title) => title.trim()).filter(Boolean)
   const shown = (labels.length ? labels : items.map((item) => item.title)).slice(0, 4)
 

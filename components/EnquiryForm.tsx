@@ -17,6 +17,7 @@ export function EnquiryForm({ productId, projectId, originPage, className }: Enq
     email: '',
     phone: '',
     message: '',
+    company: '',
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
@@ -46,7 +47,7 @@ export function EnquiryForm({ productId, projectId, originPage, className }: Enq
 
       if (response.ok) {
         setSubmitStatus('success')
-        setFormData({ name: '', email: '', phone: '', message: '' })
+        setFormData({ name: '', email: '', phone: '', message: '', company: '' })
         trackConversion('enquiry_submitted', { productId, projectId, originPage })
         trackEvent('enquiry_submitted', { productId, projectId, originPage })
       } else {
@@ -62,7 +63,19 @@ export function EnquiryForm({ productId, projectId, originPage, className }: Enq
   }
 
   return (
-    <form onSubmit={handleSubmit} className={cn('space-y-6', className)}>
+    <form onSubmit={handleSubmit} className={cn('space-y-4', className)}>
+      <div className="absolute -left-[9999px] h-0 overflow-hidden" aria-hidden="true">
+        <label htmlFor="company">Company</label>
+        <input
+          type="text"
+          id="company"
+          name="company"
+          tabIndex={-1}
+          autoComplete="off"
+          value={formData.company}
+          onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+        />
+      </div>
       <div>
         <label htmlFor="name" className="block text-sm font-medium mb-2">
           Name *
@@ -73,7 +86,7 @@ export function EnquiryForm({ productId, projectId, originPage, className }: Enq
           required
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className="w-full px-4 py-3 border border-primary-300 focus:outline-none focus:ring-2 focus:ring-primary-950 focus:border-transparent"
+          className="w-full px-4 py-2.5 border border-primary-300 focus:outline-none focus:ring-2 focus:ring-primary-950 focus:border-transparent"
         />
       </div>
 
@@ -87,7 +100,7 @@ export function EnquiryForm({ productId, projectId, originPage, className }: Enq
           required
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          className="w-full px-4 py-3 border border-primary-300 focus:outline-none focus:ring-2 focus:ring-primary-950 focus:border-transparent"
+          className="w-full px-4 py-2.5 border border-primary-300 focus:outline-none focus:ring-2 focus:ring-primary-950 focus:border-transparent"
         />
       </div>
 
@@ -101,7 +114,7 @@ export function EnquiryForm({ productId, projectId, originPage, className }: Enq
           required
           value={formData.phone}
           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-          className="w-full px-4 py-3 border border-primary-300 focus:outline-none focus:ring-2 focus:ring-primary-950 focus:border-transparent"
+          className="w-full px-4 py-2.5 border border-primary-300 focus:outline-none focus:ring-2 focus:ring-primary-950 focus:border-transparent"
         />
       </div>
 
@@ -112,10 +125,10 @@ export function EnquiryForm({ productId, projectId, originPage, className }: Enq
         <textarea
           id="message"
           required
-          rows={6}
+          rows={3}
           value={formData.message}
           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-          className="w-full px-4 py-3 border border-primary-300 focus:outline-none focus:ring-2 focus:ring-primary-950 focus:border-transparent resize-none"
+          className="w-full px-4 py-2.5 border border-primary-300 focus:outline-none focus:ring-2 focus:ring-primary-950 focus:border-transparent resize-none"
         />
       </div>
 
@@ -127,14 +140,14 @@ export function EnquiryForm({ productId, projectId, originPage, className }: Enq
 
       {submitStatus === 'error' && (
         <div className="p-4 bg-red-50 text-red-800 text-sm">
-          Something went wrong. Please try again.
+          We couldn&apos;t send that just now. Email info@fabseating.com or message us on WhatsApp.
         </div>
       )}
 
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full px-8 py-4 bg-primary-950 text-primary-50 hover:bg-primary-900 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full px-8 py-3 bg-primary-950 text-primary-50 hover:bg-primary-900 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isSubmitting ? 'Submitting...' : 'Send Enquiry'}
       </button>

@@ -22,6 +22,7 @@ export default async function ContactPage() {
       <PageHero
         title={filled(content?.title, "What's your requirement?")}
         titleClassName="whitespace-nowrap md:whitespace-normal lg:whitespace-nowrap"
+        className="pb-10 md:pb-14"
       />
       {/* Compact explanation strip (replaces image strip) */}
       <section className="bg-primary-950 text-primary-50">
@@ -34,9 +35,9 @@ export default async function ContactPage() {
           </p>
         </div>
       </section>
-      <Section>
-        <div className="max-w-6xl mx-auto space-y-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <Section className="pt-12 md:pt-16">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
             <div>
               <h2 className="font-serif text-2xl font-semibold mb-6">Get in Touch</h2>
               <div className="space-y-4 text-primary-700">

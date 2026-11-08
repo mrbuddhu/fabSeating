@@ -66,7 +66,7 @@ export default async function Home() {
   ]
   const badges = [
     filled(homeContent?.hero?.badge1, 'Premium Quality'),
-    filled(homeContent?.hero?.badge2, '20+ Years Experience'),
+    filled(homeContent?.hero?.badge2, '25+ Years Experience'),
     filled(homeContent?.hero?.badge3, 'Custom Solutions'),
   ]
   const quoteText = filled(homeContent?.quote?.text, 'We are the most experienced makers of exceptional upholstered furniture. Using materials of the highest quality, we ensure every handmade piece is comfortable, beautifully finished, and built to last.')
