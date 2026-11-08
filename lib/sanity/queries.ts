@@ -373,9 +373,13 @@ export async function getHomePageContent() {
         posterImage,
         "videoUrl": coalesce(videoFile.asset->url, videoUrl)
       },
+      processTitle,
       processSteps,
       googleReviewsUrl,
       exploreIntro { eyebrow, title, description },
+      industriesIntro { title, description },
+      faqIntro { eyebrow, title },
+      teamIntro { eyebrow, title },
       hero, quote, about, legacy, bespoke, showroomCta,
       experience { image, items[]{ title } },
       googleReviews { heading, summary, items[]{ text, date } },

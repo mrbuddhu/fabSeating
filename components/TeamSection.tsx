@@ -35,7 +35,15 @@ const HARD_CODED_TEAM: TeamMember[] = [
   },
 ]
 
-export const TeamSection = ({ teamMembers: sanityMembers }: { teamMembers?: TeamMember[] | null }) => {
+export const TeamSection = ({
+  teamMembers: sanityMembers,
+  eyebrow = 'Our Leadership',
+  title = 'Meet the Minds Behind Fab Seating',
+}: {
+  teamMembers?: TeamMember[] | null
+  eyebrow?: string
+  title?: string
+}) => {
   const published = (sanityMembers || []).filter((member) => member?.name?.trim())
   const teamMembers: TeamMember[] = (published.length ? published : HARD_CODED_TEAM).map((member, index) => {
     const fallback = HARD_CODED_TEAM[index]
@@ -58,8 +66,8 @@ export const TeamSection = ({ teamMembers: sanityMembers }: { teamMembers?: Team
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="text-center mb-10">
-          <span className="text-xs font-bold tracking-[0.2em] uppercase text-primary-200/80 mb-2 block">Our Leadership</span>
-          <h2 className="text-2xl md:text-3xl font-serif font-bold text-white mb-3">Meet the Minds Behind Fab Seating</h2>
+          <span className="text-xs font-bold tracking-[0.2em] uppercase text-primary-200/80 mb-2 block">{eyebrow}</span>
+          <h2 className="text-2xl md:text-3xl font-serif font-bold text-white mb-3">{title}</h2>
           <div className="w-16 h-px bg-white/30 mx-auto"></div>
         </div>
 

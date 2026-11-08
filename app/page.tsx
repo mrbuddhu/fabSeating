@@ -298,7 +298,11 @@ export default async function Home() {
       </AnimatedSection>
 
       {/* Industries We Serve */}
-      <IndustriesServed industries={sections.industries} />
+      <IndustriesServed
+        industries={sections.industries}
+        title={filled(homeContent?.industriesIntro?.title, 'Industries We Serve')}
+        description={filled(homeContent?.industriesIntro?.description, 'Furniture and furnishing solutions for every kind of space.')}
+      />
 
       {/* Teal Strip Divider with Process Typewriter */}
       <section className="relative py-8 md:py-10 grainy-gradient text-white overflow-hidden">
@@ -315,7 +319,7 @@ export default async function Home() {
           <div className="max-w-6xl mx-auto text-center">
             <div className="mb-6">
               <div className="w-24 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent mx-auto mb-4"></div>
-              <h3 className="text-xs font-semibold tracking-[0.2em] uppercase text-primary-300/60 mb-6">Our Process</h3>
+              <h3 className="text-xs font-semibold tracking-[0.2em] uppercase text-primary-300/60 mb-6">{filled(homeContent?.processTitle, 'Our Process')}</h3>
             </div>
             <ProcessTypewriter 
               steps={processSteps}
@@ -433,7 +437,11 @@ export default async function Home() {
 
       {/* Team Section (from Sanity Team or fallback) */}
       <AnimatedSection>
-        <TeamSection teamMembers={teamMembers} />
+        <TeamSection
+          teamMembers={teamMembers}
+          eyebrow={filled(homeContent?.teamIntro?.eyebrow, 'Our Leadership')}
+          title={filled(homeContent?.teamIntro?.title, 'Meet the Minds Behind Fab Seating')}
+        />
       </AnimatedSection>
 
       {/* 9. Testimonials/Social Proof */}
@@ -457,7 +465,11 @@ export default async function Home() {
       />
 
       {/* FAQ Section */}
-      <FaqTeal faqs={sections.faqs} />
+      <FaqTeal
+        faqs={sections.faqs}
+        eyebrow={filled(homeContent?.faqIntro?.eyebrow, 'Good to Know')}
+        title={filled(homeContent?.faqIntro?.title, 'Frequently Asked Questions')}
+      />
 
       {/* Final CTA - Visit Our Showroom */}
       <section className="relative py-12 md:py-16 bg-white text-primary-950 overflow-hidden">

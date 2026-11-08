@@ -62,7 +62,7 @@ export const structure: StructureResolver = (S) =>
       S.listItem()
         .title('Team')
         .id('team')
-        .child(S.documentTypeList('teamMember').title('Team — under Custom solutions')),
+        .child(S.documentTypeList('teamMember').title('Team — names and photos. The heading is on the home page, tab 10.')),
       S.divider().title('Photos inside category pages'),
       S.listItem()
         .title('Products')

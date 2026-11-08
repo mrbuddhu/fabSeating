@@ -5,7 +5,15 @@ import { DEFAULT_SECTIONS } from '@/lib/siteSections'
 
 const ease = [0.22, 1, 0.36, 1] as const
 
-export function IndustriesServed({ industries = DEFAULT_SECTIONS.industries }: { industries?: string[] }) {
+export function IndustriesServed({
+  industries = DEFAULT_SECTIONS.industries,
+  title = 'Industries We Serve',
+  description = 'Furniture and furnishing solutions for every kind of space.',
+}: {
+  industries?: string[]
+  title?: string
+  description?: string
+}) {
   const reduceMotion = useReducedMotion()
 
   return (
@@ -20,10 +28,10 @@ export function IndustriesServed({ industries = DEFAULT_SECTIONS.industries }: {
         >
           <div className="relative z-10 mb-6 md:mb-8">
             <h2 className="text-2xl font-serif font-bold tracking-tight text-primary-50 md:text-3xl">
-              Industries We Serve
+              {title}
             </h2>
             <p className="mt-2 max-w-xl text-sm font-normal not-italic leading-relaxed text-primary-200 md:text-base">
-              Furniture and furnishing solutions for every kind of space.
+              {description}
             </p>
           </div>
 

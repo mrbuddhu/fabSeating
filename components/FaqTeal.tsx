@@ -7,15 +7,23 @@ import { FAQS } from '@/lib/siteContent'
 
 type Faq = { q: string; a: string }
 
-export function FaqTeal({ faqs = FAQS }: { faqs?: Faq[] }) {
+export function FaqTeal({
+  faqs = FAQS,
+  eyebrow = 'Good to Know',
+  title = 'Frequently Asked Questions',
+}: {
+  faqs?: Faq[]
+  eyebrow?: string
+  title?: string
+}) {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
   return (
     <section className="relative bg-white py-16 md:py-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-10">
-          <span className="text-xs font-bold tracking-[0.2em] uppercase text-primary-700">Good to Know</span>
-          <h2 className="mt-2 text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-primary-950 tracking-tight">Frequently Asked Questions</h2>
+          <span className="text-xs font-bold tracking-[0.2em] uppercase text-primary-700">{eyebrow}</span>
+          <h2 className="mt-2 text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-primary-950 tracking-tight">{title}</h2>
           <div className="w-24 h-px bg-gradient-to-r from-transparent via-primary-700 to-transparent mx-auto my-4"></div>
         </div>
 
